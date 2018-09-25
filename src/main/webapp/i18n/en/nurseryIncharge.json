@@ -1,0 +1,26 @@
+
+{
+    "projectghApp": {
+        "nurseryIncharge" : {
+            "home": {
+                "title": "Nursery Incharges",
+                "createLabel": "Create a new Nursery Incharge",
+                "createOrEditLabel": "Create or edit a Nursery Incharge"
+            },
+            "created": "A new Nursery Incharge is created with identifier {{ param }}",
+            "updated": "A Nursery Incharge is updated with identifier {{ param }}",
+            "deleted": "A Nursery Incharge is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Nursery Incharge {{ id }}?"
+            },
+            "detail": {
+                "title": "Nursery Incharge"
+            },
+            "fromDate": "From Date",
+            "toDate": "To Date",
+            "description": "Description",
+            "status": "Status",
+            "nursery": "Nursery"
+        }
+    }
+}

@@ -1,0 +1,39 @@
+
+{
+    "projectghApp": {
+        "batch" : {
+            "home": {
+                "title": "Batches",
+                "createLabel": "Create a new Batch",
+                "createOrEditLabel": "Create or edit a Batch"
+            },
+            "created": "A new Batch is created with identifier {{ param }}",
+            "updated": "A Batch is updated with identifier {{ param }}",
+            "deleted": "A Batch is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Batch {{ id }}?"
+            },
+            "detail": {
+                "title": "Batch"
+            },
+            "batchNo": "Batch No",
+            "batchName": "Batch Name",
+            "quantity": "Quantity",
+            "showingType": "Showing Type",
+            "sowingDate": "Sowing Date",
+            "closedDate": "Closed Date",
+            "round": "Round",
+            "remarks": "Remarks",
+            "status": "Status",
+            "damages": "Damages",
+            "shadeAreas": "Shade Areas",
+            "nurseryStockDetails": "Nursery Stock Details",
+            "nursery": "Nursery",
+            "pickListVariety": "Pick List Variety",
+            "pickListCategory": "Pick List Category",
+            "quantityType": "Quantity Type",
+            "motherBed": "Mother Bed",
+            "financialYearBatch": "Financial Year Batch"
+        }
+    }
+}

@@ -1,0 +1,74 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipName": "nurserys",
+            "otherEntityName": "nursery",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "nurseryName"
+        },
+        {
+            "relationshipName": "pickListVariety",
+            "otherEntityName": "pickListValue",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "pickListValue"
+        },
+        {
+            "relationshipName": "pickListCategory",
+            "otherEntityName": "pickListValue",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "pickListValue"
+        },
+        {
+            "relationshipName": "nurseryInventoryDetails",
+            "otherEntityName": "nurseryInventoryDetails",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "nurseryInventory"
+        },
+        {
+            "relationshipName": "quantityType",
+            "otherEntityName": "pickListValue",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "pickListValue"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "currentQuantity",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "addedQuantity",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "consumedQuantity",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": "255"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "damageQuantity",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20180828044722",
+    "dto": "mapstruct",
+    "searchEngine": false,
+    "service": "serviceImpl",
+    "entityTableName": "nursery_inventory",
+    "jpaMetamodelFiltering": true,
+    "pagination": "pagination",
+    "enableEntityAudit": true
+}

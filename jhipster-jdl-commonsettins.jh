@@ -1,0 +1,13 @@
+entity CommonSettings {
+    Id Long,
+    DaysToCloseBatch Integer,
+    Status Integer,
+    CreatedBy Long,
+    ModifiedBy Long,
+    CreatedAt Instant,
+    UpdatedAt Instant
+}
+
+paginate CommonSettings with pagination
+dto * with mapstruct
+service all with serviceImpl

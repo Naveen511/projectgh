@@ -1,0 +1,183 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "selfIds",
+            "otherEntityName": "pickListValue",
+            "otherEntityRelationshipName": "pickValue"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "varietys",
+            "otherEntityName": "batch",
+            "otherEntityRelationshipName": "pickListVariety"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "categorys",
+            "otherEntityName": "batch",
+            "otherEntityRelationshipName": "pickListCategory"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "nurseryStockVarietys",
+            "otherEntityName": "nurseryStock",
+            "otherEntityRelationshipName": "pickListVariety"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "nurseryStockCategorys",
+            "otherEntityName": "nurseryStock",
+            "otherEntityRelationshipName": "pickListCategory"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "godownPurchaseVarietys",
+            "otherEntityName": "godownPurchaseDetails",
+            "otherEntityRelationshipName": "pickListVariety"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "godownPurchaseCategorys",
+            "otherEntityName": "godownPurchaseDetails",
+            "otherEntityRelationshipName": "pickListCategory"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "godownPurchaseQuantityType",
+            "otherEntityName": "godownPurchaseDetails",
+            "otherEntityRelationshipName": "pickListQuantityType"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "godownStockVarietys",
+            "otherEntityName": "godownStock",
+            "otherEntityRelationshipName": "pickListVariety"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "godownStockCategorys",
+            "otherEntityName": "godownStock",
+            "otherEntityRelationshipName": "pickListCategory"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "godownStockQuantityTypes",
+            "otherEntityName": "godownStock",
+            "otherEntityRelationshipName": "pickListQuantityType"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "pickList",
+            "otherEntityName": "pickList",
+            "otherEntityField": "pickListName"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "pickValue",
+            "otherEntityName": "pickListValue",
+            "otherEntityField": "pickListValue"
+        },
+        {
+            "relationshipName": "nurserys",
+            "otherEntityName": "nursery",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "nurseryType"
+        },
+        {
+            "relationshipName": "batchQuantityTypes",
+            "otherEntityName": "batch",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "quantityType"
+        },
+        {
+            "relationshipName": "nurseryInventoryVarietys",
+            "otherEntityName": "nurseryInventory",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "pickListVariety"
+        },
+        {
+            "relationshipName": "nurseryInventoryCategorys",
+            "otherEntityName": "nurseryInventory",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "pickListCategory"
+        },
+        {
+            "relationshipName": "nurseryInventoryQuantityTypes",
+            "otherEntityName": "nurseryInventory",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "quantityType"
+        },
+        {
+            "relationshipName": "nurseryInventoryDamageTypes",
+            "otherEntityName": "nurseryInventoryDetails",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "damageType"
+        },
+        {
+            "relationshipName": "pickListValueDamageArea",
+            "otherEntityName": "damage",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "damageArea"
+        },
+        {
+            "relationshipName": "nurseryStockDamageArea",
+            "otherEntityName": "nurseryStockDetails",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "saplingDamageArea"
+        },
+        {
+            "relationshipName": "financialYearName",
+            "otherEntityName": "financialYearSettings",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "financialYear"
+        },
+        {
+            "relationshipName": "damageDescription",
+            "otherEntityName": "damage",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "description"
+        },
+        {
+            "relationshipName": "pointOfSaleVarietys",
+            "otherEntityName": "pointOfSaleDetails",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "pickListVariety"
+        },
+        {
+            "relationshipName": "pointOfSaleCategorys",
+            "otherEntityName": "pointOfSaleDetails",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "pickListCategory"
+        },
+        {
+            "relationshipName": "coverFillingDetails",
+            "otherEntityName": "coverFillingDetails",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "damageType"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "pickListValue",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20180818124911",
+    "dto": "mapstruct",
+    "searchEngine": false,
+    "service": "serviceImpl",
+    "entityTableName": "pick_list_value",
+    "jpaMetamodelFiltering": true,
+    "pagination": "pagination",
+    "enableEntityAudit": true
+}

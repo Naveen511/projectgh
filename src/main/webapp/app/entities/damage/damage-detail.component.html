@@ -1,0 +1,59 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="damage">
+            <h2><span jhiTranslate="projectghApp.damage.detail.title">Damage</span> {{damage.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="projectghApp.damage.noOfQuantity">No Of Quantity</span></dt>
+                <dd>
+                    <span>{{damage.noOfQuantity}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.damage.date">Date</span></dt>
+                <dd>
+                    <span>{{damage.date}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.damage.status">Status</span></dt>
+                <dd>
+                    <span>{{damage.status}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.damage.batch">Batch</span></dt>
+                <dd>
+                    <div *ngIf="damage.batchId">
+                        <a [routerLink]="['/batch', damage.batchId, 'view']">{{damage.batchBatchName}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.damage.description">Description</span></dt>
+                <dd>
+                    <div *ngIf="damage.descriptionId">
+                        <a [routerLink]="['/pick-list-value', damage.descriptionId, 'view']">{{damage.descriptionPickListValue}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.damage.damageArea">Damage Area</span></dt>
+                <dd>
+                    <div *ngIf="damage.damageAreaId">
+                        <a [routerLink]="['/pick-list-value', damage.damageAreaId, 'view']">{{damage.damageAreaPickListValue}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.damage.financialYearDamage">Financial Year Damage</span></dt>
+                <dd>
+                    <div *ngIf="damage.financialYearDamageId">
+                        <a [routerLink]="['/financial-year-settings', damage.financialYearDamageId, 'view']">{{damage.financialYearDamageBatchName}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/damage', damage.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

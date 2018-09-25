@@ -1,0 +1,68 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "batch",
+            "otherEntityName": "batch",
+            "otherEntityField": "batchName"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "nurseryStock",
+            "otherEntityName": "nurseryStock",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "itNursery",
+            "otherEntityName": "nursery",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "nurseryName"
+        },
+        {
+            "relationshipName": "saplingDamageArea",
+            "otherEntityName": "pickListValue",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "pickListValue"
+        },
+        {
+            "relationshipName": "financialYearStockDetails",
+            "otherEntityName": "financialYearSettings",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "batchName"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "date",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "quantity",
+            "fieldType": "Long",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20180818124916",
+    "dto": "mapstruct",
+    "searchEngine": false,
+    "service": "serviceImpl",
+    "entityTableName": "nursery_stock_details",
+    "jpaMetamodelFiltering": true,
+    "pagination": "pagination",
+    "enableEntityAudit": true
+}

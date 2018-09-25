@@ -1,0 +1,51 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="mapSectorWithZonal">
+            <h2><span jhiTranslate="projectghApp.mapSectorWithZonal.detail.title">Map Sector With Zonal</span> {{mapSectorWithZonal.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="projectghApp.mapSectorWithZonal.fromDate">From Date</span></dt>
+                <dd>
+                    <span>{{mapSectorWithZonal.fromDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.mapSectorWithZonal.toDate">To Date</span></dt>
+                <dd>
+                    <span>{{mapSectorWithZonal.toDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.mapSectorWithZonal.description">Description</span></dt>
+                <dd>
+                    <span>{{mapSectorWithZonal.description}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.mapSectorWithZonal.status">Status</span></dt>
+                <dd>
+                    <span>{{mapSectorWithZonal.status}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.mapSectorWithZonal.zonal">Zonal</span></dt>
+                <dd>
+                    <div *ngIf="mapSectorWithZonal.zonalId">
+                        <a [routerLink]="['/zonal', mapSectorWithZonal.zonalId, 'view']">{{mapSectorWithZonal.zonalZoneName}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.mapSectorWithZonal.sector">Sector</span></dt>
+                <dd>
+                    <div *ngIf="mapSectorWithZonal.sectorId">
+                        <a [routerLink]="['/sector', mapSectorWithZonal.sectorId, 'view']">{{mapSectorWithZonal.sectorSectorName}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/map-sector-with-zonal', mapSectorWithZonal.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

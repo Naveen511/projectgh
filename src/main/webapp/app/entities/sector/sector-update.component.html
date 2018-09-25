@@ -1,0 +1,59 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-sector-heading" jhiTranslate="projectghApp.sector.home.createOrEditLabel">Create or edit a Sector</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!sector.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="sector.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.sector.sectorName" for="field_sectorName">Sector Name</label>
+                    <input type="text" class="form-control" name="sectorName" id="field_sectorName"
+                        [(ngModel)]="sector.sectorName" required/>
+                    <div [hidden]="!(editForm.controls.sectorName?.dirty && editForm.controls.sectorName?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.sectorName?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.sector.sectorAddress" for="field_sectorAddress">Sector Address</label>
+                    <input type="text" class="form-control" name="sectorAddress" id="field_sectorAddress"
+                        [(ngModel)]="sector.sectorAddress" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.sector.status" for="field_status">Status</label>
+                    <input type="number" class="form-control" name="status" id="field_status"
+                        [(ngModel)]="sector.status" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.sector.zonal" for="field_zonal">Zonal</label>
+                    <select class="form-control" id="field_zonal" name="zonal" [(ngModel)]="sector.zonalId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="zonalOption.id" *ngFor="let zonalOption of zonals; trackBy: trackZonalById">{{zonalOption.zoneName}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.sector.financialYearSector" for="field_financialYearSector">Financial Year Sector</label>
+                    <select class="form-control" id="field_financialYearSector" name="financialYearSector" [(ngModel)]="sector.financialYearSectorId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="financialYearSettingsOption.id" *ngFor="let financialYearSettingsOption of financialyearsettings; trackBy: trackFinancialYearSettingsById">{{financialYearSettingsOption.batchName}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

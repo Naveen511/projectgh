@@ -1,0 +1,252 @@
+<div class="animated fadeIn">
+    <div id="collapseBasic" [collapse]="isCollapsed" class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-align-justify"></i> Zonal Mapped Details
+                    <button type="button" class="btn btn-sm btn-danger float-right" 
+                        (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="isCollapsed" 
+                        aria-controls="collapseBasic">
+                            <fa-icon [icon]="'times'"></fa-icon> close
+                    </button>
+                </div>
+                <div class="card-body table-responsive">
+                    <table class="table font12">
+                        <thead>
+                            <tr>
+                                <th>S No.</th>
+                                <th>Head Office</th>
+                                <th>Zonal Name</th>
+                                <th>From Date</th>
+                                <th>To Date</th>
+                                <th>Description</th>
+                                <th>Created At</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let val of mapZoneWithOhs; let i = index">
+                                <td>{{i+1}}</td>
+                                <td>{{val.operationalHeadName}}</td>
+                                <td>{{val.zonalZoneName}}</td>
+                                <td>{{val.fromDate | date: 'dd/MM/yyyy'}}</td>
+                                <td>{{val.toDate | date: 'dd/MM/yyyy'}}</td>
+                                <td>{{val.description}}</td>
+                                <td>{{val.createdAt | date: 'dd/MM/yyyy'}}</td>
+                                <td>
+                                    <span *ngIf="val.status == 1" class="badge badge-success">Active</span>
+                                    <span *ngIf="val.status == 2" class="badge badge-danger">InActive</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Display the Zone List-->
+    <div class="row"> <!-- justify-content-center -->
+        <div class="col-sm-12">
+            <!-- Display the success Message alert-->
+            <div>
+                <ngb-alert *ngIf="successMessage" type="success" 
+                    (close)="successMessage = null">{{ successMessage }}</ngb-alert>
+                
+                <ngb-alert *ngIf="errorMessage" type="danger"
+                    (close)="errorMessage = null">{{ errorMessage }}</ngb-alert>
+            </div>
+            <!-- End of the success alert-->
+            <div class="card">
+                <div class="card-header">
+                  <i class="fa fa-align-justify"></i> Zone List
+                  <button type="button" class="btn btn-sm btn-brand btn-success float-right" 
+                  data-toggle="modal" (click)="createZone()"
+                  ngbTooltip="Add zone">
+                    <fa-icon [icon]="'plus'"></fa-icon> Add</button>
+                </div>
+                <div class="card-body table-responsive">
+                    <table class="table font12">
+                        <thead>
+                            <!-- [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)" -->
+                            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+                                <th>S No.</th>
+                                <th jhiSortBy="financialYearBatchName">Financial Year <fa-icon [icon]="'sort'"></fa-icon></th>
+                                <th jhiSortBy="operationalHeadName">Head Office <fa-icon [icon]="'sort'"></fa-icon></th>
+                                <th jhiSortBy="zoneName">Name <fa-icon [icon]="'sort'"></fa-icon></th>
+                                <th jhiSortBy="zoneAddress">Address <fa-icon [icon]="'sort'"></fa-icon></th>
+                                <th jhiSortBy="createdAt">Created At <fa-icon [icon]="'sort'"></fa-icon></th>
+                                <th jhiSortBy="updatedAt">Updated At <fa-icon [icon]="'sort'"></fa-icon></th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let value of zonals; let i = index; trackBy: trackId">
+                                <td>{{i+1}}</td>
+                                <td>{{value.financialYearBatchName}}</td>
+                                <td>{{value.operationalHeadName}}</td>
+                                <td>{{value.zoneName}}</td>
+                                <td>{{value.zoneAddress}}</td>
+                                <td>{{value.createdAt | date:'medium'}}</td>
+                                <td>{{value.updatedAt | date:'medium'}}</td>
+                                <td class="text-center">
+                                    <!-- <button type="button" class="btn btn-sm btn-ghost-info" 
+                                        data-toggle="modal" (click)="getZoneValue(value)"
+                                        ngbTooltip="Edit zone" placement="bottom">
+                                            <fa-icon [icon]="'pencil-alt'"></fa-icon> Edit
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-ghost-danger" 
+                                        (click)="deleteZonal(value)"
+                                        ngbTooltip="Delete zone" placement="bottom">
+                                        <fa-icon [icon]="'times'"></fa-icon> Delete
+                                    </button> -->
+                                    <a class="text-info" data-toggle="modal" ngbTooltip="Mapped Details " placement="left" 
+                                        (click)="getMapList(value.id)" [attr.aria-expanded]="isCollapsed" aria-controls="collapseBasic">
+                                        <fa-icon [icon]="'eye'"></fa-icon>
+                                    </a>
+                                    <!-- <a class="text-info" data-toggle="modal" ngbTooltip="Audit Details " placement="left" 
+                                        (click)="getAuditHistory(value.id)" [attr.aria-expanded]="isCollapsed" aria-controls="collapseBasic">
+                                        <fa-icon [icon]="'eye'"></fa-icon>
+                                    </a> -->
+                                    <a class="text-success ml-2" data-toggle="modal" ngbTooltip="Move to another head office " placement="left" 
+                                        (click)="getZoneValue(value, 1)"><fa-icon [icon]="'fast-forward'"></fa-icon>
+                                    </a>
+                                    <a class="text-primary ml-2" data-toggle="modal" ngbTooltip="Edit " placement="left" 
+                                        (click)="getZoneValue(value, 2)"><fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                    </a>
+                                    <a class="text-danger ml-2" ngbTooltip="Delete" placement="top" 
+                                        (click)="softDelete(value)"><fa-icon [icon]="'times'"></fa-icon>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div *ngIf="zonals && zonals.length" class="card-footer">
+                    <!-- <div class="row justify-content-center">
+                        <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+                    </div> -->
+                    <div class="row justify-content-center">
+                        <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End of the Zone List displaying-->
+
+<!-- Create and updte the zone, Based on the Zone Id, we can able to update -->
+<div bsModal #zoneModal="bs-modal" class="modal fade" tabindex="-1" 
+    role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-primary" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">{{title}}</h6>
+                <!-- <span class="text-danger"><b>{{errorMessage}}</b></span> -->
+                <button type="button" class="close" 
+                    (click)="closeZoneModel()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body font13">
+                <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                    <input [(ngModel)]="zonalObject.id" type="hidden" id="id" name="id" class="form-control">
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <span class="text-danger" *ngIf="errorMessage"
+                                (close)="errorMessage = null">{{ errorMessage }}</span>
+                        </div>
+                    </div>
+                    <div *ngIf="!zonalObject.id" class="form-group row">
+                        <label class="col-md-3 col-form-label" for="select1">Head Office *</label>
+                        <div class="col-md-9">
+                            <select [(ngModel)]="zonalObject.operationalHeadId" id="operationalHeadId" 
+                                name="operationalHeadId" class="form-control">
+                                <option value="0" disabled selected>Select Head Office</option>
+                                <option *ngFor="let operationalHead of operationalHeads" 
+                                    value={{operationalHead.id}}>{{operationalHead.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="text-input">Zone Name *</label>
+                        <div class="col-md-9">
+                            <input [(ngModel)]="zonalObject.zoneName" 
+                                type="text" id="zoneName" name="zoneName" 
+                                class="form-control" placeholder="Name">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="textarea-input">Address</label>
+                        <div class="col-md-9">
+                            <textarea [(ngModel)]="zonalObject.zoneAddress" 
+                                id="zoneAddress" name="zoneAddress" 
+                            rows="3" class="form-control" placeholder="Address.."></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" 
+                    (click)="closeZoneModel()">Close</button>
+                <button type="button" class="btn btn-primary" 
+                    (click)="save()">Save</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--End of the Create/Update zone-->
+
+<!-- Move the zone, Based on the head office Id -->
+<div bsModal #moveZone="bs-modal" class="modal fade" tabindex="-1" 
+    role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-primary" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">{{title}}</h6>
+                <!-- <span class="text-danger"><b>{{errorMessage}}</b></span> -->
+                <button type="button" class="close" 
+                    (click)="closeMovementModel()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body font13">
+                <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                    <input [(ngModel)]="zonalObject.id" type="hidden" id="id" name="id" class="form-control">
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <span class="text-danger" *ngIf="errorMessage"
+                                (close)="errorMessage = null">{{ errorMessage }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="select1">Head Office *</label>
+                        <div class="col-md-9">
+                            <select [(ngModel)]="zonalObject.operationalHeadId" id="operationalHeadId" 
+                                name="operationalHeadId" class="form-control">
+                                <option value="0" disabled selected>Select Head Office</option>
+                                <option *ngFor="let operationalHead of operationalHeads" 
+                                    value={{operationalHead.id}}>{{operationalHead.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="textarea-input">Description</label>
+                        <div class="col-md-9">
+                            <textarea [(ngModel)]="mapZoneWithOh.description" 
+                                id="description" name="description" 
+                            rows="3" class="form-control" placeholder="Description.."></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" 
+                    (click)="closeMovementModel()">Close</button>
+                <button type="button" class="btn btn-primary" 
+                    (click)="save()">Save</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--End of the zone movement-->

@@ -1,0 +1,35 @@
+
+{
+    "projectghApp": {
+        "nursery" : {
+            "home": {
+                "title": "Nurseries",
+                "createLabel": "Create a new Nursery",
+                "createOrEditLabel": "Create or edit a Nursery"
+            },
+            "created": "A new Nursery is created with identifier {{ param }}",
+            "updated": "A Nursery is updated with identifier {{ param }}",
+            "deleted": "A Nursery is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Nursery {{ id }}?"
+            },
+            "detail": {
+                "title": "Nursery"
+            },
+            "nurseryName": "Nursery Name",
+            "nurseryAddress": "Nursery Address",
+            "status": "Status",
+            "code": "Code",
+            "batchs": "Batchs",
+            "nurseryStocks": "Nursery Stocks",
+            "sector": "Sector",
+            "nurseryType": "Nursery Type",
+            "motherBeds": "Mother Beds",
+            "nurseryInventorys": "Nursery Inventorys",
+            "nurseryStockDetails": "Nursery Stock Details",
+            "financialYearNursery": "Financial Year Nursery",
+            "incharge": "Incharge",
+            "mapNurseryWithSector": "Map Nursery With Sector"
+        }
+    }
+}

@@ -1,0 +1,215 @@
+entity Zonal {
+    Id Long,
+    ZoneName String required,
+    ZoneAddress String,
+    ZoneIncharge String,
+    Status Integer,
+    CreatedBy Long,
+    ModifiedBy Long,
+    CreatedAt Instant,
+    UpdatedAt Instant
+}
+
+entity Sector {
+    Id Long,
+    SectorName String required,
+    SectorAddress String,
+    SectorIncharge String,
+    Status Integer,
+    CreatedBy Long,
+    ModifiedBy Long,
+    CreatedAt Instant,
+    UpdatedAt Instant
+}
+
+entity Nursery {
+	Id Long,
+    NurseryName String required,
+    NurseryAddress String,
+    NurseryIncharge String,
+    Status Integer,
+    CreatedBy Long,
+    ModifiedBy Long,
+    CreatedAt Instant,
+    UpdatedAt Instant
+}
+
+entity PickList {
+    Id Long,
+    PickListName String required,
+    Status Integer,
+    CreatedBy Long,
+    ModifiedBy Long,
+    CreatedAt Instant,
+    UpdatedAt Instant
+}
+
+entity PickListValue {
+	Id Long,
+    PickListValue String required,
+    Status Integer,
+    CreatedBy Long,
+    ModifiedBy Long,
+    CreatedAt Instant,
+    UpdatedAt Instant
+}
+
+entity Batch {
+	Id Long,
+    BatchNo String required,
+    BatchName String required,
+    Quantity Long required,
+    MotherBed String,
+    ShowingType Integer required,
+    SowingDate LocalDate required,
+    ClosedDate LocalDate,
+    Round Integer,
+    Remarks String,
+	Status Integer,
+    CreatedBy Long,
+    ModifiedBy Long,
+    CreatedAt Instant,
+    UpdatedAt Instant
+}
+
+entity Damage {
+	Id Long,
+    NoOfQuantity Long required,
+    Description String,
+    Date LocalDate required,
+	Status Integer,
+    CreatedBy Long,
+    ModifiedBy Long,
+    CreatedAt Instant,
+    UpdatedAt Instant
+}
+
+entity ShadeArea {
+	Id Long,
+    NoOfSeedlings Long required,
+    Date LocalDate required,
+	Status Integer,
+    CreatedBy Long,
+    ModifiedBy Long,
+    CreatedAt Instant,
+    UpdatedAt Instant
+}
+
+entity NurseryStock {
+	Id Long,
+    CurrentQuantity Long,
+    AddedQuantity Long,
+    ConsumedQuantity Long,
+    Description String,
+    Status Integer,
+    CreatedBy Long,
+    ModifiedBy Long,
+    CreatedAt Instant,
+    UpdatedAt Instant
+}
+
+entity NurseryStockDetails {
+	Id Long,
+    Date LocalDate required,
+    Quantity Long required,
+    Description String,
+    Status Integer,
+    CreatedBy Long,
+    ModifiedBy Long,
+    CreatedAt Instant,
+    UpdatedAt Instant
+}
+
+entity Godown {
+    Id Long,
+    Name String required,
+    Address String,
+    Incharge String,
+    Status Integer,
+    CreatedBy Long,
+    ModifiedBy Long,
+    CreatedAt Instant,
+    UpdatedAt Instant
+}
+
+entity GodownPurchaseDetails {
+	Id Long,
+	Quantity Long required,
+    Date LocalDate required,
+    Price Long,
+    OwnedBy String,
+    VendorName String,
+    VendorAddress String,
+    VendorPhone Long,
+    Description String,
+    Status Integer,
+    CreatedBy Long,
+    ModifiedBy Long,
+    CreatedAt Instant,
+    UpdatedAt Instant
+}
+
+entity GodownStock {
+	Id Long,
+    CurrentQuantity Long,
+    AddedQuantity Long,
+    ConsumedQuantity Long,
+    Description String,
+    Status Integer,
+    CreatedBy Long,
+    ModifiedBy Long,
+    CreatedAt Instant,
+    UpdatedAt Instant
+}
+
+entity GodownStockDetails {
+	Id Long,
+    Date LocalDate required,
+    Quantity Long required,
+    Description String,
+    Status Integer,
+    CreatedBy Long,
+    ModifiedBy Long,
+    CreatedAt Instant,
+    UpdatedAt Instant
+}
+
+relationship ManyToOne {
+  Sector{zonal(ZoneName)} to Zonal{sectors(SectorsList)}
+}
+
+relationship OneToMany {
+   Sector{nurserys} to Nursery{sector(SectorName)},
+   Nursery{batchs} to Batch{nursery(NurseryName)},
+   Nursery{nurseryStocks} to NurseryStock{nursery(NurseryName)},
+   PickList{pickListValues} to PickListValue{pickList(PickListName)},
+   PickListValue{selfIds} to PickListValue{pickValue(pickListValue)},
+   PickListValue{varietys} to Batch{pickListVariety(PickListValue)},
+   PickListValue{categorys} to Batch{pickListCategory(PickListValue)},
+   PickListValue{nurseryStockVarietys} to NurseryStock{pickListVariety(PickListValue)},
+   PickListValue{nurseryStockCategorys} to NurseryStock{pickListCategory(PickListValue)},
+   PickListValue{godownPurchaseVarietys} to GodownPurchaseDetails{pickListVariety(PickListValue)},
+   PickListValue{godownPurchaseCategorys} to GodownPurchaseDetails{pickListCategory(PickListValue)},
+   PickListValue{godownPurchaseQuantityType} to GodownPurchaseDetails{pickListQuantityType(PickListValue)}
+   PickListValue{godownStockVarietys} to GodownStock{pickListVariety(PickListValue)},
+   PickListValue{godownStockCategorys} to GodownStock{pickListCategory(PickListValue)},
+   PickListValue{godownStockQuantityTypes} to GodownStock{pickListQuantityType(PickListValue)},
+   Batch{damages} to Damage{batch(BatchName)},
+   Batch{shadeAreas} to ShadeArea{batch(BatchName)},
+   Batch{nurseryStockDetails} to NurseryStockDetails{batch(BatchName)},
+   NurseryStock{nurseryStockDetails} to NurseryStockDetails{nurseryStock},
+   Godown{godownPurchaseDetails} to GodownPurchaseDetails{godown(Name)},
+   Godown{godownStocks} to GodownStock{godown(Name)}
+   GodownStock{godownStockDetails} to GodownStockDetails{godownStock}
+}
+
+paginate Zonal, Sector, Nursery, PickList, PickListValue, Batch, Damage, ShadeArea, NurseryStock, NurseryStockDetails, Godown, GodownPurchaseDetails, GodownStock, GodownStock with pagination
+dto * with mapstruct
+service all with serviceImpl
+
+
+
+
+
+
+

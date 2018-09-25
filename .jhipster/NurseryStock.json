@@ -1,0 +1,76 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "nurseryStockDetails",
+            "otherEntityName": "nurseryStockDetails",
+            "otherEntityRelationshipName": "nurseryStock"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "nursery",
+            "otherEntityName": "nursery",
+            "otherEntityField": "nurseryName"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "pickListVariety",
+            "otherEntityName": "pickListValue",
+            "otherEntityField": "pickListValue"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "pickListCategory",
+            "otherEntityName": "pickListValue",
+            "otherEntityField": "pickListValue"
+        },
+        {
+            "relationshipName": "financialYearNurseryStock",
+            "otherEntityName": "financialYearSettings",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "batchName"
+        },
+        {
+            "relationshipName": "pointOfSaleDetails",
+            "otherEntityName": "pointOfSaleDetails",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "nurseryStock"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "currentQuantity",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "addedQuantity",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "consumedQuantity",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "posQuantity",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20180818124915",
+    "dto": "mapstruct",
+    "searchEngine": false,
+    "service": "serviceImpl",
+    "entityTableName": "nursery_stock",
+    "jpaMetamodelFiltering": true,
+    "pagination": "pagination",
+    "enableEntityAudit": true
+}

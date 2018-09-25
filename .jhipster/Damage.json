@@ -1,0 +1,58 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "batch",
+            "otherEntityName": "batch",
+            "otherEntityField": "batchName"
+        },
+        {
+            "relationshipName": "description",
+            "otherEntityName": "pickListValue",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "pickListValue"
+        },
+        {
+            "relationshipName": "damageArea",
+            "otherEntityName": "pickListValue",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "pickListValue"
+        },
+        {
+            "relationshipName": "financialYearDamage",
+            "otherEntityName": "financialYearSettings",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "batchName"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "noOfQuantity",
+            "fieldType": "Long",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "date",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20180818124913",
+    "dto": "mapstruct",
+    "searchEngine": false,
+    "service": "serviceImpl",
+    "entityTableName": "damage",
+    "jpaMetamodelFiltering": true,
+    "pagination": "pagination",
+    "enableEntityAudit": true
+}

@@ -1,0 +1,38 @@
+
+{
+    "projectghApp": {
+        "financialYearSettings" : {
+            "home": {
+                "title": "Financial Year Settings",
+                "createLabel": "Create a new Financial Year Settings",
+                "createOrEditLabel": "Create or edit a Financial Year Settings"
+            },
+            "created": "A new Financial Year Settings is created with identifier {{ param }}",
+            "updated": "A Financial Year Settings is updated with identifier {{ param }}",
+            "deleted": "A Financial Year Settings is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Financial Year Settings {{ id }}?"
+            },
+            "detail": {
+                "title": "Financial Year Settings"
+            },
+            "batchName": "Batch Name",
+            "startDate": "Start Date",
+            "endDate": "End Date",
+            "status": "Status",
+            "financialYear": "Financial Year",
+            "zonal": "Zonal",
+            "sector": "Sector",
+            "nursery": "Nursery",
+            "batch": "Batch",
+            "damage": "Damage",
+            "shadeArea": "Shade Area",
+            "nurseryStock": "Nursery Stock",
+            "nurseryStockDetails": "Nursery Stock Details",
+            "godown": "Godown",
+            "godownStock": "Godown Stock",
+            "godownStockDetails": "Godown Stock Details",
+            "godownPurchaseDetails": "Godown Purchase Details"
+        }
+    }
+}

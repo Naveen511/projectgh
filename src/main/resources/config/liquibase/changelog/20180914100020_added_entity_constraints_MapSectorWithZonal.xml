@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity MapSectorWithZonal.
+    -->
+    <changeSet id="20180914100020-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="zonal_id"
+                                 baseTableName="map_sector_with_zonal"
+                                 constraintName="fk_map_sector_with_zonal_zonal_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="zonal"/>
+
+        <addForeignKeyConstraint baseColumnNames="sector_id"
+                                 baseTableName="map_sector_with_zonal"
+                                 constraintName="fk_map_sector_with_zonal_sector_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="sector"/>
+
+    </changeSet>
+</databaseChangeLog>

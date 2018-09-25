@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity MapZonalWithOh.
+    -->
+    <changeSet id="20180914064544-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="zonal_id"
+                                 baseTableName="map_zonal_with_oh"
+                                 constraintName="fk_map_zonal_with_oh_zonal_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="zonal"/>
+
+        <addForeignKeyConstraint baseColumnNames="operational_head_id"
+                                 baseTableName="map_zonal_with_oh"
+                                 constraintName="fk_map_zonal_with_oh_operational_head_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="operational_head"/>
+
+    </changeSet>
+</databaseChangeLog>

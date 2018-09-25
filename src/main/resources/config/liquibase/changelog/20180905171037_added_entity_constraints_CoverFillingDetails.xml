@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity CoverFillingDetails.
+    -->
+    <changeSet id="20180905171037-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="cover_filling_id"
+                                 baseTableName="cover_filling_details"
+                                 constraintName="fk_cover_filling_details_cover_filling_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="cover_filling"/>
+
+        <addForeignKeyConstraint baseColumnNames="damage_type_id"
+                                 baseTableName="cover_filling_details"
+                                 constraintName="fk_cover_filling_details_damage_type_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="pick_list_value"/>
+
+        <addForeignKeyConstraint baseColumnNames="cover_filling_damage_description_id"
+                                 baseTableName="cover_filling_details"
+                                 constraintName="fk_cover_filling_details_cover_filling_damage_description_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="pick_list_value"/>
+
+    </changeSet>
+</databaseChangeLog>

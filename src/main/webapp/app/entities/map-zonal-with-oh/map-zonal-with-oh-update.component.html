@@ -1,0 +1,68 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-map-zonal-with-oh-heading" jhiTranslate="projectghApp.mapZonalWithOh.home.createOrEditLabel">Create or edit a Map Zonal With Oh</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!mapZonalWithOh.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="mapZonalWithOh.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.mapZonalWithOh.fromDate" for="field_fromDate">From Date</label>
+                    <div class="input-group">
+                        <input id="field_fromDate" type="text" class="form-control" name="fromDate" ngbDatepicker  #fromDateDp="ngbDatepicker" [(ngModel)]="mapZonalWithOh.fromDate"
+                        />
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="fromDateDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.mapZonalWithOh.toDate" for="field_toDate">To Date</label>
+                    <div class="input-group">
+                        <input id="field_toDate" type="text" class="form-control" name="toDate" ngbDatepicker  #toDateDp="ngbDatepicker" [(ngModel)]="mapZonalWithOh.toDate"
+                        />
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="toDateDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.mapZonalWithOh.description" for="field_description">Description</label>
+                    <input type="text" class="form-control" name="description" id="field_description"
+                        [(ngModel)]="mapZonalWithOh.description" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.mapZonalWithOh.status" for="field_status">Status</label>
+                    <input type="number" class="form-control" name="status" id="field_status"
+                        [(ngModel)]="mapZonalWithOh.status" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.mapZonalWithOh.zonal" for="field_zonal">Zonal</label>
+                    <select class="form-control" id="field_zonal" name="zonal" [(ngModel)]="mapZonalWithOh.zonalId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="zonalOption.id" *ngFor="let zonalOption of zonals; trackBy: trackZonalById">{{zonalOption.zoneName}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.mapZonalWithOh.operationalHead" for="field_operationalHead">Operational Head</label>
+                    <select class="form-control" id="field_operationalHead" name="operationalHead" [(ngModel)]="mapZonalWithOh.operationalHeadId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="operationalHeadOption.id" *ngFor="let operationalHeadOption of operationalheads; trackBy: trackOperationalHeadById">{{operationalHeadOption.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

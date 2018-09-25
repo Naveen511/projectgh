@@ -1,0 +1,55 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="shadeArea">
+            <h2><span jhiTranslate="projectghApp.shadeArea.detail.title">Shade Area</span> {{shadeArea.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="projectghApp.shadeArea.noOfSeedlings">No Of Seedlings</span></dt>
+                <dd>
+                    <span>{{shadeArea.noOfSeedlings}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.shadeArea.date">Date</span></dt>
+                <dd>
+                    <span>{{shadeArea.date}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.shadeArea.status">Status</span></dt>
+                <dd>
+                    <span>{{shadeArea.status}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.shadeArea.damage">Damage</span></dt>
+                <dd>
+                    <span>{{shadeArea.damage}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.shadeArea.saplings">Saplings</span></dt>
+                <dd>
+                    <span>{{shadeArea.saplings}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.shadeArea.batch">Batch</span></dt>
+                <dd>
+                    <div *ngIf="shadeArea.batchId">
+                        <a [routerLink]="['/batch', shadeArea.batchId, 'view']">{{shadeArea.batchBatchName}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.shadeArea.financialYearShadeArea">Financial Year Shade Area</span></dt>
+                <dd>
+                    <div *ngIf="shadeArea.financialYearShadeAreaId">
+                        <a [routerLink]="['/financial-year-settings', shadeArea.financialYearShadeAreaId, 'view']">{{shadeArea.financialYearShadeAreaBatchName}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/shade-area', shadeArea.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,90 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="projectghApp.damage.home.title">Damages</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-damage" [routerLink]="['/damage/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span  jhiTranslate="projectghApp.damage.home.createLabel">
+            Create new Damage
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="damages">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="noOfQuantity"><span jhiTranslate="projectghApp.damage.noOfQuantity">No Of Quantity</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="date"><span jhiTranslate="projectghApp.damage.date">Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="status"><span jhiTranslate="projectghApp.damage.status">Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="batchBatchName"><span jhiTranslate="projectghApp.damage.batch">Batch</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="descriptionPickListValue"><span jhiTranslate="projectghApp.damage.description">Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="damageAreaPickListValue"><span jhiTranslate="projectghApp.damage.damageArea">Damage Area</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="financialYearDamageBatchName"><span jhiTranslate="projectghApp.damage.financialYearDamage">Financial Year Damage</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let damage of damages ;trackBy: trackId">
+                <td><a [routerLink]="['/damage', damage.id, 'view' ]">{{damage.id}}</a></td>
+                <td>{{damage.noOfQuantity}}</td>
+                <td>{{damage.date | date:'mediumDate'}}</td>
+                <td>{{damage.status}}</td>
+                <td>
+                    <div *ngIf="damage.batchId">
+                        <a [routerLink]="['../batch', damage.batchId , 'view' ]" >{{damage.batchBatchName}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="damage.descriptionId">
+                        <a [routerLink]="['../pick-list-value', damage.descriptionId , 'view' ]" >{{damage.descriptionPickListValue}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="damage.damageAreaId">
+                        <a [routerLink]="['../pick-list-value', damage.damageAreaId , 'view' ]" >{{damage.damageAreaPickListValue}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="damage.financialYearDamageId">
+                        <a [routerLink]="['../financial-year-settings', damage.financialYearDamageId , 'view' ]" >{{damage.financialYearDamageBatchName}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/damage', damage.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/damage', damage.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'damage/'+ damage.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="damages && damages.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

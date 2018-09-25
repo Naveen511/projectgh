@@ -1,0 +1,88 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "pickListVariety",
+            "otherEntityName": "pickListValue",
+            "otherEntityField": "pickListValue"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "pickListCategory",
+            "otherEntityName": "pickListValue",
+            "otherEntityField": "pickListValue"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "pickListQuantityType",
+            "otherEntityName": "pickListValue",
+            "otherEntityField": "pickListValue"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "godown",
+            "otherEntityName": "godown",
+            "otherEntityField": "name"
+        },
+        {
+            "relationshipName": "financialYearGodownPurchase",
+            "otherEntityName": "financialYearSettings",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "batchName"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "quantity",
+            "fieldType": "Long",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "date",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "price",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "ownedBy",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "vendorName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "vendorAddress",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "vendorPhone",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20180818124918",
+    "dto": "mapstruct",
+    "searchEngine": false,
+    "service": "serviceImpl",
+    "entityTableName": "godown_purchase_details",
+    "jpaMetamodelFiltering": true,
+    "pagination": "pagination",
+    "enableEntityAudit": true
+}

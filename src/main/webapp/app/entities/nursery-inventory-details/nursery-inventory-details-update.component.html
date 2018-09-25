@@ -1,0 +1,76 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-nursery-inventory-details-heading" jhiTranslate="projectghApp.nurseryInventoryDetails.home.createOrEditLabel">Create or edit a Nursery Inventory Details</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!nurseryInventoryDetails.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="nurseryInventoryDetails.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.nurseryInventoryDetails.date" for="field_date">Date</label>
+                    <div class="input-group">
+                        <input id="field_date" type="text" class="form-control" name="date" ngbDatepicker  #dateDp="ngbDatepicker" [(ngModel)]="nurseryInventoryDetails.date"
+                        />
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="dateDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.nurseryInventoryDetails.quantity" for="field_quantity">Quantity</label>
+                    <input type="number" class="form-control" name="quantity" id="field_quantity"
+                        [(ngModel)]="nurseryInventoryDetails.quantity" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.nurseryInventoryDetails.status" for="field_status">Status</label>
+                    <input type="number" class="form-control" name="status" id="field_status"
+                        [(ngModel)]="nurseryInventoryDetails.status" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.nurseryInventoryDetails.description" for="field_description">Description</label>
+                    <input type="text" class="form-control" name="description" id="field_description"
+                        [(ngModel)]="nurseryInventoryDetails.description" maxlength="255"/>
+                    <div [hidden]="!(editForm.controls.description?.dirty && editForm.controls.description?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.description?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 255 }">
+                        This field cannot be longer than 255 characters.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.nurseryInventoryDetails.nurseryInventory" for="field_nurseryInventory">Nursery Inventory</label>
+                    <select class="form-control" id="field_nurseryInventory" name="nurseryInventory" [(ngModel)]="nurseryInventoryDetails.nurseryInventoryId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="nurseryInventoryOption.id" *ngFor="let nurseryInventoryOption of nurseryinventories; trackBy: trackNurseryInventoryById">{{nurseryInventoryOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.nurseryInventoryDetails.damageType" for="field_damageType">Damage Type</label>
+                    <select class="form-control" id="field_damageType" name="damageType" [(ngModel)]="nurseryInventoryDetails.damageTypeId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="pickListValueOption.id" *ngFor="let pickListValueOption of picklistvalues; trackBy: trackPickListValueById">{{pickListValueOption.pickListValue}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.nurseryInventoryDetails.inventoryDamageDescription" for="field_inventoryDamageDescription">Inventory Damage Description</label>
+                    <select class="form-control" id="field_inventoryDamageDescription" name="inventoryDamageDescription" [(ngModel)]="nurseryInventoryDetails.inventoryDamageDescriptionId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="pickListValueOption.id" *ngFor="let pickListValueOption of picklistvalues; trackBy: trackPickListValueById">{{pickListValueOption.pickListValue}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

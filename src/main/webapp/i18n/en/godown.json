@@ -1,0 +1,28 @@
+
+{
+    "projectghApp": {
+        "godown" : {
+            "home": {
+                "title": "Godowns",
+                "createLabel": "Create a new Godown",
+                "createOrEditLabel": "Create or edit a Godown"
+            },
+            "created": "A new Godown is created with identifier {{ param }}",
+            "updated": "A Godown is updated with identifier {{ param }}",
+            "deleted": "A Godown is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Godown {{ id }}?"
+            },
+            "detail": {
+                "title": "Godown"
+            },
+            "name": "Name",
+            "address": "Address",
+            "incharge": "Incharge",
+            "status": "Status",
+            "godownPurchaseDetails": "Godown Purchase Details",
+            "godownStocks": "Godown Stocks",
+            "financialYearGodown": "Financial Year Godown"
+        }
+    }
+}

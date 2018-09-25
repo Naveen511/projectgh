@@ -1,0 +1,84 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-map-sector-with-zonal-heading" jhiTranslate="projectghApp.mapSectorWithZonal.home.createOrEditLabel">Create or edit a Map Sector With Zonal</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!mapSectorWithZonal.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="mapSectorWithZonal.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.mapSectorWithZonal.fromDate" for="field_fromDate">From Date</label>
+                    <div class="input-group">
+                        <input id="field_fromDate" type="text" class="form-control" name="fromDate" ngbDatepicker  #fromDateDp="ngbDatepicker" [(ngModel)]="mapSectorWithZonal.fromDate"
+                        required/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="fromDateDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                    <div [hidden]="!(editForm.controls.fromDate?.dirty && editForm.controls.fromDate?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.fromDate?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.mapSectorWithZonal.toDate" for="field_toDate">To Date</label>
+                    <div class="input-group">
+                        <input id="field_toDate" type="text" class="form-control" name="toDate" ngbDatepicker  #toDateDp="ngbDatepicker" [(ngModel)]="mapSectorWithZonal.toDate"
+                        />
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="toDateDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.mapSectorWithZonal.description" for="field_description">Description</label>
+                    <input type="text" class="form-control" name="description" id="field_description"
+                        [(ngModel)]="mapSectorWithZonal.description" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.mapSectorWithZonal.status" for="field_status">Status</label>
+                    <input type="number" class="form-control" name="status" id="field_status"
+                        [(ngModel)]="mapSectorWithZonal.status" max="10" jhiMax="10"/>
+                    <div [hidden]="!(editForm.controls.status?.dirty && editForm.controls.status?.invalid)">
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.status?.errors?.max" jhiTranslate="entity.validation.max" translateValues="{ max: 10 }">
+                            This field cannot be more than 10.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.status?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.mapSectorWithZonal.zonal" for="field_zonal">Zonal</label>
+                    <select class="form-control" id="field_zonal" name="zonal" [(ngModel)]="mapSectorWithZonal.zonalId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="zonalOption.id" *ngFor="let zonalOption of zonals; trackBy: trackZonalById">{{zonalOption.zoneName}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.mapSectorWithZonal.sector" for="field_sector">Sector</label>
+                    <select class="form-control" id="field_sector" name="sector" [(ngModel)]="mapSectorWithZonal.sectorId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="sectorOption.id" *ngFor="let sectorOption of sectors; trackBy: trackSectorById">{{sectorOption.sectorName}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

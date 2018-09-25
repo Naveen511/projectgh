@@ -1,0 +1,26 @@
+
+{
+    "projectghApp": {
+        "operationalHead" : {
+            "home": {
+                "title": "Operational Heads",
+                "createLabel": "Create a new Operational Head",
+                "createOrEditLabel": "Create or edit a Operational Head"
+            },
+            "created": "A new Operational Head is created with identifier {{ param }}",
+            "updated": "A Operational Head is updated with identifier {{ param }}",
+            "deleted": "A Operational Head is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Operational Head {{ id }}?"
+            },
+            "detail": {
+                "title": "Operational Head"
+            },
+            "name": "Name",
+            "description": "Description",
+            "status": "Status",
+            "zonal": "Zonal",
+            "mapZonalWithOh": "Map Zonal With Oh"
+        }
+    }
+}

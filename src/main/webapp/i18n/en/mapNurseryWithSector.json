@@ -1,0 +1,27 @@
+
+{
+    "projectghApp": {
+        "mapNurseryWithSector" : {
+            "home": {
+                "title": "Map Nursery With Sectors",
+                "createLabel": "Create a new Map Nursery With Sector",
+                "createOrEditLabel": "Create or edit a Map Nursery With Sector"
+            },
+            "created": "A new Map Nursery With Sector is created with identifier {{ param }}",
+            "updated": "A Map Nursery With Sector is updated with identifier {{ param }}",
+            "deleted": "A Map Nursery With Sector is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Map Nursery With Sector {{ id }}?"
+            },
+            "detail": {
+                "title": "Map Nursery With Sector"
+            },
+            "fromDate": "From Date",
+            "toDate": "To Date",
+            "description": "Description",
+            "status": "Status",
+            "nursery": "Nursery",
+            "sector": "Sector"
+        }
+    }
+}

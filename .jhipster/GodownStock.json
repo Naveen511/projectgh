@@ -1,0 +1,72 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "godownStockDetails",
+            "otherEntityName": "godownStockDetails",
+            "otherEntityRelationshipName": "godownStock"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "pickListVariety",
+            "otherEntityName": "pickListValue",
+            "otherEntityField": "pickListValue"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "pickListCategory",
+            "otherEntityName": "pickListValue",
+            "otherEntityField": "pickListValue"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "pickListQuantityType",
+            "otherEntityName": "pickListValue",
+            "otherEntityField": "pickListValue"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "godown",
+            "otherEntityName": "godown",
+            "otherEntityField": "name"
+        },
+        {
+            "relationshipName": "financialYearGodownStock",
+            "otherEntityName": "financialYearSettings",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "batchName"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "currentQuantity",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "addedQuantity",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "consumedQuantity",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20180818124919",
+    "dto": "mapstruct",
+    "searchEngine": false,
+    "service": "serviceImpl",
+    "entityTableName": "godown_stock",
+    "jpaMetamodelFiltering": true,
+    "pagination": "pagination",
+    "enableEntityAudit": true
+}

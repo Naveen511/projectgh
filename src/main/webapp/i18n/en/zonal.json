@@ -1,0 +1,30 @@
+
+{
+    "projectghApp": {
+        "zonal" : {
+            "home": {
+                "title": "Zonals",
+                "createLabel": "Create a new Zonal",
+                "createOrEditLabel": "Create or edit a Zonal"
+            },
+            "created": "A new Zonal is created with identifier {{ param }}",
+            "updated": "A Zonal is updated with identifier {{ param }}",
+            "deleted": "A Zonal is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Zonal {{ id }}?"
+            },
+            "detail": {
+                "title": "Zonal"
+            },
+            "zoneName": "Zone Name",
+            "zoneAddress": "Zone Address",
+            "status": "Status",
+            "sectors": "Sectors",
+            "financialYear": "Financial Year",
+            "operationalHead": "Operational Head",
+            "mapZonalWithOh": "Map Zonal With Oh",
+            "zonalIncharge": "Zonal Incharge",
+            "mapSectorWithZonal": "Map Sector With Zonal"
+        }
+    }
+}

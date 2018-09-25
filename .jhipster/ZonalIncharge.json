@@ -1,0 +1,38 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipName": "zonal",
+            "otherEntityName": "zonal",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "zoneName"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "fromDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "toDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20180914072940",
+    "dto": "mapstruct",
+    "searchEngine": false,
+    "service": "serviceImpl",
+    "entityTableName": "zonal_incharge",
+    "jpaMetamodelFiltering": true,
+    "pagination": "pagination",
+    "enableEntityAudit": true
+}

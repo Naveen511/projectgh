@@ -1,0 +1,67 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "nurserys",
+            "otherEntityName": "nursery",
+            "otherEntityRelationshipName": "sector"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "zonal",
+            "otherEntityName": "zonal",
+            "otherEntityField": "zoneName"
+        },
+        {
+            "relationshipName": "financialYearSector",
+            "otherEntityName": "financialYearSettings",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "batchName"
+        },
+        {
+            "relationshipName": "incharge",
+            "otherEntityName": "sectorIncharge",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "sector"
+        },
+        {
+            "relationshipName": "mapSectorWithZonal",
+            "otherEntityName": "mapSectorWithZonal",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "sector"
+        },
+        {
+            "relationshipName": "mapNurseryWithSector",
+            "otherEntityName": "mapNurseryWithSector",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "sector"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "sectorName",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "sectorAddress",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20180818124908",
+    "dto": "mapstruct",
+    "searchEngine": false,
+    "service": "serviceImpl",
+    "entityTableName": "sector",
+    "jpaMetamodelFiltering": true,
+    "pagination": "pagination",
+    "enableEntityAudit": true
+}

@@ -1,0 +1,100 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="projectghApp.godownStock.home.title">Godown Stocks</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-godown-stock" [routerLink]="['/godown-stock/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span  jhiTranslate="projectghApp.godownStock.home.createLabel">
+            Create new Godown Stock
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="godownStocks">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="currentQuantity"><span jhiTranslate="projectghApp.godownStock.currentQuantity">Current Quantity</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="addedQuantity"><span jhiTranslate="projectghApp.godownStock.addedQuantity">Added Quantity</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="consumedQuantity"><span jhiTranslate="projectghApp.godownStock.consumedQuantity">Consumed Quantity</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="description"><span jhiTranslate="projectghApp.godownStock.description">Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="status"><span jhiTranslate="projectghApp.godownStock.status">Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="pickListVarietyPickListValue"><span jhiTranslate="projectghApp.godownStock.pickListVariety">Pick List Variety</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="pickListCategoryPickListValue"><span jhiTranslate="projectghApp.godownStock.pickListCategory">Pick List Category</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="pickListQuantityTypePickListValue"><span jhiTranslate="projectghApp.godownStock.pickListQuantityType">Pick List Quantity Type</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="godownName"><span jhiTranslate="projectghApp.godownStock.godown">Godown</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="financialYearGodownStockBatchName"><span jhiTranslate="projectghApp.godownStock.financialYearGodownStock">Financial Year Godown Stock</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let godownStock of godownStocks ;trackBy: trackId">
+                <td><a [routerLink]="['/godown-stock', godownStock.id, 'view' ]">{{godownStock.id}}</a></td>
+                <td>{{godownStock.currentQuantity}}</td>
+                <td>{{godownStock.addedQuantity}}</td>
+                <td>{{godownStock.consumedQuantity}}</td>
+                <td>{{godownStock.description}}</td>
+                <td>{{godownStock.status}}</td>
+                <td>
+                    <div *ngIf="godownStock.pickListVarietyId">
+                        <a [routerLink]="['../pick-list-value', godownStock.pickListVarietyId , 'view' ]" >{{godownStock.pickListVarietyPickListValue}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="godownStock.pickListCategoryId">
+                        <a [routerLink]="['../pick-list-value', godownStock.pickListCategoryId , 'view' ]" >{{godownStock.pickListCategoryPickListValue}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="godownStock.pickListQuantityTypeId">
+                        <a [routerLink]="['../pick-list-value', godownStock.pickListQuantityTypeId , 'view' ]" >{{godownStock.pickListQuantityTypePickListValue}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="godownStock.godownId">
+                        <a [routerLink]="['../godown', godownStock.godownId , 'view' ]" >{{godownStock.godownName}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="godownStock.financialYearGodownStockId">
+                        <a [routerLink]="['../financial-year-settings', godownStock.financialYearGodownStockId , 'view' ]" >{{godownStock.financialYearGodownStockBatchName}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/godown-stock', godownStock.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/godown-stock', godownStock.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'godown-stock/'+ godownStock.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="godownStocks && godownStocks.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

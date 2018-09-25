@@ -1,0 +1,23 @@
+
+{
+    "projectghApp": {
+        "commonSettings" : {
+            "home": {
+                "title": "Common Settings",
+                "createLabel": "Create a new Common Settings",
+                "createOrEditLabel": "Create or edit a Common Settings"
+            },
+            "created": "A new Common Settings is created with identifier {{ param }}",
+            "updated": "A Common Settings is updated with identifier {{ param }}",
+            "deleted": "A Common Settings is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Common Settings {{ id }}?"
+            },
+            "detail": {
+                "title": "Common Settings"
+            },
+            "daysToCloseBatch": "Days To Close Batch",
+            "status": "Status"
+        }
+    }
+}

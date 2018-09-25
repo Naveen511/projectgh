@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity Nursery.
+    -->
+    <changeSet id="20180818124909-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="sector_id"
+                                 baseTableName="nursery"
+                                 constraintName="fk_nursery_sector_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="sector"/>
+
+        <addForeignKeyConstraint baseColumnNames="nursery_type_id"
+                                 baseTableName="nursery"
+                                 constraintName="fk_nursery_nursery_type_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="pick_list_value"/>
+
+        <addForeignKeyConstraint baseColumnNames="financial_year_nursery_id"
+                                 baseTableName="nursery"
+                                 constraintName="fk_nursery_financial_year_nursery_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="financial_year_settings"/>
+
+    </changeSet>
+</databaseChangeLog>

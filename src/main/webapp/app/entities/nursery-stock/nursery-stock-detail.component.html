@@ -1,0 +1,71 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="nurseryStock">
+            <h2><span jhiTranslate="projectghApp.nurseryStock.detail.title">Nursery Stock</span> {{nurseryStock.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="projectghApp.nurseryStock.currentQuantity">Current Quantity</span></dt>
+                <dd>
+                    <span>{{nurseryStock.currentQuantity}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.nurseryStock.addedQuantity">Added Quantity</span></dt>
+                <dd>
+                    <span>{{nurseryStock.addedQuantity}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.nurseryStock.consumedQuantity">Consumed Quantity</span></dt>
+                <dd>
+                    <span>{{nurseryStock.consumedQuantity}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.nurseryStock.description">Description</span></dt>
+                <dd>
+                    <span>{{nurseryStock.description}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.nurseryStock.status">Status</span></dt>
+                <dd>
+                    <span>{{nurseryStock.status}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.nurseryStock.posQuantity">Pos Quantity</span></dt>
+                <dd>
+                    <span>{{nurseryStock.posQuantity}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.nurseryStock.nursery">Nursery</span></dt>
+                <dd>
+                    <div *ngIf="nurseryStock.nurseryId">
+                        <a [routerLink]="['/nursery', nurseryStock.nurseryId, 'view']">{{nurseryStock.nurseryNurseryName}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.nurseryStock.pickListVariety">Pick List Variety</span></dt>
+                <dd>
+                    <div *ngIf="nurseryStock.pickListVarietyId">
+                        <a [routerLink]="['/pick-list-value', nurseryStock.pickListVarietyId, 'view']">{{nurseryStock.pickListVarietyPickListValue}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.nurseryStock.pickListCategory">Pick List Category</span></dt>
+                <dd>
+                    <div *ngIf="nurseryStock.pickListCategoryId">
+                        <a [routerLink]="['/pick-list-value', nurseryStock.pickListCategoryId, 'view']">{{nurseryStock.pickListCategoryPickListValue}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.nurseryStock.financialYearNurseryStock">Financial Year Nursery Stock</span></dt>
+                <dd>
+                    <div *ngIf="nurseryStock.financialYearNurseryStockId">
+                        <a [routerLink]="['/financial-year-settings', nurseryStock.financialYearNurseryStockId, 'view']">{{nurseryStock.financialYearNurseryStockBatchName}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/nursery-stock', nurseryStock.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

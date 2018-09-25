@@ -1,0 +1,51 @@
+
+{
+    "projectghApp": {
+        "pickListValue" : {
+            "home": {
+                "title": "Pick List Values",
+                "createLabel": "Create a new Pick List Value",
+                "createOrEditLabel": "Create or edit a Pick List Value"
+            },
+            "created": "A new Pick List Value is created with identifier {{ param }}",
+            "updated": "A Pick List Value is updated with identifier {{ param }}",
+            "deleted": "A Pick List Value is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Pick List Value {{ id }}?"
+            },
+            "detail": {
+                "title": "Pick List Value"
+            },
+            "pickListValue": "Pick List Value",
+            "status": "Status",
+            "selfIds": "Self Ids",
+            "varietys": "Varietys",
+            "categorys": "Categorys",
+            "nurseryStockVarietys": "Nursery Stock Varietys",
+            "nurseryStockCategorys": "Nursery Stock Categorys",
+            "godownPurchaseVarietys": "Godown Purchase Varietys",
+            "godownPurchaseCategorys": "Godown Purchase Categorys",
+            "godownPurchaseQuantityType": "Godown Purchase Quantity Type",
+            "godownStockVarietys": "Godown Stock Varietys",
+            "godownStockCategorys": "Godown Stock Categorys",
+            "godownStockQuantityTypes": "Godown Stock Quantity Types",
+            "pickList": "Pick List",
+            "pickValue": "Pick Value",
+            "nurserys": "Nurserys",
+            "batchQuantityTypes": "Batch Quantity Types",
+            "nurseryInventoryVarietys": "Nursery Inventory Varietys",
+            "nurseryInventoryCategorys": "Nursery Inventory Categorys",
+            "nurseryInventoryQuantityTypes": "Nursery Inventory Quantity Types",
+            "nurseryInventoryDamageTypes": "Nursery Inventory Damage Types",
+            "pickListValueDamageArea": "Pick List Value Damage Area",
+            "nurseryStockDamageArea": "Nursery Stock Damage Area",
+            "financialYearName": "Financial Year Name",
+            "damageDescription": "Damage Description",
+            "pointOfSaleVarietys": "Point Of Sale Varietys",
+            "pointOfSaleCategorys": "Point Of Sale Categorys",
+            "coverFillingDetails": "Cover Filling Details",
+            "nurseryInventoryDamageDesc": "Nursery Inventory Damage Desc",
+            "coverFillingDamageDesc": "Cover Filling Damage Desc"
+        }
+    }
+}

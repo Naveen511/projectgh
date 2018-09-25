@@ -1,0 +1,247 @@
+<div class="animated fadeIn">
+        <div id="collapseBasic" [collapse]="isCollapsedInventoryDetails" class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fa fa-align-justify"></i> {{inventoryTitle}}
+                            <button type="button" class="btn btn-sm btn-danger float-right" 
+                                (click)="isCollapsedInventoryDetails = !isCollapsedInventoryDetails" 
+                                [attr.aria-expanded]="isCollapsedInventoryDetails" 
+                                aria-controls="collapseBasic">close
+                            </button>
+                        </div>
+                        <div class="card-body table-responsive">
+                            <table class="table table-bordered font12">
+                                <thead>
+                                    <tr>
+                                        <th>S No.</th>
+                                        <th>Quantity</th>
+                                        <th>Date</th>
+                                        <th>Description</th>
+                                        <!-- <th>Damage Type</th>
+                                        <th>Created At</th>-->
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let val of inventoryDetails; let i = index">
+                                        <td>{{i+1}}</td>
+                                        <td>{{val.quantity}}</td>
+                                        <td>{{val.date | date: 'dd/MM/yyyy'}}</td>
+                                        <td><span *ngIf="val.status == 3 && val.damageTypePickListValue != '' && val.damageTypePickListValue != null">
+                                        <b>Damage Type : </b>{{val.damageTypePickListValue}}<br>
+                                    </span>
+                                    <span *ngIf="val.status == 3 && val.inventoryDamageDescriptionPickListValue != '' && val.inventoryDamageDescriptionPickListValue != null">
+                                        <b>Damage Description : </b>{{val.inventoryDamageDescriptionPickListValue}}<br>
+                                    </span>
+                                    <span *ngIf="val.status == 3 && val.coverFillingDamageDescriptionPickListValue != '' && val.coverFillingDamageDescriptionPickListValue != null">
+                                        <b>Damage Description : </b>{{val.coverFillingDamageDescriptionPickListValue}}<br>
+                                    </span>
+                                </td>
+                                        <!-- <td>{{val.damageTypePickListValue}}</td>
+                                        <td>{{val.createdAt | date: 'dd/MM/yyyy'}}</td> -->
+                                        <td>
+                                            <span *ngIf="val.status == 1" class="text-success">Added</span>
+                                            <span *ngIf="val.status == 2" class="text-primary">Consumed</span>
+                                            <span *ngIf="val.status == 3" class="text-danger">Damage</span>
+                                        </td>
+                                    </tr>
+				    <tr *ngIf= "inventoryDetails == null || inventoryDetails ==''">
+				         <td colspan="6">No records found</td>
+				    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <div class="row font12">
+        <div class="col-lg-12">
+          <tabset>
+            <tab>
+                <ng-template tabHeading><i class="fa fa-align-justify">
+                    </i> Damage to seeds</ng-template>
+                <table class="table-responsive table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Batch Name</th>                  
+                        <th>Date</th>
+                        <th>Quantity</th>
+                        <th>Damage Area</th>
+                        <th>Reason</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let seed of damageSeeds">
+                            <td>{{seed.batchBatchName}}</td>
+                            <td>{{seed.date | date: 'dd/MM/yyyy'}}</td>
+                            <td>{{seed.noOfQuantity}}</td>
+                            <td>{{seed.damageAreaPickListValue}}</td>
+                            <td>{{seed.descriptionPickListValue}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </tab>
+            <tab>
+                <ng-template tabHeading><i class="icon-basket-loaded" 
+                    (click)="getSeedlingDamageList()"> Damage to seedling</i></ng-template>
+                <table class="table-responsive table table-bordered table-striped font12">
+                    <thead>
+                        <tr>
+                            <th>Batch Name</th>                  
+                            <th>Date</th>
+                            <th>Quantity</th>
+                            <th>Damage Area</th>
+                            <th>Reason</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let seedling of damageSeedlings">
+                            <td>{{seedling.batchBatchName}}</td>
+                            <td>{{seedling.date | date: 'dd/MM/yyyy'}}</td>
+                            <td>{{seedling.noOfQuantity}}</td>
+                            <td>{{seedling.damageAreaPickListValue}}</td>
+                            <td>{{seedling.descriptionPickListValue}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </tab>
+            <tab>
+                <ng-template tabHeading><i class="fa fa-arrow-down" 
+                    (click)="getSaplingDamageList()"> Damage to saplings</i></ng-template>
+                <table class="table-responsive table table-bordered table-striped table-sm">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Quantity</th>
+                            <th>Damage Area</th>
+                            <th>Reason</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let saplings of damageSaplings">
+                            <td>{{saplings.date | date: 'dd/MM/yyyy'}}</td>
+                            <td>{{saplings.quantity}}</td>
+                            <td>{{saplings.saplingDamageAreaPickListValue}}</td>
+                            <td>{{saplings.description}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </tab>
+            <tab>
+                <ng-template tabHeading><i class="icon-basket-loaded" 
+                    (click)="getCoverInventoryList()"> Inventory Cover Damage</i></ng-template>
+                <div>
+                    <ngb-alert *ngIf="successMessage" type="success" 
+                        (close)="successMessage = null">{{ successMessage }}</ngb-alert>
+                </div>
+                <!-- <ng-template tabHeading><i class="fa fa-align-justify"></i> Cover List</ng-template> -->
+                <table class="table-responsive table table-bordered table-striped table font12">
+                    <thead>
+                        <tr>
+                            <th>S No.</th>
+                            <th>Nursery Name</th>
+                            <!-- <th>Variety</th>
+                            <th>Category</th> -->
+                            <th>Quantity Type</th>
+                            <th>Current Quantity</th>
+                            <th>Added Quantity</th>
+                            <th>Consumed Quantity</th>
+                            <th>Damaged Quantity</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let value of coverInventorys; let i = index">
+                            <td>{{i+1}}</td>
+                            <td>{{value.nurserysNurseryName}}</td>
+                            <!-- <td>{{value.pickListVarietyPickListValue}}</td>
+                            <td>{{value.pickListCategoryPickListValue}}</td> -->
+                            <td>{{value.quantityTypePickListValue}}</td>
+                            <td>{{value.currentQuantity}}</td>
+                            <td>{{value.addedQuantity}}</td>
+                            <td>
+                                <span *ngIf="value.consumedQuantity == '' || value.consumedQuantity == null">0</span>
+                                <span *ngIf="value.consumedQuantity != '' || value.consumedQuantity != null">{{value.consumedQuantity}}</span>
+                            </td>
+                            <td>
+                                <span *ngIf="value.damageQuantity == '' || value.damageQuantity == null">0</span>
+                                <span *ngIf="value.damageQuantity != '' || value.damageQuantity != null">{{value.damageQuantity}}</span>
+                            </td>
+                            <td class="text-left">
+                                <a class="text-primary" ngbTooltip="View Covers" placement="top"
+                                    (click)="getInventoryDetails(value.id, 102)" 
+                                    [attr.aria-expanded]="isCollapsedInventoryDetails" 
+                                    aria-controls="collapseBasic">
+                                    <fa-icon [icon]="'eye'"></fa-icon>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </tab>
+            <tab>
+                <ng-template tabHeading><i class="icon-basket-loaded" 
+                    (click)="getSeedsInventoryList()"> Inventory Seeds Damage</i></ng-template>
+                <div>
+                    <table class="table-responsive table table-bordered table-striped table font12">
+                        <thead>
+                            <tr>
+                                <th>S No.</th>
+                                <th>Nursery Name</th>
+                                <th>Variety</th>
+                                <th>Category</th>
+                                <th>Quantity Type</th>
+                                <th>Current Quantity</th>
+                                <th style="width:10%">Added Quantity</th>
+                                <th>Consumed Quantity</th>
+                                <th>Damaged Quantity</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let value of nurseryInventorys; let i = index">
+                                <td>{{i+1}}</td>
+                                <td>{{value.nurserysNurseryName}}</td>
+                                <td>{{value.pickListVarietyPickListValue}}</td>
+                                <td>{{value.pickListCategoryPickListValue}}</td>
+                                <td>{{value.quantityTypePickListValue}}</td>
+                                <td>{{value.currentQuantity}}</td>
+                                <td>{{value.addedQuantity}}</td>
+                                <td>
+                                    <span *ngIf="value.consumedQuantity == '' || value.consumedQuantity == null">0</span>
+                                    <span *ngIf="value.consumedQuantity != '' || value.consumedQuantity != null">{{value.consumedQuantity}}</span>
+                                </td>
+                                <td>
+                                    <span *ngIf="value.damageQuantity == '' || value.damageQuantity == null">0</span>
+                                    <span *ngIf="value.damageQuantity != '' || value.damageQuantity != null">{{value.damageQuantity}}</span>
+                                </td>
+                                <td class="text-left">
+                                    <a class="text-primary" ngbTooltip="View Seeds" placement="top"
+                                    (click)="getInventoryDetails(value.id, 101)" 
+                                    [attr.aria-expanded]="isCollapsedInventoryDetails" 
+                                    aria-controls="collapseBasic">
+                                        <fa-icon [icon]="'eye'"></fa-icon>
+                                    </a>
+                                    <!-- <a class="text-success sm-2" data-toggle="modal" placement="bottom"
+                                        (click)="addMoreInventory(value)" 
+                                        ngbTooltip="Add"><fa-icon [icon]="'plus-square'"></fa-icon>
+                                    </a>
+                                    <a class="text-warning sm-2" data-toggle="modal" 
+                                        ngbTooltip="Consume" placement="top"
+                                        (click)="consumeInventory(value)"><fa-icon [icon]="'minus-square'"></fa-icon>
+                                    </a>
+                                    <a class="text-danger sm-2" data-toggle="modal" 
+                                        ngbTooltip="Add Damage" placement="bottom"
+                                        (click)="damageInventory(value)"><fa-icon [icon]="'ban'"></fa-icon>
+                                    </a> -->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </tab>
+            </tabset>
+        </div>
+      </div>
+    </div>
+</div>

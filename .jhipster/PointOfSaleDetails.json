@@ -1,0 +1,75 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipName": "pickListVariety",
+            "otherEntityName": "pickListValue",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "pickListValue"
+        },
+        {
+            "relationshipName": "pickListCategory",
+            "otherEntityName": "pickListValue",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "pickListValue"
+        },
+        {
+            "relationshipName": "nurseryStock",
+            "otherEntityName": "nurseryStock",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "quantity",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "purposeOfTaking",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "donorName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "donorAddress",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "contactNo",
+            "fieldType": "String",
+            "fieldValidateRules": []
+        },
+        {
+            "fieldName": "discount",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "discountAmount",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "collectedAmount",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "date",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20180904045553",
+    "dto": "mapstruct",
+    "searchEngine": false,
+    "service": "serviceImpl",
+    "entityTableName": "point_of_sale_details",
+    "jpaMetamodelFiltering": true,
+    "pagination": "pagination",
+    "enableEntityAudit": true
+}

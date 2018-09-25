@@ -1,0 +1,67 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "sectors",
+            "otherEntityName": "sector",
+            "otherEntityRelationshipName": "zonal"
+        },
+        {
+            "relationshipName": "financialYear",
+            "otherEntityName": "financialYearSettings",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "batchName"
+        },
+        {
+            "relationshipName": "operationalHead",
+            "otherEntityName": "operationalHead",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "name"
+        },
+        {
+            "relationshipName": "mapZonalWithOh",
+            "otherEntityName": "mapZonalWithOh",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "zonal"
+        },
+        {
+            "relationshipName": "zonalIncharge",
+            "otherEntityName": "zonalIncharge",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "zonal"
+        },
+        {
+            "relationshipName": "mapSectorWithZonal",
+            "otherEntityName": "mapSectorWithZonal",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "zonal"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "zoneName",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "zoneAddress",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20180818124906",
+    "dto": "mapstruct",
+    "searchEngine": false,
+    "service": "serviceImpl",
+    "entityTableName": "zonal",
+    "jpaMetamodelFiltering": true,
+    "pagination": "pagination",
+    "enableEntityAudit": true
+}

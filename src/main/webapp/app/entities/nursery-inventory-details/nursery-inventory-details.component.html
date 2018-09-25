@@ -1,0 +1,85 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="projectghApp.nurseryInventoryDetails.home.title">Nursery Inventory Details</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-nursery-inventory-details" [routerLink]="['/nursery-inventory-details/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span  jhiTranslate="projectghApp.nurseryInventoryDetails.home.createLabel">
+            Create new Nursery Inventory Details
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="nurseryInventoryDetails">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="date"><span jhiTranslate="projectghApp.nurseryInventoryDetails.date">Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="quantity"><span jhiTranslate="projectghApp.nurseryInventoryDetails.quantity">Quantity</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="status"><span jhiTranslate="projectghApp.nurseryInventoryDetails.status">Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="description"><span jhiTranslate="projectghApp.nurseryInventoryDetails.description">Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="nurseryInventoryId"><span jhiTranslate="projectghApp.nurseryInventoryDetails.nurseryInventory">Nursery Inventory</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="damageTypePickListValue"><span jhiTranslate="projectghApp.nurseryInventoryDetails.damageType">Damage Type</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let nurseryInventoryDetails of nurseryInventoryDetails ;trackBy: trackId">
+                <td><a [routerLink]="['/nursery-inventory-details', nurseryInventoryDetails.id, 'view' ]">{{nurseryInventoryDetails.id}}</a></td>
+                <td>{{nurseryInventoryDetails.date | date:'mediumDate'}}</td>
+                <td>{{nurseryInventoryDetails.quantity}}</td>
+                <td>{{nurseryInventoryDetails.status}}</td>
+                <td>{{nurseryInventoryDetails.description}}</td>
+                <td>
+                    <div *ngIf="nurseryInventoryDetails.nurseryInventoryId">
+                        <a [routerLink]="['../nursery-inventory', nurseryInventoryDetails.nurseryInventoryId , 'view' ]" >{{nurseryInventoryDetails.nurseryInventoryId}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="nurseryInventoryDetails.damageTypeId">
+                        <a [routerLink]="['../pick-list-value', nurseryInventoryDetails.damageTypeId , 'view' ]" >{{nurseryInventoryDetails.damageTypePickListValue}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="nurseryInventoryDetails.inventoryDamageDescriptionId">
+                        <a [routerLink]="['../pick-list-value', nurseryInventoryDetails.inventoryDamageDescriptionId , 'view' ]" >{{nurseryInventoryDetails.inventoryDamageDescriptionPickListValue}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/nursery-inventory-details', nurseryInventoryDetails.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/nursery-inventory-details', nurseryInventoryDetails.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'nursery-inventory-details/'+ nurseryInventoryDetails.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="nurseryInventoryDetails && nurseryInventoryDetails.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

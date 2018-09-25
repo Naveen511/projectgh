@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity Zonal.
+    -->
+    <changeSet id="20180818124906-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="financial_year_id"
+                                 baseTableName="zonal"
+                                 constraintName="fk_zonal_financial_year_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="financial_year_settings"/>
+
+        <addForeignKeyConstraint baseColumnNames="operational_head_id"
+                                 baseTableName="zonal"
+                                 constraintName="fk_zonal_operational_head_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="operational_head"/>
+
+    </changeSet>
+</databaseChangeLog>

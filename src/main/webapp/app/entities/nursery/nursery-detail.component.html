@@ -1,0 +1,57 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="nursery">
+            <h2><span jhiTranslate="projectghApp.nursery.detail.title">Nursery</span> {{nursery.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="projectghApp.nursery.nurseryName">Nursery Name</span></dt>
+                <dd>
+                    <span>{{nursery.nurseryName}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.nursery.nurseryAddress">Nursery Address</span></dt>
+                <dd>
+                    <span>{{nursery.nurseryAddress}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.nursery.status">Status</span></dt>
+                <dd>
+                    <span>{{nursery.status}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.nursery.code">Code</span></dt>
+                <dd>
+                    <span>{{nursery.code}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.nursery.sector">Sector</span></dt>
+                <dd>
+                    <div *ngIf="nursery.sectorId">
+                        <a [routerLink]="['/sector', nursery.sectorId, 'view']">{{nursery.sectorSectorName}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.nursery.nurseryType">Nursery Type</span></dt>
+                <dd>
+                    <div *ngIf="nursery.nurseryTypeId">
+                        <a [routerLink]="['/pick-list-value', nursery.nurseryTypeId, 'view']">{{nursery.nurseryTypePickListValue}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.nursery.financialYearNursery">Financial Year Nursery</span></dt>
+                <dd>
+                    <div *ngIf="nursery.financialYearNurseryId">
+                        <a [routerLink]="['/financial-year-settings', nursery.financialYearNurseryId, 'view']">{{nursery.financialYearNurseryBatchName}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/nursery', nursery.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity GodownStockDetails.
+    -->
+    <changeSet id="20180818124920-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="godown_stock_id"
+                                 baseTableName="godown_stock_details"
+                                 constraintName="fk_godown_stock_details_godown_stock_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="godown_stock"/>
+
+        <addForeignKeyConstraint baseColumnNames="financial_year_godown_stock_details_id"
+                                 baseTableName="godown_stock_details"
+                                 constraintName="fk_godown_stock_details_financial_year_godown_stock_details_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="financial_year_settings"/>
+
+    </changeSet>
+</databaseChangeLog>

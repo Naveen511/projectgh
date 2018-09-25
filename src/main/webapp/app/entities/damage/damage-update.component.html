@@ -1,0 +1,88 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-damage-heading" jhiTranslate="projectghApp.damage.home.createOrEditLabel">Create or edit a Damage</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!damage.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="damage.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.damage.noOfQuantity" for="field_noOfQuantity">No Of Quantity</label>
+                    <input type="number" class="form-control" name="noOfQuantity" id="field_noOfQuantity"
+                        [(ngModel)]="damage.noOfQuantity" required/>
+                    <div [hidden]="!(editForm.controls.noOfQuantity?.dirty && editForm.controls.noOfQuantity?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.noOfQuantity?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.noOfQuantity?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.damage.date" for="field_date">Date</label>
+                    <div class="input-group">
+                        <input id="field_date" type="text" class="form-control" name="date" ngbDatepicker  #dateDp="ngbDatepicker" [(ngModel)]="damage.date"
+                        required/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="dateDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                    <div [hidden]="!(editForm.controls.date?.dirty && editForm.controls.date?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.date?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.damage.status" for="field_status">Status</label>
+                    <input type="number" class="form-control" name="status" id="field_status"
+                        [(ngModel)]="damage.status" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.damage.batch" for="field_batch">Batch</label>
+                    <select class="form-control" id="field_batch" name="batch" [(ngModel)]="damage.batchId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="batchOption.id" *ngFor="let batchOption of batches; trackBy: trackBatchById">{{batchOption.batchName}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.damage.description" for="field_description">Description</label>
+                    <select class="form-control" id="field_description" name="description" [(ngModel)]="damage.descriptionId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="pickListValueOption.id" *ngFor="let pickListValueOption of picklistvalues; trackBy: trackPickListValueById">{{pickListValueOption.pickListValue}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.damage.damageArea" for="field_damageArea">Damage Area</label>
+                    <select class="form-control" id="field_damageArea" name="damageArea" [(ngModel)]="damage.damageAreaId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="pickListValueOption.id" *ngFor="let pickListValueOption of picklistvalues; trackBy: trackPickListValueById">{{pickListValueOption.pickListValue}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.damage.financialYearDamage" for="field_financialYearDamage">Financial Year Damage</label>
+                    <select class="form-control" id="field_financialYearDamage" name="financialYearDamage" [(ngModel)]="damage.financialYearDamageId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="financialYearSettingsOption.id" *ngFor="let financialYearSettingsOption of financialyearsettings; trackBy: trackFinancialYearSettingsById">{{financialYearSettingsOption.batchName}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

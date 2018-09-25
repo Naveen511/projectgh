@@ -1,0 +1,86 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="projectghApp.coverFillingDetails.home.title">Cover Filling Details</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-cover-filling-details" [routerLink]="['/cover-filling-details/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span  jhiTranslate="projectghApp.coverFillingDetails.home.createLabel">
+            Create new Cover Filling Details
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="coverFillingDetails">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="quantity"><span jhiTranslate="projectghApp.coverFillingDetails.quantity">Quantity</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="date"><span jhiTranslate="projectghApp.coverFillingDetails.date">Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="status"><span jhiTranslate="projectghApp.coverFillingDetails.status">Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="description"><span jhiTranslate="projectghApp.coverFillingDetails.description">Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="coverFillingId"><span jhiTranslate="projectghApp.coverFillingDetails.coverFilling">Cover Filling</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="damageTypePickListValue"><span jhiTranslate="projectghApp.coverFillingDetails.damageType">Damage Type</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="coverFillingDamageDescriptionPickListValue"><span jhiTranslate="projectghApp.coverFillingDetails.coverFillingDamageDescription">Cover Filling Damage Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let coverFillingDetails of coverFillingDetails ;trackBy: trackId">
+                <td><a [routerLink]="['/cover-filling-details', coverFillingDetails.id, 'view' ]">{{coverFillingDetails.id}}</a></td>
+                <td>{{coverFillingDetails.quantity}}</td>
+                <td>{{coverFillingDetails.date | date:'mediumDate'}}</td>
+                <td>{{coverFillingDetails.status}}</td>
+                <td>{{coverFillingDetails.description}}</td>
+                <td>
+                    <div *ngIf="coverFillingDetails.coverFillingId">
+                        <a [routerLink]="['../cover-filling', coverFillingDetails.coverFillingId , 'view' ]" >{{coverFillingDetails.coverFillingId}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="coverFillingDetails.damageTypeId">
+                        <a [routerLink]="['../pick-list-value', coverFillingDetails.damageTypeId , 'view' ]" >{{coverFillingDetails.damageTypePickListValue}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="coverFillingDetails.coverFillingDamageDescriptionId">
+                        <a [routerLink]="['../pick-list-value', coverFillingDetails.coverFillingDamageDescriptionId , 'view' ]" >{{coverFillingDetails.coverFillingDamageDescriptionPickListValue}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/cover-filling-details', coverFillingDetails.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/cover-filling-details', coverFillingDetails.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'cover-filling-details/'+ coverFillingDetails.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="coverFillingDetails && coverFillingDetails.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

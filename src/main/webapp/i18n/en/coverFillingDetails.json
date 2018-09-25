@@ -1,0 +1,28 @@
+
+{
+    "projectghApp": {
+        "coverFillingDetails" : {
+            "home": {
+                "title": "Cover Filling Details",
+                "createLabel": "Create a new Cover Filling Details",
+                "createOrEditLabel": "Create or edit a Cover Filling Details"
+            },
+            "created": "A new Cover Filling Details is created with identifier {{ param }}",
+            "updated": "A Cover Filling Details is updated with identifier {{ param }}",
+            "deleted": "A Cover Filling Details is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Cover Filling Details {{ id }}?"
+            },
+            "detail": {
+                "title": "Cover Filling Details"
+            },
+            "quantity": "Quantity",
+            "date": "Date",
+            "status": "Status",
+            "description": "Description",
+            "coverFilling": "Cover Filling",
+            "damageType": "Damage Type",
+            "coverFillingDamageDescription": "Cover Filling Damage Description"
+        }
+    }
+}

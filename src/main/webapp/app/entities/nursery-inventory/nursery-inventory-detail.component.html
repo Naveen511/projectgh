@@ -1,0 +1,71 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="nurseryInventory">
+            <h2><span jhiTranslate="projectghApp.nurseryInventory.detail.title">Nursery Inventory</span> {{nurseryInventory.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="projectghApp.nurseryInventory.currentQuantity">Current Quantity</span></dt>
+                <dd>
+                    <span>{{nurseryInventory.currentQuantity}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.nurseryInventory.addedQuantity">Added Quantity</span></dt>
+                <dd>
+                    <span>{{nurseryInventory.addedQuantity}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.nurseryInventory.consumedQuantity">Consumed Quantity</span></dt>
+                <dd>
+                    <span>{{nurseryInventory.consumedQuantity}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.nurseryInventory.description">Description</span></dt>
+                <dd>
+                    <span>{{nurseryInventory.description}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.nurseryInventory.status">Status</span></dt>
+                <dd>
+                    <span>{{nurseryInventory.status}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.nurseryInventory.damageQuantity">Damage Quantity</span></dt>
+                <dd>
+                    <span>{{nurseryInventory.damageQuantity}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.nurseryInventory.nurserys">Nurserys</span></dt>
+                <dd>
+                    <div *ngIf="nurseryInventory.nurserysId">
+                        <a [routerLink]="['/nursery', nurseryInventory.nurserysId, 'view']">{{nurseryInventory.nurserysNurseryName}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.nurseryInventory.pickListVariety">Pick List Variety</span></dt>
+                <dd>
+                    <div *ngIf="nurseryInventory.pickListVarietyId">
+                        <a [routerLink]="['/pick-list-value', nurseryInventory.pickListVarietyId, 'view']">{{nurseryInventory.pickListVarietyPickListValue}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.nurseryInventory.pickListCategory">Pick List Category</span></dt>
+                <dd>
+                    <div *ngIf="nurseryInventory.pickListCategoryId">
+                        <a [routerLink]="['/pick-list-value', nurseryInventory.pickListCategoryId, 'view']">{{nurseryInventory.pickListCategoryPickListValue}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.nurseryInventory.quantityType">Quantity Type</span></dt>
+                <dd>
+                    <div *ngIf="nurseryInventory.quantityTypeId">
+                        <a [routerLink]="['/pick-list-value', nurseryInventory.quantityTypeId, 'view']">{{nurseryInventory.quantityTypePickListValue}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/nursery-inventory', nurseryInventory.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,114 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipName": "financialYear",
+            "otherEntityName": "pickListValue",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [],
+            "otherEntityField": "pickListValue"
+        },
+        {
+            "relationshipName": "zonal",
+            "otherEntityName": "zonal",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "financialYear"
+        },
+        {
+            "relationshipName": "sector",
+            "otherEntityName": "sector",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "financialYearSector"
+        },
+        {
+            "relationshipName": "nursery",
+            "otherEntityName": "nursery",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "financialYearNursery"
+        },
+        {
+            "relationshipName": "batch",
+            "otherEntityName": "batch",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "financialYearBatch"
+        },
+        {
+            "relationshipName": "damage",
+            "otherEntityName": "damage",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "financialYearDamage"
+        },
+        {
+            "relationshipName": "shadeArea",
+            "otherEntityName": "shadeArea",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "financialYearShadeArea"
+        },
+        {
+            "relationshipName": "nurseryStock",
+            "otherEntityName": "nurseryStock",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "financialYearNurseryStock"
+        },
+        {
+            "relationshipName": "nurseryStockDetails",
+            "otherEntityName": "nurseryStockDetails",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "financialYearStockDetails"
+        },
+        {
+            "relationshipName": "godown",
+            "otherEntityName": "godown",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "financialYearGodown"
+        },
+        {
+            "relationshipName": "godownStock",
+            "otherEntityName": "godownStock",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "financialYearGodownStock"
+        },
+        {
+            "relationshipName": "godownStockDetails",
+            "otherEntityName": "godownStockDetails",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "financialYearGodownStockDetails"
+        },
+        {
+            "relationshipName": "godownPurchaseDetails",
+            "otherEntityName": "godownPurchaseDetails",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "financialYearGodownPurchase"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "batchName",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "startDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "endDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20180830101317",
+    "dto": "mapstruct",
+    "searchEngine": false,
+    "service": "serviceImpl",
+    "entityTableName": "financial_year_settings",
+    "jpaMetamodelFiltering": true,
+    "pagination": "pagination",
+    "enableEntityAudit": true
+}

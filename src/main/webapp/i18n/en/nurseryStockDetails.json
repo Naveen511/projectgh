@@ -1,0 +1,30 @@
+
+{
+    "projectghApp": {
+        "nurseryStockDetails" : {
+            "home": {
+                "title": "Nursery Stock Details",
+                "createLabel": "Create a new Nursery Stock Details",
+                "createOrEditLabel": "Create or edit a Nursery Stock Details"
+            },
+            "created": "A new Nursery Stock Details is created with identifier {{ param }}",
+            "updated": "A Nursery Stock Details is updated with identifier {{ param }}",
+            "deleted": "A Nursery Stock Details is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Nursery Stock Details {{ id }}?"
+            },
+            "detail": {
+                "title": "Nursery Stock Details"
+            },
+            "date": "Date",
+            "quantity": "Quantity",
+            "description": "Description",
+            "status": "Status",
+            "batch": "Batch",
+            "nurseryStock": "Nursery Stock",
+            "itNursery": "It Nursery",
+            "saplingDamageArea": "Sapling Damage Area",
+            "financialYearStockDetails": "Financial Year Stock Details"
+        }
+    }
+}

@@ -1,0 +1,71 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-nursery-heading" jhiTranslate="projectghApp.nursery.home.createOrEditLabel">Create or edit a Nursery</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!nursery.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="nursery.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.nursery.nurseryName" for="field_nurseryName">Nursery Name</label>
+                    <input type="text" class="form-control" name="nurseryName" id="field_nurseryName"
+                        [(ngModel)]="nursery.nurseryName" required/>
+                    <div [hidden]="!(editForm.controls.nurseryName?.dirty && editForm.controls.nurseryName?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.nurseryName?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.nursery.nurseryAddress" for="field_nurseryAddress">Nursery Address</label>
+                    <input type="text" class="form-control" name="nurseryAddress" id="field_nurseryAddress"
+                        [(ngModel)]="nursery.nurseryAddress" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.nursery.status" for="field_status">Status</label>
+                    <input type="number" class="form-control" name="status" id="field_status"
+                        [(ngModel)]="nursery.status" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.nursery.code" for="field_code">Code</label>
+                    <input type="text" class="form-control" name="code" id="field_code"
+                        [(ngModel)]="nursery.code" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.nursery.sector" for="field_sector">Sector</label>
+                    <select class="form-control" id="field_sector" name="sector" [(ngModel)]="nursery.sectorId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="sectorOption.id" *ngFor="let sectorOption of sectors; trackBy: trackSectorById">{{sectorOption.sectorName}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.nursery.nurseryType" for="field_nurseryType">Nursery Type</label>
+                    <select class="form-control" id="field_nurseryType" name="nurseryType" [(ngModel)]="nursery.nurseryTypeId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="pickListValueOption.id" *ngFor="let pickListValueOption of picklistvalues; trackBy: trackPickListValueById">{{pickListValueOption.pickListValue}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.nursery.financialYearNursery" for="field_financialYearNursery">Financial Year Nursery</label>
+                    <select class="form-control" id="field_financialYearNursery" name="financialYearNursery" [(ngModel)]="nursery.financialYearNurseryId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="financialYearSettingsOption.id" *ngFor="let financialYearSettingsOption of financialyearsettings; trackBy: trackFinancialYearSettingsById">{{financialYearSettingsOption.batchName}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

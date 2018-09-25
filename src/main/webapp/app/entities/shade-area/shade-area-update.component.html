@@ -1,0 +1,84 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-shade-area-heading" jhiTranslate="projectghApp.shadeArea.home.createOrEditLabel">Create or edit a Shade Area</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!shadeArea.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="shadeArea.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.shadeArea.noOfSeedlings" for="field_noOfSeedlings">No Of Seedlings</label>
+                    <input type="number" class="form-control" name="noOfSeedlings" id="field_noOfSeedlings"
+                        [(ngModel)]="shadeArea.noOfSeedlings" required/>
+                    <div [hidden]="!(editForm.controls.noOfSeedlings?.dirty && editForm.controls.noOfSeedlings?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.noOfSeedlings?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.noOfSeedlings?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.shadeArea.date" for="field_date">Date</label>
+                    <div class="input-group">
+                        <input id="field_date" type="text" class="form-control" name="date" ngbDatepicker  #dateDp="ngbDatepicker" [(ngModel)]="shadeArea.date"
+                        required/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="dateDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                    <div [hidden]="!(editForm.controls.date?.dirty && editForm.controls.date?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.date?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.shadeArea.status" for="field_status">Status</label>
+                    <input type="number" class="form-control" name="status" id="field_status"
+                        [(ngModel)]="shadeArea.status" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.shadeArea.damage" for="field_damage">Damage</label>
+                    <input type="number" class="form-control" name="damage" id="field_damage"
+                        [(ngModel)]="shadeArea.damage" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.shadeArea.saplings" for="field_saplings">Saplings</label>
+                    <input type="number" class="form-control" name="saplings" id="field_saplings"
+                        [(ngModel)]="shadeArea.saplings" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.shadeArea.batch" for="field_batch">Batch</label>
+                    <select class="form-control" id="field_batch" name="batch" [(ngModel)]="shadeArea.batchId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="batchOption.id" *ngFor="let batchOption of batches; trackBy: trackBatchById">{{batchOption.batchName}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.shadeArea.financialYearShadeArea" for="field_financialYearShadeArea">Financial Year Shade Area</label>
+                    <select class="form-control" id="field_financialYearShadeArea" name="financialYearShadeArea" [(ngModel)]="shadeArea.financialYearShadeAreaId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="financialYearSettingsOption.id" *ngFor="let financialYearSettingsOption of financialyearsettings; trackBy: trackFinancialYearSettingsById">{{financialYearSettingsOption.batchName}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

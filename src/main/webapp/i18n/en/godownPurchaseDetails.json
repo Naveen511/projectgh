@@ -1,0 +1,35 @@
+
+{
+    "projectghApp": {
+        "godownPurchaseDetails" : {
+            "home": {
+                "title": "Godown Purchase Details",
+                "createLabel": "Create a new Godown Purchase Details",
+                "createOrEditLabel": "Create or edit a Godown Purchase Details"
+            },
+            "created": "A new Godown Purchase Details is created with identifier {{ param }}",
+            "updated": "A Godown Purchase Details is updated with identifier {{ param }}",
+            "deleted": "A Godown Purchase Details is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Godown Purchase Details {{ id }}?"
+            },
+            "detail": {
+                "title": "Godown Purchase Details"
+            },
+            "quantity": "Quantity",
+            "date": "Date",
+            "price": "Price",
+            "ownedBy": "Owned By",
+            "vendorName": "Vendor Name",
+            "vendorAddress": "Vendor Address",
+            "vendorPhone": "Vendor Phone",
+            "description": "Description",
+            "status": "Status",
+            "pickListVariety": "Pick List Variety",
+            "pickListCategory": "Pick List Category",
+            "pickListQuantityType": "Pick List Quantity Type",
+            "godown": "Godown",
+            "financialYearGodownPurchase": "Financial Year Godown Purchase"
+        }
+    }
+}

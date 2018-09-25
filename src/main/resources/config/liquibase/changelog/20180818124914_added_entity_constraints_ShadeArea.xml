@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity ShadeArea.
+    -->
+    <changeSet id="20180818124914-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="batch_id"
+                                 baseTableName="shade_area"
+                                 constraintName="fk_shade_area_batch_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="batch"/>
+
+        <addForeignKeyConstraint baseColumnNames="financial_year_shade_area_id"
+                                 baseTableName="shade_area"
+                                 constraintName="fk_shade_area_financial_year_shade_area_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="financial_year_settings"/>
+
+    </changeSet>
+</databaseChangeLog>

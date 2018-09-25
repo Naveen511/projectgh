@@ -1,0 +1,159 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-batch-heading" jhiTranslate="projectghApp.batch.home.createOrEditLabel">Create or edit a Batch</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!batch.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="batch.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.batch.batchNo" for="field_batchNo">Batch No</label>
+                    <input type="text" class="form-control" name="batchNo" id="field_batchNo"
+                        [(ngModel)]="batch.batchNo" required/>
+                    <div [hidden]="!(editForm.controls.batchNo?.dirty && editForm.controls.batchNo?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.batchNo?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.batch.batchName" for="field_batchName">Batch Name</label>
+                    <input type="text" class="form-control" name="batchName" id="field_batchName"
+                        [(ngModel)]="batch.batchName" required/>
+                    <div [hidden]="!(editForm.controls.batchName?.dirty && editForm.controls.batchName?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.batchName?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.batch.quantity" for="field_quantity">Quantity</label>
+                    <input type="number" class="form-control" name="quantity" id="field_quantity"
+                        [(ngModel)]="batch.quantity" required/>
+                    <div [hidden]="!(editForm.controls.quantity?.dirty && editForm.controls.quantity?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.quantity?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.quantity?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.batch.showingType" for="field_showingType">Showing Type</label>
+                    <input type="number" class="form-control" name="showingType" id="field_showingType"
+                        [(ngModel)]="batch.showingType" required/>
+                    <div [hidden]="!(editForm.controls.showingType?.dirty && editForm.controls.showingType?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.showingType?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.showingType?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.batch.sowingDate" for="field_sowingDate">Sowing Date</label>
+                    <div class="input-group">
+                        <input id="field_sowingDate" type="text" class="form-control" name="sowingDate" ngbDatepicker  #sowingDateDp="ngbDatepicker" [(ngModel)]="batch.sowingDate"
+                        required/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="sowingDateDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                    <div [hidden]="!(editForm.controls.sowingDate?.dirty && editForm.controls.sowingDate?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.sowingDate?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.batch.closedDate" for="field_closedDate">Closed Date</label>
+                    <div class="input-group">
+                        <input id="field_closedDate" type="text" class="form-control" name="closedDate" ngbDatepicker  #closedDateDp="ngbDatepicker" [(ngModel)]="batch.closedDate"
+                        />
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="closedDateDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.batch.round" for="field_round">Round</label>
+                    <input type="number" class="form-control" name="round" id="field_round"
+                        [(ngModel)]="batch.round" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.batch.remarks" for="field_remarks">Remarks</label>
+                    <input type="text" class="form-control" name="remarks" id="field_remarks"
+                        [(ngModel)]="batch.remarks" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.batch.status" for="field_status">Status</label>
+                    <input type="number" class="form-control" name="status" id="field_status"
+                        [(ngModel)]="batch.status" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.batch.nursery" for="field_nursery">Nursery</label>
+                    <select class="form-control" id="field_nursery" name="nursery" [(ngModel)]="batch.nurseryId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="nurseryOption.id" *ngFor="let nurseryOption of nurseries; trackBy: trackNurseryById">{{nurseryOption.nurseryName}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.batch.pickListVariety" for="field_pickListVariety">Pick List Variety</label>
+                    <select class="form-control" id="field_pickListVariety" name="pickListVariety" [(ngModel)]="batch.pickListVarietyId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="pickListValueOption.id" *ngFor="let pickListValueOption of picklistvalues; trackBy: trackPickListValueById">{{pickListValueOption.pickListValue}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.batch.pickListCategory" for="field_pickListCategory">Pick List Category</label>
+                    <select class="form-control" id="field_pickListCategory" name="pickListCategory" [(ngModel)]="batch.pickListCategoryId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="pickListValueOption.id" *ngFor="let pickListValueOption of picklistvalues; trackBy: trackPickListValueById">{{pickListValueOption.pickListValue}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.batch.quantityType" for="field_quantityType">Quantity Type</label>
+                    <select class="form-control" id="field_quantityType" name="quantityType" [(ngModel)]="batch.quantityTypeId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="pickListValueOption.id" *ngFor="let pickListValueOption of picklistvalues; trackBy: trackPickListValueById">{{pickListValueOption.pickListValue}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.batch.motherBed" for="field_motherBed">Mother Bed</label>
+                    <select class="form-control" id="field_motherBed" name="motherBed" [(ngModel)]="batch.motherBedId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="motherBedOption.id" *ngFor="let motherBedOption of motherbeds; trackBy: trackMotherBedById">{{motherBedOption.value}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.batch.financialYearBatch" for="field_financialYearBatch">Financial Year Batch</label>
+                    <select class="form-control" id="field_financialYearBatch" name="financialYearBatch" [(ngModel)]="batch.financialYearBatchId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="financialYearSettingsOption.id" *ngFor="let financialYearSettingsOption of financialyearsettings; trackBy: trackFinancialYearSettingsById">{{financialYearSettingsOption.batchName}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

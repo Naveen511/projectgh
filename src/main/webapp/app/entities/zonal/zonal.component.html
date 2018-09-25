@@ -1,0 +1,78 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="projectghApp.zonal.home.title">Zonals</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-zonal" [routerLink]="['/zonal/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span  jhiTranslate="projectghApp.zonal.home.createLabel">
+            Create new Zonal
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="zonals">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="zoneName"><span jhiTranslate="projectghApp.zonal.zoneName">Zone Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="zoneAddress"><span jhiTranslate="projectghApp.zonal.zoneAddress">Zone Address</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="status"><span jhiTranslate="projectghApp.zonal.status">Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="financialYearBatchName"><span jhiTranslate="projectghApp.zonal.financialYear">Financial Year</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="operationalHeadName"><span jhiTranslate="projectghApp.zonal.operationalHead">Operational Head</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let zonal of zonals ;trackBy: trackId">
+                <td><a [routerLink]="['/zonal', zonal.id, 'view' ]">{{zonal.id}}</a></td>
+                <td>{{zonal.zoneName}}</td>
+                <td>{{zonal.zoneAddress}}</td>
+                <td>{{zonal.status}}</td>
+                <td>
+                    <div *ngIf="zonal.financialYearId">
+                        <a [routerLink]="['../financial-year-settings', zonal.financialYearId , 'view' ]" >{{zonal.financialYearBatchName}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="zonal.operationalHeadId">
+                        <a [routerLink]="['../operational-head', zonal.operationalHeadId , 'view' ]" >{{zonal.operationalHeadName}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/zonal', zonal.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/zonal', zonal.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'zonal/'+ zonal.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="zonals && zonals.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

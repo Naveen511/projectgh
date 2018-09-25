@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity NurseryInventoryDetails.
+    -->
+    <changeSet id="20180828053244-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="nursery_inventory_id"
+                                 baseTableName="nursery_inventory_details"
+                                 constraintName="fk_nursery_inventory_details_nursery_inventory_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="nursery_inventory"/>
+
+        <addForeignKeyConstraint baseColumnNames="damage_type_id"
+                                 baseTableName="nursery_inventory_details"
+                                 constraintName="fk_nursery_inventory_details_damage_type_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="pick_list_value"/>
+
+        <addForeignKeyConstraint baseColumnNames="inventory_damage_description_id"
+                                 baseTableName="nursery_inventory_details"
+                                 constraintName="fk_nursery_inventory_details_inventory_damage_description_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="pick_list_value"/>
+
+    </changeSet>
+</databaseChangeLog>

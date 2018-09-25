@@ -1,0 +1,100 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-point-of-sale-details-heading" jhiTranslate="projectghApp.pointOfSaleDetails.home.createOrEditLabel">Create or edit a Point Of Sale Details</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!pointOfSaleDetails.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="pointOfSaleDetails.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.pointOfSaleDetails.quantity" for="field_quantity">Quantity</label>
+                    <input type="number" class="form-control" name="quantity" id="field_quantity"
+                        [(ngModel)]="pointOfSaleDetails.quantity" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.pointOfSaleDetails.purposeOfTaking" for="field_purposeOfTaking">Purpose Of Taking</label>
+                    <input type="text" class="form-control" name="purposeOfTaking" id="field_purposeOfTaking"
+                        [(ngModel)]="pointOfSaleDetails.purposeOfTaking" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.pointOfSaleDetails.donorName" for="field_donorName">Donor Name</label>
+                    <input type="text" class="form-control" name="donorName" id="field_donorName"
+                        [(ngModel)]="pointOfSaleDetails.donorName" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.pointOfSaleDetails.donorAddress" for="field_donorAddress">Donor Address</label>
+                    <input type="text" class="form-control" name="donorAddress" id="field_donorAddress"
+                        [(ngModel)]="pointOfSaleDetails.donorAddress" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.pointOfSaleDetails.contactNo" for="field_contactNo">Contact No</label>
+                    <input type="text" class="form-control" name="contactNo" id="field_contactNo"
+                        [(ngModel)]="pointOfSaleDetails.contactNo" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.pointOfSaleDetails.discount" for="field_discount">Discount</label>
+                    <input type="number" class="form-control" name="discount" id="field_discount"
+                        [(ngModel)]="pointOfSaleDetails.discount" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.pointOfSaleDetails.discountAmount" for="field_discountAmount">Discount Amount</label>
+                    <input type="number" class="form-control" name="discountAmount" id="field_discountAmount"
+                        [(ngModel)]="pointOfSaleDetails.discountAmount" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.pointOfSaleDetails.collectedAmount" for="field_collectedAmount">Collected Amount</label>
+                    <input type="number" class="form-control" name="collectedAmount" id="field_collectedAmount"
+                        [(ngModel)]="pointOfSaleDetails.collectedAmount" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.pointOfSaleDetails.date" for="field_date">Date</label>
+                    <div class="input-group">
+                        <input id="field_date" type="text" class="form-control" name="date" ngbDatepicker  #dateDp="ngbDatepicker" [(ngModel)]="pointOfSaleDetails.date"
+                        />
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="dateDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.pointOfSaleDetails.status" for="field_status">Status</label>
+                    <input type="number" class="form-control" name="status" id="field_status"
+                        [(ngModel)]="pointOfSaleDetails.status" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.pointOfSaleDetails.pickListVariety" for="field_pickListVariety">Pick List Variety</label>
+                    <select class="form-control" id="field_pickListVariety" name="pickListVariety" [(ngModel)]="pointOfSaleDetails.pickListVarietyId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="pickListValueOption.id" *ngFor="let pickListValueOption of picklistvalues; trackBy: trackPickListValueById">{{pickListValueOption.pickListValue}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.pointOfSaleDetails.pickListCategory" for="field_pickListCategory">Pick List Category</label>
+                    <select class="form-control" id="field_pickListCategory" name="pickListCategory" [(ngModel)]="pointOfSaleDetails.pickListCategoryId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="pickListValueOption.id" *ngFor="let pickListValueOption of picklistvalues; trackBy: trackPickListValueById">{{pickListValueOption.pickListValue}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.pointOfSaleDetails.nurseryStock" for="field_nurseryStock">Nursery Stock</label>
+                    <select class="form-control" id="field_nurseryStock" name="nurseryStock" [(ngModel)]="pointOfSaleDetails.nurseryStockId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="nurseryStockOption.id" *ngFor="let nurseryStockOption of nurserystocks; trackBy: trackNurseryStockById">{{nurseryStockOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

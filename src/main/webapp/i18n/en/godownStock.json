@@ -1,0 +1,32 @@
+
+{
+    "projectghApp": {
+        "godownStock" : {
+            "home": {
+                "title": "Godown Stocks",
+                "createLabel": "Create a new Godown Stock",
+                "createOrEditLabel": "Create or edit a Godown Stock"
+            },
+            "created": "A new Godown Stock is created with identifier {{ param }}",
+            "updated": "A Godown Stock is updated with identifier {{ param }}",
+            "deleted": "A Godown Stock is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Godown Stock {{ id }}?"
+            },
+            "detail": {
+                "title": "Godown Stock"
+            },
+            "currentQuantity": "Current Quantity",
+            "addedQuantity": "Added Quantity",
+            "consumedQuantity": "Consumed Quantity",
+            "description": "Description",
+            "status": "Status",
+            "godownStockDetails": "Godown Stock Details",
+            "pickListVariety": "Pick List Variety",
+            "pickListCategory": "Pick List Category",
+            "pickListQuantityType": "Pick List Quantity Type",
+            "godown": "Godown",
+            "financialYearGodownStock": "Financial Year Godown Stock"
+        }
+    }
+}

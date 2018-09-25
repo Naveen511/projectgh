@@ -1,0 +1,98 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="projectghApp.pointOfSaleDetails.home.title">Point Of Sale Details</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-point-of-sale-details" [routerLink]="['/point-of-sale-details/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span  jhiTranslate="projectghApp.pointOfSaleDetails.home.createLabel">
+            Create new Point Of Sale Details
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="pointOfSaleDetails">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="quantity"><span jhiTranslate="projectghApp.pointOfSaleDetails.quantity">Quantity</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="purposeOfTaking"><span jhiTranslate="projectghApp.pointOfSaleDetails.purposeOfTaking">Purpose Of Taking</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="donorName"><span jhiTranslate="projectghApp.pointOfSaleDetails.donorName">Donor Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="donorAddress"><span jhiTranslate="projectghApp.pointOfSaleDetails.donorAddress">Donor Address</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="contactNo"><span jhiTranslate="projectghApp.pointOfSaleDetails.contactNo">Contact No</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="discount"><span jhiTranslate="projectghApp.pointOfSaleDetails.discount">Discount</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="discountAmount"><span jhiTranslate="projectghApp.pointOfSaleDetails.discountAmount">Discount Amount</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="collectedAmount"><span jhiTranslate="projectghApp.pointOfSaleDetails.collectedAmount">Collected Amount</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="date"><span jhiTranslate="projectghApp.pointOfSaleDetails.date">Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="status"><span jhiTranslate="projectghApp.pointOfSaleDetails.status">Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="pickListVarietyPickListValue"><span jhiTranslate="projectghApp.pointOfSaleDetails.pickListVariety">Pick List Variety</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="pickListCategoryPickListValue"><span jhiTranslate="projectghApp.pointOfSaleDetails.pickListCategory">Pick List Category</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="nurseryStockId"><span jhiTranslate="projectghApp.pointOfSaleDetails.nurseryStock">Nursery Stock</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let pointOfSaleDetails of pointOfSaleDetails ;trackBy: trackId">
+                <td><a [routerLink]="['/point-of-sale-details', pointOfSaleDetails.id, 'view' ]">{{pointOfSaleDetails.id}}</a></td>
+                <td>{{pointOfSaleDetails.quantity}}</td>
+                <td>{{pointOfSaleDetails.purposeOfTaking}}</td>
+                <td>{{pointOfSaleDetails.donorName}}</td>
+                <td>{{pointOfSaleDetails.donorAddress}}</td>
+                <td>{{pointOfSaleDetails.contactNo}}</td>
+                <td>{{pointOfSaleDetails.discount}}</td>
+                <td>{{pointOfSaleDetails.discountAmount}}</td>
+                <td>{{pointOfSaleDetails.collectedAmount}}</td>
+                <td>{{pointOfSaleDetails.date | date:'mediumDate'}}</td>
+                <td>{{pointOfSaleDetails.status}}</td>
+                <td>
+                    <div *ngIf="pointOfSaleDetails.pickListVarietyId">
+                        <a [routerLink]="['../pick-list-value', pointOfSaleDetails.pickListVarietyId , 'view' ]" >{{pointOfSaleDetails.pickListVarietyPickListValue}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="pointOfSaleDetails.pickListCategoryId">
+                        <a [routerLink]="['../pick-list-value', pointOfSaleDetails.pickListCategoryId , 'view' ]" >{{pointOfSaleDetails.pickListCategoryPickListValue}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="pointOfSaleDetails.nurseryStockId">
+                        <a [routerLink]="['../nursery-stock', pointOfSaleDetails.nurseryStockId , 'view' ]" >{{pointOfSaleDetails.nurseryStockId}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/point-of-sale-details', pointOfSaleDetails.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/point-of-sale-details', pointOfSaleDetails.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'point-of-sale-details/'+ pointOfSaleDetails.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="pointOfSaleDetails && pointOfSaleDetails.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

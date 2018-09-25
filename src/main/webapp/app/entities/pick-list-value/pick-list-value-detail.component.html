@@ -1,0 +1,43 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="pickListValue">
+            <h2><span jhiTranslate="projectghApp.pickListValue.detail.title">Pick List Value</span> {{pickListValue.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="projectghApp.pickListValue.pickListValue">Pick List Value</span></dt>
+                <dd>
+                    <span>{{pickListValue.pickListValue}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.pickListValue.status">Status</span></dt>
+                <dd>
+                    <span>{{pickListValue.status}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.pickListValue.pickList">Pick List</span></dt>
+                <dd>
+                    <div *ngIf="pickListValue.pickListId">
+                        <a [routerLink]="['/pick-list', pickListValue.pickListId, 'view']">{{pickListValue.pickListPickListName}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.pickListValue.pickValue">Pick Value</span></dt>
+                <dd>
+                    <div *ngIf="pickListValue.pickValueId">
+                        <a [routerLink]="['/pick-list-value', pickListValue.pickValueId, 'view']">{{pickListValue.pickValuePickListValue}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/pick-list-value', pickListValue.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

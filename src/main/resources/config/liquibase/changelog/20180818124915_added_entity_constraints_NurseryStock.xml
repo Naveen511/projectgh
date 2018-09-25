@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity NurseryStock.
+    -->
+    <changeSet id="20180818124915-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="nursery_id"
+                                 baseTableName="nursery_stock"
+                                 constraintName="fk_nursery_stock_nursery_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="nursery"/>
+
+        <addForeignKeyConstraint baseColumnNames="pick_list_variety_id"
+                                 baseTableName="nursery_stock"
+                                 constraintName="fk_nursery_stock_pick_list_variety_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="pick_list_value"/>
+
+        <addForeignKeyConstraint baseColumnNames="pick_list_category_id"
+                                 baseTableName="nursery_stock"
+                                 constraintName="fk_nursery_stock_pick_list_category_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="pick_list_value"/>
+
+        <addForeignKeyConstraint baseColumnNames="financial_year_nursery_stock_id"
+                                 baseTableName="nursery_stock"
+                                 constraintName="fk_nursery_stock_financial_year_nursery_stock_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="financial_year_settings"/>
+
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,81 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="pointOfSaleDetails">
+            <h2><span jhiTranslate="projectghApp.pointOfSaleDetails.detail.title">Point Of Sale Details</span> {{pointOfSaleDetails.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="projectghApp.pointOfSaleDetails.quantity">Quantity</span></dt>
+                <dd>
+                    <span>{{pointOfSaleDetails.quantity}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.pointOfSaleDetails.purposeOfTaking">Purpose Of Taking</span></dt>
+                <dd>
+                    <span>{{pointOfSaleDetails.purposeOfTaking}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.pointOfSaleDetails.donorName">Donor Name</span></dt>
+                <dd>
+                    <span>{{pointOfSaleDetails.donorName}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.pointOfSaleDetails.donorAddress">Donor Address</span></dt>
+                <dd>
+                    <span>{{pointOfSaleDetails.donorAddress}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.pointOfSaleDetails.contactNo">Contact No</span></dt>
+                <dd>
+                    <span>{{pointOfSaleDetails.contactNo}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.pointOfSaleDetails.discount">Discount</span></dt>
+                <dd>
+                    <span>{{pointOfSaleDetails.discount}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.pointOfSaleDetails.discountAmount">Discount Amount</span></dt>
+                <dd>
+                    <span>{{pointOfSaleDetails.discountAmount}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.pointOfSaleDetails.collectedAmount">Collected Amount</span></dt>
+                <dd>
+                    <span>{{pointOfSaleDetails.collectedAmount}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.pointOfSaleDetails.date">Date</span></dt>
+                <dd>
+                    <span>{{pointOfSaleDetails.date}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.pointOfSaleDetails.status">Status</span></dt>
+                <dd>
+                    <span>{{pointOfSaleDetails.status}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.pointOfSaleDetails.pickListVariety">Pick List Variety</span></dt>
+                <dd>
+                    <div *ngIf="pointOfSaleDetails.pickListVarietyId">
+                        <a [routerLink]="['/pick-list-value', pointOfSaleDetails.pickListVarietyId, 'view']">{{pointOfSaleDetails.pickListVarietyPickListValue}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.pointOfSaleDetails.pickListCategory">Pick List Category</span></dt>
+                <dd>
+                    <div *ngIf="pointOfSaleDetails.pickListCategoryId">
+                        <a [routerLink]="['/pick-list-value', pointOfSaleDetails.pickListCategoryId, 'view']">{{pointOfSaleDetails.pickListCategoryPickListValue}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.pointOfSaleDetails.nurseryStock">Nursery Stock</span></dt>
+                <dd>
+                    <div *ngIf="pointOfSaleDetails.nurseryStockId">
+                        <a [routerLink]="['/nursery-stock', pointOfSaleDetails.nurseryStockId, 'view']">{{pointOfSaleDetails.nurseryStockId}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/point-of-sale-details', pointOfSaleDetails.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

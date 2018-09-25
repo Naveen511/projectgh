@@ -1,0 +1,51 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="mapZonalWithOh">
+            <h2><span jhiTranslate="projectghApp.mapZonalWithOh.detail.title">Map Zonal With Oh</span> {{mapZonalWithOh.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="projectghApp.mapZonalWithOh.fromDate">From Date</span></dt>
+                <dd>
+                    <span>{{mapZonalWithOh.fromDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.mapZonalWithOh.toDate">To Date</span></dt>
+                <dd>
+                    <span>{{mapZonalWithOh.toDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.mapZonalWithOh.description">Description</span></dt>
+                <dd>
+                    <span>{{mapZonalWithOh.description}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.mapZonalWithOh.status">Status</span></dt>
+                <dd>
+                    <span>{{mapZonalWithOh.status}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.mapZonalWithOh.zonal">Zonal</span></dt>
+                <dd>
+                    <div *ngIf="mapZonalWithOh.zonalId">
+                        <a [routerLink]="['/zonal', mapZonalWithOh.zonalId, 'view']">{{mapZonalWithOh.zonalZoneName}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.mapZonalWithOh.operationalHead">Operational Head</span></dt>
+                <dd>
+                    <div *ngIf="mapZonalWithOh.operationalHeadId">
+                        <a [routerLink]="['/operational-head', mapZonalWithOh.operationalHeadId, 'view']">{{mapZonalWithOh.operationalHeadName}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/map-zonal-with-oh', mapZonalWithOh.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

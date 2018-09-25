@@ -1,0 +1,43 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="coverFilling">
+            <h2><span jhiTranslate="projectghApp.coverFilling.detail.title">Cover Filling</span> {{coverFilling.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="projectghApp.coverFilling.noOfCover">No Of Cover</span></dt>
+                <dd>
+                    <span>{{coverFilling.noOfCover}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.coverFilling.date">Date</span></dt>
+                <dd>
+                    <span>{{coverFilling.date}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.coverFilling.description">Description</span></dt>
+                <dd>
+                    <span>{{coverFilling.description}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.coverFilling.status">Status</span></dt>
+                <dd>
+                    <span>{{coverFilling.status}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.coverFilling.damageQuantity">Damage Quantity</span></dt>
+                <dd>
+                    <span>{{coverFilling.damageQuantity}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/cover-filling', coverFilling.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

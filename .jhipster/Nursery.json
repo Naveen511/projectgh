@@ -1,0 +1,95 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "batchs",
+            "otherEntityName": "batch",
+            "otherEntityRelationshipName": "nursery"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "nurseryStocks",
+            "otherEntityName": "nurseryStock",
+            "otherEntityRelationshipName": "nursery"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "sector",
+            "otherEntityName": "sector",
+            "otherEntityField": "sectorName"
+        },
+        {
+            "relationshipName": "nurseryType",
+            "otherEntityName": "pickListValue",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "pickListValue"
+        },
+        {
+            "relationshipName": "motherBeds",
+            "otherEntityName": "motherBed",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "nursery"
+        },
+        {
+            "relationshipName": "nurseryInventorys",
+            "otherEntityName": "nurseryInventory",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "nurserys"
+        },
+        {
+            "relationshipName": "nurseryStockDetails",
+            "otherEntityName": "nurseryStockDetails",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "itNursery"
+        },
+        {
+            "relationshipName": "financialYearNursery",
+            "otherEntityName": "financialYearSettings",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "batchName"
+        },
+        {
+            "relationshipName": "incharge",
+            "otherEntityName": "nurseryIncharge",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "nursery"
+        },
+        {
+            "relationshipName": "mapNurseryWithSector",
+            "otherEntityName": "mapNurseryWithSector",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "nursery"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "nurseryName",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "nurseryAddress",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "code",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20180818124909",
+    "dto": "mapstruct",
+    "searchEngine": false,
+    "service": "serviceImpl",
+    "entityTableName": "nursery",
+    "jpaMetamodelFiltering": true,
+    "pagination": "pagination",
+    "enableEntityAudit": true
+}

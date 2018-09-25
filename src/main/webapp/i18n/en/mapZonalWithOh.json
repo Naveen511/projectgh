@@ -1,0 +1,27 @@
+
+{
+    "projectghApp": {
+        "mapZonalWithOh" : {
+            "home": {
+                "title": "Map Zonal With Ohs",
+                "createLabel": "Create a new Map Zonal With Oh",
+                "createOrEditLabel": "Create or edit a Map Zonal With Oh"
+            },
+            "created": "A new Map Zonal With Oh is created with identifier {{ param }}",
+            "updated": "A Map Zonal With Oh is updated with identifier {{ param }}",
+            "deleted": "A Map Zonal With Oh is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Map Zonal With Oh {{ id }}?"
+            },
+            "detail": {
+                "title": "Map Zonal With Oh"
+            },
+            "fromDate": "From Date",
+            "toDate": "To Date",
+            "description": "Description",
+            "status": "Status",
+            "zonal": "Zonal",
+            "operationalHead": "Operational Head"
+        }
+    }
+}

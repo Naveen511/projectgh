@@ -1,0 +1,142 @@
+<div class="animated fadeIn">
+    <!-- Display the Finacial year List-->
+    <div class="row"> <!-- justify-content-center -->
+        <div class="col-sm-9">
+            <!-- Display the success Message alert-->
+            <div>
+                <ngb-alert *ngIf="successMessage" type="success" 
+                    (close)="successMessage = null">{{ successMessage }}</ngb-alert>
+            </div>
+            <!-- End of the success alert-->
+            <div class="card">
+                <div class="card-header">
+                  <i class="fa fa-align-justify"></i> Financial Year List
+                  <button type="button" class="btn btn-sm btn-success float-right" 
+                  data-toggle="modal" (click)="create()">
+                    <fa-icon [icon]="'plus'"></fa-icon> Add</button>
+                </div>
+                <div class="card-body table-responsive">
+                    <table class="table font12">
+                        <thead>
+                            <tr>
+                                <th>S No.</th>
+                                <th>Name</th>
+                                <th>Year</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Status</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let value of settings; let i = index">
+                                <td>{{i+1}}</td>
+                                <td>{{value.batchName}}</td>
+                                <td>{{value.financialYearPickListValue}}</td>
+                                <td>{{value.startDate | date: 'dd/MM/yyyy'}}</td>
+                                <td>{{value.endDate | date: 'dd/MM/yyyy'}}</td>
+                                <td>
+                                    <select [(ngModel)]="value.status" id="status" name="status" 
+                                    class="form-control" (change)="changeStatus(value)" required>
+                                        <option value="0" disabled selected>Select</option>
+                                        <option *ngFor="let list of statusArray" value={{list.value}}>
+                                            {{list.name}}
+                                        </option>
+                                    </select>
+                                </td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-sm btn-ghost-info" 
+                                        data-toggle="modal" (click)="getParticularRow(value)">
+                                        <fa-icon [icon]="'pencil-alt'"></fa-icon> Edit</button>
+                                    <button type="button" class="btn btn-sm btn-ghost-danger" 
+                                        (click)="softDelete(value)">
+                                        <fa-icon [icon]="'times'"></fa-icon> Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div bsModal #settingsModal="bs-modal" class="modal fade" tabindex="-1" 
+    role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-primary" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Create / Update</h6>
+                <button type="button" class="close" 
+                    (click)="settingsModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                    <input [(ngModel)]="setting.id" type="hidden" id="id" name="id" class="form-control">
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="text-input">Pick Type *</label>
+                        <div class="col-md-9">
+                            <select [(ngModel)]="setting.pickListId" id="pickListId" name="pickListId" 
+                            class="form-control" (change)="getYears(setting.pickListId)" required>
+                            <option value="0" disabled selected>Select</option>
+                            <option *ngFor="let pickList of pickLists" 
+                                value={{pickList.id}}>{{pickList.pickListName}}</option>
+                        </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="text-input">Year *</label>
+                        <div class="col-md-9">
+                            <select [(ngModel)]="setting.financialYearId" 
+                                id="financialYearId" name="financialYearId" 
+                                class="form-control" required>
+                            <option value="0" disabled selected>Select</option>
+                            <option *ngFor="let year of years" 
+                                value={{year.id}}>{{year.pickListValue}}</option>
+                        </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="text-input">Batch Name *</label>
+                        <div class="col-md-9">
+                            <input [(ngModel)]="setting.batchName" 
+                                type="text" id="batchName" name="batchName" 
+                                class="form-control" placeholder="Name">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="text-input">Start Date</label>
+                        <div class="col-md-9">
+                            <input [(ngModel)]="setting.startDate" type="text" 
+                                id="startDate" name="startDate" readonly 
+                                class="form-control" placeholder="Start Date"
+                                ngbDatepicker  #startDateDp="ngbDatepicker" (click)="startDateDp.toggle()">
+
+                            <!-- <input id="field_date" type="text" class="form-control" name="date" 
+                                [(ngModel)]="nurseryInventoryDetails.date" 
+                                ngbDatepicker  #seedsDateDp="ngbDatepicker" (click)="seedsDateDp.toggle()"/> -->
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="text-input">End Date</label>
+                        <div class="col-md-9">
+                            <input [(ngModel)]="setting.endDate" type="text" 
+                                id="endDate" name="endDate" readonly 
+                                class="form-control" placeholder="End Date"
+                                ngbDatepicker  #endDateDp="ngbDatepicker" (click)="endDateDp.toggle()">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" 
+                    (click)="settingsModal.hide()">Close</button>
+                <button type="button" class="btn btn-primary" 
+                    (click)="save()">Save</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

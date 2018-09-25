@@ -1,0 +1,55 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="godownStockDetails">
+            <h2><span jhiTranslate="projectghApp.godownStockDetails.detail.title">Godown Stock Details</span> {{godownStockDetails.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="projectghApp.godownStockDetails.date">Date</span></dt>
+                <dd>
+                    <span>{{godownStockDetails.date}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.godownStockDetails.quantity">Quantity</span></dt>
+                <dd>
+                    <span>{{godownStockDetails.quantity}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.godownStockDetails.description">Description</span></dt>
+                <dd>
+                    <span>{{godownStockDetails.description}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.godownStockDetails.status">Status</span></dt>
+                <dd>
+                    <span>{{godownStockDetails.status}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.godownStockDetails.price">Price</span></dt>
+                <dd>
+                    <span>{{godownStockDetails.price}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.godownStockDetails.godownStock">Godown Stock</span></dt>
+                <dd>
+                    <div *ngIf="godownStockDetails.godownStockId">
+                        <a [routerLink]="['/godown-stock', godownStockDetails.godownStockId, 'view']">{{godownStockDetails.godownStockId}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.godownStockDetails.financialYearGodownStockDetails">Financial Year Godown Stock Details</span></dt>
+                <dd>
+                    <div *ngIf="godownStockDetails.financialYearGodownStockDetailsId">
+                        <a [routerLink]="['/financial-year-settings', godownStockDetails.financialYearGodownStockDetailsId, 'view']">{{godownStockDetails.financialYearGodownStockDetailsBatchName}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/godown-stock-details', godownStockDetails.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

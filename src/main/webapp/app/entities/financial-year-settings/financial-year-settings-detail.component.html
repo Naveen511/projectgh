@@ -1,0 +1,45 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="financialYearSettings">
+            <h2><span jhiTranslate="projectghApp.financialYearSettings.detail.title">Financial Year Settings</span> {{financialYearSettings.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="projectghApp.financialYearSettings.batchName">Batch Name</span></dt>
+                <dd>
+                    <span>{{financialYearSettings.batchName}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.financialYearSettings.startDate">Start Date</span></dt>
+                <dd>
+                    <span>{{financialYearSettings.startDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.financialYearSettings.endDate">End Date</span></dt>
+                <dd>
+                    <span>{{financialYearSettings.endDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.financialYearSettings.status">Status</span></dt>
+                <dd>
+                    <span>{{financialYearSettings.status}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.financialYearSettings.financialYear">Financial Year</span></dt>
+                <dd>
+                    <div *ngIf="financialYearSettings.financialYearId">
+                        <a [routerLink]="['/pick-list-value', financialYearSettings.financialYearId, 'view']">{{financialYearSettings.financialYearPickListValue}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/financial-year-settings', financialYearSettings.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

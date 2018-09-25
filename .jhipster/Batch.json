@@ -1,0 +1,121 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "damages",
+            "otherEntityName": "damage",
+            "otherEntityRelationshipName": "batch"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "shadeAreas",
+            "otherEntityName": "shadeArea",
+            "otherEntityRelationshipName": "batch"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "nurseryStockDetails",
+            "otherEntityName": "nurseryStockDetails",
+            "otherEntityRelationshipName": "batch"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "nursery",
+            "otherEntityName": "nursery",
+            "otherEntityField": "nurseryName"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "pickListVariety",
+            "otherEntityName": "pickListValue",
+            "otherEntityField": "pickListValue"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "pickListCategory",
+            "otherEntityName": "pickListValue",
+            "otherEntityField": "pickListValue"
+        },
+        {
+            "relationshipName": "quantityType",
+            "otherEntityName": "pickListValue",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "pickListValue"
+        },
+        {
+            "relationshipName": "motherBed",
+            "otherEntityName": "motherBed",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "value"
+        },
+        {
+            "relationshipName": "financialYearBatch",
+            "otherEntityName": "financialYearSettings",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "batchName"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "batchNo",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "batchName",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "quantity",
+            "fieldType": "Long",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "showingType",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "sowingDate",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "closedDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "round",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "remarks",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20180818124912",
+    "dto": "mapstruct",
+    "searchEngine": false,
+    "service": "serviceImpl",
+    "entityTableName": "batch",
+    "jpaMetamodelFiltering": true,
+    "pagination": "pagination",
+    "enableEntityAudit": true
+}

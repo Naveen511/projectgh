@@ -1,0 +1,51 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="mapNurseryWithSector">
+            <h2><span jhiTranslate="projectghApp.mapNurseryWithSector.detail.title">Map Nursery With Sector</span> {{mapNurseryWithSector.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="projectghApp.mapNurseryWithSector.fromDate">From Date</span></dt>
+                <dd>
+                    <span>{{mapNurseryWithSector.fromDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.mapNurseryWithSector.toDate">To Date</span></dt>
+                <dd>
+                    <span>{{mapNurseryWithSector.toDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.mapNurseryWithSector.description">Description</span></dt>
+                <dd>
+                    <span>{{mapNurseryWithSector.description}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.mapNurseryWithSector.status">Status</span></dt>
+                <dd>
+                    <span>{{mapNurseryWithSector.status}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.mapNurseryWithSector.nursery">Nursery</span></dt>
+                <dd>
+                    <div *ngIf="mapNurseryWithSector.nurseryId">
+                        <a [routerLink]="['/nursery', mapNurseryWithSector.nurseryId, 'view']">{{mapNurseryWithSector.nurseryNurseryName}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.mapNurseryWithSector.sector">Sector</span></dt>
+                <dd>
+                    <div *ngIf="mapNurseryWithSector.sectorId">
+                        <a [routerLink]="['/sector', mapNurseryWithSector.sectorId, 'view']">{{mapNurseryWithSector.sectorSectorName}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/map-nursery-with-sector', mapNurseryWithSector.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+
+{
+    "projectghApp": {
+        "shadeArea" : {
+            "home": {
+                "title": "Shade Areas",
+                "createLabel": "Create a new Shade Area",
+                "createOrEditLabel": "Create or edit a Shade Area"
+            },
+            "created": "A new Shade Area is created with identifier {{ param }}",
+            "updated": "A Shade Area is updated with identifier {{ param }}",
+            "deleted": "A Shade Area is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Shade Area {{ id }}?"
+            },
+            "detail": {
+                "title": "Shade Area"
+            },
+            "noOfSeedlings": "No Of Seedlings",
+            "date": "Date",
+            "status": "Status",
+            "damage": "Damage",
+            "saplings": "Saplings",
+            "batch": "Batch",
+            "financialYearShadeArea": "Financial Year Shade Area"
+        }
+    }
+}

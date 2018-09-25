@@ -1,0 +1,25 @@
+
+{
+    "projectghApp": {
+        "motherBed" : {
+            "home": {
+                "title": "Mother Beds",
+                "createLabel": "Create a new Mother Bed",
+                "createOrEditLabel": "Create or edit a Mother Bed"
+            },
+            "created": "A new Mother Bed is created with identifier {{ param }}",
+            "updated": "A Mother Bed is updated with identifier {{ param }}",
+            "deleted": "A Mother Bed is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Mother Bed {{ id }}?"
+            },
+            "detail": {
+                "title": "Mother Bed"
+            },
+            "value": "Value",
+            "status": "Status",
+            "nursery": "Nursery",
+            "batchMotherBed": "Batch Mother Bed"
+        }
+    }
+}

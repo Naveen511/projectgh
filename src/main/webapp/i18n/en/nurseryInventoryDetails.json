@@ -1,0 +1,28 @@
+
+{
+    "projectghApp": {
+        "nurseryInventoryDetails" : {
+            "home": {
+                "title": "Nursery Inventory Details",
+                "createLabel": "Create a new Nursery Inventory Details",
+                "createOrEditLabel": "Create or edit a Nursery Inventory Details"
+            },
+            "created": "A new Nursery Inventory Details is created with identifier {{ param }}",
+            "updated": "A Nursery Inventory Details is updated with identifier {{ param }}",
+            "deleted": "A Nursery Inventory Details is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Nursery Inventory Details {{ id }}?"
+            },
+            "detail": {
+                "title": "Nursery Inventory Details"
+            },
+            "date": "Date",
+            "quantity": "Quantity",
+            "status": "Status",
+            "description": "Description",
+            "nurseryInventory": "Nursery Inventory",
+            "damageType": "Damage Type",
+            "inventoryDamageDescription": "Inventory Damage Description"
+        }
+    }
+}

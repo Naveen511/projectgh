@@ -1,0 +1,98 @@
+<div class="animated fadeIn">
+    <!-- Display the success Message alert-->
+    <div class="col-md-8 text-center">
+        <span class="text-success" *ngIf="successMessage"
+            (close)="successMessage = null">{{ successMessage }}</span>
+    </div>
+    <!-- End of the success alert-->
+
+    <!-- Display the Zone List-->
+    <div class="row"> <!-- justify-content-center -->
+        <div class="col-sm-8">
+            <div class="card">
+                <div class="card-header">
+                  <i class="fa fa-align-justify"></i> Godown List
+                  <button type="button" class="btn btn-sm btn-success float-right" 
+                  data-toggle="modal" (click)="createGodown()"><fa-icon [icon]="'plus'"></fa-icon> Add</button>
+                </div>
+                <div class="card-body table-responsive">
+                    <table class="table font12">
+                        <thead>
+                            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+                                <th>S No.</th>
+                                <th jhiSortBy="name">Name <fa-icon [icon]="'sort'"></fa-icon></th>
+                                <th jhiSortBy="address">Address <fa-icon [icon]="'sort'"></fa-icon></th>
+                                <th jhiSortBy="incharge">Incharge <fa-icon [icon]="'sort'"></fa-icon></th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let value of godowns; let i = index; trackBy: trackId">
+                                <td>{{i+1}}</td>
+                                <td>{{value.name}}</td>
+                                <td>{{value.address}}</td>
+                                <td></td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-ghost-info" 
+                                        data-toggle="modal" (click)="getGodownValue(value)">
+                                        <fa-icon [icon]="'pencil-alt'"></fa-icon> Edit</button>
+                                    <button type="button" class="btn btn-sm btn-ghost-danger" 
+                                        (click)="softDelete(value)">
+                                        <fa-icon [icon]="'times'"></fa-icon> Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div *ngIf="godowns && godowns.length" class="card-footer">
+                        <!-- <div class="row justify-content-center">
+                            <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+                        </div> -->
+                        <div class="row justify-content-center">
+                            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div bsModal #godownModal="bs-modal" class="modal fade" tabindex="-1" 
+    role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-primary" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <h6 class="modal-title">Create / Update {{godownObject.name}}</h6> -->
+                <h6 class="modal-title">{{title}}</h6>
+                <button type="button" class="close" (click)="godownModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body font13">
+                <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                    <input [(ngModel)]="godownObject.id" type="hidden" id="id" name="id" class="form-control">
+                    <div class="form-group row">
+                        <label class="col-md-4 col-form-label" for="text-input">Godown Name *</label>
+                        <div class="col-md-8">
+                            <input [(ngModel)]="godownObject.name" type="text" id="Name" name="Name" 
+                            class="form-control" placeholder="Name">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4 col-form-label" for="textarea-input">Address</label>
+                        <div class="col-md-8">
+                            <textarea [(ngModel)]="godownObject.address" id="address" name="Address" 
+                            rows="3" class="form-control" placeholder="Address.."></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" 
+                    (click)="godownModal.hide()">Close</button>
+                <button type="button" class="btn btn-primary" 
+                    (click)="save()">Save</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

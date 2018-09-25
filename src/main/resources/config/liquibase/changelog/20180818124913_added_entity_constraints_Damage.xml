@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity Damage.
+    -->
+    <changeSet id="20180818124913-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="batch_id"
+                                 baseTableName="damage"
+                                 constraintName="fk_damage_batch_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="batch"/>
+
+        <addForeignKeyConstraint baseColumnNames="description_id"
+                                 baseTableName="damage"
+                                 constraintName="fk_damage_description_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="pick_list_value"/>
+
+        <addForeignKeyConstraint baseColumnNames="damage_area_id"
+                                 baseTableName="damage"
+                                 constraintName="fk_damage_damage_area_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="pick_list_value"/>
+
+        <addForeignKeyConstraint baseColumnNames="financial_year_damage_id"
+                                 baseTableName="damage"
+                                 constraintName="fk_damage_financial_year_damage_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="financial_year_settings"/>
+
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,95 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="batch">
+            <h2><span jhiTranslate="projectghApp.batch.detail.title">Batch</span> {{batch.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="projectghApp.batch.batchNo">Batch No</span></dt>
+                <dd>
+                    <span>{{batch.batchNo}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.batch.batchName">Batch Name</span></dt>
+                <dd>
+                    <span>{{batch.batchName}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.batch.quantity">Quantity</span></dt>
+                <dd>
+                    <span>{{batch.quantity}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.batch.showingType">Showing Type</span></dt>
+                <dd>
+                    <span>{{batch.showingType}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.batch.sowingDate">Sowing Date</span></dt>
+                <dd>
+                    <span>{{batch.sowingDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.batch.closedDate">Closed Date</span></dt>
+                <dd>
+                    <span>{{batch.closedDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.batch.round">Round</span></dt>
+                <dd>
+                    <span>{{batch.round}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.batch.remarks">Remarks</span></dt>
+                <dd>
+                    <span>{{batch.remarks}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.batch.status">Status</span></dt>
+                <dd>
+                    <span>{{batch.status}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.batch.nursery">Nursery</span></dt>
+                <dd>
+                    <div *ngIf="batch.nurseryId">
+                        <a [routerLink]="['/nursery', batch.nurseryId, 'view']">{{batch.nurseryNurseryName}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.batch.pickListVariety">Pick List Variety</span></dt>
+                <dd>
+                    <div *ngIf="batch.pickListVarietyId">
+                        <a [routerLink]="['/pick-list-value', batch.pickListVarietyId, 'view']">{{batch.pickListVarietyPickListValue}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.batch.pickListCategory">Pick List Category</span></dt>
+                <dd>
+                    <div *ngIf="batch.pickListCategoryId">
+                        <a [routerLink]="['/pick-list-value', batch.pickListCategoryId, 'view']">{{batch.pickListCategoryPickListValue}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.batch.quantityType">Quantity Type</span></dt>
+                <dd>
+                    <div *ngIf="batch.quantityTypeId">
+                        <a [routerLink]="['/pick-list-value', batch.quantityTypeId, 'view']">{{batch.quantityTypePickListValue}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.batch.motherBed">Mother Bed</span></dt>
+                <dd>
+                    <div *ngIf="batch.motherBedId">
+                        <a [routerLink]="['/mother-bed', batch.motherBedId, 'view']">{{batch.motherBedValue}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.batch.financialYearBatch">Financial Year Batch</span></dt>
+                <dd>
+                    <div *ngIf="batch.financialYearBatchId">
+                        <a [routerLink]="['/financial-year-settings', batch.financialYearBatchId, 'view']">{{batch.financialYearBatchBatchName}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/batch', batch.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,80 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="projectghApp.mapNurseryWithSector.home.title">Map Nursery With Sectors</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-map-nursery-with-sector" [routerLink]="['/map-nursery-with-sector/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span  jhiTranslate="projectghApp.mapNurseryWithSector.home.createLabel">
+            Create new Map Nursery With Sector
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="mapNurseryWithSectors">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="fromDate"><span jhiTranslate="projectghApp.mapNurseryWithSector.fromDate">From Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="toDate"><span jhiTranslate="projectghApp.mapNurseryWithSector.toDate">To Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="description"><span jhiTranslate="projectghApp.mapNurseryWithSector.description">Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="status"><span jhiTranslate="projectghApp.mapNurseryWithSector.status">Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="nurseryNurseryName"><span jhiTranslate="projectghApp.mapNurseryWithSector.nursery">Nursery</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="sectorSectorName"><span jhiTranslate="projectghApp.mapNurseryWithSector.sector">Sector</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let mapNurseryWithSector of mapNurseryWithSectors ;trackBy: trackId">
+                <td><a [routerLink]="['/map-nursery-with-sector', mapNurseryWithSector.id, 'view' ]">{{mapNurseryWithSector.id}}</a></td>
+                <td>{{mapNurseryWithSector.fromDate | date:'mediumDate'}}</td>
+                <td>{{mapNurseryWithSector.toDate | date:'mediumDate'}}</td>
+                <td>{{mapNurseryWithSector.description}}</td>
+                <td>{{mapNurseryWithSector.status}}</td>
+                <td>
+                    <div *ngIf="mapNurseryWithSector.nurseryId">
+                        <a [routerLink]="['../nursery', mapNurseryWithSector.nurseryId , 'view' ]" >{{mapNurseryWithSector.nurseryNurseryName}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="mapNurseryWithSector.sectorId">
+                        <a [routerLink]="['../sector', mapNurseryWithSector.sectorId , 'view' ]" >{{mapNurseryWithSector.sectorSectorName}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/map-nursery-with-sector', mapNurseryWithSector.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/map-nursery-with-sector', mapNurseryWithSector.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'map-nursery-with-sector/'+ mapNurseryWithSector.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="mapNurseryWithSectors && mapNurseryWithSectors.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "pickListValues",
+            "otherEntityName": "pickListValue",
+            "otherEntityRelationshipName": "pickList"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "pickListName",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20180818124910",
+    "entityTableName": "pick_list",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": true,
+    "applications": "*",
+    "enableEntityAudit": true
+}

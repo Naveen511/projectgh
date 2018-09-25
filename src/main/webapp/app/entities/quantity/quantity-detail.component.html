@@ -1,0 +1,39 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="quantity">
+            <h2><span jhiTranslate="projectghApp.quantity.detail.title">Quantity</span> {{quantity.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="projectghApp.quantity.approxQuantity">Approx Quantity</span></dt>
+                <dd>
+                    <span>{{quantity.approxQuantity}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.quantity.pickListVariety">Pick List Variety</span></dt>
+                <dd>
+                    <div *ngIf="quantity.pickListVarietyId">
+                        <a [routerLink]="['/pick-list-value', quantity.pickListVarietyId, 'view']">{{quantity.pickListVarietyId}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.quantity.pickListCategory">Pick List Category</span></dt>
+                <dd>
+                    <div *ngIf="quantity.pickListCategoryId">
+                        <a [routerLink]="['/pick-list-value', quantity.pickListCategoryId, 'view']">{{quantity.pickListCategoryId}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/quantity', quantity.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

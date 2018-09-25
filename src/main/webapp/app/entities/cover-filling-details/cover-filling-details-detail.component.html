@@ -1,0 +1,57 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="coverFillingDetails">
+            <h2><span jhiTranslate="projectghApp.coverFillingDetails.detail.title">Cover Filling Details</span> {{coverFillingDetails.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="projectghApp.coverFillingDetails.quantity">Quantity</span></dt>
+                <dd>
+                    <span>{{coverFillingDetails.quantity}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.coverFillingDetails.date">Date</span></dt>
+                <dd>
+                    <span>{{coverFillingDetails.date}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.coverFillingDetails.status">Status</span></dt>
+                <dd>
+                    <span>{{coverFillingDetails.status}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.coverFillingDetails.description">Description</span></dt>
+                <dd>
+                    <span>{{coverFillingDetails.description}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.coverFillingDetails.coverFilling">Cover Filling</span></dt>
+                <dd>
+                    <div *ngIf="coverFillingDetails.coverFillingId">
+                        <a [routerLink]="['/cover-filling', coverFillingDetails.coverFillingId, 'view']">{{coverFillingDetails.coverFillingId}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.coverFillingDetails.damageType">Damage Type</span></dt>
+                <dd>
+                    <div *ngIf="coverFillingDetails.damageTypeId">
+                        <a [routerLink]="['/pick-list-value', coverFillingDetails.damageTypeId, 'view']">{{coverFillingDetails.damageTypePickListValue}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.coverFillingDetails.coverFillingDamageDescription">Cover Filling Damage Description</span></dt>
+                <dd>
+                    <div *ngIf="coverFillingDetails.coverFillingDamageDescriptionId">
+                        <a [routerLink]="['/pick-list-value', coverFillingDetails.coverFillingDamageDescriptionId, 'view']">{{coverFillingDetails.coverFillingDamageDescriptionPickListValue}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/cover-filling-details', coverFillingDetails.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

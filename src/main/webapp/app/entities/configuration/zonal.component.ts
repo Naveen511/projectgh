@@ -108,44 +108,40 @@ export class ZonalComponent implements OnInit {
         // Call a function to get list of zonals
         this.getZoneList();
         // Call a function to get active batch id
-        this.getActiveRecord();
+        // this.getActiveRecord();
         // Call a function to get list of active headOffice
         this.getOperationalHead();
 
         // To set the time for automatic alert close
-        setTimeout(() => this.staticAlertClosed = true, 20000);
+        setTimeout(() => (this.staticAlertClosed = true), 20000);
 
         // Set the success message with debounce time
-        this.success.subscribe(message => this.successMessage = message);
-        this.success.pipe(
-            debounceTime(5000)
-        ).subscribe(() => this.successMessage = null);
+        this.success.subscribe(message => (this.successMessage = message));
+        this.success.pipe(debounceTime(5000)).subscribe(() => (this.successMessage = null));
 
         // To set the error message with debounce time
-        this.error.subscribe(message => this.errorMessage = message);
-        this.error.pipe(
-            debounceTime(5000)
-        ).subscribe(() => this.errorMessage = null);
+        this.error.subscribe(message => (this.errorMessage = message));
+        this.error.pipe(debounceTime(5000)).subscribe(() => (this.errorMessage = null));
     }
 
     // Call a service function to get list of zonals
     getZoneList(): void {
         // Get the list of zone
-        this.zonalService.query({
-            page: this.page - 1,
-            size: this.itemsPerPage,
-            sort: this.sort(),
-            filter: {'status.equals': STATUS_ACTIVE}
-        })
-        .subscribe((res: HttpResponse<IZonal[]>) => this.paginateZonals(res.body, res.headers));
+        this.zonalService
+            .query({
+                page: this.page - 1,
+                size: this.itemsPerPage,
+                sort: this.sort(),
+                filter: { 'status.equals': STATUS_ACTIVE }
+            })
+            .subscribe((res: HttpResponse<IZonal[]>) => this.paginateZonals(res.body, res.headers));
     }
 
     // Call a service function to get list of active batch
     getActiveRecord(): void {
         // Get the list of active batch record and assign a 0th
         // index array value to an batch id
-        this.settingsService.getActiveRecord()
-        .subscribe((res: HttpResponse<IFinancialYearSettings[]>) => {
+        this.settingsService.getActiveRecord().subscribe((res: HttpResponse<IFinancialYearSettings[]>) => {
             if (res.body.length > 0) {
                 // Set the batch Id
                 this.batchId = res.body[0].id;
@@ -164,8 +160,7 @@ export class ZonalComponent implements OnInit {
     // Call a service function to get list of active head office
     getOperationalHead(): void {
         // Get the list of active batch record and assign a 0th index array value to an batch id
-        this.operationalHeadService.getActiveList()
-        .subscribe((res: HttpResponse<IOperationalHead[]>) => {
+        this.operationalHeadService.getActiveList().subscribe((res: HttpResponse<IOperationalHead[]>) => {
             this.operationalHeads = res.body;
         });
     }
@@ -177,16 +172,12 @@ export class ZonalComponent implements OnInit {
         // console.log(this.zonalObject.updatedAt);
         if (this.zonalObject.id !== undefined) {
             this.alertTitle = 'updated';
-            this.subscribeToSaveResponse(
-                this.zonalService.update(this.zonalObject), this.alertTitle
-            );
+            this.subscribeToSaveResponse(this.zonalService.update(this.zonalObject), this.alertTitle);
         } else {
             this.alertTitle = 'created';
             this.zonalObject.financialYearId = this.batchId;
             // this.mapZoneWithOh = new MapZonalWithOhModel();
-            this.subscribeToSaveResponse(
-                this.zonalService.create(this.zonalObject), this.alertTitle
-            );
+            this.subscribeToSaveResponse(this.zonalService.create(this.zonalObject), this.alertTitle);
         }
     }
 
@@ -214,14 +205,15 @@ export class ZonalComponent implements OnInit {
         this.mapZoneWithOh.operationalHeadId = zonalDetails.operationalHeadId;
         this.mapZoneWithOh.zonalId = zonalDetails.id;
         this.mapZoneWithOh.status = STATUS_ACTIVE;
-        this.mapZoneWithOhService.create(this.mapZoneWithOh)
-        .subscribe((res: HttpResponse<IMapZonalWithOh>) => {
-            this.moveZone.hide();
-        },
-        (res: HttpErrorResponse) => {
-            // alert(res.error.fieldErrors[0].message);
-            this.error.next(res.error.fieldErrors[0].message);
-        });
+        this.mapZoneWithOhService.create(this.mapZoneWithOh).subscribe(
+            (res: HttpResponse<IMapZonalWithOh>) => {
+                this.moveZone.hide();
+            },
+            (res: HttpErrorResponse) => {
+                // alert(res.error.fieldErrors[0].message);
+                this.error.next(res.error.fieldErrors[0].message);
+            }
+        );
     }
 
     moveZonal(zonalDetails: ZonalModel, value: MapZonalWithOhModel): void {
@@ -233,8 +225,7 @@ export class ZonalComponent implements OnInit {
                 this.mapZoneWithOh.description = value.description;
                 this.mapZoneWithOh.toDate = moment(this.toDate, DATE_TIME_FORMAT);
                 this.mapZoneWithOh.status = STATUS_INACTIVE;
-                this.mapZoneWithOhService.update(this.mapZoneWithOh)
-                .subscribe(
+                this.mapZoneWithOhService.update(this.mapZoneWithOh).subscribe(
                     (output: HttpResponse<IMapZonalWithOh>) => {
                         this.saveMapTable(zonalDetails);
                     },
@@ -276,8 +267,7 @@ export class ZonalComponent implements OnInit {
     softDelete(zone: ZonalModel): void {
         this.zonalObject = zone;
         this.zonalObject.status = SOFT_DELETE_STATUS;
-        this.zonalService.update(this.zonalObject)
-        .subscribe(
+        this.zonalService.update(this.zonalObject).subscribe(
             data => {
                 this.success.next(`Zone deleted successfully`);
                 this.getZoneList();
@@ -306,10 +296,11 @@ export class ZonalComponent implements OnInit {
     }
 
     getAuditHistory(id: number): void {
-        this.auditService.findByParticularUpdatedEntityDetails('com.niche.ng.domain.Zonal', id, ACTION_STATUS_UPDATE, this.selectedLimit)
-        .subscribe((res: HttpResponse<EntityAuditEvent[]>) => {
-            console.log(res.body);
-        });
+        this.auditService
+            .findByParticularUpdatedEntityDetails('com.niche.ng.domain.Zonal', id, ACTION_STATUS_UPDATE, this.selectedLimit)
+            .subscribe((res: HttpResponse<EntityAuditEvent[]>) => {
+                console.log(res.body);
+            });
     }
 
     loadPage(page: number) {

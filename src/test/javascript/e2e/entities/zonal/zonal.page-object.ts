@@ -18,7 +18,6 @@ export class ZonalUpdatePage {
     saveButton = element(by.id('save-entity'));
     cancelButton = element(by.id('cancel-save'));
     zoneNameInput = element(by.id('field_zoneName'));
-    zoneAddressInput = element(by.id('field_zoneAddress'));
     statusInput = element(by.id('field_status'));
     financialYearSelect = element(by.id('field_financialYear'));
     operationalHeadSelect = element(by.id('field_operationalHead'));
@@ -33,14 +32,6 @@ export class ZonalUpdatePage {
 
     getZoneNameInput() {
         return this.zoneNameInput.getAttribute('value');
-    }
-
-    setZoneAddressInput(zoneAddress): promise.Promise<void> {
-        return this.zoneAddressInput.sendKeys(zoneAddress);
-    }
-
-    getZoneAddressInput() {
-        return this.zoneAddressInput.getAttribute('value');
     }
 
     setStatusInput(status): promise.Promise<void> {

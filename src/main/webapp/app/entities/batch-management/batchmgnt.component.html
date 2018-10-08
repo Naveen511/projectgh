@@ -36,7 +36,7 @@
                             <div class="form-group col-sm-4">
                                 <label for="name">Nursery *</label>
                                 <select [(ngModel)]="batch.nurseryId" id="nurseryId" name="nurseryId" class="form-control" 
-                                (change)="getMotherBed(batch.nurseryId)" required>
+                                (change)="getMotherBedValue(batch.nurseryId)" required>
                                     <option value="0" disabled selected>Select Nursery Name</option>
                                     <option *ngFor="let nursery of nurserys" value={{nursery.id}}>{{nursery.nurseryName}}</option>
                                 </select>
@@ -92,7 +92,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="form-group col-sm-4">
+                            <div class="form-group col-sm-3">
                                 <label for="name">Pick Quantity Name *</label>
                                 <select [(ngModel)]="batch.pickListQuantityId" id="pickListQuantityId" name="pickListQuantityId" 
                                 class="form-control" (change)="getQuantityType(batch.pickListQuantityId)" required>
@@ -100,33 +100,50 @@
                                     <option *ngFor="let pickList of pickLists" value={{pickList.id}}>{{pickList.pickListName}}</option>
                                 </select>
                             </div>
-                            <div class="form-group col-sm-4">
+                            <div class="form-group col-sm-3">
                                 <label for="name">Quantity Type * </label>
-                                <select [(ngModel)]="batch.quantityTypeId" id="quantityTypeId" name="quantityTypeId" class="form-control" required>
+                                <select [(ngModel)]="batch.quantityTypeId" (change)="getQuantityTypeValue($event)" id="quantityTypeId" name="quantityTypeId" class="form-control" required>
                                     <option value="0" disabled selected>Select Quantity Type</option>
                                     <option *ngFor="let type of quantityTypes" value={{type.id}}>{{type.pickListValue}}</option>
                                 </select>
                             </div>
-                            <div class="form-group col-sm-4">
-                                <label for="name">Quantity *</label>
-                                <input [(ngModel)]="batch.quantity" type="text" id="quantity" name="quantity" 
-                                class="form-control" placeholder="Quantity" required>
+                            <div *ngIf="quantityType == 'kg'" class="form-group col-sm-3">
+                                    <label for="name">No of Kg </label>
+                                    <input [(ngModel)]="batch.noOfKg" type="text" id="noOfKg"
+                                    name="No of Kg" class="form-control"
+                                    placeholder="Expected Quantity" required>
                             </div>
+                            <div class="form-group col-sm-3">
+                                <label *ngIf="quantityType == 'kg'" for="name">Expected Quantity *</label>
+                                <label *ngIf="quantityType == 'NOS'" for="name">Quantity *</label>
+                                <input [(ngModel)]="batch.quantity" type="text" id="quantity"
+                                name="quantity" class="form-control" placeholder="Quantity"
+                                 required>
+                            </div>
+                            <!-- <div *ngIf="batch.pickListVarietyId && batch.pickListCategoryId != 0"
+                                 class="form-group col-sm-3">
+                                <label for="name">Expected Quantity </label>
+                                <input [(ngModel)]="batch.expectedQuantity" type="text" id="expectedQuantity"
+                                name="expectedQuantity" class="form-control"
+                                placeholder="Expected Quantity" required>
+                            </div> -->
                         </div>
                         <div class="row">
-                            <div class="form-group col-sm-4">
-                                <label for="name">Motherbed</label>
-                                <select [(ngModel)]="batch.motherBedId" id="motherBedId" name="motherBedId" class="form-control">
-                                    <option value="0" disabled selected>Select Quantity Type</option>
-                                    <option *ngFor="let motherBed of motherBeds" value={{motherBed.id}}>{{motherBed.value}}</option>
-                                </select>
-                            </div>
                             <div class="form-group col-sm-4">
                                 <label for="name">Showing Type *</label>
                                 <select [(ngModel)]="batch.showingType" id="select1" name="select1" class="form-control" required>
                                     <option value="0" disabled selected>Showing Type</option>
-                                    <option value="1">Seed</option>
-                                    <option value="2">Direct</option>
+                                    <option value="1">Motherbed</option>
+                                    <option value="2">Cover</option>
+                                </select>
+                            </div>
+                            <div *ngIf="batch.showingType == 1" class="form-group col-sm-4">
+                                <label for="name">Motherbed</label>
+                                <select [(ngModel)]="batch.motherBedId" (change)="getMotherBedTypeValue($event)"
+                                    (click)="getMotherBedForNursery(batch.nurseryId)" id="motherBedId" name="motherBedId" 
+                                    class="form-control">
+                                    <option value="0" disabled selected>Select Motherbed </option>
+                                    <option *ngFor="let motherBed of motherBeds" value={{motherBed.id}}>{{motherBed.value}}</option>
                                 </select>
                             </div>
                         </div>
@@ -236,16 +253,6 @@
                 </tr>
               </tbody>
             </table>
-            <!-- <ul class="pagination">
-              <li class="page-item"><a class="page-link" href="#">Prev</a></li>
-              <li class="page-item active">
-                <a class="page-link" href="#">1</a>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#">4</a></li>
-              <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul> -->
             <div *ngIf="batchs && batchs.length" class="card-footer">
                 <!-- <div class="row justify-content-center">
                     <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
@@ -388,7 +395,7 @@
     <div class="modal-dialog modal-primary" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h6 class="modal-title">Update {{updateBatchValue.batchName}}</h6>
+          <h6 class="modal-title">Move {{updateBatchValue.batchName}} to damage area</h6>
           <button type="button" class="close" (click)="damageModal.hide()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -455,7 +462,7 @@
                   </div>
               </div>
               <div class="form-group row">
-                  <label class="col-md-3 col-form-label" for="name">Descreption</label>
+                  <label class="col-md-3 col-form-label" for="name">Description</label>
                   <div class="col-md-9">
                     <select [(ngModel)]="updateBatchValue.descriptionId" id="descriptionId" name="descriptionId" class="form-control">
                       <option value="0" disabled selected>Description</option>
@@ -477,7 +484,7 @@
     <div class="modal-dialog modal-primary" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h6 class="modal-title">Update {{updateBatchValue.batchName}}</h6>
+          <h6 class="modal-title">Move {{updateBatchValue.batchName}} to shade area</h6>
           <button type="button" class="close" (click)="shiftBatchModal.hide()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -520,7 +527,7 @@
   <div class="modal-dialog modal-primary" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h6 class="modal-title">Create</h6>
+        <h6 class="modal-title">Move to Seasonong/Stock</h6>
         <button type="button" class="close" (click)="stockModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

@@ -77,7 +77,7 @@ public class MotherBedQueryService extends QueryService<MotherBed> {
                 specification = specification.and(buildSpecification(criteria.getId(), MotherBed_.id));
             }
             if (criteria.getValue() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getValue(), MotherBed_.value));
+                specification = specification.and(buildStringSpecification(criteria.getValue(), MotherBed_.value));
             }
             if (criteria.getStatus() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getStatus(), MotherBed_.status));

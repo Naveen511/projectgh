@@ -25,8 +25,6 @@ public class ZonalDTO extends AbstractAuditingDTO implements Serializable {
     @NotNull(message = "Zone name cannot be blank.")
     private String zoneName;
 
-    private String zoneAddress;
-
     private Integer status;
 
     private Long financialYearId;
@@ -51,14 +49,6 @@ public class ZonalDTO extends AbstractAuditingDTO implements Serializable {
 
     public void setZoneName(String zoneName) {
         this.zoneName = zoneName;
-    }
-
-    public String getZoneAddress() {
-        return zoneAddress;
-    }
-
-    public void setZoneAddress(String zoneAddress) {
-        this.zoneAddress = zoneAddress;
     }
 
     public Integer getStatus() {
@@ -127,7 +117,6 @@ public class ZonalDTO extends AbstractAuditingDTO implements Serializable {
         return "ZonalDTO{" +
             "id=" + getId() +
             ", zoneName='" + getZoneName() + "'" +
-            ", zoneAddress='" + getZoneAddress() + "'" +
             ", status=" + getStatus() +
             ", financialYear=" + getFinancialYearId() +
             ", financialYear='" + getFinancialYearBatchName() + "'" +

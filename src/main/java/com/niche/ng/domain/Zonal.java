@@ -44,9 +44,6 @@ public class Zonal extends AbstractAuditingEntity implements Serializable {
     @Column(name = "zone_name", nullable = false)
     private String zoneName;
 
-    @Column(name = "zone_address")
-    private String zoneAddress;
-
     @Column(name = "status")
     private Integer status;
 
@@ -90,19 +87,6 @@ public class Zonal extends AbstractAuditingEntity implements Serializable {
 
     public void setZoneName(String zoneName) {
         this.zoneName = zoneName;
-    }
-
-    public String getZoneAddress() {
-        return zoneAddress;
-    }
-
-    public Zonal zoneAddress(String zoneAddress) {
-        this.zoneAddress = zoneAddress;
-        return this;
-    }
-
-    public void setZoneAddress(String zoneAddress) {
-        this.zoneAddress = zoneAddress;
     }
 
     public Integer getStatus() {
@@ -270,7 +254,6 @@ public class Zonal extends AbstractAuditingEntity implements Serializable {
         return "Zonal{" +
             "id=" + getId() +
             ", zoneName='" + getZoneName() + "'" +
-            ", zoneAddress='" + getZoneAddress() + "'" +
             ", status=" + getStatus() +
             "}";
     }

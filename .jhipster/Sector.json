@@ -48,10 +48,6 @@
             ]
         },
         {
-            "fieldName": "sectorAddress",
-            "fieldType": "String"
-        },
-        {
             "fieldName": "status",
             "fieldType": "Integer"
         }

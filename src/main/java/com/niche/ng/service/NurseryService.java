@@ -55,13 +55,6 @@ public interface NurseryService {
      */
     void delete(Long id);
 
-     /**
-     * softDelete the "id" Nursery
-     * 
-     * @param id the id of the entity
-     */
-    void softDelete(Long id);
-
     /**
      * Get the "sectorId" nursery.
      *
@@ -69,4 +62,12 @@ public interface NurseryService {
      * @return the list of entity
      */
     List<NurseryDTO> findSectorNurserys(Long sectorId);
+
+     /**
+     * Get the "count" operationalHead.
+     *
+     * @param status the batchId of the entity
+     * @return the list of entity
+     */
+    Long findActiveCount(Integer status);
 }

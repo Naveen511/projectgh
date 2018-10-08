@@ -18,7 +18,6 @@ export class SectorUpdatePage {
     saveButton = element(by.id('save-entity'));
     cancelButton = element(by.id('cancel-save'));
     sectorNameInput = element(by.id('field_sectorName'));
-    sectorAddressInput = element(by.id('field_sectorAddress'));
     statusInput = element(by.id('field_status'));
     zonalSelect = element(by.id('field_zonal'));
     financialYearSectorSelect = element(by.id('field_financialYearSector'));
@@ -33,14 +32,6 @@ export class SectorUpdatePage {
 
     getSectorNameInput() {
         return this.sectorNameInput.getAttribute('value');
-    }
-
-    setSectorAddressInput(sectorAddress): promise.Promise<void> {
-        return this.sectorAddressInput.sendKeys(sectorAddress);
-    }
-
-    getSectorAddressInput() {
-        return this.sectorAddressInput.getAttribute('value');
     }
 
     setStatusInput(status): promise.Promise<void> {

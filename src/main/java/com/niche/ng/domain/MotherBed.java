@@ -42,7 +42,7 @@ public class MotherBed extends AbstractAuditingEntity implements Serializable {
 
     @NotNull
     @Column(name = "jhi_value", nullable = false)
-    private Integer value;
+    private String value;
 
     @Column(name = "status")
     private Integer status;
@@ -64,16 +64,16 @@ public class MotherBed extends AbstractAuditingEntity implements Serializable {
         this.id = id;
     }
 
-    public Integer getValue() {
+    public String getValue() {
         return value;
     }
 
-    public MotherBed value(Integer value) {
+    public MotherBed value(String value) {
         this.value = value;
         return this;
     }
 
-    public void setValue(Integer value) {
+    public void setValue(String value) {
         this.value = value;
     }
 

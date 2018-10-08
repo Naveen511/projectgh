@@ -100,17 +100,6 @@ public class FinancialYearSettingsServiceImpl implements FinancialYearSettingsSe
     }
 
     /**
-     * softDelete the financialYearSettings by id
-     * 
-     * @param id the id of the entity
-     */
-    @Override
-    public void softDelete(Long id) {
-        log.debug("Request to delete financialYearSettings : {}", id);
-        financialYearSettingsRepository.findById(id);
-    }
-
-    /**
      * Get one financialYearSettings by status.
      *
      * @param status the status of the entity

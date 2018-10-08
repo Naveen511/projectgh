@@ -152,7 +152,7 @@ export class ZonalComponent implements OnInit {
                 this.title = 'Create Zone:';
             } else {
                 // alert('There is no active financial year');
-                this.error.next('There is no active financial year');
+                this.error.next('There is no active year in calendar settings');
             }
         });
     }

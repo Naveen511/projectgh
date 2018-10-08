@@ -142,17 +142,4 @@ public class GodownPurchaseDetailsResource {
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
-    /**
-     * DELETE  /godown-purchase-details/:id : delete the "id" godownPurchaseDetails.
-     * 
-     * @param id the id of the godownPurchaseDetailsDTO to delete
-     * @return the ResponseEntity with status 200 (OK)
-     */
-    @GetMapping("/godown-purchase-details/soft-delete/{id}")
-    @Timed
-    public ResponseEntity<Void> softDelete(@PathVariable Long id) {
-        log.debug("REST request to delete godownPurchaseDetails : {}", id);
-        godownPurchaseDetailsService.softDelete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
-    }
 }

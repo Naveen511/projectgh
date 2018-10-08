@@ -98,18 +98,7 @@ public class PickListValueServiceImpl implements PickListValueService {
         log.debug("Request to delete PickListValue : {}", id);
         pickListValueRepository.deleteById(id);
     }
-
-    /**
-     * softDelete the pickListValue by id
-     * 
-     * @param id the id of the entity
-     */
-    @Override
-    public void softDelete(Long id) {
-        log.debug("Request to delete pickListValue : {}", id);
-        pickListValueRepository.findById(id);
-    }
-
+    
     /**
      * Get all the sectors by zonalId.
      *

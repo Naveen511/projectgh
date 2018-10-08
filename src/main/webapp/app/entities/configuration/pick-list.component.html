@@ -125,9 +125,10 @@
                         </div>
                     </tab>
                     <tab>
-                        <ng-template tabHeading><i class="icon-basket-loaded"> Mother Bed List</i></ng-template>
-                        <button type="button" class="badge badge-success float-right" 
-                    data-toggle="modal" (click)="showMotherBedCreateForm()"><fa-icon [icon]="'plus'"></fa-icon> Add
+                    <ng-template tabHeading><i class="icon-basket-loaded"> Mother Bed List</i></ng-template>
+                    <button type="button" class="badge badge-success float-right" 
+                        data-toggle="modal" (click)="showMotherBedCreateForm()">
+                        <fa-icon [icon]="'plus'"></fa-icon> Add
                     </button>
                         <table class="table font12">
                             <thead>
@@ -135,6 +136,7 @@
                                     <th>S No.</th>
                                     <th>Nursery</th>
                                     <th>Number</th>
+                                    <th>Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
@@ -143,6 +145,10 @@
                                     <td>{{l+1}}</td>
                                     <td>{{motherBed.nurseryNurseryName}}</td>
                                     <td>{{motherBed.value}}</td>
+                                    <td>
+                                        <span *ngIf="motherBed.status == 1" class="text-success">Available</span>
+                                        <span *ngIf="motherBed.status == 3" class="text-danger">Occupied</span>
+                                    </td>
                                     <td>
                                         <!-- <button type="button" class="btn btn-sm btn-ghost-info" 
                                             data-toggle="modal">
@@ -157,7 +163,7 @@
                                             <fa-icon [icon]="'pencil-alt'"> </fa-icon>
                                         </a>
                                         <a class="text-danger sm-2" data-toggle="modal" 
-                                            ngbTooltip="Delete" placement="top" (click)="softDeleteMothedBed(quantitys)">
+                                            ngbTooltip="Delete" placement="top" (click)="softDeleteMothedBed(motherBed)">
                                             <fa-icon [icon]="'times'"> </fa-icon>
                                         </a>
                                     </td>
@@ -165,7 +171,7 @@
                             </tbody>
                         </table>
                     </tab>
-                    <tab>
+                    <!-- <tab>
                         <ng-template tabHeading><i class="icon-basket-loaded"> Quantity List</i></ng-template>
                         <button type="button" class="badge badge-success float-right" 
                     data-toggle="modal" (click)="createQuantityList()"><fa-icon [icon]="'plus'"></fa-icon> Add
@@ -201,7 +207,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                    </tab>
+                    </tab> -->
                 </tabset>
             </div>
         </div>
@@ -635,7 +641,7 @@
                     </div>
                     <div class="form-group row">
                         <label class="col-md-4 col-form-label" 
-                            for="text-input">Approximate Quantity *</label>
+                            for="text-input">Expected Quantity *</label>
                         <div class="col-md-8">
                             <input [(ngModel)]="quantityObject.approxQuantity" 
                                 type="text" id="quantity" 

@@ -132,16 +132,16 @@ public class QuantityResource {
     }
 
     /**
-     * DELETE  /quantities/:id : delete the "id" quantity.
-     * 
-     * @param id the id of the quantityDTO to delete
-     * @return the ResponseEntity with status 200 (OK)
+     * GET  /quantities/{pickListQuantityId}/{quantityTypeId} : get the quantity for motherBeds.
+     *
+     * @param pickListQuantityId the status of the motherBedDTO to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the ZonalDTO, or with status 404 (Not Found)
      */
-    @GetMapping("/quantities/soft-delete/{id}")
+    @GetMapping("/quantities/quantity/{pickListQuantityId}/{quantityTypeId}")
     @Timed
-    public ResponseEntity<Void> softDelete(@PathVariable Long id) {
-        log.debug("REST request to delete quantity : {}", id);
-        quantityService.softDelete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    public ResponseEntity<List<QuantityDTO>> getQuantityCount(@PathVariable Long pickListQuantityId, @PathVariable Long quantityTypeId) {
+        log.debug("REST request to get a list of particular status of motherbed");
+        List<QuantityDTO> quantityDTO = quantityService.findQuantity(pickListQuantityId, quantityTypeId);
+        return ResponseEntity.ok().body(quantityDTO);
     }
 }

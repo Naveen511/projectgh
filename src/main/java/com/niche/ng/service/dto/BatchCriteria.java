@@ -46,6 +46,8 @@ public class BatchCriteria implements Serializable {
 
     private IntegerFilter status;
 
+    private StringFilter noOfKg;
+
     private LongFilter damagesId;
 
     private LongFilter shadeAreasId;
@@ -147,6 +149,14 @@ public class BatchCriteria implements Serializable {
         this.status = status;
     }
 
+    public StringFilter getNoOfKg() {
+        return noOfKg;
+    }
+
+    public void setNoOfKg(StringFilter noOfKg) {
+        this.noOfKg = noOfKg;
+    }
+
     public LongFilter getDamagesId() {
         return damagesId;
     }
@@ -232,6 +242,7 @@ public class BatchCriteria implements Serializable {
                 (round != null ? "round=" + round + ", " : "") +
                 (remarks != null ? "remarks=" + remarks + ", " : "") +
                 (status != null ? "status=" + status + ", " : "") +
+                (noOfKg != null ? "noOfKg=" + noOfKg + ", " : "") +
                 (damagesId != null ? "damagesId=" + damagesId + ", " : "") +
                 (shadeAreasId != null ? "shadeAreasId=" + shadeAreasId + ", " : "") +
                 (nurseryStockDetailsId != null ? "nurseryStockDetailsId=" + nurseryStockDetailsId + ", " : "") +

@@ -79,9 +79,6 @@ public class SectorQueryService extends QueryService<Sector> {
             if (criteria.getSectorName() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getSectorName(), Sector_.sectorName));
             }
-            if (criteria.getSectorAddress() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getSectorAddress(), Sector_.sectorAddress));
-            }
             if (criteria.getStatus() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getStatus(), Sector_.status));
             }

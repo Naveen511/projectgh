@@ -32,8 +32,6 @@ describe('Zonal e2e test', () => {
         zonalComponentsPage.clickOnCreateButton();
         zonalUpdatePage.setZoneNameInput('zoneName');
         expect(zonalUpdatePage.getZoneNameInput()).toMatch('zoneName');
-        zonalUpdatePage.setZoneAddressInput('zoneAddress');
-        expect(zonalUpdatePage.getZoneAddressInput()).toMatch('zoneAddress');
         zonalUpdatePage.setStatusInput('5');
         expect(zonalUpdatePage.getStatusInput()).toMatch('5');
         zonalUpdatePage.financialYearSelectLastOption();

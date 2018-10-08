@@ -146,16 +146,15 @@ public class OperationalHeadResource {
     }
 
     /**
-     * DELETE  /operational-heads/:id : delete the "id" operationalHead.
-     * 
-     * @param id the id of the operationalHeadDTO to delete
-     * @return the ResponseEntity with status 200 (OK)
+     * GET  /operational-heads/active-record:status : get the "status" operationalHead.
+     *
+     * @param status the status of the operationalHeadDTO to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the operationalHeadDTO, or with status 404 (Not Found)
      */
-    @GetMapping("/operational-heads/soft-delete/{id}")
+    @GetMapping("/operational-heads/count/{status}")
     @Timed
-    public ResponseEntity<Void> softDelete(@PathVariable Long id) {
-        log.debug("REST request to delete OperationalHead : {}", id);
-        operationalHeadService.softDelete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    public Long getOperationHeadCount(@PathVariable Integer status) {
+        log.debug("REST request to get a list of particular status of operationalHeadService");
+        return operationalHeadService.findActiveCount(status);
     }
 }

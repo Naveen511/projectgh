@@ -92,31 +92,28 @@ export class OperationalHeadComponent implements OnInit {
         this.getList();
 
         // To set the time for automatic alert close
-        setTimeout(() => this.staticAlertClosed = true, 20000);
+        setTimeout(() => (this.staticAlertClosed = true), 20000);
 
         // Set the success message with debounce time
-        this.success.subscribe(message => this.successMessage = message);
-        this.success.pipe(
-            debounceTime(5000)
-        ).subscribe(() => this.successMessage = null);
+        this.success.subscribe(message => (this.successMessage = message));
+        this.success.pipe(debounceTime(5000)).subscribe(() => (this.successMessage = null));
 
         // To set the error message with debounce time
-        this.error.subscribe(message => this.errorMessage = message);
-        this.error.pipe(
-            debounceTime(5000)
-        ).subscribe(() => this.errorMessage = null);
+        this.error.subscribe(message => (this.errorMessage = message));
+        this.error.pipe(debounceTime(5000)).subscribe(() => (this.errorMessage = null));
     }
 
     // Call a service function to get list of head office
     getList(): void {
         // Get the list of head office
-        this.operationalHeadService.query({
-            page: this.page - 1,
-            size: this.itemsPerPage,
-            sort: this.sort(),
-            filter: {'status.equals': STATUS_ACTIVE}
-        })
-        .subscribe((res: HttpResponse<IOperationalHead[]>) => this.paginateLists(res.body, res.headers));
+        this.operationalHeadService
+            .query({
+                page: this.page - 1,
+                size: this.itemsPerPage,
+                sort: this.sort(),
+                filter: { 'status.equal': STATUS_ACTIVE }
+            })
+            .subscribe((res: HttpResponse<IOperationalHead[]>) => this.paginateLists(res.body, res.headers));
     }
 
     // Send a head office object to a service (create or update)
@@ -124,12 +121,10 @@ export class OperationalHeadComponent implements OnInit {
         this.operationalHead.status = STATUS_ACTIVE;
         if (this.operationalHead.id !== undefined) {
             this.alertTitle = 'updated';
-            this.subscribeToSaveResponse(
-                this.operationalHeadService.update(this.operationalHead), this.alertTitle);
+            this.subscribeToSaveResponse(this.operationalHeadService.update(this.operationalHead), this.alertTitle);
         } else {
             this.alertTitle = 'created';
-            this.subscribeToSaveResponse(
-                this.operationalHeadService.create(this.operationalHead), this.alertTitle);
+            this.subscribeToSaveResponse(this.operationalHeadService.create(this.operationalHead), this.alertTitle);
         }
     }
 
@@ -175,8 +170,7 @@ export class OperationalHeadComponent implements OnInit {
         // console.log('head', headOffice);
         this.operationalHead = headOffice;
         this.operationalHead.status = SOFT_DELETE_STATUS;
-        this.operationalHeadService.update(this.operationalHead)
-        .subscribe(
+        this.operationalHeadService.update(this.operationalHead).subscribe(
             data => {
                 // console.log('upda', this.operationalHead);
                 alert('Delete Successfully.');

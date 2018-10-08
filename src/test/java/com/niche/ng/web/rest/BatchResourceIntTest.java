@@ -82,6 +82,9 @@ public class BatchResourceIntTest {
     private static final Integer DEFAULT_STATUS = 1;
     private static final Integer UPDATED_STATUS = 2;
 
+    private static final String DEFAULT_NO_OF_KG = "AAAAAAAAAA";
+    private static final String UPDATED_NO_OF_KG = "BBBBBBBBBB";
+
     @Autowired
     private BatchRepository batchRepository;
 
@@ -139,7 +142,8 @@ public class BatchResourceIntTest {
             .closedDate(DEFAULT_CLOSED_DATE)
             .round(DEFAULT_ROUND)
             .remarks(DEFAULT_REMARKS)
-            .status(DEFAULT_STATUS);
+            .status(DEFAULT_STATUS)
+            .noOfKg(DEFAULT_NO_OF_KG);
         return batch;
     }
 
@@ -173,6 +177,7 @@ public class BatchResourceIntTest {
         assertThat(testBatch.getRound()).isEqualTo(DEFAULT_ROUND);
         assertThat(testBatch.getRemarks()).isEqualTo(DEFAULT_REMARKS);
         assertThat(testBatch.getStatus()).isEqualTo(DEFAULT_STATUS);
+        assertThat(testBatch.getNoOfKg()).isEqualTo(DEFAULT_NO_OF_KG);
     }
 
     @Test
@@ -309,7 +314,8 @@ public class BatchResourceIntTest {
             .andExpect(jsonPath("$.[*].closedDate").value(hasItem(DEFAULT_CLOSED_DATE.toString())))
             .andExpect(jsonPath("$.[*].round").value(hasItem(DEFAULT_ROUND)))
             .andExpect(jsonPath("$.[*].remarks").value(hasItem(DEFAULT_REMARKS.toString())))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)));
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)))
+            .andExpect(jsonPath("$.[*].noOfKg").value(hasItem(DEFAULT_NO_OF_KG.toString())));
     }
     
 
@@ -332,7 +338,8 @@ public class BatchResourceIntTest {
             .andExpect(jsonPath("$.closedDate").value(DEFAULT_CLOSED_DATE.toString()))
             .andExpect(jsonPath("$.round").value(DEFAULT_ROUND))
             .andExpect(jsonPath("$.remarks").value(DEFAULT_REMARKS.toString()))
-            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS));
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS))
+            .andExpect(jsonPath("$.noOfKg").value(DEFAULT_NO_OF_KG.toString()));
     }
 
     @Test
@@ -850,6 +857,45 @@ public class BatchResourceIntTest {
 
     @Test
     @Transactional
+    public void getAllBatchesByNoOfKgIsEqualToSomething() throws Exception {
+        // Initialize the database
+        batchRepository.saveAndFlush(batch);
+
+        // Get all the batchList where noOfKg equals to DEFAULT_NO_OF_KG
+        defaultBatchShouldBeFound("noOfKg.equals=" + DEFAULT_NO_OF_KG);
+
+        // Get all the batchList where noOfKg equals to UPDATED_NO_OF_KG
+        defaultBatchShouldNotBeFound("noOfKg.equals=" + UPDATED_NO_OF_KG);
+    }
+
+    @Test
+    @Transactional
+    public void getAllBatchesByNoOfKgIsInShouldWork() throws Exception {
+        // Initialize the database
+        batchRepository.saveAndFlush(batch);
+
+        // Get all the batchList where noOfKg in DEFAULT_NO_OF_KG or UPDATED_NO_OF_KG
+        defaultBatchShouldBeFound("noOfKg.in=" + DEFAULT_NO_OF_KG + "," + UPDATED_NO_OF_KG);
+
+        // Get all the batchList where noOfKg equals to UPDATED_NO_OF_KG
+        defaultBatchShouldNotBeFound("noOfKg.in=" + UPDATED_NO_OF_KG);
+    }
+
+    @Test
+    @Transactional
+    public void getAllBatchesByNoOfKgIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        batchRepository.saveAndFlush(batch);
+
+        // Get all the batchList where noOfKg is not null
+        defaultBatchShouldBeFound("noOfKg.specified=true");
+
+        // Get all the batchList where noOfKg is null
+        defaultBatchShouldNotBeFound("noOfKg.specified=false");
+    }
+
+    @Test
+    @Transactional
     public void getAllBatchesByDamagesIsEqualToSomething() throws Exception {
         // Initialize the database
         Damage damages = DamageResourceIntTest.createEntity(em);
@@ -1034,7 +1080,8 @@ public class BatchResourceIntTest {
             .andExpect(jsonPath("$.[*].closedDate").value(hasItem(DEFAULT_CLOSED_DATE.toString())))
             .andExpect(jsonPath("$.[*].round").value(hasItem(DEFAULT_ROUND)))
             .andExpect(jsonPath("$.[*].remarks").value(hasItem(DEFAULT_REMARKS.toString())))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)));
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)))
+            .andExpect(jsonPath("$.[*].noOfKg").value(hasItem(DEFAULT_NO_OF_KG.toString())));
     }
 
     /**
@@ -1077,7 +1124,8 @@ public class BatchResourceIntTest {
             .closedDate(UPDATED_CLOSED_DATE)
             .round(UPDATED_ROUND)
             .remarks(UPDATED_REMARKS)
-            .status(UPDATED_STATUS);
+            .status(UPDATED_STATUS)
+            .noOfKg(UPDATED_NO_OF_KG);
         BatchDTO batchDTO = batchMapper.toDto(updatedBatch);
 
         restBatchMockMvc.perform(put("/api/batches")
@@ -1098,6 +1146,7 @@ public class BatchResourceIntTest {
         assertThat(testBatch.getRound()).isEqualTo(UPDATED_ROUND);
         assertThat(testBatch.getRemarks()).isEqualTo(UPDATED_REMARKS);
         assertThat(testBatch.getStatus()).isEqualTo(UPDATED_STATUS);
+        assertThat(testBatch.getNoOfKg()).isEqualTo(UPDATED_NO_OF_KG);
     }
 
     @Test

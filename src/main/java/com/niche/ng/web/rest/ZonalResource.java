@@ -141,21 +141,7 @@ public class ZonalResource {
         zonalService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
-
-    /**
-     * DELETE  /zonals/:id : delete the "id" zonal.
-     * 
-     * @param id the id of the zonalDTO to delete
-     * @return the ResponseEntity with status 200 (OK)
-     */
-    @GetMapping("/zonals/soft-delete/{id}")
-    @Timed
-    public ResponseEntity<Void> softDelete(@PathVariable Long id) {
-        log.debug("REST request to delete zonal : {}", id);
-        zonalService.softDelete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
-    }
-
+    
     /**
      * GET  /zonals/headoffice/:operationalHeadId/:status : get all the zonals of particular operationalHeadId.
      *
@@ -169,5 +155,18 @@ public class ZonalResource {
         log.debug("REST request to get a list of particular head office zonals");
         List<ZonalDTO> list = zonalService.findParticularHeadOfficeZonal(operationalHeadId, status);
         return ResponseEntity.ok().body(list);
+    }
+
+    /**
+     * GET  /zonals/active-record:status : get the "status" zonals.
+     *
+     * @param status the status of the ZonalDTO to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the ZonalDTO, or with status 404 (Not Found)
+     */
+    @GetMapping("/zonals/count/{status}")
+    @Timed
+    public Long getZonalCount(@PathVariable Integer status) {
+        log.debug("REST request to get a list of particular status of zonals");
+        return zonalService.findActiveCount(status);
     }
 }

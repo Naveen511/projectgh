@@ -30,8 +30,6 @@ public class SectorCriteria implements Serializable {
 
     private StringFilter sectorName;
 
-    private StringFilter sectorAddress;
-
     private IntegerFilter status;
 
     private LongFilter nurserysId;
@@ -63,14 +61,6 @@ public class SectorCriteria implements Serializable {
 
     public void setSectorName(StringFilter sectorName) {
         this.sectorName = sectorName;
-    }
-
-    public StringFilter getSectorAddress() {
-        return sectorAddress;
-    }
-
-    public void setSectorAddress(StringFilter sectorAddress) {
-        this.sectorAddress = sectorAddress;
     }
 
     public IntegerFilter getStatus() {
@@ -134,7 +124,6 @@ public class SectorCriteria implements Serializable {
         return "SectorCriteria{" +
                 (id != null ? "id=" + id + ", " : "") +
                 (sectorName != null ? "sectorName=" + sectorName + ", " : "") +
-                (sectorAddress != null ? "sectorAddress=" + sectorAddress + ", " : "") +
                 (status != null ? "status=" + status + ", " : "") +
                 (nurserysId != null ? "nurserysId=" + nurserysId + ", " : "") +
                 (zonalId != null ? "zonalId=" + zonalId + ", " : "") +

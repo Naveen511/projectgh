@@ -38,7 +38,7 @@ export const navItems = [
         icon: 'icon-organization'
     },
     {
-        name: 'Financial Year Settings',
+        name: 'Calendar Settings',
         url: '/configuration/financialYearSettings',
         icon: 'icon-equalizer'
     },
@@ -97,5 +97,5 @@ export const navItems = [
         name: 'Audit Details',
         url: '/entity-audit/entity-audit',
         icon: 'icon-layers'
-    },
+    }
 ];

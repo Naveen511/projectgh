@@ -1,5 +1,7 @@
 package com.niche.ng.service.mapper;
 
+import java.util.List;
+
 import com.niche.ng.domain.*;
 import com.niche.ng.service.dto.QuantityDTO;
 
@@ -20,6 +22,8 @@ public interface QuantityMapper extends EntityMapper<QuantityDTO, Quantity> {
     @Mapping(source = "pickListVarietyId", target = "pickListVariety")
     @Mapping(source = "pickListCategoryId", target = "pickListCategory")
     Quantity toEntity(QuantityDTO quantityDTO);
+
+    List<QuantityDTO> toDto(List<Quantity> quantity);
 
     default Quantity fromId(Long id) {
         if (id == null) {

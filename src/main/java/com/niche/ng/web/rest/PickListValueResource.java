@@ -143,20 +143,6 @@ public class PickListValueResource {
     }
 
     /**
-     * DELETE  /pick-lists-values/:id : delete the "id" pickListValue.
-     * 
-     * @param id the id of the pickListValueDTO to delete
-     * @return the ResponseEntity with status 200 (OK)
-     */
-    @GetMapping("/pick-lists-values/soft-delete/{id}")
-    @Timed
-    public ResponseEntity<Void> softDelete(@PathVariable Long id) {
-        log.debug("REST request to delete pickListValue : {}", id);
-        pickListValueService.softDelete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
-    }
-
-    /**
      * GET  /pick-list-values/zoanl/:pickListId : get all the sectors of particular pickValueId.
      *
      * @param pickListId the pickListId of the sectorDTO to retrieve

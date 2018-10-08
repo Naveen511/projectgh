@@ -7,7 +7,6 @@ import { IMapSectorWithZonal } from 'app/shared/model//map-sector-with-zonal.mod
 export interface IZonal {
     id?: number;
     zoneName?: string;
-    zoneAddress?: string;
     status?: number;
     sectors?: ISector[];
     financialYearBatchName?: string;
@@ -23,7 +22,6 @@ export class Zonal implements IZonal {
     constructor(
         public id?: number,
         public zoneName?: string,
-        public zoneAddress?: string,
         public status?: number,
         public sectors?: ISector[],
         public financialYearBatchName?: string,
@@ -39,7 +37,6 @@ export class Zonal implements IZonal {
 export class ZonalModel {
     id?: number;
     zoneName?: string;
-    zoneAddress?: string;
     status?: number;
     sectors?: ISector[];
     financialYearBatchName?: string;

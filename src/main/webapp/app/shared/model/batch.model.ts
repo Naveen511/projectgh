@@ -14,6 +14,7 @@ export interface IBatch {
     round?: number;
     remarks?: string;
     status?: number;
+    noOfKg?: string;
     damages?: IDamage[];
     shadeAreas?: IShadeArea[];
     nurseryStockDetails?: INurseryStockDetails[];
@@ -43,6 +44,7 @@ export class Batch implements IBatch {
         public round?: number,
         public remarks?: string,
         public status?: number,
+        public noOfKg?: string,
         public damages?: IDamage[],
         public shadeAreas?: IShadeArea[],
         public nurseryStockDetails?: INurseryStockDetails[],
@@ -72,6 +74,7 @@ export class BatchModel {
     round?: number;
     remarks?: string;
     status?: number;
+    noOfKg?: string;
     damages?: IDamage[];
     shadeAreas?: IShadeArea[];
     nurseryStockDetails?: INurseryStockDetails[];

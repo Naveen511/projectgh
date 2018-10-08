@@ -132,20 +132,6 @@ public class FinancialYearSettingsResource {
     }
 
     /**
-     * DELETE  /financial-year-settings/:id : delete the "id" FinancialYearSettings.
-     * 
-     * @param id the id of the financialYearSettingsDTO to delete
-     * @return the ResponseEntity with status 200 (OK)
-     */
-    @GetMapping("/financial-year-settings/soft-delete/{id}")
-    @Timed
-    public ResponseEntity<Void> softDelete(@PathVariable Long id) {
-        log.debug("REST request to delete FinancialYearSettings : {}", id);
-        financialYearSettingsService.softDelete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
-    }
-
-    /**
      * GET  /financial-year-settings/active-record:status : get the "status" financialYearSettings.
      *
      * @param status the status of the financialYearSettingsDTO to retrieve

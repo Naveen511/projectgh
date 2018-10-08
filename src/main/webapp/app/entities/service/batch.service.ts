@@ -54,16 +54,14 @@ export class BatchService {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
-    softDelete(id: number): Observable<HttpResponse<any>> {
-        return this.http.delete<any>(`${this.resourceUrl}/${id}`, {observe: 'response'});
-    }
-
     // Get all the record of batch based on filter
     getReport(fromDate: any, toDate: any): Observable<EntityArrayResponseType> {
         // console.log(fromDate.format(DATE_FORMAT));
         // console.log(fromDate);
         return this.http
-            .get<IBatch[]>(`${this.resourceUrl}/filter/${fromDate.format(DATE_FORMAT)}/${toDate.format(DATE_FORMAT)}`, { observe: 'response' })
+            .get<IBatch[]>(`${this.resourceUrl}/filter/${fromDate.format(DATE_FORMAT)}/${toDate.format(DATE_FORMAT)}`, {
+                observe: 'response'
+            })
             .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
     }
 

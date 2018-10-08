@@ -54,10 +54,6 @@ export class GodownPurchaseDetailsService {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
-    softDelete(id: number): Observable<HttpResponse<any>> {
-        return this.http.delete<any>(`${this.resourceUrl}/${id}`, {observe: 'response'});
-    }
-
     private convertDateFromClient(godownPurchaseDetails: IGodownPurchaseDetails): IGodownPurchaseDetails {
         const copy: IGodownPurchaseDetails = Object.assign({}, godownPurchaseDetails, {
             date:

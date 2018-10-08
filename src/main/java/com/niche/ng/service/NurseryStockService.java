@@ -50,6 +50,14 @@ public interface NurseryStockService {
     Optional<NurseryStockDTO> findOne(Long id);
 
     /**
+     * Get the "id" nurseryStock.
+     *
+     * @param id the id of the entity
+     * @return the entity
+     */
+    List<NurseryStockDTO> findNurseryId(Long id);
+
+    /**
      * Delete the "id" nurseryStock.
      *
      * @param id the id of the entity

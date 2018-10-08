@@ -23,4 +23,5 @@ import java.util.List;
 @Repository
 public interface SectorRepository extends JpaRepository<Sector, Long>, JpaSpecificationExecutor<Sector> {
     List<Sector> findByZonalId(Long zonalId);
+    long countByStatus(Integer status);
 }

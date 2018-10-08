@@ -55,10 +55,4 @@ public interface GodownService {
      */
     void delete(Long id);
 
-    /**
-     * softDelete the "id" Zonal
-     * 
-     * @param id the id of the entity
-     */
-    void softDelete(Long id);
 }

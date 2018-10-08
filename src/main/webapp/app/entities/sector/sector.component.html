@@ -16,7 +16,6 @@
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="sectorName"><span jhiTranslate="projectghApp.sector.sectorName">Sector Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="sectorAddress"><span jhiTranslate="projectghApp.sector.sectorAddress">Sector Address</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="status"><span jhiTranslate="projectghApp.sector.status">Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="zonalZoneName"><span jhiTranslate="projectghApp.sector.zonal">Zonal</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="financialYearSectorBatchName"><span jhiTranslate="projectghApp.sector.financialYearSector">Financial Year Sector</span> <fa-icon [icon]="'sort'"></fa-icon></th>
@@ -27,7 +26,6 @@
             <tr *ngFor="let sector of sectors ;trackBy: trackId">
                 <td><a [routerLink]="['/sector', sector.id, 'view' ]">{{sector.id}}</a></td>
                 <td>{{sector.sectorName}}</td>
-                <td>{{sector.sectorAddress}}</td>
                 <td>{{sector.status}}</td>
                 <td>
                     <div *ngIf="sector.zonalId">

@@ -25,8 +25,6 @@ public class SectorDTO extends AbstractAuditingDTO implements Serializable {
     @NotNull(message = "Sector name cannot be blank.")
     private String sectorName;
 
-    private String sectorAddress;
-
     private Integer status;
 
     @NotNull(message = "Zonal name cannot be blank.")
@@ -52,14 +50,6 @@ public class SectorDTO extends AbstractAuditingDTO implements Serializable {
 
     public void setSectorName(String sectorName) {
         this.sectorName = sectorName;
-    }
-
-    public String getSectorAddress() {
-        return sectorAddress;
-    }
-
-    public void setSectorAddress(String sectorAddress) {
-        this.sectorAddress = sectorAddress;
     }
 
     public Integer getStatus() {
@@ -128,7 +118,6 @@ public class SectorDTO extends AbstractAuditingDTO implements Serializable {
         return "SectorDTO{" +
             "id=" + getId() +
             ", sectorName='" + getSectorName() + "'" +
-            ", sectorAddress='" + getSectorAddress() + "'" +
             ", status=" + getStatus() +
             ", zonal=" + getZonalId() +
             ", zonal='" + getZonalZoneName() + "'" +

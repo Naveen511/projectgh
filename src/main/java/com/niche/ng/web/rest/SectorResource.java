@@ -143,20 +143,6 @@ public class SectorResource {
     }
 
     /**
-     * DELETE  /sectors/:id : delete the "id" Sector.
-     * 
-     * @param id the id of the sectorDTO to delete
-     * @return the ResponseEntity with status 200 (OK)
-     */
-    @GetMapping("/sectors/soft-delete/{id}")
-    @Timed
-    public ResponseEntity<Void> softDelete(@PathVariable Long id) {
-        log.debug("REST request to delete Sector : {}", id);
-        sectorService.softDelete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
-    }
-
-    /**
      * GET  /sectors/zoanl/:zonalId : get all the sectors of particular zonalId.
      *
      * @param zonalId the zonalId of the sectorDTO to retrieve
@@ -168,5 +154,18 @@ public class SectorResource {
         log.debug("REST request to get a list of particular zonal Sectors");
         List<SectorDTO> sectorList = sectorService.findZonalSectors(zonalId);
         return ResponseEntity.ok().body(sectorList);
+    }
+
+    /**
+     * GET  /sectors/active-record:status : get the "status" Sector.
+     *
+     * @param status the status of the sectorDTO to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the sectorDTO, or with status 404 (Not Found)
+     */
+    @GetMapping("/sectors/count/{status}")
+    @Timed
+    public Long getSectorCount(@PathVariable Integer status) {
+        log.debug("REST request to get a list of particular status of sectors");
+        return sectorService.findActiveCount(status);
     }
 }

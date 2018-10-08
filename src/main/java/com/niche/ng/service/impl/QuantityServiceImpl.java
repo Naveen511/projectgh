@@ -13,7 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
+import java.util.List;
 import java.util.Optional;
 /**
  * Service Implementation for managing Quantity.
@@ -87,14 +87,9 @@ public class QuantityServiceImpl implements QuantityService {
         quantityRepository.deleteById(id);
     }
 
-    /**
-     * softDelete the quantity by id
-     * 
-     * @param id the id of the entity
-     */
     @Override
-    public void softDelete(Long id) {
-        log.debug("Request to delete quantity : {}", id);
-        quantityRepository.findById(id);
+    public List<QuantityDTO> findQuantity(Long pickListQuantityId, Long quantityTypeId) {
+        List<Quantity> test = quantityRepository.findByPickListVarietyIdAndPickListCategoryId(pickListQuantityId,quantityTypeId);
+        return quantityMapper.toDto(test);
     }
 }

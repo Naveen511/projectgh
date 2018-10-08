@@ -23,4 +23,5 @@ import java.util.List;
 @Repository
 public interface MotherBedRepository extends JpaRepository<MotherBed, Long>, JpaSpecificationExecutor<MotherBed> {
     List<MotherBed> findByNurseryId(Long nurseryId);
+    List<MotherBed> findByNurseryIdAndStatus(Long nurseryId, Integer status);
 }

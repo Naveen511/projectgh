@@ -16,7 +16,6 @@
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="zoneName"><span jhiTranslate="projectghApp.zonal.zoneName">Zone Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="zoneAddress"><span jhiTranslate="projectghApp.zonal.zoneAddress">Zone Address</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="status"><span jhiTranslate="projectghApp.zonal.status">Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="financialYearBatchName"><span jhiTranslate="projectghApp.zonal.financialYear">Financial Year</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="operationalHeadName"><span jhiTranslate="projectghApp.zonal.operationalHead">Operational Head</span> <fa-icon [icon]="'sort'"></fa-icon></th>
@@ -27,7 +26,6 @@
             <tr *ngFor="let zonal of zonals ;trackBy: trackId">
                 <td><a [routerLink]="['/zonal', zonal.id, 'view' ]">{{zonal.id}}</a></td>
                 <td>{{zonal.zoneName}}</td>
-                <td>{{zonal.zoneAddress}}</td>
                 <td>{{zonal.status}}</td>
                 <td>
                     <div *ngIf="zonal.financialYearId">

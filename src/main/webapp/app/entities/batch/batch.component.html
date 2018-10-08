@@ -24,6 +24,7 @@
             <th jhiSortBy="round"><span jhiTranslate="projectghApp.batch.round">Round</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="remarks"><span jhiTranslate="projectghApp.batch.remarks">Remarks</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="status"><span jhiTranslate="projectghApp.batch.status">Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="noOfKg"><span jhiTranslate="projectghApp.batch.noOfKg">No Of Kg</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="nurseryNurseryName"><span jhiTranslate="projectghApp.batch.nursery">Nursery</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="pickListVarietyPickListValue"><span jhiTranslate="projectghApp.batch.pickListVariety">Pick List Variety</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="pickListCategoryPickListValue"><span jhiTranslate="projectghApp.batch.pickListCategory">Pick List Category</span> <fa-icon [icon]="'sort'"></fa-icon></th>
@@ -45,6 +46,7 @@
                 <td>{{batch.round}}</td>
                 <td>{{batch.remarks}}</td>
                 <td>{{batch.status}}</td>
+                <td>{{batch.noOfKg}}</td>
                 <td>
                     <div *ngIf="batch.nurseryId">
                         <a [routerLink]="['../nursery', batch.nurseryId , 'view' ]" >{{batch.nurseryNurseryName}}</a>

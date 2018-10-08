@@ -28,7 +28,7 @@ public class MotherBedCriteria implements Serializable {
 
     private LongFilter id;
 
-    private IntegerFilter value;
+    private StringFilter value;
 
     private IntegerFilter status;
 
@@ -47,11 +47,11 @@ public class MotherBedCriteria implements Serializable {
         this.id = id;
     }
 
-    public IntegerFilter getValue() {
+    public StringFilter getValue() {
         return value;
     }
 
-    public void setValue(IntegerFilter value) {
+    public void setValue(StringFilter value) {
         this.value = value;
     }
 

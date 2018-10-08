@@ -89,6 +89,20 @@ public class NurseryStockServiceImpl implements NurseryStockService {
     }
 
     /**
+     * Get one nurseryStock by id.
+     *
+     * @param id the id of the entity
+     * @return the entity
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<NurseryStockDTO> findNurseryId(Long nurseryId) {
+        log.debug("Request to get NurseryStock : {}", nurseryId);
+        List<NurseryStock> stock = nurseryStockRepository.findByNurseryId(nurseryId);
+        return nurseryStockMapper.toDto(stock);
+    }
+
+    /**
      * Delete the nurseryStock by id.
      *
      * @param id the id of the entity

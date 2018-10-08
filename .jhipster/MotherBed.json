@@ -21,7 +21,7 @@
     "fields": [
         {
             "fieldName": "value",
-            "fieldType": "Integer",
+            "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]

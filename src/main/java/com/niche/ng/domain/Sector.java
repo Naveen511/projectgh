@@ -44,9 +44,6 @@ public class Sector extends AbstractAuditingEntity implements Serializable {
     @Column(name = "sector_name", nullable = false)
     private String sectorName;
 
-    @Column(name = "sector_address")
-    private String sectorAddress;
-
     @Column(name = "status")
     private Integer status;
 
@@ -91,19 +88,6 @@ public class Sector extends AbstractAuditingEntity implements Serializable {
 
     public void setSectorName(String sectorName) {
         this.sectorName = sectorName;
-    }
-
-    public String getSectorAddress() {
-        return sectorAddress;
-    }
-
-    public Sector sectorAddress(String sectorAddress) {
-        this.sectorAddress = sectorAddress;
-        return this;
-    }
-
-    public void setSectorAddress(String sectorAddress) {
-        this.sectorAddress = sectorAddress;
     }
 
     public Integer getStatus() {
@@ -271,7 +255,6 @@ public class Sector extends AbstractAuditingEntity implements Serializable {
         return "Sector{" +
             "id=" + getId() +
             ", sectorName='" + getSectorName() + "'" +
-            ", sectorAddress='" + getSectorAddress() + "'" +
             ", status=" + getStatus() +
             "}";
     }

@@ -48,10 +48,6 @@
             ]
         },
         {
-            "fieldName": "zoneAddress",
-            "fieldType": "String"
-        },
-        {
             "fieldName": "status",
             "fieldType": "Integer"
         }

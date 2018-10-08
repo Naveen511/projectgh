@@ -23,4 +23,5 @@ import java.util.List;
 @Repository
 public interface ZonalRepository extends JpaRepository<Zonal, Long>, JpaSpecificationExecutor<Zonal> {
     List<Zonal> findByOperationalHeadIdAndStatus(Long operationalHeadId, Integer status);
+    long countByStatus(Integer status);
 }

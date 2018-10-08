@@ -79,9 +79,6 @@ public class ZonalQueryService extends QueryService<Zonal> {
             if (criteria.getZoneName() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getZoneName(), Zonal_.zoneName));
             }
-            if (criteria.getZoneAddress() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getZoneAddress(), Zonal_.zoneAddress));
-            }
             if (criteria.getStatus() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getStatus(), Zonal_.status));
             }

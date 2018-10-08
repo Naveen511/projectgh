@@ -97,15 +97,4 @@ public class GodownServiceImpl implements GodownService {
         log.debug("Request to delete Godown : {}", id);
         godownRepository.deleteById(id);
     }
-
-    /**
-     * softDelete the Zonal by id
-     * 
-     * @param id the id of the entity
-     */
-    @Override
-    public void softDelete(Long id) {
-        log.debug("Request to delete Zonal : {}", id);
-        godownRepository.findById(id);
-    }
 }

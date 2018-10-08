@@ -100,17 +100,6 @@ public class ZonalServiceImpl implements ZonalService {
     }
 
     /**
-     * softDelete the Zonal by id
-     * 
-     * @param id the id of the entity
-     */
-    @Override
-    public void softDelete(Long id) {
-        log.debug("Request to delete Zonal : {}", id);
-        zonalRepository.findById(id);
-    }
-
-    /**
      * Get all the zonals by operationalHeadId.
      *
      * @param operationalHeadId the operationalHeadId of the entity
@@ -123,5 +112,10 @@ public class ZonalServiceImpl implements ZonalService {
         log.debug("Request to get Sectors : {}", operationalHeadId);
         List<Zonal> list = zonalRepository.findByOperationalHeadIdAndStatus(operationalHeadId, status);
         return zonalMapper.toDto(list);
+    }
+
+    @Override
+    public Long findActiveCount(Integer status) {
+        return zonalRepository.countByStatus(status);
     }
 }

@@ -203,7 +203,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="form-group col-sm-4">
+                        <div class="form-group col-sm-3">
                             <label for="name">Nursery Type*</label>
                             <select [(ngModel)]="nurseryObject.nurseryTypeId"
                                 id="nurseryTypeId" name="nurseryTypeId" class="form-control">
@@ -211,6 +211,18 @@
                                 <option *ngFor="let val of varietys" 
                                     value={{val.id}}>{{val.pickListValue}}</option>
                             </select>
+                        </div>
+                        <div class="form-group col-sm-3">
+                                <label for="name">From Date</label>
+                                <div class="input-group">
+                                        <input id="field_fromDate" type="text" class="form-control" name="fromDate" 
+                                        [(ngModel)]="mapNurseryWithSector.fromDate" ngbDatepicker  #fromDateDp="ngbDatepicker" readonly/>
+                                        <span class="input-group-append">
+                                            <button class="btn btn-secondary" (click)="fromDateDp.toggle()">
+                                                <fa-icon [icon]="'calendar-alt'"></fa-icon>
+                                            </button>
+                                        </span>
+                                </div>
                         </div>
                         <div class="form-group col-sm-6">
                             <label for="textarea-input">Address</label>
@@ -220,6 +232,20 @@
                             </textarea>
                         </div>
                     </div>
+                    <!-- <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="text-input">From Date</label>
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                <input id="field_fromDate" type="text" class="form-control" name="fromDate" 
+                                [(ngModel)]="mapNurseryWithSector.fromDate" ngbDatepicker  #fromDateDp="ngbDatepicker" readonly/>
+                                <span class="input-group-append">
+                                    <button class="btn btn-secondary" (click)="fromDateDp.toggle()">
+                                        <fa-icon [icon]="'calendar-alt'"></fa-icon>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div> -->
                 </form>
             </div>
             <div class="modal-footer">

@@ -146,20 +146,6 @@ public class BatchResource {
     }
 
     /**
-     * DELETE  /batches/:id : delete the "id" batch.
-     * 
-     * @param id the id of the batchDTO to delete
-     * @return the ResponseEntity with status 200 (OK)
-     */
-    @GetMapping("/batches/soft-delete/{id}")
-    @Timed
-    public ResponseEntity<Void> softDelete(@PathVariable Long id) {
-        log.debug("REST request to delete batch : {}", id);
-        batchService.softDelete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
-    }
-
-    /**
      * GET  /batches/filter/:fromDate/toDate : get all the BatchDTO of date between 2 date.
      *
      * @param fromDate the Date of the BatchDto to retrieve

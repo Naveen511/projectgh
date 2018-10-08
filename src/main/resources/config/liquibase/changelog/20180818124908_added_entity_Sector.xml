@@ -24,11 +24,7 @@
             <column name="sector_name" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-
-            <column name="sector_address" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-
+            
             <column name="status" type="integer">
                 <constraints nullable="true" />
             </column>

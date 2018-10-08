@@ -103,6 +103,9 @@ public class BatchQueryService extends QueryService<Batch> {
             if (criteria.getStatus() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getStatus(), Batch_.status));
             }
+            if (criteria.getNoOfKg() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getNoOfKg(), Batch_.noOfKg));
+            }
             if (criteria.getDamagesId() != null) {
                 specification = specification.and(buildReferringEntitySpecification(criteria.getDamagesId(), Batch_.damages, Damage_.id));
             }

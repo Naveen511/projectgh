@@ -12,4 +12,5 @@ import java.util.List;
 @Repository
 public interface OperationalHeadRepository extends JpaRepository<OperationalHead, Long>, JpaSpecificationExecutor<OperationalHead> {
     List<OperationalHead> findByStatus(Integer status);
+    long countByStatus(Integer status);
 }

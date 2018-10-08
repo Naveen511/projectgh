@@ -2,11 +2,84 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
+import { ZonalService } from 'app/entities/service/zonal.service';
+import { SectorService } from 'app/entities/service/sector.service';
+import { NurseryService } from 'app/entities/service/nursery.service';
+import { OperationalHeadService } from 'app/entities/service/operational-head.service';
+import { HttpResponse } from '@angular/common/http';
+import { IOperationalHead } from 'app/shared/model/operational-head.model';
+import { IZonal } from 'app/shared/model/zonal.model';
+import { PickListValueService } from 'app/entities/service/pick-list-value.service';
+import { IPickListValue } from 'app/shared/model/pick-list-value.model';
+import { NurseryStockService } from 'app/entities/service/nursery-stock.service';
+import { INurseryStock } from 'app/shared/model/nursery-stock.model';
+import { ISector } from 'app/shared/model/sector.model';
+import { INursery } from 'app/shared/model/nursery.model';
 
 @Component({
     templateUrl: 'dashboard.component.html'
 })
 export class DashboardComponent implements OnInit {
+    operationalHeadCount: IOperationalHead[];
+    zonalCount: IZonal[];
+    sectorCount: ISector[];
+    nurseryCount: INursery[];
+    pickListValue: IPickListValue[];
+
+    // operationalHeadCount: any;
+    // zonalCount: any;
+    // sectorCount: any;
+    // nurseryCount: any;
+    // pickListValue: any;
+    public ids: any = [];
+    addedQuan: any = [];
+    consumedQuan: any = [];
+    currentQuan: any = [];
+
+    stockDetailLabel: INurseryStock[];
+
+    // operationalCount: number;
+    constructor(
+        private operationalHeadService: OperationalHeadService,
+        private zonalService: ZonalService,
+        private sectorService: SectorService,
+        private nurseryService: NurseryService,
+        private pickListValueService: PickListValueService,
+        private nurseryStockService: NurseryStockService
+    ) {}
+
+    // barChart
+    public barChartOptions: any = {
+        scaleShowVerticalLines: false,
+        responsive: true
+    };
+
+    public stockDamageLabel: string[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+    // public stockDetailLabel: string[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+    public barChartType = 'bar';
+    public barChartLegend = true;
+
+    public stockDamageData: any[] = [
+        { data: [65, 59, 80, 81, 56, 55, 40], label: 'Godown Stock' },
+        { data: [28, 48, 40, 19, 86, 27, 90], label: 'Godown Damage' },
+        { data: [65, 59, 80, 81, 56, 55, 40], label: 'Nursery Stock' },
+        { data: [28, 48, 40, 19, 86, 27, 90], label: 'Nursery Damage' }
+    ];
+    public stockDetailData: any[] = [
+        { data: this.addedQuan, label: 'Added Quantity' },
+        // {data: this.consumedQuan, label: 'Consumed Quantity'},
+        { data: this.currentQuan, label: 'Current Quantity' }
+    ];
+
+    // Doughnut
+    public seedlingCurrentStockLabels: string[] = ['Seedling Stock', 'Current Stock'];
+    public seedlingCurrentStockData: number[] = [350, 450];
+    public productionLabel: String[] = ['Production', 'Germination', 'Seed Sowing', 'Seed Received'];
+    public productionData: number[] = [100, 350, 450, 100];
+    public DistributionLabels: string[] = ['Sent', 'Received'];
+    public DistributionData: number[] = [350, 450];
+    public doughnutChartType = 'doughnut';
+
     radioModel = 'Month';
     // lineChart1
     public lineChart1Data: Array<any> = [
@@ -431,10 +504,58 @@ export class DashboardComponent implements OnInit {
 
     ngOnInit(): void {
         // generate random values for mainChart
-        for (let i = 0; i <= this.mainChartElements; i++) {
-            this.mainChartData1.push(this.random(50, 200));
-            this.mainChartData2.push(this.random(80, 100));
-            this.mainChartData3.push(65);
-        }
+        // for (let i = 0; i <= this.mainChartElements; i++) {
+        //  this.mainChartData1.push(this.random(50, 200));
+        //             this.mainChartData2.push(this.random(80, 100));
+        //           this.mainChartData3.push(65);
+        //     }
+
+        // Get the count of operational head
+        this.operationalHeadService.getOperationalHeadCount().subscribe((res: HttpResponse<IOperationalHead[]>) => {
+            this.operationalHeadCount = res.body;
+            // this.operationalCount = this.operationalHeadCount.length;
+            // console.log('count', this.operationalHeadCount);
+        });
+
+        // Get the count of Zonal
+        this.zonalService.getZonalCount().subscribe((res: HttpResponse<IZonal[]>) => {
+            this.zonalCount = res.body;
+            // console.log('count', this.zonalCount);
+        });
+
+        // Get the count of Sector
+        this.sectorService.getSectorCount().subscribe((res: HttpResponse<IZonal[]>) => {
+            this.sectorCount = res.body;
+            // console.log('count', this.sectorCount);
+        });
+
+        // Get the count of Zonal
+        this.nurseryService.getNurseryCount().subscribe((res: HttpResponse<IZonal[]>) => {
+            this.nurseryCount = res.body;
+            // console.log('count', this.nurseryCount);
+        });
+
+        this.nurseryStockService.particularNursery(1401).subscribe((res: HttpResponse<INurseryStock[]>) => {
+            // console.log("category", res.body);
+            this.stockDetailLabel = res.body;
+            console.log('category', this.stockDetailLabel);
+            for (const result of this.stockDetailLabel) {
+                this.ids.push(result.pickListCategoryPickListValue);
+                this.addedQuan.push(result.addedQuantity);
+                this.consumedQuan.push(result.consumedQuantity);
+                this.currentQuan.push(result.currentQuantity);
+                // console.log("ids", this.ids);
+            }
+            console.log('Category', this.ids);
+            // console.log("addedQuantity", this.addedQuan);
+            // console.log("consumedQuantity", this.consumedQuan);
+            // console.log("currentQuantity", this.currentQuan);
+        });
+
+        // this.pickListValueService.query().subscribe((res: HttpResponse<IPickListValue[]>) => {
+        //     // console.log("category", res.body);
+        //     this.stockDetailLabel = res.body;
+        //     console.log("category", this.stockDetailLabel);
+        // });
     }
 }

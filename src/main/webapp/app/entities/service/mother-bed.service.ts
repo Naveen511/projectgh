@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
 
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared';
-import { IMotherBed } from 'app/shared/model/mother-bed.model';
+import { IMotherBed, STATUS_AVAILABLE } from 'app/shared/model/mother-bed.model';
 
 type EntityResponseType = HttpResponse<IMotherBed>;
 type EntityArrayResponseType = HttpResponse<IMotherBed[]>;
@@ -44,12 +44,12 @@ export class MotherBedService {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
-    softDelete(id: number): Observable<HttpResponse<any>> {
-        return this.http.delete<any>(`${this.resourceUrl}/${id}`, {observe: 'response'});
-    }
-
     // Get Motherbed details based on the nursery Id
     getMotherBed(nurseryId: number): Observable<EntityArrayResponseType> {
         return this.http.get<IMotherBed[]>(`${this.resourceUrl}/nursery/${nurseryId}`, { observe: 'response' });
+    }
+
+    getMotherBedNursery(nurseryId: number): Observable<EntityArrayResponseType> {
+        return this.http.get<IMotherBed[]>(`${this.resourceUrl}/nursery/${nurseryId}/${STATUS_AVAILABLE}`, { observe: 'response' });
     }
 }

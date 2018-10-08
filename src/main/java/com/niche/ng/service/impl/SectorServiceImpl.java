@@ -98,18 +98,7 @@ public class SectorServiceImpl implements SectorService {
         log.debug("Request to delete Sector : {}", id);
         sectorRepository.deleteById(id);
     }
-
-    /**
-     * softDelete the sector by id
-     * 
-     * @param id the id of the entity
-     */
-    @Override
-    public void softDelete(Long id) {
-        log.debug("Request to delete sector : {}", id);
-        sectorRepository.findById(id);
-    }
-
+    
     /**
      * Get all the sectors by zonalId.
      *
@@ -122,5 +111,10 @@ public class SectorServiceImpl implements SectorService {
         log.debug("Request to get Sectors : {}", zonalId);
         List<Sector> sector = sectorRepository.findByZonalId(zonalId);
         return sectorMapper.toDto(sector);
+    }
+
+    @Override
+    public Long findActiveCount(Integer status) {
+        return sectorRepository.countByStatus(status);
     }
 }

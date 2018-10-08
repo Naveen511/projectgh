@@ -128,6 +128,20 @@ public class NurseryStockResource {
     }
 
     /**
+     * GET  /nursery-stocks/:id : get the "id" nurseryStock.
+     *
+     * @param id the id of the nurseryStockDTO to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the nurseryStockDTO, or with status 404 (Not Found)
+     */
+    @GetMapping("/nursery-stocks/nursery/{nurseryId}")
+    @Timed
+    public ResponseEntity<List<NurseryStockDTO>> getparticularNursery(@PathVariable Long nurseryId) {
+        log.debug("REST request to get NurseryStock : {}", nurseryId);
+        List<NurseryStockDTO> list = nurseryStockService.findNurseryId(nurseryId);
+        return ResponseEntity.ok().body(list);
+    }
+
+    /**
      * DELETE  /nursery-stocks/:id : delete the "id" nurseryStock.
      *
      * @param id the id of the nurseryStockDTO to delete

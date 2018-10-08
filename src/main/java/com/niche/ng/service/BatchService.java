@@ -57,12 +57,5 @@ public interface BatchService {
      */
     void delete(Long id);
 
-    /**
-     * softDelete the "id" batch
-     * 
-     * @param id the id of the entity
-     */
-    void softDelete(Long id);
-
     List<BatchDTO> findDateBetween(LocalDate fromDate, LocalDate toDate);
 }

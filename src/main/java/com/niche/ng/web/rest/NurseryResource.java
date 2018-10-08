@@ -143,20 +143,6 @@ public class NurseryResource {
     }
 
     /**
-     * DELETE  /nurseries/:id : delete the "id" Nursery.
-     * 
-     * @param id the id of the nurseryDTO to delete
-     * @return the ResponseEntity with status 200 (OK)
-     */
-    @GetMapping("/nurseries/soft-delete/{id}")
-    @Timed
-    public ResponseEntity<Void> softDelete(@PathVariable Long id) {
-        log.debug("REST request to delete Nursery : {}", id);
-        nurseryService.softDelete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
-    }
-
-    /**
      * GET  /nurseries/sector/:sectorId : get all the sectors of particular sectorId.
      *
      * @param sectorId the sectorId of the nurseryDTO to retrieve
@@ -168,5 +154,18 @@ public class NurseryResource {
         log.debug("REST request to get a list of particular sector nurserys");
         List<NurseryDTO> nurseryList = nurseryService.findSectorNurserys(sectorId);
         return ResponseEntity.ok().body(nurseryList);
+    }
+
+    /**
+     * GET  /sectors/active-record:status : get the "status" nursery.
+     *
+     * @param status the status of the nurseryDTO to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the nurseryDTO, or with status 404 (Not Found)
+     */
+    @GetMapping("/nurseries/count/{status}")
+    @Timed
+    public Long getNurseryCount(@PathVariable Integer status) {
+        log.debug("REST request to get a list of particular status of nursery");
+        return nurseryService.findActiveCount(status);
     }
 }

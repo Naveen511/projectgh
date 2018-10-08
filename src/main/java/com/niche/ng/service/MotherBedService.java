@@ -57,17 +57,19 @@ public interface MotherBedService {
     void delete(Long id);
 
     /**
-     * softDelete the "id" motherBed
-     * 
-     * @param id the id of the entity
-     */
-    void softDelete(Long id);
-
-    /**
      * Get the "nurseryId" motherbeds.
      *
      * @param nurseryId the nurseryId of the entity
      * @return the list of entity
      */
     List<MotherBedDTO> findNurseryMotherBeds(Long nurseryId);
+
+    /**
+     * Get the "nurseryId" motherbeds with active status.
+     *
+     * @param nurseryId the nurseryId of the entity
+     * @param status the status of the entity
+     * @return the list of entity
+     */
+    List<MotherBedDTO> findAvailableNurseryMotherBeds(Long nurseryId, Integer status);
 }

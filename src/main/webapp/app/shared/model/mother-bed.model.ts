@@ -2,7 +2,7 @@ import { IBatch } from 'app/shared/model//batch.model';
 
 export interface IMotherBed {
     id?: number;
-    value?: number;
+    value?: string;
     status?: number;
     nurseryNurseryName?: string;
     nurseryId?: number;
@@ -12,7 +12,7 @@ export interface IMotherBed {
 export class MotherBed implements IMotherBed {
     constructor(
         public id?: number,
-        public value?: number,
+        public value?: string,
         public status?: number,
         public nurseryNurseryName?: string,
         public nurseryId?: number,
@@ -22,9 +22,12 @@ export class MotherBed implements IMotherBed {
 
 export class MotherBedModel {
     id?: number;
-    value?: number;
+    value?: string;
     status?: number;
     nurseryNurseryName?: string;
     nurseryId?: number;
     batchMotherBeds?: IBatch[];
 }
+
+export const STATUS_OCCUPIED = 3;
+export const STATUS_AVAILABLE = 1;

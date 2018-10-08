@@ -7,7 +7,6 @@ import { IMapNurseryWithSector } from 'app/shared/model//map-nursery-with-sector
 export interface ISector {
     id?: number;
     sectorName?: string;
-    sectorAddress?: string;
     status?: number;
     nurserys?: INursery[];
     zonalZoneName?: string;
@@ -23,7 +22,6 @@ export class Sector implements ISector {
     constructor(
         public id?: number,
         public sectorName?: string,
-        public sectorAddress?: string,
         public status?: number,
         public nurserys?: INursery[],
         public zonalZoneName?: string,
@@ -39,7 +37,6 @@ export class Sector implements ISector {
 export class SectorModel {
     id?: number;
     sectorName?: string;
-    sectorAddress?: string;
     status?: number;
     zonalZoneName?: string;
     zonalId?: number;

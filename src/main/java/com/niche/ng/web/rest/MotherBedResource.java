@@ -143,20 +143,6 @@ public class MotherBedResource {
     }
 
     /**
-     * DELETE  /mother-beds/:id : delete the "id" motherBed.
-     * 
-     * @param id the id of the motherBedDTO to delete
-     * @return the ResponseEntity with status 200 (OK)
-     */
-    @GetMapping("/mother-beds/soft-delete/{id}")
-    @Timed
-    public ResponseEntity<Void> softDelete(@PathVariable Long id) {
-        log.debug("REST request to delete motherBed : {}", id);
-        motherBedService.softDelete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
-    }
-
-    /**
      * GET  /mother-beds/nursery/:nurseryId : get all the motherBeds of particular nurseryId.
      *
      * @param nurseryId the nurseryId of the motherBedDTO to retrieve
@@ -169,4 +155,20 @@ public class MotherBedResource {
         List<MotherBedDTO> motherBedList = motherBedService.findNurseryMotherBeds(nurseryId);
         return ResponseEntity.ok().body(motherBedList);
     }
+
+    /**
+     * GET  /mother-beds/nursery/:nurseryId : get all the motherBeds of particular nurseryId.
+     *
+     * @param nurseryId the nurseryId of the motherBedDTO to retrieve
+     * @param status the status of the entity
+     * @return the ResponseEntity with status 200 (OK) and the list of sectors in body
+     */
+    @GetMapping("/mother-beds/nursery/{nurseryId}/{status}")
+    @Timed
+    public ResponseEntity<List<MotherBedDTO>> getMotherBedNursery(@PathVariable Long nurseryId, @PathVariable Integer status) {
+        log.debug("REST request to get a list of particular nursery motherBeds");
+        List<MotherBedDTO> motherBedList = motherBedService.findAvailableNurseryMotherBeds(nurseryId, status);
+        return ResponseEntity.ok().body(motherBedList);
+    }
+
 }

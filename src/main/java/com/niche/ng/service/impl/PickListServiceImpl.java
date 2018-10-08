@@ -97,15 +97,4 @@ public class PickListServiceImpl implements PickListService {
         log.debug("Request to delete PickList : {}", id);
         pickListRepository.deleteById(id);
     }
-
-    /**
-     * softDelete the pickList by id
-     * 
-     * @param id the id of the entity
-     */
-    @Override
-    public void softDelete(Long id) {
-        log.debug("Request to delete pickList : {}", id);
-        pickListRepository.findById(id);
-    }
 }

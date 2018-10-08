@@ -70,7 +70,7 @@
                                 <th jhiSortBy="financialYearSectorBatchName">Year <fa-icon [icon]="'sort'"></fa-icon></th>
                                 <th jhiSortBy="zonalZoneName">Zonal <fa-icon [icon]="'sort'"></fa-icon></th>
                                 <th jhiSortBy="sectorName">Name <fa-icon [icon]="'sort'"></fa-icon></th>
-                                <th jhiSortBy="sectorAddress">Address <fa-icon [icon]="'sort'"></fa-icon></th>
+                                <!-- <th jhiSortBy="sectorAddress">Address <fa-icon [icon]="'sort'"></fa-icon></th> -->
                                 <th jhiSortBy="createdAt">Created At <fa-icon [icon]="'sort'"></fa-icon></th>
                                 <th jhiSortBy="updatedAt">Updated At <fa-icon [icon]="'sort'"></fa-icon></th>
                                 <th class="text-center">Action</th>
@@ -82,7 +82,7 @@
                                 <td>{{sector.financialYearSectorBatchName}}</td>
                                 <td>{{sector.zonalZoneName}}</td>
                                 <td>{{sector.sectorName}}</td>
-                                <td>{{sector.sectorAddress}}</td>
+                                <!-- <td>{{sector.sectorAddress}}</td> -->
                                 <td>{{sector.createdAt | date:'medium'}}</td>
                                 <td>{{sector.updatedAt | date:'medium'}}</td>
                                 <td class="text-center">
@@ -179,7 +179,7 @@
                                 class="form-control" placeholder="Sector Name">
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <!-- <div class="form-group row">
                         <label class="col-md-3 col-form-label" for="textarea-input">Address</label>
                         <div class="col-md-9">
                             <textarea [(ngModel)]="sectorObject.sectorAddress" 
@@ -187,7 +187,7 @@
                                 rows="3" class="form-control" placeholder="Address..">
                             </textarea>
                         </div>
-                    </div>
+                    </div> -->
                 </form>
             </div>
             <div class="modal-footer">

@@ -43,14 +43,7 @@ public interface OperationalHeadService {
      * @param id the id of the entity
      */
     void delete(Long id);
-
-    /**
-     * sodtDelete the "id" operational head
-     * 
-     * @param id the id of the entity
-     */
-    void softDelete(Long id);
-
+    
     /**
      * Get the "status" operationalHead.
      *
@@ -58,4 +51,12 @@ public interface OperationalHeadService {
      * @return the list of entity
      */
     List<OperationalHeadDTO> findParticularStatus(Integer status);
+
+     /**
+     * Get the "count" operationalHead.
+     *
+     * @param status the batchId of the entity
+     * @return the list of entity
+     */
+    Long findActiveCount(Integer status);
 }

@@ -75,7 +75,6 @@ public class BatchServiceImpl implements BatchService {
             .map(batchMapper::toDto);
     }
 
-
     /**
      * Get one batch by id.
      *
@@ -99,17 +98,6 @@ public class BatchServiceImpl implements BatchService {
     public void delete(Long id) {
         log.debug("Request to delete Batch : {}", id);
         batchRepository.deleteById(id);
-    }
-
-    /**
-     * softDelete the Zonal by id
-     * 
-     * @param id the id of the entity
-     */
-    @Override
-    public void softDelete(Long id) {
-        log.debug("Request to delete Zonal : {}", id);
-        batchRepository.findById(id);
     }
 
     @Override

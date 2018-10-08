@@ -30,8 +30,6 @@ public class ZonalCriteria implements Serializable {
 
     private StringFilter zoneName;
 
-    private StringFilter zoneAddress;
-
     private IntegerFilter status;
 
     private LongFilter sectorsId;
@@ -63,14 +61,6 @@ public class ZonalCriteria implements Serializable {
 
     public void setZoneName(StringFilter zoneName) {
         this.zoneName = zoneName;
-    }
-
-    public StringFilter getZoneAddress() {
-        return zoneAddress;
-    }
-
-    public void setZoneAddress(StringFilter zoneAddress) {
-        this.zoneAddress = zoneAddress;
     }
 
     public IntegerFilter getStatus() {
@@ -134,7 +124,6 @@ public class ZonalCriteria implements Serializable {
         return "ZonalCriteria{" +
                 (id != null ? "id=" + id + ", " : "") +
                 (zoneName != null ? "zoneName=" + zoneName + ", " : "") +
-                (zoneAddress != null ? "zoneAddress=" + zoneAddress + ", " : "") +
                 (status != null ? "status=" + status + ", " : "") +
                 (sectorsId != null ? "sectorsId=" + sectorsId + ", " : "") +
                 (financialYearId != null ? "financialYearId=" + financialYearId + ", " : "") +

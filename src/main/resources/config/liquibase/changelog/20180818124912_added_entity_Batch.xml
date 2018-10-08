@@ -57,6 +57,10 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="no_of_kg" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
             <column name="nursery_id" type="bigint">
                 <constraints nullable="true" />
             </column>

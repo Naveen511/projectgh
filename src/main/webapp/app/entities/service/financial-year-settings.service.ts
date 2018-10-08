@@ -54,10 +54,6 @@ export class FinancialYearSettingsService {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
-    softDelete(id: number): Observable<HttpResponse<any>> {
-        return this.http.delete<any>(`${this.resourceUrl}/${id}`, {observe: 'response'});
-    }
-
     // List all the record based on the status
     getActiveRecord(): Observable<EntityArrayResponseType> {
         return this.http

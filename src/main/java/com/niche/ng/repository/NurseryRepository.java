@@ -23,4 +23,5 @@ import java.util.List;
 @Repository
 public interface NurseryRepository extends JpaRepository<Nursery, Long>, JpaSpecificationExecutor<Nursery> {
     List<Nursery> findBySectorId(Long sectorId);
+    long countByStatus(Integer status);
 }

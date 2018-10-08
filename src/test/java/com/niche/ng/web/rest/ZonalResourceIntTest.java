@@ -53,9 +53,6 @@ public class ZonalResourceIntTest {
     private static final String DEFAULT_ZONE_NAME = "AAAAAAAAAA";
     private static final String UPDATED_ZONE_NAME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_ZONE_ADDRESS = "AAAAAAAAAA";
-    private static final String UPDATED_ZONE_ADDRESS = "BBBBBBBBBB";
-
     private static final Integer DEFAULT_STATUS = 1;
     private static final Integer UPDATED_STATUS = 2;
 
@@ -109,7 +106,6 @@ public class ZonalResourceIntTest {
     public static Zonal createEntity(EntityManager em) {
         Zonal zonal = new Zonal()
             .zoneName(DEFAULT_ZONE_NAME)
-            .zoneAddress(DEFAULT_ZONE_ADDRESS)
             .status(DEFAULT_STATUS);
         return zonal;
     }
@@ -136,7 +132,6 @@ public class ZonalResourceIntTest {
         assertThat(zonalList).hasSize(databaseSizeBeforeCreate + 1);
         Zonal testZonal = zonalList.get(zonalList.size() - 1);
         assertThat(testZonal.getZoneName()).isEqualTo(DEFAULT_ZONE_NAME);
-        assertThat(testZonal.getZoneAddress()).isEqualTo(DEFAULT_ZONE_ADDRESS);
         assertThat(testZonal.getStatus()).isEqualTo(DEFAULT_STATUS);
     }
 
@@ -191,7 +186,6 @@ public class ZonalResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(zonal.getId().intValue())))
             .andExpect(jsonPath("$.[*].zoneName").value(hasItem(DEFAULT_ZONE_NAME.toString())))
-            .andExpect(jsonPath("$.[*].zoneAddress").value(hasItem(DEFAULT_ZONE_ADDRESS.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)));
     }
     
@@ -208,7 +202,6 @@ public class ZonalResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(zonal.getId().intValue()))
             .andExpect(jsonPath("$.zoneName").value(DEFAULT_ZONE_NAME.toString()))
-            .andExpect(jsonPath("$.zoneAddress").value(DEFAULT_ZONE_ADDRESS.toString()))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS));
     }
 
@@ -249,45 +242,6 @@ public class ZonalResourceIntTest {
 
         // Get all the zonalList where zoneName is null
         defaultZonalShouldNotBeFound("zoneName.specified=false");
-    }
-
-    @Test
-    @Transactional
-    public void getAllZonalsByZoneAddressIsEqualToSomething() throws Exception {
-        // Initialize the database
-        zonalRepository.saveAndFlush(zonal);
-
-        // Get all the zonalList where zoneAddress equals to DEFAULT_ZONE_ADDRESS
-        defaultZonalShouldBeFound("zoneAddress.equals=" + DEFAULT_ZONE_ADDRESS);
-
-        // Get all the zonalList where zoneAddress equals to UPDATED_ZONE_ADDRESS
-        defaultZonalShouldNotBeFound("zoneAddress.equals=" + UPDATED_ZONE_ADDRESS);
-    }
-
-    @Test
-    @Transactional
-    public void getAllZonalsByZoneAddressIsInShouldWork() throws Exception {
-        // Initialize the database
-        zonalRepository.saveAndFlush(zonal);
-
-        // Get all the zonalList where zoneAddress in DEFAULT_ZONE_ADDRESS or UPDATED_ZONE_ADDRESS
-        defaultZonalShouldBeFound("zoneAddress.in=" + DEFAULT_ZONE_ADDRESS + "," + UPDATED_ZONE_ADDRESS);
-
-        // Get all the zonalList where zoneAddress equals to UPDATED_ZONE_ADDRESS
-        defaultZonalShouldNotBeFound("zoneAddress.in=" + UPDATED_ZONE_ADDRESS);
-    }
-
-    @Test
-    @Transactional
-    public void getAllZonalsByZoneAddressIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        zonalRepository.saveAndFlush(zonal);
-
-        // Get all the zonalList where zoneAddress is not null
-        defaultZonalShouldBeFound("zoneAddress.specified=true");
-
-        // Get all the zonalList where zoneAddress is null
-        defaultZonalShouldNotBeFound("zoneAddress.specified=false");
     }
 
     @Test
@@ -478,7 +432,6 @@ public class ZonalResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(zonal.getId().intValue())))
             .andExpect(jsonPath("$.[*].zoneName").value(hasItem(DEFAULT_ZONE_NAME.toString())))
-            .andExpect(jsonPath("$.[*].zoneAddress").value(hasItem(DEFAULT_ZONE_ADDRESS.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)));
     }
 
@@ -515,7 +468,6 @@ public class ZonalResourceIntTest {
         em.detach(updatedZonal);
         updatedZonal
             .zoneName(UPDATED_ZONE_NAME)
-            .zoneAddress(UPDATED_ZONE_ADDRESS)
             .status(UPDATED_STATUS);
         ZonalDTO zonalDTO = zonalMapper.toDto(updatedZonal);
 
@@ -529,7 +481,6 @@ public class ZonalResourceIntTest {
         assertThat(zonalList).hasSize(databaseSizeBeforeUpdate);
         Zonal testZonal = zonalList.get(zonalList.size() - 1);
         assertThat(testZonal.getZoneName()).isEqualTo(UPDATED_ZONE_NAME);
-        assertThat(testZonal.getZoneAddress()).isEqualTo(UPDATED_ZONE_ADDRESS);
         assertThat(testZonal.getStatus()).isEqualTo(UPDATED_STATUS);
     }
 

@@ -23,7 +23,7 @@ public class MotherBedDTO extends AbstractAuditingDTO implements Serializable {
     private Long id;
 
     @NotNull
-    private Integer value;
+    private String value;
 
     private Integer status;
 
@@ -39,11 +39,11 @@ public class MotherBedDTO extends AbstractAuditingDTO implements Serializable {
         this.id = id;
     }
 
-    public Integer getValue() {
+    public String getValue() {
         return value;
     }
 
-    public void setValue(Integer value) {
+    public void setValue(String value) {
         this.value = value;
     }
 

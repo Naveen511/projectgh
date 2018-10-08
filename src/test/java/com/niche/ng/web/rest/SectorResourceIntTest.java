@@ -53,9 +53,6 @@ public class SectorResourceIntTest {
     private static final String DEFAULT_SECTOR_NAME = "AAAAAAAAAA";
     private static final String UPDATED_SECTOR_NAME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_SECTOR_ADDRESS = "AAAAAAAAAA";
-    private static final String UPDATED_SECTOR_ADDRESS = "BBBBBBBBBB";
-
     private static final Integer DEFAULT_STATUS = 1;
     private static final Integer UPDATED_STATUS = 2;
 
@@ -109,7 +106,6 @@ public class SectorResourceIntTest {
     public static Sector createEntity(EntityManager em) {
         Sector sector = new Sector()
             .sectorName(DEFAULT_SECTOR_NAME)
-            .sectorAddress(DEFAULT_SECTOR_ADDRESS)
             .status(DEFAULT_STATUS);
         return sector;
     }
@@ -136,7 +132,6 @@ public class SectorResourceIntTest {
         assertThat(sectorList).hasSize(databaseSizeBeforeCreate + 1);
         Sector testSector = sectorList.get(sectorList.size() - 1);
         assertThat(testSector.getSectorName()).isEqualTo(DEFAULT_SECTOR_NAME);
-        assertThat(testSector.getSectorAddress()).isEqualTo(DEFAULT_SECTOR_ADDRESS);
         assertThat(testSector.getStatus()).isEqualTo(DEFAULT_STATUS);
     }
 
@@ -191,7 +186,6 @@ public class SectorResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(sector.getId().intValue())))
             .andExpect(jsonPath("$.[*].sectorName").value(hasItem(DEFAULT_SECTOR_NAME.toString())))
-            .andExpect(jsonPath("$.[*].sectorAddress").value(hasItem(DEFAULT_SECTOR_ADDRESS.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)));
     }
     
@@ -208,7 +202,6 @@ public class SectorResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(sector.getId().intValue()))
             .andExpect(jsonPath("$.sectorName").value(DEFAULT_SECTOR_NAME.toString()))
-            .andExpect(jsonPath("$.sectorAddress").value(DEFAULT_SECTOR_ADDRESS.toString()))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS));
     }
 
@@ -249,45 +242,6 @@ public class SectorResourceIntTest {
 
         // Get all the sectorList where sectorName is null
         defaultSectorShouldNotBeFound("sectorName.specified=false");
-    }
-
-    @Test
-    @Transactional
-    public void getAllSectorsBySectorAddressIsEqualToSomething() throws Exception {
-        // Initialize the database
-        sectorRepository.saveAndFlush(sector);
-
-        // Get all the sectorList where sectorAddress equals to DEFAULT_SECTOR_ADDRESS
-        defaultSectorShouldBeFound("sectorAddress.equals=" + DEFAULT_SECTOR_ADDRESS);
-
-        // Get all the sectorList where sectorAddress equals to UPDATED_SECTOR_ADDRESS
-        defaultSectorShouldNotBeFound("sectorAddress.equals=" + UPDATED_SECTOR_ADDRESS);
-    }
-
-    @Test
-    @Transactional
-    public void getAllSectorsBySectorAddressIsInShouldWork() throws Exception {
-        // Initialize the database
-        sectorRepository.saveAndFlush(sector);
-
-        // Get all the sectorList where sectorAddress in DEFAULT_SECTOR_ADDRESS or UPDATED_SECTOR_ADDRESS
-        defaultSectorShouldBeFound("sectorAddress.in=" + DEFAULT_SECTOR_ADDRESS + "," + UPDATED_SECTOR_ADDRESS);
-
-        // Get all the sectorList where sectorAddress equals to UPDATED_SECTOR_ADDRESS
-        defaultSectorShouldNotBeFound("sectorAddress.in=" + UPDATED_SECTOR_ADDRESS);
-    }
-
-    @Test
-    @Transactional
-    public void getAllSectorsBySectorAddressIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        sectorRepository.saveAndFlush(sector);
-
-        // Get all the sectorList where sectorAddress is not null
-        defaultSectorShouldBeFound("sectorAddress.specified=true");
-
-        // Get all the sectorList where sectorAddress is null
-        defaultSectorShouldNotBeFound("sectorAddress.specified=false");
     }
 
     @Test
@@ -478,7 +432,6 @@ public class SectorResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(sector.getId().intValue())))
             .andExpect(jsonPath("$.[*].sectorName").value(hasItem(DEFAULT_SECTOR_NAME.toString())))
-            .andExpect(jsonPath("$.[*].sectorAddress").value(hasItem(DEFAULT_SECTOR_ADDRESS.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)));
     }
 
@@ -515,7 +468,6 @@ public class SectorResourceIntTest {
         em.detach(updatedSector);
         updatedSector
             .sectorName(UPDATED_SECTOR_NAME)
-            .sectorAddress(UPDATED_SECTOR_ADDRESS)
             .status(UPDATED_STATUS);
         SectorDTO sectorDTO = sectorMapper.toDto(updatedSector);
 
@@ -529,7 +481,6 @@ public class SectorResourceIntTest {
         assertThat(sectorList).hasSize(databaseSizeBeforeUpdate);
         Sector testSector = sectorList.get(sectorList.size() - 1);
         assertThat(testSector.getSectorName()).isEqualTo(UPDATED_SECTOR_NAME);
-        assertThat(testSector.getSectorAddress()).isEqualTo(UPDATED_SECTOR_ADDRESS);
         assertThat(testSector.getStatus()).isEqualTo(UPDATED_STATUS);
     }
 

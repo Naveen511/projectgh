@@ -55,10 +55,4 @@ public interface PickListService {
      */
     void delete(Long id);
 
-    /**
-     * softDelete the "id" pickList
-     * 
-     * @param id the id of the entity
-     */
-    void softDelete(Long id);
 }

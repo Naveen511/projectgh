@@ -89,17 +89,6 @@ public class OperationalHeadServiceImpl implements OperationalHeadService {
     }
 
     /**
-     * softDelete the operationalHead by id
-     * 
-     * @param id the id of the entity
-     */
-    @Override
-    public void softDelete(Long id) {
-        log.debug("Request to delete OperationalHead : {}", id);
-        operationalHeadRepository.findById(id);
-    }
-
-    /**
      * Get all the head office by status.
      *
      * @param status the status of the entity
@@ -112,4 +101,10 @@ public class OperationalHeadServiceImpl implements OperationalHeadService {
         List<OperationalHead> list = operationalHeadRepository.findByStatus(status);
         return operationalHeadMapper.toDto(list);
     }
+
+    @Override
+    public Long findActiveCount(Integer status) {
+        return operationalHeadRepository.countByStatus(status);
+    }
+    
 }

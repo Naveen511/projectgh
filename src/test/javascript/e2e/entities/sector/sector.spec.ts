@@ -32,8 +32,6 @@ describe('Sector e2e test', () => {
         sectorComponentsPage.clickOnCreateButton();
         sectorUpdatePage.setSectorNameInput('sectorName');
         expect(sectorUpdatePage.getSectorNameInput()).toMatch('sectorName');
-        sectorUpdatePage.setSectorAddressInput('sectorAddress');
-        expect(sectorUpdatePage.getSectorAddressInput()).toMatch('sectorAddress');
         sectorUpdatePage.setStatusInput('5');
         expect(sectorUpdatePage.getStatusInput()).toMatch('5');
         sectorUpdatePage.zonalSelectLastOption();

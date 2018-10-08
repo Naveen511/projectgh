@@ -141,18 +141,4 @@ public class GodownResource {
         godownService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
-
-    /**
-     * DELETE  /zonals/:id : delete the "id" godown.
-     * 
-     * @param id the id of the godownDTO to delete
-     * @return the ResponseEntity with status 200 (OK)
-     */
-    @GetMapping("/godowns/soft-delete/{id}")
-    @Timed
-    public ResponseEntity<Void> softDelete(@PathVariable Long id) {
-        log.debug("REST request to delete godown : {}", id);
-        godownService.softDelete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
-    }
 }

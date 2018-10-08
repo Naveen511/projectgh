@@ -26,6 +26,7 @@ export class BatchUpdatePage {
     roundInput = element(by.id('field_round'));
     remarksInput = element(by.id('field_remarks'));
     statusInput = element(by.id('field_status'));
+    noOfKgInput = element(by.id('field_noOfKg'));
     nurserySelect = element(by.id('field_nursery'));
     pickListVarietySelect = element(by.id('field_pickListVariety'));
     pickListCategorySelect = element(by.id('field_pickListCategory'));
@@ -107,6 +108,14 @@ export class BatchUpdatePage {
 
     getStatusInput() {
         return this.statusInput.getAttribute('value');
+    }
+
+    setNoOfKgInput(noOfKg): promise.Promise<void> {
+        return this.noOfKgInput.sendKeys(noOfKg);
+    }
+
+    getNoOfKgInput() {
+        return this.noOfKgInput.getAttribute('value');
     }
 
     nurserySelectLastOption(): promise.Promise<void> {

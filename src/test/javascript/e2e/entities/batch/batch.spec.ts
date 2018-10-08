@@ -48,6 +48,8 @@ describe('Batch e2e test', () => {
         expect(batchUpdatePage.getRemarksInput()).toMatch('remarks');
         batchUpdatePage.setStatusInput('5');
         expect(batchUpdatePage.getStatusInput()).toMatch('5');
+        batchUpdatePage.setNoOfKgInput('noOfKg');
+        expect(batchUpdatePage.getNoOfKgInput()).toMatch('noOfKg');
         batchUpdatePage.nurserySelectLastOption();
         batchUpdatePage.pickListVarietySelectLastOption();
         batchUpdatePage.pickListCategorySelectLastOption();

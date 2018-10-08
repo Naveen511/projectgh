@@ -19,37 +19,32 @@ export class NurseryService {
     constructor(private http: HttpClient) {}
 
     create(nursery: INursery): Observable<EntityResponseType> {
-        return this.http
-            .post<INursery>(this.resourceUrl, nursery, { observe: 'response' });
+        return this.http.post<INursery>(this.resourceUrl, nursery, { observe: 'response' });
     }
 
     update(nursery: INursery): Observable<EntityResponseType> {
-        return this.http
-            .put<INursery>(this.resourceUrl, nursery, { observe: 'response' });
+        return this.http.put<INursery>(this.resourceUrl, nursery, { observe: 'response' });
     }
 
     find(id: number): Observable<EntityResponseType> {
-        return this.http
-            .get<INursery>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+        return this.http.get<INursery>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
     query(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
-        return this.http
-            .get<INursery[]>(this.resourceUrl, { params: options, observe: 'response' });
+        return this.http.get<INursery[]>(this.resourceUrl, { params: options, observe: 'response' });
     }
 
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
-    softDelete(id: number): Observable<HttpResponse<any>> {
-        return this.http.delete<any>(`${this.resourceUrl}/${id}`, {observe: 'response'});
+    getNurserys(sectorId: number): Observable<EntityArrayResponseType> {
+        return this.http.get<INursery[]>(`${this.resourceUrl}/sector/${sectorId}`, { observe: 'response' });
     }
 
-    getNurserys(sectorId: number): Observable<EntityArrayResponseType> {
-        return this.http
-            .get<INursery[]>(`${this.resourceUrl}/sector/${sectorId}`, { observe: 'response' });
+    getNurseryCount(): Observable<HttpResponse<any>> {
+        return this.http.get<any>(`${this.resourceUrl}/count/${STATUS_ACTIVE}`, { observe: 'response' });
     }
 
     // getNurserys(sectorId: number): Observable<EntityArrayResponseType> {
@@ -59,7 +54,6 @@ export class NurseryService {
     // }
 
     getMovedNursery(zoneId: number, sectorId: number): Observable<EntityArrayResponseType> {
-        return this.http
-            .get<INursery[]>(`${this.resourceUrl}/movednursery/${zoneId}/${sectorId}`, { observe: 'response' });
+        return this.http.get<INursery[]>(`${this.resourceUrl}/movednursery/${zoneId}/${sectorId}`, { observe: 'response' });
     }
 }

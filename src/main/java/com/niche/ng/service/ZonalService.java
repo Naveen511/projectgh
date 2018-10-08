@@ -57,13 +57,6 @@ public interface ZonalService {
     void delete(Long id);
 
     /**
-     * softDelete the "id" Zonal
-     * 
-     * @param id the id of the entity
-     */
-    void softDelete(Long id);
-
-    /**
      * Get the "operationalHeadId" Zoanl.
      *
      * @param operationalHeadId the operationalHeadId of the entity
@@ -71,4 +64,12 @@ public interface ZonalService {
      * @return the list of entity
      */
     List<ZonalDTO> findParticularHeadOfficeZonal(Long operationalHeadId, Integer status);
+
+    /**
+     * Get the "count" operationalHead.
+     *
+     * @param status the batchId of the entity
+     * @return the list of entity
+     */
+    Long findActiveCount(Integer status);
 }

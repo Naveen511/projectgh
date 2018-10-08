@@ -43,14 +43,7 @@ public interface FinancialYearSettingsService {
      * @param id the id of the entity
      */
     void delete(Long id);
-
-     /**
-     * softDelete the "id" financialYearSettings
-     * 
-     * @param id the id of the entity
-     */
-    void softDelete(Long id);
-
+    
     /**
      * Get the "status" financialYearSettings.
      *

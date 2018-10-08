@@ -100,17 +100,6 @@ public class MotherBedServiceImpl implements MotherBedService {
     }
 
     /**
-     * softDelete the motherBed by id
-     * 
-     * @param id the id of the entity
-     */
-    @Override
-    public void softDelete(Long id) {
-        log.debug("Request to delete motherBed : {}", id);
-        motherBedRepository.findById(id);
-    }
-
-    /**
      * Get all the motherBed by nurseryId.
      *
      * @param nurseryId the nurseryId of the entity
@@ -121,6 +110,20 @@ public class MotherBedServiceImpl implements MotherBedService {
     public List<MotherBedDTO> findNurseryMotherBeds(Long nurseryId) {
         log.debug("Request to get motherBed : {}", nurseryId);
         List<MotherBed> motherBedList = motherBedRepository.findByNurseryId(nurseryId);
+        return motherBedMapper.toDto(motherBedList);
+    }
+
+    /**
+     * Get all the motherBed by nurseryId.
+     *
+     * @param nurseryId the nurseryId of the entity
+     * @return the list of entities
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<MotherBedDTO> findAvailableNurseryMotherBeds(Long nurseryId, Integer status) {
+        log.debug("Request to get motherBed : {}", nurseryId);
+        List<MotherBed> motherBedList = motherBedRepository.findByNurseryIdAndStatus(nurseryId,status);
         return motherBedMapper.toDto(motherBedList);
     }
 }

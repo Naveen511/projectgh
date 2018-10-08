@@ -19,37 +19,32 @@ export class SectorService {
     constructor(private http: HttpClient) {}
 
     create(sector: ISector): Observable<EntityResponseType> {
-        return this.http
-            .post<ISector>(this.resourceUrl, sector, { observe: 'response' });
+        return this.http.post<ISector>(this.resourceUrl, sector, { observe: 'response' });
     }
 
     update(sector: ISector): Observable<EntityResponseType> {
-        return this.http
-            .put<ISector>(this.resourceUrl, sector, { observe: 'response' });
+        return this.http.put<ISector>(this.resourceUrl, sector, { observe: 'response' });
     }
 
     find(id: number): Observable<EntityResponseType> {
-        return this.http
-            .get<ISector>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+        return this.http.get<ISector>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
     query(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
-        return this.http
-            .get<ISector[]>(this.resourceUrl, { params: options, observe: 'response' });
+        return this.http.get<ISector[]>(this.resourceUrl, { params: options, observe: 'response' });
     }
 
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
-    softDelete(id: number): Observable<HttpResponse<any>> {
-        return this.http.delete<any>(`${this.resourceUrl}/${id}`, {observe: 'response'});
-    }
-
     // To get the sectors
     getSectors(zonalId: number): Observable<EntityArrayResponseType> {
-        return this.http
-            .get<ISector[]>(`${this.resourceUrl}/zonal/${zonalId}`, { observe: 'response' });
+        return this.http.get<ISector[]>(`${this.resourceUrl}/zonal/${zonalId}`, { observe: 'response' });
+    }
+
+    getSectorCount(): Observable<HttpResponse<any>> {
+        return this.http.get<any>(`${this.resourceUrl}/count/${STATUS_ACTIVE}`, { observe: 'response' });
     }
 }

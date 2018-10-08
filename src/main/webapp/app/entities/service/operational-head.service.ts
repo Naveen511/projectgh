@@ -16,37 +16,32 @@ export class OperationalHeadService {
     constructor(private http: HttpClient) {}
 
     create(operationalHead: IOperationalHead): Observable<EntityResponseType> {
-        return this.http
-            .post<IOperationalHead>(this.resourceUrl, operationalHead, { observe: 'response' });
+        return this.http.post<IOperationalHead>(this.resourceUrl, operationalHead, { observe: 'response' });
     }
 
     update(operationalHead: IOperationalHead): Observable<EntityResponseType> {
-        return this.http
-            .put<IOperationalHead>(this.resourceUrl, operationalHead, { observe: 'response' });
+        return this.http.put<IOperationalHead>(this.resourceUrl, operationalHead, { observe: 'response' });
     }
 
     find(id: number): Observable<EntityResponseType> {
-        return this.http
-            .get<IOperationalHead>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+        return this.http.get<IOperationalHead>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
     query(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
-        return this.http
-            .get<IOperationalHead[]>(this.resourceUrl, { params: options, observe: 'response' });
+        return this.http.get<IOperationalHead[]>(this.resourceUrl, { params: options, observe: 'response' });
     }
 
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
-    softDelete(id: number): Observable<HttpResponse<any>> {
-        return this.http.delete<any>(`${this.resourceUrl}/${id}`, {observe: 'response'});
-    }
-
     // List all the record based on the status
     getActiveList(): Observable<EntityArrayResponseType> {
-        return this.http
-            .get<IOperationalHead[]>(`${this.resourceUrl}/active-record/${STATUS_ACTIVE}`, { observe: 'response' });
+        return this.http.get<IOperationalHead[]>(`${this.resourceUrl}/active-record/${STATUS_ACTIVE}`, { observe: 'response' });
+    }
+
+    getOperationalHeadCount(): Observable<HttpResponse<any>> {
+        return this.http.get<any>(`${this.resourceUrl}/count/${STATUS_ACTIVE}`, { observe: 'response' });
     }
 }

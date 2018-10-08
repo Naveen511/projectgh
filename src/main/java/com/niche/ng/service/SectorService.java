@@ -56,13 +56,6 @@ public interface SectorService {
      */
     void delete(Long id);
 
-     /**
-     * softDelete the "id" Sector
-     * 
-     * @param id the id of the entity
-     */
-    void softDelete(Long id);
-
     /**
      * Get the "zonalId" sector.
      *
@@ -70,4 +63,12 @@ public interface SectorService {
      * @return the list of entity
      */
     List<SectorDTO> findZonalSectors(Long zonalId);
+
+    /**
+     * Get the "count" operationalHead.
+     *
+     * @param status the batchId of the entity
+     * @return the list of entity
+     */
+    Long findActiveCount(Integer status);
 }

@@ -28,7 +28,12 @@ import { FinancialYearSettingsService } from 'app/entities/service/financial-yea
 import { IFinancialYearSettings } from 'app/shared/model/financial-year-settings.model';
 import { OperationalHeadService } from 'app/entities/service/operational-head.service';
 import { IOperationalHead } from 'app/shared/model/operational-head.model';
-import { MapNurseryWithSector, IMapNurseryWithSector, MapNurseryWithSectorModel, STATUS_INACTIVE } from 'app/shared/model/map-nursery-with-sector.model';
+import {
+    MapNurseryWithSector,
+    IMapNurseryWithSector,
+    MapNurseryWithSectorModel,
+    STATUS_INACTIVE
+} from 'app/shared/model/map-nursery-with-sector.model';
 import { MapNurseryWithSectorService } from 'app/entities/service/map-nursery-with-sector.service';
 
 // Mension the html, css/sass files
@@ -58,6 +63,7 @@ export class NurseryComponent implements OnInit {
     batchId: number;
     updateStatus: number;
     isCollapsed = true;
+    fromDateDp: any;
 
     // Title and alertTitle declation as String
     title: String;
@@ -122,19 +128,15 @@ export class NurseryComponent implements OnInit {
         this.getActiveRecord();
 
         // To set the time for automatic alert close
-        setTimeout(() => this.staticAlertClosed = true, 20000);
+        setTimeout(() => (this.staticAlertClosed = true), 20000);
 
         // Set the success message with debounce time
-        this.success.subscribe(message => this.successMessage = message);
-        this.success.pipe(
-            debounceTime(5000)
-        ).subscribe(() => this.successMessage = null);
+        this.success.subscribe(message => (this.successMessage = message));
+        this.success.pipe(debounceTime(5000)).subscribe(() => (this.successMessage = null));
 
         // To set the error message with debounce time
-        this.error.subscribe(message => this.errorMessage = message);
-        this.error.pipe(
-            debounceTime(5000)
-        ).subscribe(() => this.errorMessage = null);
+        this.error.subscribe(message => (this.errorMessage = message));
+        this.error.pipe(debounceTime(5000)).subscribe(() => (this.errorMessage = null));
     }
 
     // Call a service function to get list of active head office
@@ -163,13 +165,14 @@ export class NurseryComponent implements OnInit {
 
     // Call a service function to get list of Nurserys
     getNurseryList(): void {
-        this.nurseryService.query({
-            page: this.page - 1,
-            size: this.itemsPerPage,
-            sort: this.sort(),
-            filter: {'status.equals': STATUS_ACTIVE}
-        })
-        .subscribe((res: HttpResponse<INursery[]>) => this.paginateNurserys(res.body, res.headers));
+        this.nurseryService
+            .query({
+                page: this.page - 1,
+                size: this.itemsPerPage,
+                sort: this.sort(),
+                filter: { 'status.equals': STATUS_ACTIVE }
+            })
+            .subscribe((res: HttpResponse<INursery[]>) => this.paginateNurserys(res.body, res.headers));
     }
 
     // Call a service function to get list of active batch
@@ -183,11 +186,13 @@ export class NurseryComponent implements OnInit {
     // Call a service function to get list of pickList
     getPickList(): void {
         // Get the list of picklist
-        this.pickListService.query({
-            filter: {'status.equals': STATUS_ACTIVE}
-        }).subscribe((res: HttpResponse<IPickList[]>) => {
-            this.pickLists = res.body;
-        });
+        this.pickListService
+            .query({
+                filter: { 'status.equals': STATUS_ACTIVE }
+            })
+            .subscribe((res: HttpResponse<IPickList[]>) => {
+                this.pickLists = res.body;
+            });
     }
 
     // Get the variety from the picklist table
@@ -206,16 +211,12 @@ export class NurseryComponent implements OnInit {
         if (this.nurseryObject.id !== undefined) {
             // Set the title for the alert updated
             this.alertTitle = 'updated';
-            this.subscribeToSaveResponse(
-                this.nurseryService.update(this.nurseryObject), this.alertTitle
-            );
+            this.subscribeToSaveResponse(this.nurseryService.update(this.nurseryObject), this.alertTitle);
         } else {
             // Set the title for the alert created
             this.alertTitle = 'created';
             this.nurseryObject.financialYearNurseryId = this.batchId;
-            this.subscribeToSaveResponse(
-                this.nurseryService.create(this.nurseryObject), this.alertTitle
-            );
+            this.subscribeToSaveResponse(this.nurseryService.create(this.nurseryObject), this.alertTitle);
         }
     }
 
@@ -237,45 +238,49 @@ export class NurseryComponent implements OnInit {
         );
     }
 
-    saveMapTable(nurseryDetails: NurseryModel): void {
+    saveMapTable(nurseryDetails: NurseryModel, mapNurseryWithSector: MapNurseryWithSector): void {
         this.mapNurseryWithSector = new MapNurseryWithSectorModel();
-        this.mapNurseryWithSector.fromDate = moment(moment(this.mapNurseryWithSector.fromDate).format(DATE_TIME_FORMAT), DATE_TIME_FORMAT);
+        // this.mapNurseryWithSector.fromDate = moment(moment(this.mapNurseryWithSector.fromDate).format(DATE_TIME_FORMAT), DATE_TIME_FORMAT);
+        this.mapNurseryWithSector.fromDate = mapNurseryWithSector.fromDate;
         this.mapNurseryWithSector.sectorId = nurseryDetails.sectorId;
         this.mapNurseryWithSector.nurseryId = nurseryDetails.id;
         this.mapNurseryWithSector.status = STATUS_ACTIVE;
-        this.mapNurseryWithSectorService.create(this.mapNurseryWithSector)
-        .subscribe((res: HttpResponse<IMapNurseryWithSector>) => {
-            this.moveNursery.hide();
-        },
-        (res: HttpErrorResponse) => {
-            // alert(res.error.fieldErrors[0].message);
-            this.error.next(res.error.fieldErrors[0].message);
-        });
+        console.log(this.mapNurseryWithSector);
+        this.mapNurseryWithSectorService.create(this.mapNurseryWithSector).subscribe(
+            (res: HttpResponse<IMapNurseryWithSector>) => {
+                this.moveNursery.hide();
+            },
+            (res: HttpErrorResponse) => {
+                // alert(res.error.fieldErrors[0].message);
+                this.error.next(res.error.fieldErrors[0].message);
+            }
+        );
     }
 
     moveNurseryValue(nurseryDetails: NurseryModel, value: MapNurseryWithSector): void {
         this.toDate = moment(value.toDate).format(DATE_TIME_FORMAT);
         // Get the list of active batch record and assign a 0th index array value to an batch id
-        this.mapNurseryWithSectorService.getParticularNurseryActiveRecord(nurseryDetails.id).subscribe((res: HttpResponse<IMapNurseryWithSector[]>) => {
-            if (res.body.length > 0) {
-                this.mapNurseryWithSector = res.body[0];
-                this.mapNurseryWithSector.description = value.description;
-                this.mapNurseryWithSector.toDate = moment(this.toDate, DATE_TIME_FORMAT);
-                this.mapNurseryWithSector.status = STATUS_INACTIVE;
-                this.mapNurseryWithSectorService.update(this.mapNurseryWithSector)
-                .subscribe(
-                    (output: HttpResponse<IMapNurseryWithSector>) => {
-                        this.saveMapTable(nurseryDetails);
-                    },
-                    (error: HttpErrorResponse) => {
-                        // alert(res.error.fieldErrors[0].message);
-                        this.error.next(error.error.fieldErrors[0].message);
-                    }
-                );
-            } else {
-                this.saveMapTable(nurseryDetails);
-            }
-        });
+        this.mapNurseryWithSectorService
+            .getParticularNurseryActiveRecord(nurseryDetails.id)
+            .subscribe((res: HttpResponse<IMapNurseryWithSector[]>) => {
+                if (res.body.length > 0) {
+                    this.mapNurseryWithSector = res.body[0];
+                    this.mapNurseryWithSector.description = value.description;
+                    this.mapNurseryWithSector.toDate = moment(this.toDate, DATE_TIME_FORMAT);
+                    this.mapNurseryWithSector.status = STATUS_INACTIVE;
+                    this.mapNurseryWithSectorService.update(this.mapNurseryWithSector).subscribe(
+                        (output: HttpResponse<IMapNurseryWithSector>) => {
+                            this.saveMapTable(nurseryDetails, value);
+                        },
+                        (error: HttpErrorResponse) => {
+                            // alert(res.error.fieldErrors[0].message);
+                            this.error.next(error.error.fieldErrors[0].message);
+                        }
+                    );
+                } else {
+                    this.saveMapTable(nurseryDetails, value);
+                }
+            });
     }
 
     // show model popup to create nursery value
@@ -314,8 +319,7 @@ export class NurseryComponent implements OnInit {
         this.nurseryObject = nursery;
         this.nurseryObject.status = SOFT_DELETE_STATUS;
         // console.log('date', this.sectorObject);
-        this.nurseryService.update(this.nurseryObject)
-        .subscribe(
+        this.nurseryService.update(this.nurseryObject).subscribe(
             data => {
                 // console.log('upda', this.sectorObject);
                 this.success.next(`Nursery deleted successfully`);

@@ -100,17 +100,6 @@ public class NurseryServiceImpl implements NurseryService {
     }
 
     /**
-     * softDelete the nursery by id
-     * 
-     * @param id the id of the entity
-     */
-    @Override
-    public void softDelete(Long id) {
-        log.debug("Request to delete nursery : {}", id);
-        nurseryRepository.findById(id);
-    }
-
-    /**
      * Get all the nursery by sectorId.
      *
      * @param sectorId the sectorId of the entity
@@ -122,5 +111,10 @@ public class NurseryServiceImpl implements NurseryService {
         log.debug("Request to get Nursery : {}", sectorId);
         List<Nursery> nursery = nurseryRepository.findBySectorId(sectorId);
         return nurseryMapper.toDto(nursery);
+    }
+
+    @Override
+    public Long findActiveCount(Integer status) {
+        return nurseryRepository.countByStatus(status);
     }
 }

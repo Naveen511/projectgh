@@ -78,6 +78,9 @@ public class Batch extends AbstractAuditingEntity implements Serializable {
     @Column(name = "status")
     private Integer status;
 
+    @Column(name = "no_of_kg")
+    private String noOfKg;
+
     /**
      * Relation Name : OneToMany - damages
      * It Connects the Batch Table to Damage Table
@@ -289,6 +292,19 @@ public class Batch extends AbstractAuditingEntity implements Serializable {
         this.status = status;
     }
 
+    public String getNoOfKg() {
+        return noOfKg;
+    }
+
+    public Batch noOfKg(String noOfKg) {
+        this.noOfKg = noOfKg;
+        return this;
+    }
+
+    public void setNoOfKg(String noOfKg) {
+        this.noOfKg = noOfKg;
+    }
+
     public Set<Damage> getDamages() {
         return damages;
     }
@@ -476,6 +492,7 @@ public class Batch extends AbstractAuditingEntity implements Serializable {
             ", round=" + getRound() +
             ", remarks='" + getRemarks() + "'" +
             ", status=" + getStatus() +
+            ", noOfKg='" + getNoOfKg() + "'" +
             "}";
     }
 }

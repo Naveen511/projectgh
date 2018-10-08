@@ -98,14 +98,4 @@ public class GodownPurchaseDetailsServiceImpl implements GodownPurchaseDetailsSe
         godownPurchaseDetailsRepository.deleteById(id);
     }
 
-    /**
-     * softDelete the Zonal by id
-     * 
-     * @param id the id of the entity
-     */
-    @Override
-    public void softDelete(Long id) {
-        log.debug("Request to delete Zonal : {}", id);
-        godownPurchaseDetailsRepository.findById(id);
-    }
 }

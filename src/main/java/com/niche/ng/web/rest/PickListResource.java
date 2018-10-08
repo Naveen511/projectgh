@@ -141,18 +141,4 @@ public class PickListResource {
         pickListService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
-
-    /**
-     * DELETE  /pick-lists/:id : delete the "id" pickList.
-     * 
-     * @param id the id of the pickListDTO to delete
-     * @return the ResponseEntity with status 200 (OK)
-     */
-    @GetMapping("/pick-lists/soft-delete/{id}")
-    @Timed
-    public ResponseEntity<Void> softDelete(@PathVariable Long id) {
-        log.debug("REST request to delete pickList : {}", id);
-        pickListService.softDelete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
-    }
 }

@@ -16,31 +16,23 @@ export class PickListService {
     constructor(private http: HttpClient) {}
 
     create(pickList: IPickList): Observable<EntityResponseType> {
-        return this.http
-            .post<IPickList>(this.resourceUrl, pickList, { observe: 'response' });
+        return this.http.post<IPickList>(this.resourceUrl, pickList, { observe: 'response' });
     }
 
     update(pickList: IPickList): Observable<EntityResponseType> {
-        return this.http
-            .put<IPickList>(this.resourceUrl, pickList, { observe: 'response' });
+        return this.http.put<IPickList>(this.resourceUrl, pickList, { observe: 'response' });
     }
 
     find(id: number): Observable<EntityResponseType> {
-        return this.http
-            .get<IPickList>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+        return this.http.get<IPickList>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
     query(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
-        return this.http
-            .get<IPickList[]>(this.resourceUrl, { params: options, observe: 'response' });
+        return this.http.get<IPickList[]>(this.resourceUrl, { params: options, observe: 'response' });
     }
 
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
-    }
-
-    softDelete(id: number): Observable<HttpResponse<any>> {
-        return this.http.delete<any>(`${this.resourceUrl}/${id}`, {observe: 'response'});
     }
 }

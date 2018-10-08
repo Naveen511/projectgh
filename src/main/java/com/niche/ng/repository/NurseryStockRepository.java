@@ -40,4 +40,5 @@ public interface NurseryStockRepository extends JpaRepository<NurseryStock, Long
     
     // public List<NurseryStock> findByNurseryIdAndPickListVarietyIdIn(@Param("nurseryId") Long nurseryId, @Param("pickListVarietyId") Long pickListVarietyId);
     public List<NurseryStock> findByNurseryIdAndPickListCategoryId(@Param("nurseryId") Long nurseryId, @Param("pickListCategoryId") Long pickListCategoryId);
+    List<NurseryStock> findByNurseryId(Long nurseryId);
 }

@@ -20,8 +20,7 @@ export class GodownService {
 
     // Create Godown
     create(godown: IGodown): Observable<EntityResponseType> {
-        return this.http.post<IGodown>(this.resourceUrl, godown, { observe: 'response' }
-        );
+        return this.http.post<IGodown>(this.resourceUrl, godown, { observe: 'response' });
     }
 
     // Update Godown
@@ -31,8 +30,7 @@ export class GodownService {
 
     // Find Godown using ID
     find(id: number): Observable<EntityResponseType> {
-        return this.http
-            .get<IGodown>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+        return this.http.get<IGodown>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
     // Load all the godown
@@ -44,9 +42,5 @@ export class GodownService {
     // Delete the Godown using the Godown Id
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
-    }
-
-    softDelete(id: number): Observable<HttpResponse<any>> {
-        return this.http.delete<any>(`${this.resourceUrl}/${id}`, {observe: 'response'});
     }
 }

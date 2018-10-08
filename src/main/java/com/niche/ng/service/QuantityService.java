@@ -5,6 +5,7 @@ import com.niche.ng.service.dto.QuantityDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -44,10 +45,5 @@ public interface QuantityService {
      */
     void delete(Long id);
 
-    /**
-     * softDelete the "id" quantity
-     * 
-     * @param id the id of the entity
-     */
-    void softDelete(Long id);
+    List<QuantityDTO> findQuantity(Long pickListQuantityId, Long  quantityTypeId);
 }

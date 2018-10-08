@@ -108,6 +108,10 @@
         {
             "fieldName": "status",
             "fieldType": "Integer"
+        },
+        {
+            "fieldName": "noOfKg",
+            "fieldType": "String"
         }
     ],
     "changelogDate": "20180818124912",

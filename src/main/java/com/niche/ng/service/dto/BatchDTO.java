@@ -46,6 +46,8 @@ public class BatchDTO extends AbstractAuditingDTO implements Serializable {
 
     private Integer status;
 
+    private String noOfKg;
+
     @NotNull(message = "Nursery Name cannot be blank.")
     private Long nurseryId;
 
@@ -151,6 +153,14 @@ public class BatchDTO extends AbstractAuditingDTO implements Serializable {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getNoOfKg() {
+        return noOfKg;
+    }
+
+    public void setNoOfKg(String noOfKg) {
+        this.noOfKg = noOfKg;
     }
 
     public Long getNurseryId() {
@@ -283,6 +293,7 @@ public class BatchDTO extends AbstractAuditingDTO implements Serializable {
             ", round=" + getRound() +
             ", remarks='" + getRemarks() + "'" +
             ", status=" + getStatus() +
+            ", noOfKg='" + getNoOfKg() + "'" +
             ", nursery=" + getNurseryId() +
             ", nursery='" + getNurseryNurseryName() + "'" +
             ", pickListVariety=" + getPickListVarietyId() +

@@ -38,8 +38,6 @@ import java.util.Optional;
 
 /**
  * REST controller for managing PickList.
- * Used RequestMapping annotation to map the url with the client side.
- * Using service to access the values in the database.
  */
 @RestController
 @RequestMapping("/api")

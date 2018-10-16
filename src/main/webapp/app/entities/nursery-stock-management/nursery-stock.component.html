@@ -1,72 +1,62 @@
 <div class="animated fadeIn">
-    <!-- Add the Stock details form based on the Zonal and sector -->
     <div id="collapseBasic" [collapse]="isCollapsed" class="row">
-        <div class="col-sm-12 font12">
+        <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
                   <strong>Showing </strong> Form
-                  <button type="button" class="btn btn-danger btn-sm float-right"
-                        (click)="isCollapsed = !isCollapsed"
-                        [attr.aria-expanded]="isCollapsedStockDetails" 
-                        aria-controls="collapseBasic">Close
+                  <button type="button" class="badge badge-danger float-right" 
+                        (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="isCollapsedInventoryDetails" 
+                        aria-controls="collapseBasic">close
                     </button>
                 </div>
                 <div class="card-body">
                     <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
                         <div class="row">
-                            <div class="form-group col-sm-3">
+                            <div class="form-group col-sm-4">
                                 <label for="name">Zonal *</label>
                                 <select [(ngModel)]="nurseryStock.zoneId" id="zoneId" 
                                     name="zoneId" class="form-control"
                                     (change)="getSector(nurseryStock.zoneId)" required>
                                     <option value="0" disabled selected>Select Zonal Name</option>
-                                    <option *ngFor="let zone of zonals"
-                                        value={{zone.id}}>{{zone.zoneName}}</option>
+                                    <option *ngFor="let zone of zonals" value={{zone.id}}>{{zone.zoneName}}</option>
                                 </select>
                             </div>
-                            <div class="form-group col-sm-3">
+                            <div class="form-group col-sm-4">
                                 <label for="name">Sector *</label>
-                                <select [(ngModel)]="nurseryStock.sectorId" id="sectorId"
-                                    name="sectorId" class="form-control"
-                                    (change)="getNursery(nurseryStock.sectorId)">
+                                <select [(ngModel)]="nurseryStock.sectorId" id="sectorId" name="sectorId" class="form-control" 
+                                (change)="getNursery(nurseryStock.sectorId)">
                                     <option value="0" disabled selected>Select Sector Name</option>
-                                    <option *ngFor="let sector of sectors"
-                                        value={{sector.id}}>{{sector.sectorName}}</option>
+                                    <option *ngFor="let sector of sectors" value={{sector.id}}>{{sector.sectorName}}</option>
                                 </select>
                             </div>
-                            <div class="form-group col-sm-3">
+                            <div class="form-group col-sm-4">
                                 <label for="name">Nursery *</label>
-                                <select [(ngModel)]="nurseryStock.nurseryId"
-                                    id="nurseryId" name="nurseryId" 
-                                    class="form-control" required>
+                                <select [(ngModel)]="nurseryStock.nurseryId" id="nurseryId" name="nurseryId" 
+                                class="form-control" required>
                                     <option value="0" disabled selected>Select Nursery Name</option>
-                                    <option *ngFor="let nursery of nurserys"
-                                        value={{nursery.id}}>{{nursery.nurseryName}}</option>
+                                    <option *ngFor="let nursery of nurserys" value={{nursery.id}}>{{nursery.nurseryName}}</option>
                                 </select>
                             </div>
-                            <!-- <div class="form-group col-sm-4">
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-sm-4">
                                 <label for="name">Pick Name *</label>
                                 <select [(ngModel)]="nurseryStock.pickListId" id="pickListId" 
                                     name="pickListId" class="form-control"
                                     (change)="getVariety(nurseryStock.pickListId)" required>
                                     <option value="0" disabled selected>Select</option>
-                                    <option *ngFor="let pickList of pickLists"
-                                        value={{pickList.id}}>{{pickList.pickListName}}</option>
-                                </select>
-                            </div> -->
-                            <div class="form-group col-sm-3">
-                                <label for="name">Variety * </label>
-                                <select [(ngModel)]="nurseryStock.pickListVarietyId"
-                                    id="pickListVarietyId" name="pickListVarietyId" class="form-control"
-                                    (change)="getCategory(nurseryStock.pickListVarietyId)" required>
-                                    <option value="0" disabled selected>Select Variety Name</option>
-                                    <option *ngFor="let val of varietys"
-                                        value={{val.id}}>{{val.pickListValue}}</option>
+                                    <option *ngFor="let pickList of pickLists" value={{pickList.id}}>{{pickList.pickListName}}</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-sm-3">
+                            <div class="form-group col-sm-4">
+                                <label for="name">Variety * </label>
+                                <select [(ngModel)]="nurseryStock.pickListVarietyId" id="pickListVarietyId" name="pickListVarietyId" class="form-control"
+                                (change)="getCategory(nurseryStock.pickListVarietyId)" required>
+                                    <option value="0" disabled selected>Select Variety Name</option>
+                                    <option *ngFor="let val of varietys" value={{val.id}}>{{val.pickListValue}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-4">
                                 <label for="name">Category *</label>
                                 <select [(ngModel)]="nurseryStock.pickListCategoryId" 
                                     id="pickListCategoryId" name="pickListCategoryId" 
@@ -76,18 +66,40 @@
                                         value={{category.id}}>{{category.pickListValue}}</option>
                                 </select>
                             </div>
-                            <div class="form-group col-sm-3">
-                                <label for="name">Quantity *</label>
-                                <input [(ngModel)]="nurseryStockDetails.quantity"
-                                    type="text" id="quantity" name="quantity"
-                                    class="form-control" placeholder="Quantity" required
-                                    (keypress)="numberOnly($event)">
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 text-info">Received saplings from other nursery </div>
+                            <div class="form-group col-sm-4">
+                                <label for="name">Zonal</label>
+                                <select [(ngModel)]="nurseryStockDetails.receivedZoneId" id="receivedZoneId" name="receivedZoneId" class="form-control"
+                                (change)="getReceivedSector(nurseryStockDetails.receivedZoneId)" required>
+                                    <option value="0" disabled selected>Select Zonal Name</option>
+                                    <option *ngFor="let zonal of zonals" value={{zonal.id}}>{{zonal.zoneName}}</option>
+                                </select>
                             </div>
-                            <div class="form-group col-sm-3">
+                            <div class="form-group col-sm-4">
+                                <label for="name">Sector</label>
+                                <select [(ngModel)]="nurseryStockDetails.receivedSectorId" id="receivedSectorId" name="receivedSectorId" class="form-control" 
+                                (change)="getReceivedNursery(nurseryStockDetails.receivedSectorId)">
+                                    <option value="0" disabled selected>Select Sector Name</option>
+                                    <option *ngFor="let sector of receivedSectors" value={{sector.id}}>{{sector.sectorName}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label for="name">Nursery</label>
+                                <select [(ngModel)]="nurseryStockDetails.itNurseryId" id="itNurseryId" name="itNurseryId" 
+                                class="form-control" required>
+                                    <option value="0" disabled selected>Select Nursery Name</option>
+                                    <option *ngFor="let nursery of receivedNurserys" value={{nursery.id}}>{{nursery.nurseryName}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-sm-4">
                                 <label for="name">Date *</label>
                                 <div class="input-group">
-                                    <input id="field_date" type="text" class="form-control" 
-                                    name="date" [(ngModel)]="nurseryStockDetails.date" 
+                                    <input id="field_date" type="text" class="form-control" name="date" 
+                                    [(ngModel)]="nurseryStockDetails.date" 
                                     ngbDatepicker #stockDateDp="ngbDatepicker" readonly/>
                                     <span class="input-group-append">
                                         <button class="btn btn-secondary" (click)="stockDateDp.toggle()">
@@ -96,46 +108,15 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="form-group col-sm-3">
+                            <div class="form-group col-sm-4">
+                                <label for="name">Quantity *</label>
+                                <input [(ngModel)]="nurseryStockDetails.quantity" type="text" id="quantity" name="quantity" 
+                                class="form-control" placeholder="Quantity" required>
+                            </div>
+                            <div class="form-group col-sm-4">
                                     <label for="name">Description</label>
-                                <textarea [(ngModel)]="nurseryStockDetails.description" 
-                                    type="text" id="description" name="description"
-                                    class="form-control" placeholder="Description">
-                                </textarea>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12 text-info">
-                                Received saplings from other nursery </div>
-                            <div class="form-group col-sm-3">
-                                <label for="name">Zonal</label>
-                                <select [(ngModel)]="nurseryStockDetails.receivedZoneId"
-                                    id="receivedZoneId" name="receivedZoneId" class="form-control"
-                                    (change)="getReceivedSector(nurseryStockDetails.receivedZoneId)" required>
-                                    <option value="0" disabled selected>Select Zonal Name</option>
-                                    <option *ngFor="let zonal of zonals"
-                                        value={{zonal.id}}>{{zonal.zoneName}}</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-sm-3">
-                                <label for="name">Sector</label>
-                                <select [(ngModel)]="nurseryStockDetails.receivedSectorId"
-                                    id="receivedSectorId" name="receivedSectorId" class="form-control" 
-                                    (change)="getReceivedNursery(nurseryStockDetails.receivedSectorId)">
-                                    <option value="0" disabled selected>Select Sector Name</option>
-                                    <option *ngFor="let sector of receivedSectors"
-                                        value={{sector.id}}>{{sector.sectorName}}</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-sm-3">
-                                <label for="name">Nursery</label>
-                                <select [(ngModel)]="nurseryStockDetails.itNurseryId"
-                                    id="itNurseryId" name="itNurseryId" 
-                                    class="form-control" required>
-                                    <option value="0" disabled selected>Select Nursery Name</option>
-                                    <option *ngFor="let nursery of receivedNurserys"
-                                        value={{nursery.id}}>{{nursery.nurseryName}}</option>
-                                </select>
+                                <input [(ngModel)]="nurseryStockDetails.description" type="text" 
+                                id="description" name="description" class="form-control" placeholder="description">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -146,26 +127,21 @@
                 </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-sm btn-primary" 
-                        (click)="save()"><i class="fa fa-dot-circle-o"></i> Create Stock
-                    </button>
+                        (click)="save()"><i class="fa fa-dot-circle-o"></i> Create Stock</button>
                     <button type="submit" class="btn btn-sm btn-danger"
                         (click)="resetForm()">
                         <i class="fa fa-ban"></i> Reset</button>
                 </div>
             </div>
         </div>
-    </div><!-- End of the add form -->
-
-    <!-- Display the nursery stock list -->
+    </div>
     <div id="collapseBasic" [collapse]="isCollapsedStockDetails" class="row">
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <i class="fa fa-align-justify"></i>
-                        Nursery Stock Details List - {{ modalTitle }}
+                    <i class="fa fa-align-justify"></i> Nursery Stock Details List
                     <button type="button" class="btn btn-sm btn-danger float-right" 
-                        (click)="isCollapsedStockDetails = !isCollapsedStockDetails"
-                        [attr.aria-expanded]="isCollapsedStockDetails" 
+                        (click)="isCollapsedStockDetails = !isCollapsedStockDetails" [attr.aria-expanded]="isCollapsedStockDetails" 
                         aria-controls="collapseBasic">
                             <fa-icon [icon]="'times'"></fa-icon> close
                     </button>
@@ -175,7 +151,7 @@
                         <thead>
                             <tr>
                                 <th>S No.</th>
-                                <!-- <th>IT. Nursery Name</th> -->
+                                <th>Nursery Name</th>
                                 <th>Quantity</th>
                                 <th>Date</th>
                                 <th>Description</th>
@@ -186,34 +162,15 @@
                         <tbody>
                             <tr *ngFor="let val of stockDetails; let i = index">
                                 <td>{{i+1}}</td>
-                                <!-- <th>{{val.itNurseryNurseryName}}</th> -->
+                                <th>{{val.itNurseryNurseryName}}</th>
                                 <td>{{val.quantity}}</td>
                                 <td>{{val.date | date: 'dd/MM/yyyy'}}</td>
-                                <td>{{val.description}}<br>
-                                    <span 
-                                        *ngIf="val.itNurseryNurseryName != null 
-                                        && val.itNurseryNurseryName != undefined
-                                        && val.status == 2">
-                                        <b>Distributed to(nursery) : </b>{{val.itNurseryNurseryName}}
-                                    </span>
-                                    <span 
-                                        *ngIf="val.fromNurseryStockDetailsNurseryName != null 
-                                        && val.fromNurseryStockDetailsNurseryName != undefined
-                                        && (val.status == 1 || val.status == 3)">
-                                        <b>Received from(nursery) : </b>{{val.fromNurseryStockDetailsNurseryName}}
-                                    </span>
-
-                                </td>
-                                <td>{{val.createdDate | date:'medium'}}</td>
-                                <td><b>
-                                    <span *ngIf="val.status == 1" 
-                                        class="text-success">Added</span>
-                                    <span *ngIf="val.status == 2" 
-                                        class="text-primary">Distributed</span>
-                                    <span *ngIf="val.status == 3" 
-                                        class="text-danger">Damage</span>
-                                    <span *ngIf="val.status == 4" 
-                                        class="text-danger">POS</span></b>
+                                <td>{{val.description}}</td>
+                                <td>{{val.createdAt | date: 'dd/MM/yyyy'}}</td>
+                                <td>
+                                    <span *ngIf="val.status == 1" class="badge badge-success">Added</span>
+                                    <span *ngIf="val.status == 2" class="badge badge-primary">Consumed</span>
+                                    <span *ngIf="val.status == 3" class="badge badge-danger">Damage</span>
                                 </td>
                             </tr>
                         </tbody>
@@ -221,63 +178,56 @@
                 </div>
             </div>
         </div>
-    </div><!-- End of the nursery stock list details -->
-
-    <!-- Display the success alert-->
+    </div>
     <div>
         <ngb-alert *ngIf="successMessage" type="success" 
             (close)="successMessage = null">{{ successMessage }}</ngb-alert>
-    </div><!-- End of the success alert -->
-
-    <!-- Display the tabset and tab for the Stock list and IT and POS Details -->
-    <div class="row font12">
+    </div>
+    <div class="row font12"> <!-- justify-content-center -->
         <div class="col-sm-12">
             <tabset>
-                <!-- <button class="btn btn-ghost-success btn-sm float-right" 
+                <button class="badge badge-primary float-right" 
                     (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="isCollapsed" 
                     aria-controls="collapseBasic">
                         <fa-icon [icon]="'plus'"></fa-icon> Add Stock
-                </button> -->
-                <!-- Display the stock list -->
+                </button>
                 <tab>
-                    <ng-template tabHeading><i class="icon-basket-loaded"
-                        (click)="getNurseryStockList()"> Stock List </i>
+                    <ng-template tabHeading>
+                        <i class="icon-basket-loaded"> Stock List </i>
                     </ng-template>
-                    <!-- Display the error message -->
                     <div class="form-group row">
                         <div class="col-md-6">
                             <span class="text-danger" *ngIf="errorMessage"
                                 (close)="errorMessage = null">{{ errorMessage }}</span>
                         </div>
-                    </div> <!-- End of the error message -->
-                    <div class="card">
+                    </div>
+                    <!-- <div class="card">
                         <div class="card-header">
                             <i class="fa fa-align-justify"></i> Nursery Stock List
                             <button type="button" class="btn btn-sm btn-success float-right" 
-                            (click)="addSaplings()">
+                            (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="isCollapsed" 
+                            aria-controls="collapseBasic">
                                 <fa-icon [icon]="'plus'"></fa-icon> Add Stock
                             </button>
                         </div>
-                        <div class="card-body table-responsive">
-                            <div class="text-left"><b>
-                                <span class="text-primary"><fa-icon [icon]="'eye'"></fa-icon> -  Stock Detail</span>,
-                                <span class="text-success"><fa-icon [icon]="'plus-square'"></fa-icon> -  Add quantity</span>,
-                                <span class="text-warning"><fa-icon [icon]="'minus-square'"></fa-icon> -  Distribute Sapling</span>,
-                                <span class="text-danger"><fa-icon [icon]="'ban'"></fa-icon> -  Record damage</span>,
-                                <span class="text-info"><fa-icon [icon]="'check'"></fa-icon> - POS</span></b>
-                            </div>
-                            <table class="table table-responsive font12">
+                        <div class="card-body table-responsive"> -->
+                                <div class="text-right">
+                                        <span class="btn-ghost-info"><fa-icon [icon]="'eye'"></fa-icon> - Stock Detail</span>,
+                                        <span class="btn-ghost-success"><fa-icon [icon]="'plus'"></fa-icon> - Add quantity</span>,
+                                        <span class="btn-ghost-primary"><fa-icon [icon]="'minus'"></fa-icon> - Distribute Sapling</span>,
+                                        <span class="btn-ghost-danger"><fa-icon [icon]="'ban'"></fa-icon> - Record damage</span>
+                                        <span class="btn-ghost-info"><fa-icon [icon]="'check'"></fa-icon> - POS</span>
+                                </div>
+                            <table class="table font12">
                                 <thead>
                                     <tr>
                                         <th>S No.</th>
                                         <th>Nursery Name</th>
                                         <th>Variety</th>
                                         <th>Category</th>
-                                        <th>Added Quantity</th>
                                         <th>Current Quantity</th>
-                                        <th>Distributed Quantity</th>
-                                        <th>Damaged Quantity</th>
-                                        <th>POS Quantity</th>
+                                        <th>Added Quantity</th>
+                                        <th>Consumed Quantity</th>
                                         <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
@@ -287,506 +237,329 @@
                                         <td>{{value.nurseryNurseryName}}</td>
                                         <td>{{value.pickListVarietyPickListValue}}</td>
                                         <td>{{value.pickListCategoryPickListValue}}</td>
-                                        <td>{{value.addedQuantity}}</td>
                                         <td>{{value.currentQuantity}}</td>
+                                        <td>{{value.addedQuantity}}</td>
+                                        <td>{{value.consumedQuantity}}</td>
                                         <td>
-                                            <span *ngIf="value.consumedQuantity == '' || value.consumedQuantity == null">0</span>
-                                            <span *ngIf="value.consumedQuantity != '' || value.consumedQuantity != null">{{value.consumedQuantity}}</span>
-                                        </td>
-                                        <td>
-                                            <span *ngIf="value.damageQuantity == '' || value.damageQuantity == null">0</span>
-                                            <span *ngIf="value.damageQuantity != '' || value.damageQuantity != null">{{value.damageQuantity}}</span>
-                                        </td>
-                                        <td>
-                                            <span *ngIf="value.damageQuantity == '' || value.damageQuantity == null">0</span>
-                                            <span *ngIf="value.posQuantity != '' || value.posQuantity != null">{{value.damageQuantity}}</span>
-                                        </td>
-                                        <!-- <td>{{value.consumedQuantity}}</td>
-                                        <td>{{value.damageQuantity}}</td>
-                                        <td>{{value.posQuantity}}</td> -->
-                                        <td>
-                                            <a class="text-primary" title="View stock Details"
-                                                (click)="getStockDetails(value.id, value.nurseryNurseryName)" 
-                                                [attr.aria-expanded]="isCollapsedStockDetails" 
-                                                aria-controls="collapseBasic">
+                                            <a class="text-info" title="View stock Details"
+                                            (click)="getStockDetails(value.id)" [attr.aria-expanded]="isCollapsedStockDetails" 
+                                            aria-controls="collapseBasic">
                                                 <fa-icon [icon]="'eye'"></fa-icon>
                                             </a>
-                                            <a class="text-success sm-2" data-toggle="modal"
-                                                title="Add more quantity" (click)="addMoreStock(value)">
-                                                <fa-icon [icon]="'plus-square'"></fa-icon>
-                                            </a>
-                                            <a class="text-warning sm-2" data-toggle="modal"
-                                                title="Distribute saplings to other nursery"
-                                                (click)="distributeStock(value)">
-                                                <fa-icon [icon]="'minus-square'"></fa-icon>
-                                            </a>
-                                            <a class="text-danger sm-2" data-toggle="modal"
-                                                title="Record damage saplings"
-                                                (click)="damageStock(value)">
-                                                <fa-icon [icon]="'ban'"></fa-icon>
-                                            </a>
-                                            <a class="text-info ml-2" data-toggle="modal"
-                                                title="POS" (click)="saplingPOS(value)">
-                                                <fa-icon [icon]="'check'"></fa-icon>
-                                            </a>
+                                            <a class="text-success ml-2" data-toggle="modal" title="Add more quantity"
+                                            (click)="addMoreStock(value)"><fa-icon [icon]="'plus'"></fa-icon></a>
+                                            <a class="text-primary ml-2" data-toggle="modal" title="Distribute saplings to other nursery"
+                                            (click)="consumeStock(value)"><fa-icon [icon]="'minus'"></fa-icon></a>
+                                            <a class="text-danger ml-2" data-toggle="modal" title="Record damage saplings"
+                                            (click)="damageStock(value)"><fa-icon [icon]="'ban'"></fa-icon></a>
+                                            <a class="text-info ml-2" data-toggle="modal" title="POS"
+                                            (click)="saleStock(value)"><fa-icon [icon]="'check'"></fa-icon></a>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
-                    </div>
-                </tab><!-- End of the stock list -->
-                
-                <!-- To display the IT details -->
+                        <!-- </div>
+                    </div> -->
+                </tab>
                 <tab>
-                    <ng-template tabHeading><i class="icon-basket-loaded"
-                        (click)="emptyItNurseryDetails()"> IT </i>
-                    </ng-template>
-
-                    <div class="card">
-                        <div class="card-header">
-                            <!-- <i class="fa fa-align-justify"></i> Distribution List -->
-                            <div class="row">
-                                <div class="form-group col-sm-1">
-                                    <label for="name">Nursery </label>
-                                </div>
-                                <div class="form-group col-sm-3">
-                                    <form action="" method="post"
-                                        enctype="multipart/form-data" class="form-horizontal">
-                                        <select [(ngModel)]="nurseryStock.nurseryId"
-                                            id="nurseryId" name="nurseryId" class="form-control" 
-                                            (change)="getParticularList(nurseryStock.nurseryId)">
-                                            <option value="0" disabled selected>Select Nursery Name</option>
-                                            <option *ngFor="let nursery of nurserysList" value={{nursery.id}}>{{nursery.nurseryName}}</option>
-                                        </select>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body table-responsive">
-                            <!-- *ngIf="particularNurseryDetails != '' 
-                                && particularNurseryDetails != undefined" -->
-                            <table class="table font12">
-                                <thead>
-                                    <tr>
-                                        <th>S No.</th>
-                                        <th>From Nursery</th>
-                                        <th>Date</th>
-                                        <th>Variety</th>
-                                        <th>Category</th>
-                                        <th>Quantity</th>
-                                        <th>Description</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let value of particularNurseryDetails; let i = index">
-                                        <td>{{i+1}}</td>
-                                        <!-- <td>{{value.itNurseryNurseryName}}</td> -->
-                                        <td>{{value.fromNurseryStockDetailsNurseryName}}</td>
-                                        <td>{{value.date | date: 'dd/MM/yyyy'}}</td>
-                                        <td>{{value.stockVariety}}</td>
-                                        <td>{{value.stockCategory}}</td>
-                                        <td>{{value.quantity}}</td>
-                                        <td>{{value.description}}</td>
-                                        <td>
-                                            <span *ngIf="value.itStatus == null">
-                                                <a class="text-damage ml-2" data-toggle="modal" 
-                                                    title="Add to Stock" (click)="addToStocks(value)">
-                                                    <fa-icon [icon]="'plus'"></fa-icon>
-                                                </a>
-                                            </span>
-                                            <span *ngIf="value.itStatus == 2"> Distributed </span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+        <ng-template tabHeading>
+            <i class="icon-basket-loaded"> IT </i>
+        </ng-template>
+        <div class="card">
+            <div class="card-header">
+                <!-- <i class="fa fa-align-justify"></i> Distribution List -->
+                <div class="row">
+                    <div class="form-group col-sm-1">
+                        <label for="name">Nursery </label>
                     </div>
-                    <div class="card" 
-                        *ngIf="addedNurseryDetails != '' && addedNurseryDetails != undefined">
-                        <div class="card-header">
-                            <i class="fa fa-align-justify"></i> Added List
-                        </div>
-                        <div class="card-body table-responsive">
-                            <table class="table font12">
-                                <thead>
-                                    <tr>
-                                        <th>S No.</th>
-                                        <th>From Nursery</th>
-                                        <th>Date</th>
-                                        <th>Variety</th>
-                                        <th>Category</th>
-                                        <th>Quantity</th>
-                                        <th>Description</th>
-                                        <!-- <th>Action</th> -->
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let val of addedNurseryDetails; let i = index">
-                                        <td>{{i+1}}</td>
-                                        <!-- <td>{{value.itNurseryNurseryName}}</td> -->
-                                        <td>{{val.fromNurseryStockDetailsNurseryName}}</td>
-                                        <td>{{val.date | date: 'dd/MM/yyyy'}}</td>
-                                        <td>{{val.stockVariety}}</td>
-                                        <td>{{val.stockCategory}}</td>
-                                        <td>{{val.quantity}}</td>
-                                        <td>{{val.description}}</td>
-                                        <!-- <td>
-                                            <span *ngIf="val.itStatus == 1"> Added </span>
-                                            <span *ngIf="val.itStatus == 2"> Distributed </span>
-                                        </td> -->
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class="form-group col-sm-3">
+                            <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                            <select [(ngModel)]="nurseryStock.nurseryId" id="nurseryId" name="nurseryId" class="form-control" 
+                            (change)="getParticularList(nurseryStock.nurseryId)" required>
+                                <option value="0" disabled selected>Select Nursery Name</option>
+                                <option *ngFor="let nursery of nurserysList" value={{nursery.id}}>{{nursery.nurseryName}}</option>
+                            </select>
+                            </form>
                     </div>
-                </tab><!-- End of the Internal transportation -->
-
-                <!-- Display the POs List Details -->
+                </div>
+            </div>
+            <div class="card-body table-responsive">
+                    <table class="table font12">
+                            <thead>
+                                <tr>
+                                    <th>S No.</th>
+                                    <th>Nursery Name</th>
+                                    <th>Date</th>
+                                    <th>Variety</th>
+                                    <th>Category</th>
+                                    <th>Quantity</th>
+                                    <th>Description</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let value of particularNurseryDetails; let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{value.itNurseryNurseryName}}</td>
+                                    <td>{{value.date | date: 'dd/MM/yyyy'}}</td>
+                                    <td>{{value.stockVariety}}</td>
+                                    <td>{{value.stockCategory}}</td>
+                                    <td>{{value.quantity}}</td>
+                                    <td>{{value.description}}</td>
+                                    <td>
+                                        <span *ngIf="value.status != 1">
+                                        <a class="text-damage ml-2" data-toggle="modal" title="Add to Stock"
+                                        (click)="addToStock(value)"><fa-icon [icon]="'plus'"></fa-icon></a>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                    </table>
+            </div>
+        </div>
+        </tab>
                 <tab>
                     <ng-template tabHeading><i class="icon-basket-loaded" 
-                        (click)="getPointOfSaleList()"> POS List</i>
-                    </ng-template>
-                    <table class="table table-responsive font12">
-                        <thead>
-                            <tr>
-                                <th>S No.</th>
-                                <th>Variety</th>
-                                <th>Category</th>
-                                <th>Quantity</th>
-                                <th>Donor Name</th>
-                                <th>Donor Address</th>
-                                <th>Contact No</th>
-                                <th>Discount %</th>
-                                <th>Discount Amount</th>
-                                <th>Collected Amount</th>
-                                <th>Date</th>
-                                <!-- <th class="text-center">Action</th> -->
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let value of pointOfSales; let i = index">
-                                <td>{{i+1}}</td>
-                                <td>{{value.pickListVarietyPickListValue}}</td>
-                                <td>{{value.pickListCategoryPickListValue}}</td>
-                                <td>{{value.quantity}}</td>
-                                <td>{{value.donorName}}</td>
-                                <td>{{value.donorAddress}}</td>
-                                <td>{{value.contactNo}}</td>
-                                <td>{{value.discount}}</td>
-                                <td>{{value.discountAmount}}</td>
-                                <td>{{value.collectedAmount}}</td>
-                                <!-- <td>{{value.date}}</td> -->
-                                <td>{{value.date | date:'medium'}}</td>
-                                <!-- <td>{{value.contactNo}}</td> -->
-                            </tr>
-                        </tbody>
-                    </table>
-                </tab><!-- End of the POs list-->
+                        (click)="getPointOfSaleList()"> POS List</i></ng-template>
+
+                    <table class="table-responsive table table-bordered table-striped table font12">
+                            <thead>
+                                <tr>
+                                    <th>S No.</th>
+                                    <th>Variety</th>
+                                    <th>Category</th>
+                                    <th>Quantity</th>
+                                    <th>Donor Name</th>
+                                    <th>Donor Address</th>
+                                    <th>Contact No</th>
+                                    <th>Discount %</th>
+                                    <th>Discount Amount</th>
+                                    <th>Collected Amount</th>
+                                    <th>Date</th>
+                                    <!-- <th class="text-center">Action</th> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let value of pointOfSales; let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{value.pickListVarietyPickListValue}}</td>
+                                    <td>{{value.pickListCategoryPickListValue}}</td>
+                                    <td>{{value.quantity}}</td>
+                                    <td>{{value.donorName}}</td>
+                                    <td>{{value.donorAddress}}</td>
+                                    <td>{{value.contactNo}}</td>
+                                    <td>{{value.discount}}</td>
+                                    <td>{{value.discountAmount}}</td>
+                                    <td>{{value.collectedAmount}}</td>
+                                    <td>{{value.date}}</td>
+                                    <!-- <td>{{value.contactNo}}</td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+                </tab>
+            </div>
         </div>
-    </div><!-- End of the List -->
 </div>
 
 <!-- Add particular stock with update the consume and damge stock details -->
 <div bsModal #addParticularStock="bs-modal" class="modal fade" 
-    tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-    aria-hidden="true" [config]="{backdrop: 'static',  keyboard: false}">
+    tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-primary modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h6 class="modal-title">
-                    {{modalTitle}} : {{nurseryStock.nurseryNurseryName}}
-                </h6>
+                <h6 class="modal-title">Add/Consume Quantity</h6>
                 <button type="button" class="close" 
                     (click)="addParticularStock.hide()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body font12">
-                <form action="" method="post" enctype="multipart/form-data"
-                    class="form-horizontal">
-                    <input [(ngModel)]="nurseryStockDetails.nurseryStockId"
-                        type="hidden" id="nurseryStockId" 
-                        name="nurseryStockId" class="form-control">
+            <div class="modal-body">
+                <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                    <input [(ngModel)]="nurseryStockDetails.nurseryStockId" type="hidden" id="nurseryStockId" name="nurseryStockId" 
+                    class="form-control">
                     <div class="row">
-                        <div class="form-group col-sm-3"
-                            *ngIf="nurseryStockDetails.status == statusConsume">
-                            <label for="select1">Zonal *</label>
-                            <select [(ngModel)]="nurseryStockDetails.zoneId" 
-                                id="zoneId" name="zoneId" class="form-control" 
-                                (change)="getSector(nurseryStockDetails.zoneId)">
+                        <div class="form-group col-sm-4">
+                            <label for="select1">Zonal</label>
+                            <select [(ngModel)]="nurseryStockDetails.zoneId" id="zoneId" name="zoneId" class="form-control" 
+                            (change)="getSector(nurseryStockDetails.zoneId)">
                                 <option value="0" disabled selected>Select Zonal Name</option>
-                                <option *ngFor="let zone of zonals"
-                                    value={{zone.id}}>{{zone.zoneName}}</option>
+                                <option *ngFor="let zone of zonals" value={{zone.id}}>{{zone.zoneName}}</option>
                             </select>
                         </div>
-                        <div class="form-group col-sm-3"
-                            *ngIf="nurseryStockDetails.status == statusConsume">
-                            <label for="select1">Sector *</label>
-                            <select [(ngModel)]="nurseryStockDetails.sectorId"
-                                id="sectorId" name="sectorId" class="form-control" 
-                                (change)="getNursery(nurseryStockDetails.sectorId)">
+                        <div class="form-group col-sm-4">
+                            <label for="select1">Sector</label>
+                            <select [(ngModel)]="nurseryStockDetails.sectorId" id="sectorId" name="sectorId" 
+                            class="form-control" (change)="getNursery(nurseryStockDetails.sectorId)">
                                 <option value="0" disabled selected>Select Sector Name</option>
-                                <option *ngFor="let sectorValue of sectors"
-                                    value={{sectorValue.id}}>{{sectorValue.sectorName}}
-                                </option>
+                                <option *ngFor="let sectorValue of sectors" value={{sectorValue.id}}>{{sectorValue.sectorName}}</option>
                             </select>
                         </div>
-                        <div class="form-group col-sm-3"
-                            *ngIf="nurseryStockDetails.status == statusConsume">
-                            <label for="name">Nursery *</label>
-                            <select [(ngModel)]="nurseryStockDetails.itNurseryId"
-                                id="itNurseryId" name="itNurseryId" class="form-control" required>
+                        <div class="form-group col-sm-4">
+                            <label for="name">Nursery</label>
+                            <select [(ngModel)]="nurseryStockDetails.itNurseryId" id="itNurseryId" name="itNurseryId" class="form-control" required>
                                 <option value="0" disabled selected>Select Nursery Name</option>
-                                <option *ngFor="let nursery of nurserys"
-                                    value={{nursery.id}}>{{nursery.nurseryName}}
-                                </option>
+                                <option *ngFor="let nursery of nurserys" value={{nursery.id}}>{{nursery.nurseryName}}</option>
                             </select>
                         </div>
-                        <div class="form-group col-sm-3">
-                            <label for="text-input">Date *</label>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-4">
+                            <label for="text-input">Date</label>
                             <div class="input-group">
                                 <input id="field_date" type="text" class="form-control" name="date" 
                                 [(ngModel)]="nurseryStockDetails.date" ngbDatepicker 
                                 #stockDetailsDateDp="ngbDatepicker" readonly/>
                                 <span class="input-group-append">
-                                    <button class="btn btn-secondary"
-                                        (click)="stockDetailsDateDp.toggle()">
+                                    <button class="btn btn-secondary" (click)="stockDetailsDateDp.toggle()">
                                         <fa-icon [icon]="'calendar-alt'"></fa-icon>
                                     </button>
                                 </span>
                             </div>
                         </div>
-                        <div class="form-group col-sm-3">
-                            <label for="text-input">Quantity *</label>
-                            <input [(ngModel)]="nurseryStockDetails.quantity"
-                                type="text" id="quantity" name="quantity"
-                                class="form-control" placeholder="Quantity"
-                                (keypress)="numberOnly($event)">
+                        <div class="form-group col-sm-4">
+                            <label for="text-input">Quantity</label>
+                            <input [(ngModel)]="nurseryStockDetails.quantity" type="text" 
+                            id="quantity" name="quantity" class="form-control" placeholder="Quantity">
                         </div>
-                        <div *ngIf="nurseryStockDetails.status != statusDamage" 
-                            class="form-group col-sm-3">
-                            <label for="text-input">Description *</label>
-                            <textarea [(ngModel)]="nurseryStockDetails.description"
-                                type="text" id="description" name="description" 
-                                class="form-control" placeholder="Description">
-                            </textarea>
+                        <div *ngIf="nurseryStockDetails.status != 3" class="form-group col-sm-4">
+                            <label for="text-input">Description</label>
+                            <input [(ngModel)]="nurseryStockDetails.description" type="text" 
+                            id="description" name="description" class="form-control" placeholder="description">
                         </div>
-                        <div *ngIf="nurseryStockDetails.status == statusDamage"
-                            class="form-group col-sm-3">
-                            <label for="name">Damage Area *</label>
-                            <select [(ngModel)]="nurseryStockDetails.saplingDamageAreaId"
-                                id="saplingDamageAreaId" name="saplingDamageAreaId" class="form-control">
-                                <option value="0" disabled selected>Description</option>
-                                <option *ngFor="let damageArea of damageAreaList"
-                                    value={{damageArea.id}}>{{damageArea.pickListValue}}</option>
-                            </select>
-                        </div>
-                        <div *ngIf="nurseryStockDetails.status == statusDamage"
-                            class="form-group col-sm-3">
-                            <label for="name">Description *</label>
-                            <select [(ngModel)]="nurseryStockDetails.description"
-                                id="description" name="description" class="form-control">
-                                <option value="0" disabled selected>Description</option>
-                                <option *ngFor="let damageReason of damageReasons" 
-                                    value={{damageReason.pickListValue}}>
-                                        {{damageReason.pickListValue}}
-                                </option>
+                        <div *ngIf="nurseryStockDetails.status == 3" class="form-group col-sm-4">
+                            <label for="name">Damage Type </label>
+                            <select [(ngModel)]="nurseryStockDetails.pickListDamageAreaId" id="pickListDamageAreaId" name="pickListDamageAreaId" 
+                                class="form-control" (change)="getDamageType(nurseryStockDetails.pickListDamageAreaId)">
+                                <option value="0" disabled selected>Select</option>
+                                <option *ngFor="let damageValue of pickLists" value={{damageValue.id}}>{{damageValue.pickListName}}</option>
                             </select>
                         </div>
                     </div>
-                    <div>
-                        <span class="text-danger" *ngIf="errorMessage"
-                            (close)="errorMessage = null">{{ errorMessage }}
-                        </span>
+                    <div *ngIf="nurseryStockDetails.status == 3" class="row">
+                        <div class="form-group col-sm-4">
+                            <label for="name">Damage Area</label>
+                            <select [(ngModel)]="nurseryStockDetails.saplingDamageAreaId" id="saplingDamageAreaId" name="saplingDamageAreaId" class="form-control">
+                                <option value="0" disabled selected>Description</option>
+                                <option *ngFor="let damageArea of damageAreaList" value={{damageArea.id}}>{{damageArea.pickListValue}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label for="name">Pick Name </label>
+                            <select [(ngModel)]="nurseryStockDetails.pickListDescriptionId" id="pickListDescriptionId" name="pickListDescriptionId" 
+                            class="form-control" (change)="getVariety(nurseryStockDetails.pickListDescriptionId)">
+                                <option value="0" disabled selected>Select</option>
+                                <option *ngFor="let pickList of pickLists" value={{pickList.id}}>{{pickList.pickListName}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label for="name">Reason</label>
+                            <select [(ngModel)]="nurseryStockDetails.description" id="description" name="description" class="form-control">
+                                <option value="0" disabled selected>Reason</option>
+                                <option *ngFor="let val of varietys" value={{val.pickListValue}}>{{val.pickListValue}}</option>
+                            </select>
+                        </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary"
-                    (click)="addParticularStock.hide()">Close</button>
-                <button *ngIf="nurseryStockDetails.status == statusAdd"
-                    type="button" class="btn btn-primary" 
-                    (click)="addStockQuantity(nurseryStock)">Add
-                </button>
-                <button 
-                    *ngIf="(nurseryStockDetails.status == statusConsume)" 
-                    type="button" class="btn btn-primary" 
-                    (click)="consumeStockQuantity(nurseryStock, statusConsume)">Distribute
-                </button>
-                <button 
-                    *ngIf="(nurseryStockDetails.status == statusDamage)" 
-                    type="button" class="btn btn-primary" 
-                    (click)="consumeStockQuantity(nurseryStock, statusDamage)">Submit
-                </button>
+                <button type="button" class="btn btn-secondary" (click)="addParticularStock.hide()">Close</button>
+                <button *ngIf="nurseryStockDetails.status == 1" type="button" class="btn btn-primary" (click)="addStockQuantity(nurseryStock)">Add</button>
+                <button *ngIf="((nurseryStockDetails.status == 2) || (nurseryStockDetails.status == 3))" type="button" class="btn btn-primary" (click)="consumeStockQuantity(nurseryStock)">Consume</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-</div><!-- End of the add stock and consume and datamge stock form details-->
+</div><!-- /.modal -->
+<!-- End of the add stock and consume and datamge stock form details-->
 
 <!-- To sale the saplings through POS(Point of Sale)-->
 <!-- Consume Seeds-->
 <div bsModal #stockPOS="bs-modal" class="modal fade" 
-    tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-    aria-hidden="true" [config]="{backdrop: 'static',  keyboard: false}">
-    <div class="modal-dialog modal-primary modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h6 class="modal-title">Stock POS
-                </h6>
-                <button type="button" class="close" 
-                    (click)="stockPOS.hide()" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body font13">
-                <form action="" method="post" 
-                    enctype="multipart/form-data" class="form-horizontal">
-                    <input [(ngModel)]="nurseryStockDetails.nurseryStockId"
-                        type="hidden" id="nurseryStockId" name="nurseryStockId" 
-                        class="form-control">
-                    <div class="row">
-                        <div class="form-group col-sm-3">
-                            <label for="text-input">Quantity *</label>
-                            <input [(ngModel)]="nurseryStockDetails.quantity"
-                                type="text" id="quantity" name="quantity"
-                                class="form-control" placeholder="Quantity"
-                                (keypress)="numberOnly($event)">
-                        </div>
-                        <div class="form-group col-sm-3">
-                            <label for="text-input">Date *</label>
-                            <input id="field_date" type="text" class="form-control"
-                                name="date" [(ngModel)]="nurseryStockDetails.date" readonly
-                                ngbDatepicker  #consumeInventoryDateDp="ngbDatepicker" 
-                            (click)="consumeInventoryDateDp.toggle()"/>
-                        </div>
-                        <div class="form-group col-sm-3">
-                            <label for="text-input">Discount in *</label>
-                            <input [(ngModel)]="pointOfSaleDetails.discount"
-                                type="text" id="discount" name="discount"
-                                class="form-control" placeholder="Discount"
-                                (keypress)="numberOnly($event)">
-                        </div>
-                        <div class="form-group col-sm-3">
-                            <label for="text-input">Discount Amount</label>
-                            <input [(ngModel)]="pointOfSaleDetails.discountAmount"
-                                type="text" id="discountAmount" name="discountAmount"
-                                class="form-control" placeholder="Discount Amount"
-                                (keypress)="numberOnly($event)">
-                        </div>
-                        <div class="form-group col-sm-3">
-                            <label for="text-input">Collected Amount *</label>
-                            <input [(ngModel)]="pointOfSaleDetails.collectedAmount"
-                                type="text" id="collectedAmount" name="collectedAmount"
-                                class="form-control" placeholder="Collected Amount"
-                                (keypress)="numberOnly($event)">
-                        </div>
-                        <div class="form-group col-sm-3">
-                            <label for="text-input">Donor Name *</label>
-                            <input [(ngModel)]="pointOfSaleDetails.donorName"
-                                type="text" id="donorName" name="donorName"
-                                class="form-control" placeholder="Donor Name">
-                        </div>
-                        <div class="form-group col-sm-3">
-                            <label for="text-input">Donor Address *</label>
-                            <input [(ngModel)]="pointOfSaleDetails.donorAddress" 
-                                type="text" id="quantity" name="donorAddress"
-                                class="form-control" placeholder="Donor Address">
-                        </div>
-                        <div class="form-group col-sm-3">
-                            <label for="text-input">Contact No *</label>
-                            <input [(ngModel)]="pointOfSaleDetails.contactNo"
-                                type="text" id="contactNo" name="contactNo"
-                                class="form-control" placeholder="Contact No"
-                                (keypress)="numberOnly($event)">
-                        </div>
-                        <div class="form-group col-sm-3">
-                            <label for="text-input">Purpose Of Taking *</label>
-                            <input [(ngModel)]="pointOfSaleDetails.purposeOfTaking"
-                                type="text" id="purposeOfTaking" name="purposeOfTaking"
-                                class="form-control" placeholder="Purpose Of Taking">
-                        </div>
-                    </div>
-                    <div>
-                        <span class="text-danger" *ngIf="errorMessage"
-                            (close)="errorMessage = null">{{ errorMessage }}
-                        </span>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" 
-                    (click)="stockPOS.hide()">Close</button>
-                <button type="button" class="btn btn-primary" 
-                    (click)="savePointOfSale(nurseryStock)">Save</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- End of the Point of sale(Sapling sales)-->
-      
-<!-- Consume Seeds/Cover-->
-<div bsModal #addToStockModel="bs-modal" class="modal fade" 
-tabindex="-1" role="dialog" aria-labelledby="myModalLabel" 
-aria-hidden="true" [config]="{backdrop: 'static',  keyboard: false}">
-<div class="modal-dialog modal-primary font13" role="document">
+tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-primary modal-lg" role="document">
     <div class="modal-content">
         <div class="modal-header">
-            <h6 class="modal-title">
-                Add to Stock -  No of Quantity : {{nurseryStockDetails.quantity}}
+            <h6 class="modal-title">Stock POS
             </h6>
             <button type="button" class="close" 
-                (click)="addToStockModel.hide()" aria-label="Close">
+                (click)="stockPOS.hide()" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="modal-body">
-            <form action="" method="post"
-                enctype="multipart/form-data" class="form-horizontal">
+        <div class="modal-body font13">
+            <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                <input [(ngModel)]="nurseryStockDetails.nurseryStockId" type="hidden" id="nurseryStockId" name="nurseryStockId" 
+                    class="form-control">
                 <div class="form-group row">
-                    <label class="col-md-4 col-form-label"
-                        for="text-input">Damage Quantity</label>
-                    <div class="col-md-6">
-                        <input [(ngModel)]="damageQuantity"
-                        (change)="getDamageDetails(damageQuantity)"
-                        type="text" id="damageQuantity" name="damageQuantity" 
-                        class="form-control" placeholder="Damage Quantity">
+                    <label class="col-md-2 col-form-label" for="text-input">Date *</label>
+                    <div class="col-md-4">
+                        <input id="field_date" type="text" class="form-control" name="date"
+                        [(ngModel)]="nurseryStockDetails.date" 
+                        ngbDatepicker  #consumeInventoryDateDp="ngbDatepicker" 
+                        (click)="consumeInventoryDateDp.toggle()"/>
+                    </div>
+                    <label class="col-md-2 col-form-label" for="text-input">Quantity *</label>
+                    <div class="col-md-4">
+                        <input [(ngModel)]="nurseryStockDetails.quantity" type="text" 
+                        id="quantity" name="quantity" class="form-control" 
+                        placeholder="Quantity">
                     </div>
                 </div>
-                <div class="form-group row" *ngIf="statusDamage != 2">
-                    <label class="col-md-4 col-form-label"
-                        for="text-input">Description *</label>
-                    <div class="col-md-6">
-                        <textarea [(ngModel)]="nurseryStockDetails.description"
-                            type="text" id="description" name="description" 
-                            class="form-control" placeholder="Description">
-                        </textarea>
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" 
+                        for="text-input">Donor Name *</label>
+                    <div class="col-md-4">
+                        <input [(ngModel)]="pointOfSaleDetails.donorName" type="text" 
+                        id="donorName" name="donorName" class="form-control" 
+                        placeholder="Donor Name">
+                    </div>
+
+                    <label class="col-md-2 col-form-label" 
+                        for="text-input">Donor Address *</label>
+                    <div class="col-md-4">
+                        <input [(ngModel)]="pointOfSaleDetails.donorAddress" type="text" 
+                        id="quantity" name="donorAddress" class="form-control" 
+                        placeholder="Donor Address">
                     </div>
                 </div>
-                <div class="form-group row" *ngIf="statusDamage == 2">
-                    <label class="col-md-4 col-form-label"
-                        for="text-input">Damage Area *</label>
-                    <div class="col-md-6">
-                        <select [(ngModel)]="nurseryStockDetails.saplingDamageAreaId"
-                            id="saplingDamageAreaId" name="saplingDamageAreaId" class="form-control">
-                            <option value="0" disabled selected>Description</option>
-                            <option *ngFor="let damageArea of damageAreaList"
-                                value={{damageArea.id}}>{{damageArea.pickListValue}}</option>
-                        </select>
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" 
+                        for="text-input">Contact No *</label>
+                    <div class="col-md-4">
+                        <input [(ngModel)]="pointOfSaleDetails.contactNo" type="text" 
+                        id="contactNo" name="contactNo" class="form-control" 
+                        placeholder="Contact No">
+                    </div>
+                    <label class="col-md-2 col-form-label" 
+                        for="text-input">Discount in %</label>
+                    <div class="col-md-4">
+                        <input [(ngModel)]="pointOfSaleDetails.discount" type="text" 
+                        id="discount" name="discount" class="form-control" 
+                        placeholder="Discount">
                     </div>
                 </div>
-                <div class="form-group row" *ngIf="statusDamage == 2">
-                    <label class="col-md-4 col-form-label"
-                        for="text-input">Description *</label>
-                    <div class="col-md-6">
-                        <select [(ngModel)]="nurseryStockDetails.description"
-                            id="description" name="description" class="form-control">
-                            <option value="0" disabled selected>Description</option>
-                            <option *ngFor="let damageReason of damageReasons" 
-                                value={{damageReason.pickListValue}}>
-                                    {{damageReason.pickListValue}}
-                            </option>
-                        </select>
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" 
+                        for="text-input">Discount Amount</label>
+                    <div class="col-md-4">
+                        <input [(ngModel)]="pointOfSaleDetails.discountAmount" type="text" 
+                        id="discountAmount" name="discountAmount" class="form-control" 
+                        placeholder="Discount Amount">
+                    </div>
+
+                    <label class="col-md-2 col-form-label" 
+                        for="text-input">Collected Amount *</label>
+                    <div class="col-md-4">
+                        <input [(ngModel)]="pointOfSaleDetails.collectedAmount" type="text" 
+                        id="collectedAmount" name="collectedAmount" class="form-control" 
+                        placeholder="Collected Amount">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="text-input">Purpose Of Taking</label>
+                    <div class="col-md-10">
+                    <input [(ngModel)]="pointOfSaleDetails.purposeOfTaking" type="text" 
+                        id="purposeOfTaking" name="purposeOfTaking" class="form-control" 
+                        placeholder="Purpose Of Taking">
                     </div>
                 </div>
                 <div>
@@ -798,10 +571,12 @@ aria-hidden="true" [config]="{backdrop: 'static',  keyboard: false}">
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" 
-                (click)="addToStockModel.hide()">Close</button>
+                (click)="stockPOS.hide()">Close</button>
             <button type="button" class="btn btn-primary" 
-                (click)="addStockToNursery(nurseryStockDetails, damageQuantity)">Save</button>
+                (click)="savePOs(nurseryStock)">Save</button>
         </div>
     </div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->
-</div><!-- End of the consume seeds/cover-->
+</div><!-- /.modal -->
+<!-- End of the Point of sale(Sapling sales)-->
+      

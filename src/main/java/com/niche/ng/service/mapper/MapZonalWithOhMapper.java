@@ -1,24 +1,12 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date  : 2018/09/12
- *  Target: yarn
- *  -----------------------------------------------------------------------------
- *  File Description    : This file performs MapZonalWithOhMapper
- *
- *******************************************************************************/
 package com.niche.ng.service.mapper;
 
 import com.niche.ng.domain.*;
 import com.niche.ng.service.dto.MapZonalWithOhDTO;
 
 import org.mapstruct.*;
+import java.util.List;
 /**
  * Mapper for the entity MapZonalWithOh and its DTO MapZonalWithOhDTO.
- * Mapping the parent and child table to fetch the field value.
- * Converting the entity object into data transfer object(DTO).
  */
 @Mapper(componentModel = "spring", uses = {ZonalMapper.class, OperationalHeadMapper.class})
 public interface MapZonalWithOhMapper extends EntityMapper<MapZonalWithOhDTO, MapZonalWithOh> {
@@ -32,6 +20,8 @@ public interface MapZonalWithOhMapper extends EntityMapper<MapZonalWithOhDTO, Ma
     @Mapping(source = "zonalId", target = "zonal")
     @Mapping(source = "operationalHeadId", target = "operationalHead")
     MapZonalWithOh toEntity(MapZonalWithOhDTO mapZonalWithOhDTO);
+
+    List<MapZonalWithOhDTO> toDto(List<MapZonalWithOh> mapZonalWithOh);
 
     default MapZonalWithOh fromId(Long id) {
         if (id == null) {

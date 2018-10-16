@@ -61,12 +61,6 @@
             "otherEntityName": "mapNurseryWithSector",
             "relationshipType": "one-to-many",
             "otherEntityRelationshipName": "nursery"
-        },
-        {
-            "relationshipName": "fromNurseryStockDetails",
-            "otherEntityName": "nurseryStockDetails",
-            "relationshipType": "one-to-many",
-            "otherEntityRelationshipName": "fromNurseryStockDetails"
         }
     ],
     "fields": [

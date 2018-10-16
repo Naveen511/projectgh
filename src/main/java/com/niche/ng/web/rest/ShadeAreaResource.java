@@ -38,8 +38,6 @@ import java.util.Optional;
 
 /**
  * REST controller for managing ShadeArea.
- * Used RequestMapping annotation to map the url with the client side.
- * Using service to access the values in the database.
  */
 @RestController
 @RequestMapping("/api")
@@ -145,11 +143,24 @@ public class ShadeAreaResource {
     }
 
     /**
-     * GET  /shade-areas/count:batchId : get the "batchId" shade area records.
+     * GET  /shade-areas/batch/:batchId : get all the shade area record of particular batchId.
      *
      * @param batchId the batchId of the ShadeAreaDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the shade count, 
-     *         or with status 404 (Not Found)
+     * @return the ResponseEntity with status 200 (OK) and the list of shade area record in body
+     */
+    @GetMapping("/shade-areas/batch/{batchId}")
+    @Timed
+    public ResponseEntity<List<ShadeAreaDTO>> getParticularBatchRecord(@PathVariable Long batchId) {
+        log.debug("REST request to get a list of particular batch shade area record");
+        List<ShadeAreaDTO> shadeAreaList = shadeAreaService.findParticularBatch(batchId);
+        return ResponseEntity.ok().body(shadeAreaList);
+    }
+
+    /**
+     * GET  /shade-areas/count:batchId : get the "batchId" damage.
+     *
+     * @param batchId the batchId of the ShadeAreaDTO to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the shade count, or with status 404 (Not Found)
      */
     @GetMapping("/shade-areas/count/{batchId}")
     @Timed

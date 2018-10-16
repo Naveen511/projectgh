@@ -17,7 +17,6 @@
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="pickListName"><span jhiTranslate="projectghApp.pickList.pickListName">Pick List Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="status"><span jhiTranslate="projectghApp.pickList.status">Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="displayLabelName"><span jhiTranslate="projectghApp.pickList.displayLabelName">Display Label Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
             </tr>
             </thead>
@@ -26,7 +25,6 @@
                 <td><a [routerLink]="['/pick-list', pickList.id, 'view' ]">{{pickList.id}}</a></td>
                 <td>{{pickList.pickListName}}</td>
                 <td>{{pickList.status}}</td>
-                <td>{{pickList.displayLabelName}}</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

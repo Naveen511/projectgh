@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date  : 2018/08/02
+ *  Date: 2018/08/02
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs BatchRepository
@@ -19,14 +19,11 @@ import java.util.List;
 import java.time.LocalDate;
 
 /**
- * Spring Data repository for the Batch entity.
- *
- * BatchRepository Extends JpaRepository to handle the CRUD operation and
- * querying the values using keywords.
+ * Spring Data  repository for the Batch entity.
  */
 @SuppressWarnings("unused")
 @Repository
 public interface BatchRepository extends JpaRepository<Batch, Long>, JpaSpecificationExecutor<Batch> {
-    // Query the list of batch between 2 date using a field sowingDate.
+    
     List<Batch> findBySowingDateBetween(LocalDate fromDate, LocalDate toDate);
 }

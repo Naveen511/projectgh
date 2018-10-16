@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date  : 2018/08/02
+ *  Date: 2018/08/02
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs ZonalService
@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
+import java.util.List;
 
 /**
  * Service Interface for managing Zonal.
@@ -56,17 +57,19 @@ public interface ZonalService {
     void delete(Long id);
 
     /**
-     * Filter : based on the from date and to date
-     * @param fromDate From date of the zonal created date
-     * @param toDate From date of the zonal created date
+     * Get the "operationalHeadId" Zoanl.
+     *
+     * @param operationalHeadId the operationalHeadId of the entity
+     * @param status of the entity
+     * @return the list of entity
      */
-    // List<ZonalDTO> findDateBetween(Instant fromDate, Instant toDate);
+    List<ZonalDTO> findParticularHeadOfficeZonal(Long operationalHeadId, Integer status);
 
     /**
-     * Get count of "status" operationalHead.
+     * Get the "count" operationalHead.
      *
-     * @param status the status of the entity
-     * @return count of the zonal
+     * @param status the batchId of the entity
+     * @return the list of entity
      */
     Long findActiveCount(Integer status);
 }

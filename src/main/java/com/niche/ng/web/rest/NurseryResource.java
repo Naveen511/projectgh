@@ -38,8 +38,6 @@ import java.util.Optional;
 
 /**
  * REST controller for managing Nursery.
- * Used RequestMapping annotation to map the url with the client side.
- * Using service to access the values in the database.
  */
 @RestController
 @RequestMapping("/api")
@@ -145,7 +143,21 @@ public class NurseryResource {
     }
 
     /**
-     * GET  /sectors/active-record:status : get the particular "status" nursery.
+     * GET  /nurseries/sector/:sectorId : get all the sectors of particular sectorId.
+     *
+     * @param sectorId the sectorId of the nurseryDTO to retrieve
+     * @return the ResponseEntity with status 200 (OK) and the list of sectors in body
+     */
+    @GetMapping("/nurseries/sector/{sectorId}")
+    @Timed
+    public ResponseEntity<List<NurseryDTO>> getSectorNurserys(@PathVariable Long sectorId) {
+        log.debug("REST request to get a list of particular sector nurserys");
+        List<NurseryDTO> nurseryList = nurseryService.findSectorNurserys(sectorId);
+        return ResponseEntity.ok().body(nurseryList);
+    }
+
+    /**
+     * GET  /sectors/active-record:status : get the "status" nursery.
      *
      * @param status the status of the nurseryDTO to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the nurseryDTO, or with status 404 (Not Found)

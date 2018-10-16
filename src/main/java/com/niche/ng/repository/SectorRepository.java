@@ -15,15 +15,13 @@ import com.niche.ng.domain.Sector;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 /**
  * Spring Data  repository for the Sector entity.
- *
- * SectorRepository Extends JpaRepository to handle the CRUD operation and
- * querying the values using keywords.
  */
 @SuppressWarnings("unused")
 @Repository
 public interface SectorRepository extends JpaRepository<Sector, Long>, JpaSpecificationExecutor<Sector> {
-    // Query the sector using a field status to get count.
+    List<Sector> findByZonalId(Long zonalId);
     long countByStatus(Integer status);
 }

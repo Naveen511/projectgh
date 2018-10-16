@@ -1,15 +1,3 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date: 2018/08/31
- *  Target: yarn
- *  -----------------------------------------------------------------------------
- *  File Description    : This file performs PickListCriteria and
-                            declared the table fields, data types for PickList table.
- *
- *******************************************************************************/
 package com.niche.ng.service.dto;
 
 import java.io.Serializable;
@@ -20,6 +8,10 @@ import io.github.jhipster.service.filter.FloatFilter;
 import io.github.jhipster.service.filter.IntegerFilter;
 import io.github.jhipster.service.filter.LongFilter;
 import io.github.jhipster.service.filter.StringFilter;
+
+
+
+
 
 
 /**
@@ -40,118 +32,49 @@ public class PickListCriteria implements Serializable {
 
     private IntegerFilter status;
 
-    private StringFilter displayLabelName;
-
     private LongFilter pickListValuesId;
 
-    /**
-     * PickListCriteria from PickList table
-     */
     public PickListCriteria() {
     }
 
-    /**
-     * To Get the Id from PickList table
-     * 
-     * @return id
-     */
     public LongFilter getId() {
         return id;
     }
 
-    /**
-     * To set the id values for the PickList table.
-     * 
-     * @param id id of the PickList
-     */
     public void setId(LongFilter id) {
         this.id = id;
     }
 
-    /**
-     * To Get the pickListName from PickList table
-     * 
-     * @return pickListName
-     */
     public StringFilter getPickListName() {
         return pickListName;
     }
 
-    /**
-     * To set the pickListName values for the PickList table.
-     * 
-     * @param pickListName pickListName of the PickList
-     */
     public void setPickListName(StringFilter pickListName) {
         this.pickListName = pickListName;
     }
 
-    /**
-     * To Get the status from PickList table
-     * 
-     * @return status
-     */
     public IntegerFilter getStatus() {
         return status;
     }
 
-    /**
-     * To set the status values for the PickList table.
-     * 
-     * @param status status of the PickList
-     */
     public void setStatus(IntegerFilter status) {
         this.status = status;
     }
 
-    /**
-     * To Get the displayLabelName from PickList table
-     * 
-     * @return displayLabelName
-     */
-    public StringFilter getDisplayLabelName() {
-        return displayLabelName;
-    }
-
-    /**
-     * To set the displayLabelName values for the PickList table.
-     * 
-     * @param displayLabelName displayLabelName of the PickList
-     */
-    public void setDisplayLabelName(StringFilter displayLabelName) {
-        this.displayLabelName = displayLabelName;
-    }
-
-    /**
-     * To Get the pickListValuesId from PickList table
-     * 
-     * @return pickListValuesId
-     */
     public LongFilter getPickListValuesId() {
         return pickListValuesId;
     }
 
-    /**
-     * To set the pickListValuesId values for the PickList table.
-     * 
-     * @param pickListValuesId pickListValuesId of the PickList
-     */
     public void setPickListValuesId(LongFilter pickListValuesId) {
         this.pickListValuesId = pickListValuesId;
     }
 
-    /**
-     * toString to get the values
-     * 
-     * @return values
-     */
     @Override
     public String toString() {
         return "PickListCriteria{" +
                 (id != null ? "id=" + id + ", " : "") +
                 (pickListName != null ? "pickListName=" + pickListName + ", " : "") +
                 (status != null ? "status=" + status + ", " : "") +
-                (displayLabelName != null ? "displayLabelName=" + displayLabelName + ", " : "") +
                 (pickListValuesId != null ? "pickListValuesId=" + pickListValuesId + ", " : "") +
             "}";
     }

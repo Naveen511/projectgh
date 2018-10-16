@@ -42,8 +42,6 @@ describe('NurseryStock e2e test', () => {
         expect(nurseryStockUpdatePage.getStatusInput()).toMatch('5');
         nurseryStockUpdatePage.setPosQuantityInput('5');
         expect(nurseryStockUpdatePage.getPosQuantityInput()).toMatch('5');
-        nurseryStockUpdatePage.setDamageQuantityInput('5');
-        expect(nurseryStockUpdatePage.getDamageQuantityInput()).toMatch('5');
         nurseryStockUpdatePage.nurserySelectLastOption();
         nurseryStockUpdatePage.pickListVarietySelectLastOption();
         nurseryStockUpdatePage.pickListCategorySelectLastOption();

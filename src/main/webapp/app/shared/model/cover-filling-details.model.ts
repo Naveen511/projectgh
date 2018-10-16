@@ -1,13 +1,3 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date: 2018/08/24
- *  Target: yarn
- *******************************************************************************/
-
-// Import needed dependency
 import { Moment } from 'moment';
 
 export interface ICoverFillingDetails {
@@ -34,9 +24,8 @@ export class CoverFillingDetails implements ICoverFillingDetails {
         public damageTypePickListValue?: string,
         public damageTypeId?: number,
         public coverFillingDamageDescriptionPickListValue?: string,
-        public coverFillingDamageDescriptionId?: number,
-        public pickListQuantityId?: number,
-        public damageDescriptionId?: number
+        public coverFillingDamageDescriptionId?: number
+
     ) {}
 }
 
@@ -51,9 +40,9 @@ export interface ICoverFillingDetailsModel {
     damageTypeId?: number;
     coverFillingDamageDescriptionPickListValue?: string;
     coverFillingDamageDescriptionId?: number;
+
 }
 
-// Constant variable
 export const STATUS_ADD = 1;
 export const STATUS_CONSUME = 2;
 export const STATUS_DAMAGE = 3;

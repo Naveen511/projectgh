@@ -8,7 +8,6 @@ import com.niche.ng.domain.NurseryStock;
 import com.niche.ng.domain.Nursery;
 import com.niche.ng.domain.PickListValue;
 import com.niche.ng.domain.FinancialYearSettings;
-import com.niche.ng.domain.Nursery;
 import com.niche.ng.repository.NurseryStockDetailsRepository;
 import com.niche.ng.service.NurseryStockDetailsService;
 import com.niche.ng.service.dto.NurseryStockDetailsDTO;
@@ -64,9 +63,6 @@ public class NurseryStockDetailsResourceIntTest {
     private static final Integer DEFAULT_STATUS = 1;
     private static final Integer UPDATED_STATUS = 2;
 
-    private static final Integer DEFAULT_IT_STATUS = 1;
-    private static final Integer UPDATED_IT_STATUS = 2;
-
     @Autowired
     private NurseryStockDetailsRepository nurseryStockDetailsRepository;
 
@@ -119,8 +115,7 @@ public class NurseryStockDetailsResourceIntTest {
             .date(DEFAULT_DATE)
             .quantity(DEFAULT_QUANTITY)
             .description(DEFAULT_DESCRIPTION)
-            .status(DEFAULT_STATUS)
-            .itStatus(DEFAULT_IT_STATUS);
+            .status(DEFAULT_STATUS);
         return nurseryStockDetails;
     }
 
@@ -149,7 +144,6 @@ public class NurseryStockDetailsResourceIntTest {
         assertThat(testNurseryStockDetails.getQuantity()).isEqualTo(DEFAULT_QUANTITY);
         assertThat(testNurseryStockDetails.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testNurseryStockDetails.getStatus()).isEqualTo(DEFAULT_STATUS);
-        assertThat(testNurseryStockDetails.getItStatus()).isEqualTo(DEFAULT_IT_STATUS);
     }
 
     @Test
@@ -224,8 +218,7 @@ public class NurseryStockDetailsResourceIntTest {
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
             .andExpect(jsonPath("$.[*].quantity").value(hasItem(DEFAULT_QUANTITY.intValue())))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)))
-            .andExpect(jsonPath("$.[*].itStatus").value(hasItem(DEFAULT_IT_STATUS)));
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)));
     }
     
 
@@ -243,8 +236,7 @@ public class NurseryStockDetailsResourceIntTest {
             .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
             .andExpect(jsonPath("$.quantity").value(DEFAULT_QUANTITY.intValue()))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
-            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS))
-            .andExpect(jsonPath("$.itStatus").value(DEFAULT_IT_STATUS));
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS));
     }
 
     @Test
@@ -486,72 +478,6 @@ public class NurseryStockDetailsResourceIntTest {
 
     @Test
     @Transactional
-    public void getAllNurseryStockDetailsByItStatusIsEqualToSomething() throws Exception {
-        // Initialize the database
-        nurseryStockDetailsRepository.saveAndFlush(nurseryStockDetails);
-
-        // Get all the nurseryStockDetailsList where itStatus equals to DEFAULT_IT_STATUS
-        defaultNurseryStockDetailsShouldBeFound("itStatus.equals=" + DEFAULT_IT_STATUS);
-
-        // Get all the nurseryStockDetailsList where itStatus equals to UPDATED_IT_STATUS
-        defaultNurseryStockDetailsShouldNotBeFound("itStatus.equals=" + UPDATED_IT_STATUS);
-    }
-
-    @Test
-    @Transactional
-    public void getAllNurseryStockDetailsByItStatusIsInShouldWork() throws Exception {
-        // Initialize the database
-        nurseryStockDetailsRepository.saveAndFlush(nurseryStockDetails);
-
-        // Get all the nurseryStockDetailsList where itStatus in DEFAULT_IT_STATUS or UPDATED_IT_STATUS
-        defaultNurseryStockDetailsShouldBeFound("itStatus.in=" + DEFAULT_IT_STATUS + "," + UPDATED_IT_STATUS);
-
-        // Get all the nurseryStockDetailsList where itStatus equals to UPDATED_IT_STATUS
-        defaultNurseryStockDetailsShouldNotBeFound("itStatus.in=" + UPDATED_IT_STATUS);
-    }
-
-    @Test
-    @Transactional
-    public void getAllNurseryStockDetailsByItStatusIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        nurseryStockDetailsRepository.saveAndFlush(nurseryStockDetails);
-
-        // Get all the nurseryStockDetailsList where itStatus is not null
-        defaultNurseryStockDetailsShouldBeFound("itStatus.specified=true");
-
-        // Get all the nurseryStockDetailsList where itStatus is null
-        defaultNurseryStockDetailsShouldNotBeFound("itStatus.specified=false");
-    }
-
-    @Test
-    @Transactional
-    public void getAllNurseryStockDetailsByItStatusIsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        nurseryStockDetailsRepository.saveAndFlush(nurseryStockDetails);
-
-        // Get all the nurseryStockDetailsList where itStatus greater than or equals to DEFAULT_IT_STATUS
-        defaultNurseryStockDetailsShouldBeFound("itStatus.greaterOrEqualThan=" + DEFAULT_IT_STATUS);
-
-        // Get all the nurseryStockDetailsList where itStatus greater than or equals to UPDATED_IT_STATUS
-        defaultNurseryStockDetailsShouldNotBeFound("itStatus.greaterOrEqualThan=" + UPDATED_IT_STATUS);
-    }
-
-    @Test
-    @Transactional
-    public void getAllNurseryStockDetailsByItStatusIsLessThanSomething() throws Exception {
-        // Initialize the database
-        nurseryStockDetailsRepository.saveAndFlush(nurseryStockDetails);
-
-        // Get all the nurseryStockDetailsList where itStatus less than or equals to DEFAULT_IT_STATUS
-        defaultNurseryStockDetailsShouldNotBeFound("itStatus.lessThan=" + DEFAULT_IT_STATUS);
-
-        // Get all the nurseryStockDetailsList where itStatus less than or equals to UPDATED_IT_STATUS
-        defaultNurseryStockDetailsShouldBeFound("itStatus.lessThan=" + UPDATED_IT_STATUS);
-    }
-
-
-    @Test
-    @Transactional
     public void getAllNurseryStockDetailsByBatchIsEqualToSomething() throws Exception {
         // Initialize the database
         Batch batch = BatchResourceIntTest.createEntity(em);
@@ -644,25 +570,6 @@ public class NurseryStockDetailsResourceIntTest {
         defaultNurseryStockDetailsShouldNotBeFound("financialYearStockDetailsId.equals=" + (financialYearStockDetailsId + 1));
     }
 
-
-    @Test
-    @Transactional
-    public void getAllNurseryStockDetailsByFromNurseryStockDetailsIsEqualToSomething() throws Exception {
-        // Initialize the database
-        Nursery fromNurseryStockDetails = NurseryResourceIntTest.createEntity(em);
-        em.persist(fromNurseryStockDetails);
-        em.flush();
-        nurseryStockDetails.setFromNurseryStockDetails(fromNurseryStockDetails);
-        nurseryStockDetailsRepository.saveAndFlush(nurseryStockDetails);
-        Long fromNurseryStockDetailsId = fromNurseryStockDetails.getId();
-
-        // Get all the nurseryStockDetailsList where fromNurseryStockDetails equals to fromNurseryStockDetailsId
-        defaultNurseryStockDetailsShouldBeFound("fromNurseryStockDetailsId.equals=" + fromNurseryStockDetailsId);
-
-        // Get all the nurseryStockDetailsList where fromNurseryStockDetails equals to fromNurseryStockDetailsId + 1
-        defaultNurseryStockDetailsShouldNotBeFound("fromNurseryStockDetailsId.equals=" + (fromNurseryStockDetailsId + 1));
-    }
-
     /**
      * Executes the search, and checks that the default entity is returned
      */
@@ -674,8 +581,7 @@ public class NurseryStockDetailsResourceIntTest {
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
             .andExpect(jsonPath("$.[*].quantity").value(hasItem(DEFAULT_QUANTITY.intValue())))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)))
-            .andExpect(jsonPath("$.[*].itStatus").value(hasItem(DEFAULT_IT_STATUS)));
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)));
     }
 
     /**
@@ -713,8 +619,7 @@ public class NurseryStockDetailsResourceIntTest {
             .date(UPDATED_DATE)
             .quantity(UPDATED_QUANTITY)
             .description(UPDATED_DESCRIPTION)
-            .status(UPDATED_STATUS)
-            .itStatus(UPDATED_IT_STATUS);
+            .status(UPDATED_STATUS);
         NurseryStockDetailsDTO nurseryStockDetailsDTO = nurseryStockDetailsMapper.toDto(updatedNurseryStockDetails);
 
         restNurseryStockDetailsMockMvc.perform(put("/api/nursery-stock-details")
@@ -730,7 +635,6 @@ public class NurseryStockDetailsResourceIntTest {
         assertThat(testNurseryStockDetails.getQuantity()).isEqualTo(UPDATED_QUANTITY);
         assertThat(testNurseryStockDetails.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testNurseryStockDetails.getStatus()).isEqualTo(UPDATED_STATUS);
-        assertThat(testNurseryStockDetails.getItStatus()).isEqualTo(UPDATED_IT_STATUS);
     }
 
     @Test

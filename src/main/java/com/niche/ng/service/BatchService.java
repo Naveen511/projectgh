@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date  : 2018/08/02
+ *  Date: 2018/08/02
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs BatchService
@@ -57,11 +57,5 @@ public interface BatchService {
      */
     void delete(Long id);
 
-    /**
-     * Get all the "sowingDate" batches between 2 dates
-     *
-     * @param fromDate the sowingDate of the entity
-     * @param toDate the sowingDate of the entity
-     */
     List<BatchDTO> findDateBetween(LocalDate fromDate, LocalDate toDate);
 }

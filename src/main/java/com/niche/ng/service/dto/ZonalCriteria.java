@@ -1,15 +1,3 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date: 2018/08/31
- *  Target: yarn
- *  -----------------------------------------------------------------------------
- *  File Description    : This file performs ZonalCriteria and
-                            declared the table fields, data types for Zonal table.
- *
- *******************************************************************************/
 package com.niche.ng.service.dto;
 
 import java.io.Serializable;
@@ -20,6 +8,10 @@ import io.github.jhipster.service.filter.FloatFilter;
 import io.github.jhipster.service.filter.IntegerFilter;
 import io.github.jhipster.service.filter.LongFilter;
 import io.github.jhipster.service.filter.StringFilter;
+
+
+
+
 
 
 /**
@@ -38,8 +30,6 @@ public class ZonalCriteria implements Serializable {
 
     private StringFilter zoneName;
 
-    private StringFilter zoneAddress;
-
     private IntegerFilter status;
 
     private LongFilter sectorsId;
@@ -54,203 +44,86 @@ public class ZonalCriteria implements Serializable {
 
     private LongFilter mapSectorWithZonalId;
 
-    /**
-     * ZonalCriteria from Zonal table
-     */
     public ZonalCriteria() {
     }
 
-    /**
-     * To Get the Id from Zonal table
-     * 
-     * @return id
-     */
     public LongFilter getId() {
         return id;
     }
 
-    /**
-     * To set the id values for the Zonal table.
-     * 
-     * @param id id of the Zonal
-     */
     public void setId(LongFilter id) {
         this.id = id;
     }
 
-    /**
-     * To Get the zoneName from Zonal table
-     * 
-     * @return zoneName
-     */
     public StringFilter getZoneName() {
         return zoneName;
     }
 
-    /**
-     * To set the zoneName values for the Zonal table.
-     * 
-     * @param zoneName zoneName of the Zonal
-     */
     public void setZoneName(StringFilter zoneName) {
         this.zoneName = zoneName;
     }
 
-    /**
-     * To Get the zoneAddress from Zonal table
-     * 
-     * @return zoneAddress
-     */
-    public StringFilter getZoneAddress() {
-        return zoneAddress;
-    }
-
-    /**
-     * To set the zoneAddress values for the Zonal table.
-     * 
-     * @param zoneAddress zoneAddress of the Zonal
-     */
-    public void setZoneAddress(StringFilter zoneAddress) {
-        this.zoneAddress = zoneAddress;
-    }
-
-    /**
-     * To Get the status from Zonal table
-     * 
-     * @return status
-     */
     public IntegerFilter getStatus() {
         return status;
     }
 
-    /**
-     * To set the status values for the Zonal table.
-     * 
-     * @param status status of the Zonal
-     */
     public void setStatus(IntegerFilter status) {
         this.status = status;
     }
 
-    /**
-     * To Get the sectorsId from Zonal table
-     * 
-     * @return sectorsId
-     */
     public LongFilter getSectorsId() {
         return sectorsId;
     }
 
-    /**
-     * To set the sectorsId values for the Zonal table.
-     * 
-     * @param sectorsId sectorsId of the Zonal
-     */
     public void setSectorsId(LongFilter sectorsId) {
         this.sectorsId = sectorsId;
     }
 
-    /**
-     * To Get the financialYearId from Zonal table
-     * 
-     * @return financialYearId
-     */
     public LongFilter getFinancialYearId() {
         return financialYearId;
     }
 
-    /**
-     * To set the financialYearId values for the Zonal table.
-     * 
-     * @param financialYearId financialYearId of the Zonal
-     */
     public void setFinancialYearId(LongFilter financialYearId) {
         this.financialYearId = financialYearId;
     }
 
-    /**
-     * To Get the operationalHeadId from Zonal table
-     * 
-     * @return operationalHeadId
-     */
     public LongFilter getOperationalHeadId() {
         return operationalHeadId;
     }
 
-    /**
-     * To set the operationalHeadId values for the Zonal table.
-     * 
-     * @param operationalHeadId operationalHeadId of the Zonal
-     */
     public void setOperationalHeadId(LongFilter operationalHeadId) {
         this.operationalHeadId = operationalHeadId;
     }
 
-    /**
-     * To Get the mapZonalWithOhId from Zonal table
-     * 
-     * @return mapZonalWithOhId
-     */
     public LongFilter getMapZonalWithOhId() {
         return mapZonalWithOhId;
     }
 
-    /**
-     * To set the mapZonalWithOhId values for the Zonal table.
-     * 
-     * @param mapZonalWithOhId mapZonalWithOhId of the Zonal
-     */
     public void setMapZonalWithOhId(LongFilter mapZonalWithOhId) {
         this.mapZonalWithOhId = mapZonalWithOhId;
     }
 
-    /**
-     * To Get the zonalInchargeId from Zonal table
-     * 
-     * @return zonalInchargeId
-     */
     public LongFilter getZonalInchargeId() {
         return zonalInchargeId;
     }
 
-    /**
-     * To set the id zonalInchargeId for the Zonal table.
-     * 
-     * @param zonalInchargeId zonalInchargeId of the Zonal
-     */
     public void setZonalInchargeId(LongFilter zonalInchargeId) {
         this.zonalInchargeId = zonalInchargeId;
     }
 
-    /**
-     * To Get the mapSectorWithZonalId from Zonal table
-     * 
-     * @return mapSectorWithZonalId
-     */
     public LongFilter getMapSectorWithZonalId() {
         return mapSectorWithZonalId;
     }
 
-    /**
-     * To set the mapSectorWithZonalId values for the Zonal table.
-     * 
-     * @param mapSectorWithZonalId mapSectorWithZonalId of the Zonal
-     */
     public void setMapSectorWithZonalId(LongFilter mapSectorWithZonalId) {
         this.mapSectorWithZonalId = mapSectorWithZonalId;
     }
 
-    /**
-     * toString to get the values
-     * 
-     * @return values
-     */
     @Override
     public String toString() {
         return "ZonalCriteria{" +
                 (id != null ? "id=" + id + ", " : "") +
                 (zoneName != null ? "zoneName=" + zoneName + ", " : "") +
-                (zoneAddress != null ? "zoneAddress=" + zoneAddress + ", " : "") +
                 (status != null ? "status=" + status + ", " : "") +
                 (sectorsId != null ? "sectorsId=" + sectorsId + ", " : "") +
                 (financialYearId != null ? "financialYearId=" + financialYearId + ", " : "") +

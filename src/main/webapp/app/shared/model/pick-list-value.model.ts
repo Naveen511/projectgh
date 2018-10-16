@@ -1,13 +1,4 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date: 2018/08/02 11:27:58
- *  Target: yarn
- *******************************************************************************/
-
-// Import needed model and dependency
+import { Moment } from 'moment';
 import { IPickListValue } from 'app/shared/model//pick-list-value.model';
 import { IBatch } from 'app/shared/model//batch.model';
 import { INurseryStock } from 'app/shared/model//nursery-stock.model';
@@ -98,6 +89,7 @@ export class PickListValue implements IPickListValue {
         public coverFillingDetails?: ICoverFillingDetails[],
         public nurseryInventoryDamageDescs?: INurseryInventoryDetails[],
         public coverFillingDamageDescs?: ICoverFillingDetails[]
+
     ) {}
 }
 

@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date  : 2018/08/25
+ *  Date: 2018/08/25
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs NurseryInventoryServiceImpl
@@ -24,17 +24,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 
 import java.util.Optional;
 /**
  * Service Implementation for managing NurseryInventory.
- *
- * Implementing NurseryInventoryService with IMPL suffix class
- * as NurseryInventoryServiceImpl.
- * Using of business logic in the service layer which is present in the service file
- * using impl as a interface to access the repository layer.
- * Once we got the responce from the repository layer, mapper convert the entity
- * object to data transfer object(DTO).
  */
 @Service
 @Transactional
@@ -103,5 +97,52 @@ public class NurseryInventoryServiceImpl implements NurseryInventoryService {
     public void delete(Long id) {
         log.debug("Request to delete NurseryInventory : {}", id);
         nurseryInventoryRepository.deleteById(id);
+    }
+
+    /**
+     * Get all the nursery stock by nurseryId, pickListCategoryId.
+     *
+     * @param nurseryId the nurseryId of the entity
+     * @param pickListCategoryId the pickListCategoryId of the entity
+     * @return the list of entities
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<NurseryInventoryDTO> findInventory(Long nurserysId, Long pickListCategoryId) {
+        log.debug("Request to get Nursery Stock : {}", nurserysId +", "+ pickListCategoryId);
+        // List<NurseryStock> stock = nurseryStockRepository.findByNurseryIdAndPickListVarietyIdAndPickListCategoryIdIn(nurseryId, pickListVarietyId, pickListCategoryId);
+        // List<NurseryStock> stock = nurseryStockRepository.findByNurseryIdAndPickListVarietyIdInAndPickListCategoryIdIn(nurseryId, pickListVarietyId, pickListCategoryId);
+        List<NurseryInventory> inventory = nurseryInventoryRepository.findByNurserysIdAndPickListCategoryId(nurserysId, pickListCategoryId);
+        // List<NurseryStock> stock = nurseryStockRepository.findByNurseryIdAndPickListVarietyIdIn(nurseryId, pickListVarietyId);
+        return nurseryInventoryMapper.toDto(inventory);
+    }
+
+    /**
+     * Get all the nursery stock by nurseryId, pickListCategoryId.
+     *
+     * @param nurseryId the nurseryId of the entity
+     * @param status the status of the entity
+     * @return the list of entities
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<NurseryInventoryDTO> findCoverInventory(Long nurserysId, Integer status) {
+        log.debug("Request to get Nursery Cover : {}", nurserysId);
+        List<NurseryInventory> inventory = nurseryInventoryRepository.findByNurserysIdAndStatus(nurserysId, status);
+        return nurseryInventoryMapper.toDto(inventory);
+    }
+
+    /**
+     * Get all the damage by status.
+     *
+     * @param status the status of the entity
+     * @return the list of entities
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<NurseryInventoryDTO> findParticularStatus(Integer status) {
+        log.debug("Request to get seeds : {}", status);
+        List<NurseryInventory> inventory = nurseryInventoryRepository.findByStatus(status);
+        return nurseryInventoryMapper.toDto(inventory);
     }
 }

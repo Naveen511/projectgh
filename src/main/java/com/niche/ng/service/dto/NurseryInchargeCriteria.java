@@ -1,15 +1,3 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date: 2018/08/31
- *  Target: yarn
- *  -----------------------------------------------------------------------------
- *  File Description    : This file performs NurseryInchargeCriteria and
-                            declared the table fields, data types for NurseryIncharge table.
- *
- *******************************************************************************/
 package com.niche.ng.service.dto;
 
 import java.io.Serializable;
@@ -23,6 +11,7 @@ import io.github.jhipster.service.filter.StringFilter;
 
 
 import io.github.jhipster.service.filter.LocalDateFilter;
+
 
 
 /**
@@ -49,125 +38,57 @@ public class NurseryInchargeCriteria implements Serializable {
 
     private LongFilter nurseryId;
 
-    /**
-     * NurseryInchargeCriteria from NurseryIncharge table
-     */
     public NurseryInchargeCriteria() {
     }
 
-    /**
-     * To Get the Id from NurseryIncharge table
-     * 
-     * @return id
-     */
     public LongFilter getId() {
         return id;
     }
 
-    /**
-     * To set the id values for the NurseryIncharge table.
-     * 
-     * @param id id value of the NurseryIncharge
-     */
     public void setId(LongFilter id) {
         this.id = id;
     }
 
-    /**
-     * To Get the fromDate from NurseryIncharge table
-     * 
-     * @return fromDate
-     */
     public LocalDateFilter getFromDate() {
         return fromDate;
     }
 
-    /**
-     * To set the fromDate values for the NurseryIncharge table.
-     * 
-     * @param fromDate fromDate value of the NurseryIncharge
-     */
     public void setFromDate(LocalDateFilter fromDate) {
         this.fromDate = fromDate;
-    } 
+    }
 
-    /**
-     * To Get the toDate from NurseryIncharge table
-     * 
-     * @return toDate
-     */
     public LocalDateFilter getToDate() {
         return toDate;
     }
 
-    /**
-     * To set the toDate values for the NurseryIncharge table.
-     * 
-     * @param toDate toDate value of the NurseryIncharge
-     */
     public void setToDate(LocalDateFilter toDate) {
         this.toDate = toDate;
     }
 
-    /**
-     * To Get the description from NurseryIncharge table
-     * 
-     * @return description
-     */
     public StringFilter getDescription() {
         return description;
     }
 
-    /**
-     * To set the description values for the NurseryIncharge table.
-     * 
-     * @param description description value of the NurseryIncharge
-     */
     public void setDescription(StringFilter description) {
         this.description = description;
     }
 
-    /**
-     * To Get the status from NurseryIncharge table
-     * 
-     * @return status
-     */
     public IntegerFilter getStatus() {
         return status;
     }
 
-    /**
-     * To set the status values for the NurseryIncharge table.
-     * 
-     * @param status status value of the NurseryIncharge
-     */
     public void setStatus(IntegerFilter status) {
         this.status = status;
     }
 
-    /**
-     * To Get the nurseryId from NurseryIncharge table
-     * 
-     * @return nurseryId
-     */
     public LongFilter getNurseryId() {
         return nurseryId;
     }
 
-    /**
-     * To set the nurseryId values for the NurseryIncharge table.
-     * 
-     * @param nurseryId nurseryId value of the NurseryIncharge
-     */
     public void setNurseryId(LongFilter nurseryId) {
         this.nurseryId = nurseryId;
     }
 
-    /**
-     * toString to get the values
-     * 
-     * @return values
-     */
     @Override
     public String toString() {
         return "NurseryInchargeCriteria{" +

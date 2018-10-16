@@ -15,22 +15,22 @@ export const navItems = [
     {
         name: 'Head Office',
         url: '/configuration/head-office',
-        icon: 'icon-globe'
+        icon: 'icon-folder'
     },
     {
         name: 'Zonal',
         url: '/configuration/zonal',
-        icon: 'icon-share'
+        icon: 'icon-folder'
     },
     {
         name: 'Sector',
         url: '/configuration/sector',
-        icon: 'icon-cursor'
+        icon: 'icon-folder-alt'
     },
     {
         name: 'Nursery',
         url: '/configuration/nursery',
-        icon: 'icon-home'
+        icon: 'icon-speech'
     },
     {
         name: 'Pick List',
@@ -40,7 +40,7 @@ export const navItems = [
     {
         name: 'Calendar Settings',
         url: '/configuration/financialYearSettings',
-        icon: 'icon-calendar'
+        icon: 'icon-equalizer'
     },
     {
         title: true,
@@ -49,7 +49,7 @@ export const navItems = [
     {
         name: 'Batch Formation',
         url: '/batch',
-        icon: 'icon-badge'
+        icon: 'icon-layers'
     },
     {
         name: 'Stock Management',
@@ -59,12 +59,12 @@ export const navItems = [
     {
         name: 'Damage Recording',
         url: '/damage',
-        icon: 'icon-note'
+        icon: 'icon-equalizer'
     },
     {
         name: 'Seeds & Cover Mgnt',
         url: '/nursery-inventory',
-        icon: 'icon-bag'
+        icon: 'icon-layers'
     },
     // {
     //     name: 'Approval Management',
@@ -77,17 +77,17 @@ export const navItems = [
     {
         name: 'Create Godown',
         url: '/godown/godownlist',
-        icon: 'icon-basket'
+        icon: 'icon-layers'
     },
     {
         name: 'Purchase Details',
         url: '/godown/purchase',
-        icon: 'icon-grid'
+        icon: 'icon-layers'
     },
     {
         name: 'Stock Details',
         url: '/godown/stock',
-        icon: 'icon-energy'
+        icon: 'icon-layers'
     },
     {
         title: true,
@@ -96,6 +96,6 @@ export const navItems = [
     {
         name: 'Audit Details',
         url: '/entity-audit/entity-audit',
-        icon: 'icon-notebook'
+        icon: 'icon-layers'
     }
 ];

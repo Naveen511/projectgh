@@ -1,14 +1,3 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date  : 2018/09/02
- *  Target: yarn
- *  -----------------------------------------------------------------------------
- *  File Description    : This file performs NurseryInchargeService
- *
- *******************************************************************************/
 package com.niche.ng.service;
 
 import com.niche.ng.service.dto.NurseryInchargeDTO;

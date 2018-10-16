@@ -41,10 +41,6 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="round" type="integer">
-                <constraints nullable="true" />
-            </column>
-
             <column name="batch_id" type="bigint">
                 <constraints nullable="true" />
             </column>

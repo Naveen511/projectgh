@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date  : 2018/08/02
+ *  Date: 2018/08/02
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs PersistentAuditEvent Generation.
@@ -51,92 +51,42 @@ public class PersistentAuditEvent implements Serializable {
     @CollectionTable(name = "jhi_persistent_audit_evt_data", joinColumns=@JoinColumn(name="event_id"))
     private Map<String, String> data = new HashMap<>();
 
-    /**
-     * To Get the Id from persistentAuditEvent table
-     * 
-     * @return id
-     */
     public Long getId() {
         return id;
     }
 
-    /**
-     * To Set the Id for persistentAuditEvent table
-     *
-     * @param id the id in persistentAuditEvent table
-     */
     public void setId(Long id) {
         this.id = id;
     }
 
-    /**
-     * To Get the principal from persistentAuditEvent table
-     * 
-     * @return principal
-     */
     public String getPrincipal() {
         return principal;
     }
 
-    /**
-     * To Set the principal for persistentAuditEvent table
-     *
-     * @param principal the principal in persistentAuditEvent table
-     */
     public void setPrincipal(String principal) {
         this.principal = principal;
     }
 
-    /**
-     * To Get the auditEventDate from persistentAuditEvent table
-     * 
-     * @return auditEventDate
-     */
     public Instant getAuditEventDate() {
         return auditEventDate;
     }
 
-    /**
-     * To Set the auditEventDate for persistentAuditEvent table
-     *
-     * @param auditEventDate the auditEventDate in persistentAuditEvent table
-     */
     public void setAuditEventDate(Instant auditEventDate) {
         this.auditEventDate = auditEventDate;
     }
 
-    /**
-     * To Get the auditEventType from persistentAuditEvent table
-     * 
-     * @return auditEventType
-     */
     public String getAuditEventType() {
         return auditEventType;
     }
 
-    /**
-     * To Set the auditEventType for persistentAuditEvent table
-     *
-     * @param auditEventType the auditEventType in persistentAuditEvent table
-     */
     public void setAuditEventType(String auditEventType) {
         this.auditEventType = auditEventType;
     }
 
-    /**
-     * To Get the data from persistentAuditEvent table
-     * 
-     * @return data
-     */
     public Map<String, String> getData() {
         return data;
     }
 
-    /**
-     * To Set the data for persistentAuditEvent table
-     *
-     * @param data the data in persistentAuditEvent table
-     */
     public void setData(Map<String, String> data) {
         this.data = data;
     }

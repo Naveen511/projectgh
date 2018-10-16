@@ -1,13 +1,3 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date: 2018/09/20
- *  Target: yarn
- *******************************************************************************/
-
-// Import needed dependency
 import { Moment } from 'moment';
 
 export interface IMapZonalWithOh {
@@ -48,6 +38,5 @@ export class MapZonalWithOhModel {
     operationalHeadId?: number;
 }
 
-// Constant variable
 export const STATUS_ACTIVE = 1;
 export const STATUS_INACTIVE = 2;

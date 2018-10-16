@@ -1,14 +1,3 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date  : 2018/08/17
- *  Target: yarn
- *  -----------------------------------------------------------------------------
- *  File Description    : This file performs CoverFillingMapper
- *
- *******************************************************************************/
 package com.niche.ng.service.mapper;
 
 import com.niche.ng.domain.*;
@@ -18,8 +7,6 @@ import org.mapstruct.*;
 
 /**
  * Mapper for the entity CoverFilling and its DTO CoverFillingDTO.
- * Mapping the parent and child table to fetch the field value.
- * Converting the entity object into data transfer object(DTO).
  */
 @Mapper(componentModel = "spring", uses = {})
 public interface CoverFillingMapper extends EntityMapper<CoverFillingDTO, CoverFilling> {

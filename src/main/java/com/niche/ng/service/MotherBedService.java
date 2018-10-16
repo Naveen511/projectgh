@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date  : 2018/08/02
+ *  Date: 2018/08/02
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs MotherBedService
@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
+import java.util.List;
 
 /**
  * Service Interface for managing MotherBed.
@@ -54,4 +55,21 @@ public interface MotherBedService {
      * @param id the id of the entity
      */
     void delete(Long id);
+
+    /**
+     * Get the "nurseryId" motherbeds.
+     *
+     * @param nurseryId the nurseryId of the entity
+     * @return the list of entity
+     */
+    List<MotherBedDTO> findNurseryMotherBeds(Long nurseryId);
+
+    /**
+     * Get the "nurseryId" motherbeds with active status.
+     *
+     * @param nurseryId the nurseryId of the entity
+     * @param status the status of the entity
+     * @return the list of entity
+     */
+    List<MotherBedDTO> findAvailableNurseryMotherBeds(Long nurseryId, Integer status);
 }

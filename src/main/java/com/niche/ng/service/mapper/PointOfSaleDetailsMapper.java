@@ -1,14 +1,3 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date  : 2018/08/25
- *  Target: yarn
- *  -----------------------------------------------------------------------------
- *  File Description    : This file performs PointOfSaleDetailsMapper
- *
- *******************************************************************************/
 package com.niche.ng.service.mapper;
 
 import com.niche.ng.domain.*;
@@ -18,8 +7,6 @@ import org.mapstruct.*;
 
 /**
  * Mapper for the entity PointOfSaleDetails and its DTO PointOfSaleDetailsDTO.
- * Mapping the parent and child table to fetch the field value.
- * Converting the entity object into data transfer object(DTO).
  */
 @Mapper(componentModel = "spring", uses = {PickListValueMapper.class, NurseryStockMapper.class})
 public interface PointOfSaleDetailsMapper extends EntityMapper<PointOfSaleDetailsDTO, PointOfSaleDetails> {

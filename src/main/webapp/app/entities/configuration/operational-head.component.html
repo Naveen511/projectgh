@@ -1,14 +1,13 @@
 <div class="animated fadeIn">
-    <!-- Display the particular operational head audit details List-->
     <div id="collapseBasic" [collapse]="isCollapsed" class="row">
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
                     <i class="fa fa-align-justify"></i> Audit Details
                     <button type="button" class="btn btn-sm btn-danger float-right" 
-                        (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="isCollapsed"
+                        (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="isCollapsed" 
                         aria-controls="collapseBasic">
-                        <fa-icon [icon]="'times'"></fa-icon> close
+                            <fa-icon [icon]="'times'"></fa-icon> close
                     </button>
                 </div>
                 <div class="card-body table-responsive">
@@ -40,44 +39,31 @@
             </div>
         </div>
     </div>
-    <!-- End of audit details -->
     <!-- Display the success Message alert-->
-    <div class="col-md-8">
-        <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">
-            {{ successMessage }}
-        </ngb-alert>
-    </div>
+	<div class="col-md-8">
+             <ngb-alert *ngIf="successMessage" type="success" 
+             (close)="successMessage = null">{{ successMessage }}</ngb-alert>
+        </div>
     <!-- End of the success alert-->
 
     <!-- Display the Operational Head List-->
-    <div class="row">
-        <!-- justify-content-center -->
+    <div class="row"> <!-- justify-content-center -->
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <i class="fa fa-align-justify"></i> Head Office List
-                    <button type="button" class="btn btn-sm btn-success float-right"
-                        data-toggle="modal" (click)="create()">
-                        <fa-icon [icon]="'plus'"></fa-icon> Add</button>
+                  <i class="fa fa-align-justify"></i> Operational Head List
+                  <button type="button" class="btn btn-sm btn-success float-right" 
+                  data-toggle="modal" (click)="create()"><fa-icon [icon]="'plus'"></fa-icon> Add</button>
                 </div>
                 <div class="card-body table-responsive">
                     <table class="table font12">
                         <thead>
-                            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" 
-                                [callback]="transition.bind(this)">
+                            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
                                 <th>S No.</th>
-                                <th jhiSortBy="name">Name
-                                    <fa-icon [icon]="'sort'"></fa-icon>
-                                </th>
-                                <th jhiSortBy="description">Description
-                                    <fa-icon [icon]="'sort'"></fa-icon>
-                                </th>
-                                <th jhiSortBy="createdDate">Created At
-                                    <fa-icon [icon]="'sort'"></fa-icon>
-                                </th>
-                                <th jhiSortBy="lastModifiedDate">Updated At
-                                    <fa-icon [icon]="'sort'"></fa-icon>
-                                </th>
+                                <th jhiSortBy="name">Name <fa-icon [icon]="'sort'"></fa-icon></th>
+                                <th jhiSortBy="description">Description <fa-icon [icon]="'sort'"></fa-icon></th>
+                                <th jhiSortBy="createdDate">Created At <fa-icon [icon]="'sort'"></fa-icon></th>
+                                <th jhiSortBy="lastModifiedDate">Updated At <fa-icon [icon]="'sort'"></fa-icon></th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -89,21 +75,15 @@
                                 <td>{{value.createdDate | date:'medium'}}</td>
                                 <td>{{value.lastModifiedDate | date:'medium'}}</td>
                                 <td>
-                                    <!-- <a class="text-success" data-toggle="modal"
-                                        ngbTooltip="Audit Details " placement="left" 
-                                        (click)="getAuditHistory(value.id)"
-                                        [attr.aria-expanded]="isCollapsed"
-                                        aria-controls="collapseBasic">
+                                    <!-- <a class="text-success" data-toggle="modal" ngbTooltip="Audit Details " placement="left" 
+                                        (click)="getAuditHistory(value.id)" [attr.aria-expanded]="isCollapsed" aria-controls="collapseBasic">
                                         <fa-icon [icon]="'eye'"></fa-icon>
                                     </a> -->
-                                    <a class="text-primary ml-2" data-toggle="modal"
-                                        ngbTooltip="Edit " placement="top"
-                                        (click)="getValue(value)">
-                                        <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                    <a class="text-primary ml-2" data-toggle="modal" ngbTooltip="Edit " placement="left" 
+                                        (click)="getValue(value)"><fa-icon [icon]="'pencil-alt'"></fa-icon>
                                     </a>
-                                    <a class="text-danger ml-2" ngbTooltip="Delete"
-                                        placement="bottom" (click)="softDelete(value)">
-                                        <fa-icon [icon]="'trash-alt'"></fa-icon>
+                                    <a class="text-danger ml-2" ngbTooltip="Delete" placement="top" 
+                                        (click)="softDelete(value)"><fa-icon [icon]="'times'"></fa-icon>
                                     </a>
                                 </td>
                             </tr>
@@ -112,14 +92,10 @@
                 </div>
                 <div *ngIf="list && list.length" class="card-footer">
                     <!-- <div class="row justify-content-center">
-                        <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5"
-                        [itemsPerPage]="itemsPerPage"></jhi-item-count>
+                        <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
                     </div> -->
                     <div class="row justify-content-center">
-                        <ngb-pagination [collectionSize]="totalItems" [(page)]="page"
-                            [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true"
-                            [boundaryLinks]="true" (pageChange)="loadPage(page)">
-                        </ngb-pagination>
+                        <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
                     </div>
                 </div>
             </div>
@@ -127,60 +103,53 @@
     </div>
 </div>
 
-<!-- Create and updte the operational head office, Based on the Id, we can able to update -->
 <div bsModal #operationalHeadModal="bs-modal" class="modal fade" tabindex="-1" 
-    role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
-    [config]="{backdrop: 'static',  keyboard: false}">
+    role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-primary" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h6 class="modal-title">{{title}}</h6>
-                <button type="button" class="close" (click)="closeOperationalHeadModal()"
-                    aria-label="Close">
+                <button type="button" class="close" 
+                    (click)="operationalHeadModal.hide()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body font13">
-                <form action="" method="post" enctype="multipart/form-data"
-                    class="form-horizontal">
-                    <input [(ngModel)]="operationalHead.id" type="hidden" id="id"
-                        name="id" class="form-control">
+                <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                    <input [(ngModel)]="operationalHead.id" type="hidden" 
+                    id="id" name="id" class="form-control">
                     <!--To display the error mesage-->
                     <div class="form-group row">
                         <div class="col-md-6">
                             <span class="text-danger" *ngIf="errorMessage"
-                            (close)="errorMessage = null">{{ errorMessage }}</span>
+                                (close)="errorMessage = null">{{ errorMessage }}</span>
                         </div>
                     </div>
                     <!--End of the error message -->
                     <div class="form-group row">
-                        <label class="col-md-4 col-form-label" for="text-input">
-                            Name *
-                        </label>
+                        <label class="col-md-4 col-form-label" for="text-input">Name *</label>
                         <div class="col-md-8">
-                            <input [(ngModel)]="operationalHead.name" type="text" 
-                            id="Name" name="Name" class="form-control" placeholder="Name">
+                            <input [(ngModel)]="operationalHead.name" 
+                            type="text" id="Name" name="Name" 
+                            class="form-control" placeholder="Name">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-4 col-form-label" for="textarea-input">
-                            Description
-                        </label>
+                        <label class="col-md-4 col-form-label" 
+                            for="textarea-input">Description</label>
                         <div class="col-md-8">
-                            <textarea [(ngModel)]="operationalHead.description" 
-                                id="description" name="description" rows="3" 
-                                class="form-control" placeholder="Description..">
-                            </textarea>
+                            <textarea [(ngModel)]="operationalHead.description" id="description" name="description" 
+                            rows="3" class="form-control" placeholder="Address.."></textarea>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" 
-                    (click)="closeOperationalHeadModal()">Close</button>
+                    (click)="operationalHeadModal.hide()">Close</button>
                 <button type="button" class="btn btn-primary" 
                     (click)="save()">Save</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-</div><!--End of the Create/Update operational head office-->
+</div><!-- /.modal -->

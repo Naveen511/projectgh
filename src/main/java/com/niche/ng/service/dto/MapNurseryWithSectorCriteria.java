@@ -1,15 +1,3 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date: 2018/08/31
- *  Target: yarn
- *  -----------------------------------------------------------------------------
- *  File Description    : This file performs MapNurseryWithSectorCriteria and
-                            declared the table fields, data types for MapNurseryWithSectorC table.
- *
- *******************************************************************************/
 package com.niche.ng.service.dto;
 
 import java.io.Serializable;
@@ -55,137 +43,62 @@ public class MapNurseryWithSectorCriteria implements Serializable {
     public MapNurseryWithSectorCriteria() {
     }
 
-    /**
-     * To Get the Id from MapNurseryWithSector table
-     * 
-     * @return id
-     */
     public LongFilter getId() {
         return id;
     }
 
-    /**
-     * To set the id values for the MapNurseryWithSector table.
-     * 
-     * @param id id value of the MapNurseryWithSector
-     */
     public void setId(LongFilter id) {
         this.id = id;
     }
 
-    /**
-     * To Get the fromDate from MapNurseryWithSector table
-     * 
-     * @return fromDate
-     */
     public LocalDateFilter getFromDate() {
         return fromDate;
     }
 
-    /**
-     * To set the fromDate values for the MapNurseryWithSector table.
-     * 
-     * @param fromDate fromDate value of the MapNurseryWithSector
-     */
     public void setFromDate(LocalDateFilter fromDate) {
         this.fromDate = fromDate;
     }
 
-    /**
-     * To Get the fromDate from MapNurseryWithSector table
-     * 
-     * @return fromDate
-     */
     public LocalDateFilter getToDate() {
         return toDate;
     }
 
-    /**
-     * To set the toDate values for the MapNurseryWithSector table.
-     * 
-     * @param toDate toDate value of the MapNurseryWithSector
-     */
     public void setToDate(LocalDateFilter toDate) {
         this.toDate = toDate;
     }
 
-    /**
-     * To Get the fromDate from MapNurseryWithSector table
-     * 
-     * @return fromDate
-     */
     public StringFilter getDescription() {
         return description;
     }
 
-    /**
-     * To set the description values for the MapNurseryWithSector table.
-     * 
-     * @param description description value of the MapNurseryWithSector
-     */
     public void setDescription(StringFilter description) {
         this.description = description;
     }
 
-    /**
-     * To Get the fromDate from MapNurseryWithSector table
-     * 
-     * @return fromDate
-     */
     public IntegerFilter getStatus() {
         return status;
     }
 
-    /**
-     * To set the status values for the MapNurseryWithSector table.
-     * 
-     * @param status status value of the MapNurseryWithSector
-     */
     public void setStatus(IntegerFilter status) {
         this.status = status;
     }
 
-    /**
-     * To Get the fromDate from MapNurseryWithSector table
-     * 
-     * @return fromDate
-     */
     public LongFilter getNurseryId() {
         return nurseryId;
     }
 
-    /**
-     * To set the nurseryId values for the MapNurseryWithSector table.
-     * 
-     * @param nurseryId nurseryId value of the MapNurseryWithSector
-     */
     public void setNurseryId(LongFilter nurseryId) {
         this.nurseryId = nurseryId;
     }
 
-    /**
-     * To Get the fromDate from MapNurseryWithSector table
-     * 
-     * @return fromDate
-     */
     public LongFilter getSectorId() {
         return sectorId;
     }
 
-    /**
-     * To set the sectorIdid values for the MapNurseryWithSector table.
-     * 
-     * @param sectorId sectorId value of the MapNurseryWithSector
-     */
     public void setSectorId(LongFilter sectorId) {
         this.sectorId = sectorId;
     }
 
-    /**
-     * toString to get the values
-     * 
-     * @return values
-     */
     @Override
     public String toString() {
         return "MapNurseryWithSectorCriteria{" +

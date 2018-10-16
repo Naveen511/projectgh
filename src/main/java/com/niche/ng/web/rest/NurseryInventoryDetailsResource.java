@@ -1,14 +1,3 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date  : 2018/09/02
- *  Target: yarn
- *  -----------------------------------------------------------------------------
- *  File Description    : This file performs NurseryInventoryDetailsResource of CRUD Operation
- *
- *******************************************************************************/
 package com.niche.ng.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
@@ -38,8 +27,6 @@ import java.util.Optional;
 
 /**
  * REST controller for managing NurseryInventoryDetails.
- * Used RequestMapping annotation to map the url with the client side.
- * Using service to access the values in the database.
  */
 @RestController
 @RequestMapping("/api")
@@ -142,5 +129,35 @@ public class NurseryInventoryDetailsResource {
         log.debug("REST request to delete NurseryInventoryDetails : {}", id);
         nurseryInventoryDetailsService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    /**
+     * GET  /nursery-inventory-details/inventory/:nurseryInventorykId : get all the Inventory details 
+     * of particular nurseryInventoryId.
+     *
+     * @param nurseryInventoryId the nurseryInventoryId of the NurseryInventoryDetailsDTO to retrieve
+     * @return the ResponseEntity with status 200 (OK) and the list of nurseryInventoryId in body
+     */
+    @GetMapping("/nursery-inventory-details/inventory/{nurseryInventoryId}")
+    @Timed
+    public ResponseEntity<List<NurseryInventoryDetailsDTO>> getParticularInventoryDetails(@PathVariable Long nurseryInventoryId) {
+        log.debug("REST request to get a list of particular nursery inventory details");
+        List<NurseryInventoryDetailsDTO> list = nurseryInventoryDetailsService.findParticularInventoryDetails(nurseryInventoryId);
+        return ResponseEntity.ok().body(list);
+    }
+
+    /**
+     * GET  /nursery-inventory-details/inventory/:nurseryInventorykId : get all the Inventory details 
+     * of particular nurseryInventoryId.
+     *
+     * @param nurseryInventoryId the nurseryInventoryId of the NurseryInventoryDetailsDTO to retrieve
+     * @return the ResponseEntity with status 200 (OK) and the list of nurseryInventoryId in body
+     */
+    @GetMapping("/nursery-inventory-details/inventory/{nurseryInventoryId}/{status}")
+    @Timed
+    public ResponseEntity<List<NurseryInventoryDetailsDTO>> getParticularInventoryDamage(@PathVariable Long nurseryInventoryId, @PathVariable Integer status) {
+        log.debug("REST request to get a list of particular nursery inventory details");
+        List<NurseryInventoryDetailsDTO> list = nurseryInventoryDetailsService.findParticularInventoryDamageDetails(nurseryInventoryId, status);
+        return ResponseEntity.ok().body(list);
     }
 }

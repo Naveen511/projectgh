@@ -1,14 +1,3 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date: 2018/08/07
- *  Target: yarn
- *  -----------------------------------------------------------------------------
- *  File Description    : This file performs QuantityResource of CRUD Operation
- *
- *******************************************************************************/
 package com.niche.ng.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
@@ -38,8 +27,6 @@ import java.util.Optional;
 
 /**
  * REST controller for managing Quantity.
- * Used RequestMapping annotation to map the url with the client side.
- * Using service to access the values in the database.
  */
 @RestController
 @RequestMapping("/api")
@@ -142,5 +129,19 @@ public class QuantityResource {
         log.debug("REST request to delete Quantity : {}", id);
         quantityService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    /**
+     * GET  /quantities/{pickListQuantityId}/{quantityTypeId} : get the quantity for motherBeds.
+     *
+     * @param pickListQuantityId the status of the motherBedDTO to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the ZonalDTO, or with status 404 (Not Found)
+     */
+    @GetMapping("/quantities/quantity/{pickListQuantityId}/{quantityTypeId}")
+    @Timed
+    public ResponseEntity<List<QuantityDTO>> getQuantityCount(@PathVariable Long pickListQuantityId, @PathVariable Long quantityTypeId) {
+        log.debug("REST request to get a list of particular status of motherbed");
+        List<QuantityDTO> quantityDTO = quantityService.findQuantity(pickListQuantityId, quantityTypeId);
+        return ResponseEntity.ok().body(quantityDTO);
     }
 }

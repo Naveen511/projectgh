@@ -1,24 +1,12 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date  : 2018/09/12
- *  Target: yarn
- *  -----------------------------------------------------------------------------
- *  File Description    : This file performs MapSectorWithZonalMapper
- *
- *******************************************************************************/
 package com.niche.ng.service.mapper;
 
 import com.niche.ng.domain.*;
 import com.niche.ng.service.dto.MapSectorWithZonalDTO;
 
 import org.mapstruct.*;
+import java.util.List;
 /**
  * Mapper for the entity MapSectorWithZonal and its DTO MapSectorWithZonalDTO.
- * Mapping the parent and child table to fetch the field value.
- * Converting the entity object into data transfer object(DTO).
  */
 @Mapper(componentModel = "spring", uses = {ZonalMapper.class, SectorMapper.class})
 public interface MapSectorWithZonalMapper extends EntityMapper<MapSectorWithZonalDTO, MapSectorWithZonal> {
@@ -32,6 +20,8 @@ public interface MapSectorWithZonalMapper extends EntityMapper<MapSectorWithZona
     @Mapping(source = "zonalId", target = "zonal")
     @Mapping(source = "sectorId", target = "sector")
     MapSectorWithZonal toEntity(MapSectorWithZonalDTO mapSectorWithZonalDTO);
+
+    List<MapSectorWithZonalDTO> toDto(List<MapSectorWithZonal> mapSectorWithZonal);
 
     default MapSectorWithZonal fromId(Long id) {
         if (id == null) {

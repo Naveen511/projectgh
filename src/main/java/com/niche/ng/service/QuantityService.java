@@ -1,14 +1,3 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date  : 2018/08/22
- *  Target: yarn
- *  -----------------------------------------------------------------------------
- *  File Description    : This file performs QuantityService
- *
- *******************************************************************************/
 package com.niche.ng.service;
 
 import com.niche.ng.service.dto.QuantityDTO;
@@ -16,6 +5,7 @@ import com.niche.ng.service.dto.QuantityDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -54,4 +44,6 @@ public interface QuantityService {
      * @param id the id of the entity
      */
     void delete(Long id);
+
+    List<QuantityDTO> findQuantity(Long pickListQuantityId, Long  quantityTypeId);
 }

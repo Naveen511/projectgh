@@ -20,10 +20,6 @@
         {
             "fieldName": "status",
             "fieldType": "Integer"
-        },
-        {
-            "fieldName": "displayLabelName",
-            "fieldType": "String"
         }
     ],
     "changelogDate": "20180818124910",

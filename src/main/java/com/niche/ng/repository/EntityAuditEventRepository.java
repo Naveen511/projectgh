@@ -1,14 +1,3 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date  : 2018/09/21
- *  Target: yarn
- *  -----------------------------------------------------------------------------
- *  File Description    : This file performs EntityAuditEventRepository
- *
- *******************************************************************************/
 package com.niche.ng.repository;
 
 import com.niche.ng.domain.EntityAuditEvent;
@@ -22,9 +11,6 @@ import java.util.List;
 
 /**
  * Spring Data JPA repository for the EntityAuditEvent entity.
- *
- * EntityAuditEventRepository Extends JpaRepository to
- * query the values using keywords.
  */
 public interface EntityAuditEventRepository extends JpaRepository<EntityAuditEvent, Long> {
 

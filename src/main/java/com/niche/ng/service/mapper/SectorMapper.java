@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date  : 2018/08/02
+ *  Date: 2018/08/02
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs SectorMapper
@@ -15,11 +15,10 @@ import com.niche.ng.domain.*;
 import com.niche.ng.service.dto.SectorDTO;
 
 import org.mapstruct.*;
+import java.util.List;
 
 /**
  * Mapper for the entity Sector and its DTO SectorDTO.
- * Mapping the parent and child table to fetch the field value.
- * Converting the entity object into data transfer object(DTO).
  */
 @Mapper(componentModel = "spring", uses = {ZonalMapper.class, FinancialYearSettingsMapper.class})
 public interface SectorMapper extends EntityMapper<SectorDTO, Sector> {
@@ -29,6 +28,8 @@ public interface SectorMapper extends EntityMapper<SectorDTO, Sector> {
     @Mapping(source = "financialYearSector.id", target = "financialYearSectorId")
     @Mapping(source = "financialYearSector.batchName", target = "financialYearSectorBatchName")
     SectorDTO toDto(Sector sector);
+
+    List<SectorDTO> toDto(List<Sector> sector);
 
     @Mapping(target = "nurserys", ignore = true)
     @Mapping(source = "zonalId", target = "zonal")

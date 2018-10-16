@@ -1,14 +1,3 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date  : 2018/09/16
- *  Target: yarn
- *  -----------------------------------------------------------------------------
- *  File Description    : This file performs OperationalHeadServiceImpl
- *
- *******************************************************************************/
 package com.niche.ng.service.impl;
 
 import com.niche.ng.service.OperationalHeadService;
@@ -26,15 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.Optional;
+import java.util.List;
 /**
  * Service Implementation for managing OperationalHead.
- *
- * Implementing OperationalHeadService with IMPL suffix class
- * as OperationalHeadServiceImpl.
- * Using of business logic in the service layer which is present in the service file
- * using impl as a interface to access the repository layer.
- * Once we got the responce from the repository layer, mapper convert the entity
- * object to data transfer object(DTO).
  */
 @Service
 @Transactional
@@ -106,11 +89,19 @@ public class OperationalHeadServiceImpl implements OperationalHeadService {
     }
 
     /**
-     * Get the count of head office by status
+     * Get all the head office by status.
      *
      * @param status the status of the entity
-     * @return Long value of nursery count
+     * @return the list of entities
      */
+    @Override
+    @Transactional(readOnly = true)
+    public List<OperationalHeadDTO> findParticularStatus(Integer status) {
+        log.debug("Request to get headOffice : {}", status);
+        List<OperationalHead> list = operationalHeadRepository.findByStatus(status);
+        return operationalHeadMapper.toDto(list);
+    }
+
     @Override
     public Long findActiveCount(Integer status) {
         return operationalHeadRepository.countByStatus(status);

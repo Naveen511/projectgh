@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date  : 2018/08/02
+ *  Date: 2018/08/02
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs GodownStockDetailsServiceImpl
@@ -24,17 +24,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
-
+import java.util.stream.Collectors;
 /**
  * Service Implementation for managing GodownStockDetails.
- *
- * Implementing GodownStockDetailsService with IMPL suffix class
- * as GodownStockDetailsServiceImpl.
- * Using of business logic in the service layer which is present in the service file
- * using impl as a interface to access the repository layer.
- * Once we got the responce from the repository layer, mapper convert the entity
- * object to data transfer object(DTO).
  */
 @Service
 @Transactional
@@ -102,5 +97,18 @@ public class GodownStockDetailsServiceImpl implements GodownStockDetailsService 
     public void delete(Long id) {
         log.debug("Request to delete GodownStockDetails : {}", id);
         godownStockDetailsRepository.deleteById(id);
+    }
+
+    /**
+     * Get one godownStockDetails by id.
+     *
+     * @param id the id of the entity
+     * @return the entity
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<GodownStockDetailsDTO> findStockList(Long godownStockId) {
+        List<GodownStockDetails> stockList = godownStockDetailsRepository.findByGodownStockId(godownStockId);
+        return godownStockDetailsMapper.toDto(stockList);
     }
 }

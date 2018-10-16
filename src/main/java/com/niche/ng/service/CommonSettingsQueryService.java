@@ -1,14 +1,3 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date  : 2018/08/07
- *  Target: yarn
- *  -----------------------------------------------------------------------------
- *  File Description    : This file performs CommonSettingsQueryService
- *
- *******************************************************************************/
 package com.niche.ng.service;
 
 import java.util.List;

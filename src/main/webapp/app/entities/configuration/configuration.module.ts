@@ -1,11 +1,11 @@
 /******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date: 2018/08/02 11:27:58
- *  Target: yarn
- *******************************************************************************/
+*  Property of Nichehands
+*  Nichehands Confidential Proprietary
+*  Nichehands Copyright (C) 2018 All rights reserved
+*  ----------------------------------------------------------------------------
+*  Date: 2018/08/02 11:27:58
+*  Target: yarn
+*******************************************************************************/
 // Angular
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -55,7 +55,9 @@ import { NgbDateMomentAdapter } from '../../shared/util/datepicker-adapter';
         PickListComponent,
         FinancialYearSettingsComponent
     ],
-    providers: [{ provide: NgbDateAdapter, useClass: NgbDateMomentAdapter }],
+    providers: [
+        { provide: NgbDateAdapter, useClass: NgbDateMomentAdapter }
+    ],
     exports: [NgbModule],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

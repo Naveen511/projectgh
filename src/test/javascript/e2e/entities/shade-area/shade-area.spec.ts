@@ -40,8 +40,6 @@ describe('ShadeArea e2e test', () => {
         expect(shadeAreaUpdatePage.getDamageInput()).toMatch('5');
         shadeAreaUpdatePage.setSaplingsInput('5');
         expect(shadeAreaUpdatePage.getSaplingsInput()).toMatch('5');
-        shadeAreaUpdatePage.setRoundInput('5');
-        expect(shadeAreaUpdatePage.getRoundInput()).toMatch('5');
         shadeAreaUpdatePage.batchSelectLastOption();
         shadeAreaUpdatePage.financialYearShadeAreaSelectLastOption();
         shadeAreaUpdatePage.save();

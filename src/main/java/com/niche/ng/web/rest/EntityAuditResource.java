@@ -1,14 +1,3 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date  : 2018/10/02
- *  Target: yarn
- *  -----------------------------------------------------------------------------
- *  File Description    : This file performs EntityAuditResource of CRUD Operation
- *
- *******************************************************************************/
 package com.niche.ng.web.rest;
 
 import com.niche.ng.domain.EntityAuditEvent;
@@ -36,9 +25,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 /**
- * REST controller for getting the audit events for entity.
- * Used RequestMapping annotation to map the url with the client side.
- * Using service to access the values in the database.
+ * REST controller for getting the audit events for entity
  */
 @RestController
 @RequestMapping("/api")

@@ -31,12 +31,6 @@
             "otherEntityName": "financialYearSettings",
             "relationshipType": "many-to-one",
             "otherEntityField": "batchName"
-        },
-        {
-            "relationshipName": "fromNurseryStockDetails",
-            "otherEntityName": "nursery",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "nurseryName"
         }
     ],
     "fields": [
@@ -60,10 +54,6 @@
         },
         {
             "fieldName": "status",
-            "fieldType": "Integer"
-        },
-        {
-            "fieldName": "itStatus",
             "fieldType": "Integer"
         }
     ],

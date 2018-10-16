@@ -1,15 +1,3 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date: 2018/08/31
- *  Target: yarn
- *  -----------------------------------------------------------------------------
- *  File Description    : This file performs MapZonalWithOhCriteria and
-                            declared the table fields, data types for MapZonalWithOh table.
- *
- *******************************************************************************/
 package com.niche.ng.service.dto;
 
 import java.io.Serializable;
@@ -52,143 +40,65 @@ public class MapZonalWithOhCriteria implements Serializable {
 
     private LongFilter operationalHeadId;
 
-    /**
-     * MapZonalWithOhCriteria from MapZonalWithOh table
-     */
     public MapZonalWithOhCriteria() {
     }
 
-    /**
-     * To Get the Id from MapZonalWithOh table
-     * 
-     * @return id
-     */
     public LongFilter getId() {
         return id;
     }
 
-    /**
-     * To set the id values for the MapZonalWithOh table.
-     * 
-     * @param id id value of the MapZonalWithOh
-     */
     public void setId(LongFilter id) {
         this.id = id;
     }
 
-    /**
-     * To Get the fromDate from MapZonalWithOh table
-     * 
-     * @return fromDate
-     */
     public LocalDateFilter getFromDate() {
         return fromDate;
     }
 
-    /**
-     * To set the fromDate values for the MapZonalWithOh table.
-     * 
-     * @param fromDate fromDate value of the MapZonalWithOh
-     */
     public void setFromDate(LocalDateFilter fromDate) {
         this.fromDate = fromDate;
     }
 
-    /**
-     * To Get the toDate from MapZonalWithOh table
-     * 
-     * @return toDate
-     */
     public LocalDateFilter getToDate() {
         return toDate;
     }
 
-    /**
-     * To set the toDate values for the MapZonalWithOh table.
-     * 
-     * @param toDate toDate value of the MapZonalWithOh
-     */
     public void setToDate(LocalDateFilter toDate) {
         this.toDate = toDate;
     }
 
-    /**
-     * To Get the description from MapZonalWithOh table
-     * 
-     * @return description
-     */
     public StringFilter getDescription() {
         return description;
     }
 
-    /**
-     * To set the description values for the MapZonalWithOh table.
-     * 
-     * @param description description value of the MapZonalWithOh
-     */
     public void setDescription(StringFilter description) {
         this.description = description;
     }
 
-    /**
-     * To Get the status from MapZonalWithOh table
-     * 
-     * @return status
-     */
     public IntegerFilter getStatus() {
         return status;
     }
 
-    /**
-     * To set the status values for the MapZonalWithOh table.
-     * 
-     * @param status status value of the MapZonalWithOh
-     */
     public void setStatus(IntegerFilter status) {
         this.status = status;
     }
 
-    /**
-     * To Get the zonalId from MapZonalWithOh table
-     * 
-     * @return zonalId
-     */
     public LongFilter getZonalId() {
         return zonalId;
     }
 
-    /**
-     * To set the zonalId values for the MapZonalWithOh table.
-     * 
-     * @param zonalId zonalId value of the MapZonalWithOh
-     */
     public void setZonalId(LongFilter zonalId) {
         this.zonalId = zonalId;
     }
 
-    /**
-     * To Get the operationalHeadId from MapZonalWithOh table
-     * 
-     * @return operationalHeadId
-     */
     public LongFilter getOperationalHeadId() {
         return operationalHeadId;
     }
 
-    /**
-     * To set the operationalHeadId values for the MapZonalWithOh table.
-     * 
-     * @param operationalHeadId operationalHeadId value of the MapZonalWithOh
-     */
     public void setOperationalHeadId(LongFilter operationalHeadId) {
         this.operationalHeadId = operationalHeadId;
     }
 
-    /**
-     * toString to get the values
-     * 
-     * @return values
-     */
     @Override
     public String toString() {
         return "MapZonalWithOhCriteria{" +

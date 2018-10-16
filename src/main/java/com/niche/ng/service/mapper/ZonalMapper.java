@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date  : 2018/08/02
+ *  Date: 2018/08/02
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs ZonalMapper
@@ -15,11 +15,10 @@ import com.niche.ng.domain.*;
 import com.niche.ng.service.dto.ZonalDTO;
 
 import org.mapstruct.*;
+import java.util.List;
 
 /**
  * Mapper for the entity Zonal and its DTO ZonalDTO.
- * Mapping the parent and child table to fetch the field value.
- * Converting the entity object into data transfer object(DTO).
  */
 @Mapper(componentModel = "spring", uses = {FinancialYearSettingsMapper.class, OperationalHeadMapper.class})
 public interface ZonalMapper extends EntityMapper<ZonalDTO, Zonal> {
@@ -37,6 +36,8 @@ public interface ZonalMapper extends EntityMapper<ZonalDTO, Zonal> {
     @Mapping(target = "zonalIncharges", ignore = true)
     @Mapping(target = "mapSectorWithZonals", ignore = true)
     Zonal toEntity(ZonalDTO zonalDTO);
+
+    List<ZonalDTO> toDto(List<Zonal> zonal);
 
     default Zonal fromId(Long id) {
         if (id == null) {

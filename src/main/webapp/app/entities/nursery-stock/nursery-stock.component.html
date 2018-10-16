@@ -21,7 +21,6 @@
             <th jhiSortBy="description"><span jhiTranslate="projectghApp.nurseryStock.description">Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="status"><span jhiTranslate="projectghApp.nurseryStock.status">Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="posQuantity"><span jhiTranslate="projectghApp.nurseryStock.posQuantity">Pos Quantity</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="damageQuantity"><span jhiTranslate="projectghApp.nurseryStock.damageQuantity">Damage Quantity</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="nurseryNurseryName"><span jhiTranslate="projectghApp.nurseryStock.nursery">Nursery</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="pickListVarietyPickListValue"><span jhiTranslate="projectghApp.nurseryStock.pickListVariety">Pick List Variety</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="pickListCategoryPickListValue"><span jhiTranslate="projectghApp.nurseryStock.pickListCategory">Pick List Category</span> <fa-icon [icon]="'sort'"></fa-icon></th>
@@ -38,7 +37,6 @@
                 <td>{{nurseryStock.description}}</td>
                 <td>{{nurseryStock.status}}</td>
                 <td>{{nurseryStock.posQuantity}}</td>
-                <td>{{nurseryStock.damageQuantity}}</td>
                 <td>
                     <div *ngIf="nurseryStock.nurseryId">
                         <a [routerLink]="['../nursery', nurseryStock.nurseryId , 'view' ]" >{{nurseryStock.nurseryNurseryName}}</a>

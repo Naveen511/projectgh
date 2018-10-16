@@ -50,14 +50,7 @@ import {
     faMinusSquare,
     faPlusSquare,
     faCheck,
-    faFastForward,
-    faBold,
-    faUniversity,
-    faLeaf,
-    faCube,
-    faTags,
-    faFileExcel,
-    faFilePdf
+    faFastForward
 } from '@fortawesome/free-solid-svg-icons';
 
 // Adds the SVG icon to the library so you can use it in your page
@@ -107,12 +100,5 @@ library.add(faPlusSquare);
 library.add(faBan);
 library.add(faCheck);
 library.add(faFastForward);
-library.add(faBold);
-library.add(faUniversity);
-library.add(faLeaf);
-library.add(faCube);
-library.add(faTags);
-library.add(faFileExcel);
-library.add(faFilePdf);
 
 // jhipster-needle-add-element-to-vendor - JHipster will add new menu items here

@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date  : 2018/08/02
+ *  Date: 2018/08/02
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs GodownPurchaseDetailsServiceImpl
@@ -28,13 +28,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 /**
  * Service Implementation for managing GodownPurchaseDetails.
- *
- * Implementing GodownPurchaseDetailsService with IMPL suffix class
- * as GodownPurchaseDetailsServiceImpl.
- * Using of business logic in the service layer which is present in the service file
- * using impl as a interface to access the repository layer.
- * Once we got the responce from the repository layer, mapper convert the entity
- * object to data transfer object(DTO).
  */
 @Service
 @Transactional
@@ -104,4 +97,5 @@ public class GodownPurchaseDetailsServiceImpl implements GodownPurchaseDetailsSe
         log.debug("Request to delete GodownPurchaseDetails : {}", id);
         godownPurchaseDetailsRepository.deleteById(id);
     }
+
 }

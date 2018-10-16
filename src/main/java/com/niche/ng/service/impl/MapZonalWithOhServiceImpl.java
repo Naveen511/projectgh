@@ -1,14 +1,3 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date  : 2018/09/16
- *  Target: yarn
- *  -----------------------------------------------------------------------------
- *  File Description    : This file performs MapZonalWithOhServiceImpl
- *
- *******************************************************************************/
 package com.niche.ng.service.impl;
 
 import com.niche.ng.service.MapZonalWithOhService;
@@ -26,15 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.Optional;
+import java.util.List;
 /**
  * Service Implementation for managing MapZonalWithOh.
- *
- * Implementing MapZonalWithOhService with IMPL suffix class
- * as MapZonalWithOhServiceImpl.
- * Using of business logic in the service layer which is present in the service file
- * using impl as a interface to access the repository layer.
- * Once we got the responce from the repository layer, mapper convert the entity
- * object to data transfer object(DTO).
  */
 @Service
 @Transactional
@@ -103,5 +86,33 @@ public class MapZonalWithOhServiceImpl implements MapZonalWithOhService {
     public void delete(Long id) {
         log.debug("Request to delete MapZonalWithOh : {}", id);
         mapZonalWithOhRepository.deleteById(id);
+    }
+
+    /**
+     * Get all the sectors by zonalId.
+     *
+     * @param zonalId the zonalId of the entity
+     * @return the list of entities
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<MapZonalWithOhDTO> findParticularZonalActiveRecord(Long zonalId, Integer status) {
+        // log.debug("Request to get Sectors : {}", zonalId);
+        List<MapZonalWithOh> list = mapZonalWithOhRepository.findByZonalIdAndStatus(zonalId, status);
+        return mapZonalWithOhMapper.toDto(list);
+    }
+
+    /**
+     * Get all the sectors by zonalId.
+     *
+     * @param zonalId the zonalId of the entity
+     * @return the list of entities
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<MapZonalWithOhDTO> findParticularZonalRecord(Long zonalId) {
+        // log.debug("Request to get Sectors : {}", zonalId);
+        List<MapZonalWithOh> list = mapZonalWithOhRepository.findByZonalId(zonalId);
+        return mapZonalWithOhMapper.toDto(list);
     }
 }

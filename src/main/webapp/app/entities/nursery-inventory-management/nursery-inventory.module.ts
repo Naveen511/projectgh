@@ -1,11 +1,3 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date: 2018/09/02
- *  Target: yarn
- *******************************************************************************/
 // Angular
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -37,7 +29,10 @@ import { NgbDateMomentAdapter } from '../../shared/util/datepicker-adapter';
         NurseryInventoryMgntRoutingModule
     ],
     declarations: [NurseryInventoryMgntComponent],
-    providers: [{ provide: NgbDateAdapter, useClass: NgbDateMomentAdapter }],
+    providers: [
+        { provide: NgbDateAdapter, useClass: NgbDateMomentAdapter }
+    ],
     exports: [NgbModule]
 })
+
 export class NurseryInventoryMgntModule {}

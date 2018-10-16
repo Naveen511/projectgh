@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date  : 2018/08/02
+ *  Date: 2018/08/02
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs NurseryStockDetailsMapper
@@ -15,11 +15,10 @@ import com.niche.ng.domain.*;
 import com.niche.ng.service.dto.NurseryStockDetailsDTO;
 
 import org.mapstruct.*;
+import java.util.List;
 
 /**
  * Mapper for the entity NurseryStockDetails and its DTO NurseryStockDetailsDTO.
- * Mapping the parent and child table to fetch the field value.
- * Converting the entity object into data transfer object(DTO).
  */
 @Mapper(componentModel = "spring", uses = {BatchMapper.class, NurseryStockMapper.class, NurseryMapper.class, PickListValueMapper.class, FinancialYearSettingsMapper.class})
 public interface NurseryStockDetailsMapper extends EntityMapper<NurseryStockDetailsDTO, NurseryStockDetails> {
@@ -33,20 +32,18 @@ public interface NurseryStockDetailsMapper extends EntityMapper<NurseryStockDeta
     @Mapping(source = "saplingDamageArea.pickListValue", target = "saplingDamageAreaPickListValue")
     @Mapping(source = "financialYearStockDetails.id", target = "financialYearStockDetailsId")
     @Mapping(source = "financialYearStockDetails.batchName", target = "financialYearStockDetailsBatchName")
-    @Mapping(source = "fromNurseryStockDetails.id", target = "fromNurseryStockDetailsId")
-    @Mapping(source = "fromNurseryStockDetails.nurseryName", target = "fromNurseryStockDetailsNurseryName")
     @Mapping(source = "nurseryStock.pickListVariety.pickListValue", target= "stockVariety")
     @Mapping(source = "nurseryStock.pickListCategory.pickListValue", target= "stockCategory")
     @Mapping(source = "nurseryStock.pickListVariety.id", target= "stockVarietyId")
     @Mapping(source = "nurseryStock.pickListCategory.id", target= "stockCategoryId")
     NurseryStockDetailsDTO toDto(NurseryStockDetails nurseryStockDetails);
+    List<NurseryStockDetailsDTO> toDto(List<NurseryStockDetails> nurseryStockDetails);
 
     @Mapping(source = "batchId", target = "batch")
     @Mapping(source = "nurseryStockId", target = "nurseryStock")
     @Mapping(source = "itNurseryId", target = "itNursery")
     @Mapping(source = "saplingDamageAreaId", target = "saplingDamageArea")
     @Mapping(source = "financialYearStockDetailsId", target = "financialYearStockDetails")
-    @Mapping(source = "fromNurseryStockDetailsId", target = "fromNurseryStockDetails")
     NurseryStockDetails toEntity(NurseryStockDetailsDTO nurseryStockDetailsDTO);
 
     default NurseryStockDetails fromId(Long id) {

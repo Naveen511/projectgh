@@ -19,13 +19,11 @@
             <th jhiSortBy="quantity"><span jhiTranslate="projectghApp.nurseryStockDetails.quantity">Quantity</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="description"><span jhiTranslate="projectghApp.nurseryStockDetails.description">Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="status"><span jhiTranslate="projectghApp.nurseryStockDetails.status">Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="itStatus"><span jhiTranslate="projectghApp.nurseryStockDetails.itStatus">It Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="batchBatchName"><span jhiTranslate="projectghApp.nurseryStockDetails.batch">Batch</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="nurseryStockId"><span jhiTranslate="projectghApp.nurseryStockDetails.nurseryStock">Nursery Stock</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="itNurseryNurseryName"><span jhiTranslate="projectghApp.nurseryStockDetails.itNursery">It Nursery</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="saplingDamageAreaPickListValue"><span jhiTranslate="projectghApp.nurseryStockDetails.saplingDamageArea">Sapling Damage Area</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="financialYearStockDetailsBatchName"><span jhiTranslate="projectghApp.nurseryStockDetails.financialYearStockDetails">Financial Year Stock Details</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="fromNurseryStockDetailsNurseryName"><span jhiTranslate="projectghApp.nurseryStockDetails.fromNurseryStockDetails">From Nursery Stock Details</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
             </tr>
             </thead>
@@ -36,7 +34,6 @@
                 <td>{{nurseryStockDetails.quantity}}</td>
                 <td>{{nurseryStockDetails.description}}</td>
                 <td>{{nurseryStockDetails.status}}</td>
-                <td>{{nurseryStockDetails.itStatus}}</td>
                 <td>
                     <div *ngIf="nurseryStockDetails.batchId">
                         <a [routerLink]="['../batch', nurseryStockDetails.batchId , 'view' ]" >{{nurseryStockDetails.batchBatchName}}</a>
@@ -60,11 +57,6 @@
                 <td>
                     <div *ngIf="nurseryStockDetails.financialYearStockDetailsId">
                         <a [routerLink]="['../financial-year-settings', nurseryStockDetails.financialYearStockDetailsId , 'view' ]" >{{nurseryStockDetails.financialYearStockDetailsBatchName}}</a>
-                    </div>
-                </td>
-                <td>
-                    <div *ngIf="nurseryStockDetails.fromNurseryStockDetailsId">
-                        <a [routerLink]="['../nursery', nurseryStockDetails.fromNurseryStockDetailsId , 'view' ]" >{{nurseryStockDetails.fromNurseryStockDetailsNurseryName}}</a>
                     </div>
                 </td>
                 <td class="text-right">

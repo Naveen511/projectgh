@@ -1,12 +1,3 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date: 2018/08/02 11:27:58
- *  Target: yarn
- *******************************************************************************/
-
 // Import needed component and dependency
 import { Component, OnInit } from '@angular/core';
 import { OperationalHeadService } from 'app/entities/service/operational-head.service';
@@ -14,9 +5,11 @@ import { IOperationalHead, OperationalHeadModel, STATUS_ACTIVE } from 'app/share
 
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { ViewChild } from '@angular/core';
+
 import { JhiParseLinks } from 'ng-jhipster';
 
-import { ITEMS_PER_PAGE, SOFT_DELETE_STATUS, ALERT_TIME_OUT_5000, ALERT_TIME_OUT_3000 } from 'app/shared';
+import * as moment from 'moment';
+import { DATE_TIME_FORMAT, ITEMS_PER_PAGE, SOFT_DELETE_STATUS } from 'app/shared';
 import { HttpResponse, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -24,7 +17,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 // Display the alert message of success and error
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { EntityAuditEvent } from 'app/admin/entity-audit/entity-audit-event.model';
+import { EntityAuditEvent, ACTION_STATUS_UPDATE } from 'app/admin/entity-audit/entity-audit-event.model';
 import { EntityAuditService } from 'app/admin/entity-audit/entity-audit.service';
 
 // Mension the html, css/sass files
@@ -34,8 +27,7 @@ import { EntityAuditService } from 'app/admin/entity-audit/entity-audit.service'
 })
 
 /**
- * Class OperationalHeadComponent used to create/update a head office,
- * List all head office.
+ * Class OperationalHeadComponent used to create/update a head office, List all head office.
  * Declared an OperationalHead object to create and update.
  * Declared an Array variable to set list of head office.
  * Using a modal popup directive create and update form is displayed.
@@ -43,12 +35,10 @@ import { EntityAuditService } from 'app/admin/entity-audit/entity-audit.service'
 export class OperationalHeadComponent implements OnInit {
     // Create object for model
     operationalHead: OperationalHeadModel = new OperationalHeadModel();
-
     // create empty array for each service
     list: IOperationalHead[];
     audits: EntityAuditEvent[];
     isCollapsed = true;
-
     // Title and alertTitle declation as String
     title: String;
     alertTitle: String;
@@ -64,7 +54,6 @@ export class OperationalHeadComponent implements OnInit {
     // By default close the alert with statc time
     staticAlertClosed = false;
 
-    // To set value for url params
     routeData: any;
     links: any;
     totalItems: any;
@@ -88,9 +77,9 @@ export class OperationalHeadComponent implements OnInit {
         private activatedRoute: ActivatedRoute,
         private auditService: EntityAuditService
     ) {
-        // Declare a value to url params
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.routeData = this.activatedRoute.data.subscribe(data => {
+            // console.log(data);
             this.page = data.pagingParams.page;
             this.previousPage = data.pagingParams.page;
             this.reverse = data.pagingParams.ascending;
@@ -103,21 +92,18 @@ export class OperationalHeadComponent implements OnInit {
         this.getList();
 
         // To set the time for automatic alert close
-        setTimeout(() => (this.staticAlertClosed = true), ALERT_TIME_OUT_5000);
+        setTimeout(() => (this.staticAlertClosed = true), 20000);
 
         // Set the success message with debounce time
         this.success.subscribe(message => (this.successMessage = message));
-        this.success.pipe(debounceTime(ALERT_TIME_OUT_3000)).subscribe(() => (this.successMessage = null));
+        this.success.pipe(debounceTime(5000)).subscribe(() => (this.successMessage = null));
 
         // To set the error message with debounce time
         this.error.subscribe(message => (this.errorMessage = message));
-        this.error.pipe(debounceTime(ALERT_TIME_OUT_5000)).subscribe(() => (this.errorMessage = null));
+        this.error.pipe(debounceTime(5000)).subscribe(() => (this.errorMessage = null));
     }
 
-    /**
-     * Get the head of list from the operational head table
-     * using the active status
-     */
+    // Call a service function to get list of head office
     getList(): void {
         // Get the list of head office
         this.operationalHeadService
@@ -125,48 +111,13 @@ export class OperationalHeadComponent implements OnInit {
                 page: this.page - 1,
                 size: this.itemsPerPage,
                 sort: this.sort(),
-                filter: { 'status.equals': STATUS_ACTIVE }
+                filter: { 'status.equal': STATUS_ACTIVE }
             })
-            .subscribe((res: HttpResponse<IOperationalHead[]>) => {
-                this.paginateLists(res.body, res.headers);
-            });
+            .subscribe((res: HttpResponse<IOperationalHead[]>) => this.paginateLists(res.body, res.headers));
     }
 
-    /**
-     * Send a head office object to a service (create or update)
-     */
+    // Send a head office object to a service (create or update)
     save() {
-        // If the operation Id is not empty, goto update action
-        if (this.operationalHead.id !== undefined) {
-            this.operationalHeadService
-                .query({
-                    filter: {
-                        'id.equals': this.operationalHead.id,
-                        'name.equals': this.operationalHead.name,
-                        'status.equals': STATUS_ACTIVE
-                    }
-                })
-                .subscribe((res: HttpResponse<IOperationalHead[]>) => {
-                    // Same value - 1, differnt value 0
-                    if (res.body.length === 1) {
-                        this.saveHeadOffice();
-                    } else if (res.body.length === 0) {
-                        this.validateHeadOffice();
-                    } else {
-                        this.error.next('Already this name has taken');
-                    }
-                });
-        } else {
-            // Validate the head office
-            this.validateHeadOffice();
-        }
-    }
-
-    /**
-     * Save the head office,
-     * By default set statu as active
-     */
-    saveHeadOffice() {
         this.operationalHead.status = STATUS_ACTIVE;
         if (this.operationalHead.id !== undefined) {
             this.alertTitle = 'updated';
@@ -177,32 +128,6 @@ export class OperationalHeadComponent implements OnInit {
         }
     }
 
-    /**
-     * Validate the Head office
-     */
-    validateHeadOffice() {
-        this.operationalHeadService
-            .query({
-                filter: {
-                    'name.equals': this.operationalHead.name,
-                    'status.equals': STATUS_ACTIVE
-                }
-            })
-            .subscribe((res: HttpResponse<IOperationalHead[]>) => {
-                if (res.body.length > 0) {
-                    this.error.next('Already this name has taken');
-                } else {
-                    this.saveHeadOffice();
-                }
-            });
-    }
-
-    /**
-     * return the saved response of success and
-     * error from the operational head table
-     * @param result object
-     * @param alertTitle string
-     */
     private subscribeToSaveResponse(result: Observable<HttpResponse<IOperationalHead>>, alertTitle) {
         result.subscribe(
             (res: HttpResponse<IOperationalHead>) => {
@@ -218,68 +143,54 @@ export class OperationalHeadComponent implements OnInit {
     }
 
     // show model popup to create head office value
-    /**
-     * create operational head with new row and
-     * show the operataionalHeadModal
-     * set the title for the Head office
-     */
     create(): void {
         this.operationalHead = new OperationalHeadModel();
         this.operationalHeadModal.show();
-        // Set title for the Head office
-        this.title = 'Create Head Office:';
+        this.title = 'Create Operation Head:';
     }
 
-    /**
-     * Show model popup to update the head office
-     * @param value OperationalHeadModel
-     */
+    // show model popup to update value
     getValue(value: OperationalHeadModel): void {
         this.operationalHeadModal.show();
         this.operationalHead = value;
-        this.title = `Update Head Office: ${value.name}`;
+        this.title = `Update Operation Head: ${value.name}`;
     }
 
-    /**
-     * Delete the calendar settings by updated the status as delete
-     * @param headOffice OperationalHeadModel
-     */
+    // getAuditHistory(id: number): void {
+    //     this.auditService.findByParticularUpdatedEntityDetails('com.niche.ng.domain.OperationalHead', id, ACTION_STATUS_UPDATE, this.selectedLimit)
+    //     .subscribe((res: HttpResponse<EntityAuditEvent[]>) => {
+    //         console.log(res.body);
+    //         this.audits = res.body;
+    //         this.isCollapsed = false;
+    //     });
+    // }
+
+    // soft delete
     softDelete(headOffice: OperationalHeadModel): void {
-        // if(confirm("test")) { }
-        // Confirmation Pop-up for the Delete
-        if (window.confirm('Are sure you want to delete?')) {
-            // console.log('head', headOffice);
-            this.operationalHead = headOffice;
-            this.operationalHead.status = SOFT_DELETE_STATUS;
-            this.operationalHeadService.update(this.operationalHead).subscribe(
-                data => {
-                    // console.log('upda', this.operationalHead);
-                    // alert('Delete Successfully.');
-                    this.success.next(`Deleted successfully`);
-                    this.getList();
-                },
-                (res: HttpErrorResponse) => {
-                    alert(res.error.fieldErrors[0].message);
-                }
-            );
-        }
+        // console.log('head', headOffice);
+        this.operationalHead = headOffice;
+        this.operationalHead.status = SOFT_DELETE_STATUS;
+        this.operationalHeadService.update(this.operationalHead).subscribe(
+            data => {
+                // console.log('upda', this.operationalHead);
+                alert('Delete Successfully.');
+                this.getList();
+            },
+            (res: HttpErrorResponse) => {
+                alert(res.error.fieldErrors[0].message);
+            }
+        );
     }
 
-    /**
-     * If the zone model pop up closed,
-     * call the get zone list function, to diplay original records
-     */
-    closeOperationalHeadModal(): void {
-        // Hide the zone model pop-up
-        this.operationalHeadModal.hide();
-        // Call the getZone List function
-        this.getList();
-    }
+    // commented for making the delete as soft one which means not to delete from db
+    // delete(headOffice: OperationalHeadModel): void {
+    //     this.operationalHeadService.delete(headOffice.id).subscribe(data => {
+    //         // alert('Head Office deleted Successfully.');
+    //         this.success.next(`Deleted successfully`);
+    //         this.list = this.list.filter(u => u !== headOffice);
+    //     });
+    // }
 
-    /**
-     * Get the page number
-     * @param page number
-     */
     loadPage(page: number) {
         if (page !== this.previousPage) {
             this.previousPage = page;
@@ -287,9 +198,6 @@ export class OperationalHeadComponent implements OnInit {
         }
     }
 
-    /**
-     * Based on sort load the data
-     */
     transition() {
         this.router.navigate(['/operational-head'], {
             queryParams: {
@@ -301,9 +209,6 @@ export class OperationalHeadComponent implements OnInit {
         this.getList();
     }
 
-    /**
-     * Clear the filter
-     */
     clear() {
         this.page = 0;
         this.router.navigate([
@@ -316,9 +221,6 @@ export class OperationalHeadComponent implements OnInit {
         this.getList();
     }
 
-    /**
-     * Get the sorting type
-     */
     sort() {
         const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
         if (this.predicate !== 'id') {
@@ -327,43 +229,14 @@ export class OperationalHeadComponent implements OnInit {
         return result;
     }
 
-    /**
-     * Get the row index of data
-     * @param index number
-     * @param item IOperationalHead
-     */
     trackId(index: number, item: IOperationalHead) {
         return item.id;
     }
 
-    /**
-     * Set the page size, total record count in header
-     * @param data IOperationalHead
-     * @param headers headers
-     */
     private paginateLists(data: IOperationalHead[], headers: HttpHeaders) {
         this.links = this.parseLinks.parse(headers.get('link'));
         this.totalItems = parseInt(headers.get('X-Total-Count'), 10);
         this.queryCount = this.totalItems;
         this.list = data;
     }
-
-    /**
-    // getAuditHistory(id: number): void {
-    //     this.auditService.findByParticularUpdatedEntityDetails('com.niche.ng.domain.OperationalHead', id, ACTION_STATUS_UPDATE, this.selectedLimit)
-    //     .subscribe((res: HttpResponse<EntityAuditEvent[]>) => {
-    //         console.log(res.body);
-    //         this.audits = res.body;
-    //         this.isCollapsed = false;
-    //     });
-    // }
-
-    // commented for making the delete as soft one which means not to delete from db
-    delete(headOffice: OperationalHeadModel): void {
-        this.operationalHeadService.delete(headOffice.id).subscribe(data => {
-            // alert('Head Office deleted Successfully.');
-            this.success.next(`Deleted successfully`);
-            this.list = this.list.filter(u => u !== headOffice);
-        });
-    } */
 }

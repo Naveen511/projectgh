@@ -19,7 +19,6 @@ export class PickListUpdatePage {
     cancelButton = element(by.id('cancel-save'));
     pickListNameInput = element(by.id('field_pickListName'));
     statusInput = element(by.id('field_status'));
-    displayLabelNameInput = element(by.id('field_displayLabelName'));
 
     getPageTitle() {
         return this.pageTitle.getAttribute('jhiTranslate');
@@ -39,14 +38,6 @@ export class PickListUpdatePage {
 
     getStatusInput() {
         return this.statusInput.getAttribute('value');
-    }
-
-    setDisplayLabelNameInput(displayLabelName): promise.Promise<void> {
-        return this.displayLabelNameInput.sendKeys(displayLabelName);
-    }
-
-    getDisplayLabelNameInput() {
-        return this.displayLabelNameInput.getAttribute('value');
     }
 
     save(): promise.Promise<void> {

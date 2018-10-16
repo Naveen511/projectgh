@@ -1,13 +1,4 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date: 2018/08/02 11:27:58
- *  Target: yarn
- *******************************************************************************/
-
-// Import needed model and dependency
+import { Moment } from 'moment';
 import { INurseryInventoryDetails } from 'app/shared/model//nursery-inventory-details.model';
 
 export interface INurseryInventory {
@@ -46,11 +37,8 @@ export class NurseryInventory implements INurseryInventory {
         public pickListCategoryId?: number,
         public nurseryInventoryDetails?: INurseryInventoryDetails[],
         public quantityTypePickListValue?: string,
-        public quantityTypeId?: number,
-        public zoneId?: number,
-        public sectorId?: number,
-        public pickListId?: number,
-        public pickListQuantityId?: number
+        public quantityTypeId?: number
+
     ) {}
 }
 
@@ -71,12 +59,7 @@ export class NurseryInventoryModel {
     pickListCategoryId?: number;
     quantityTypePickListValue?: string;
     quantityTypeId?: number;
-    zoneId?: number;
-    sectorId?: number;
-    pickListId?: number;
-    pickListQuantityId?: number;
 }
 
-// Constant variables
 export const STATUS_SEEDS = 101;
 export const STATUS_COVER = 102;

@@ -55,13 +55,7 @@
             "otherEntityName": "financialYearSettings",
             "relationshipType": "many-to-one",
             "otherEntityField": "batchName"
-        },
-        {
-            "relationshipName": "batchQuantity",
-            "otherEntityName": "batchQuantity",
-            "relationshipType": "one-to-many",
-            "otherEntityRelationshipName": "batch"
-        }   
+        }
     ],
     "fields": [
         {

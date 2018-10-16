@@ -1,14 +1,3 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date  : 2018/08/22
- *  Target: yarn
- *  -----------------------------------------------------------------------------
- *  File Description    : This file performs NurseryStockQueryService
- *
- *******************************************************************************/
 package com.niche.ng.service;
 
 import java.util.List;
@@ -104,9 +93,6 @@ public class NurseryStockQueryService extends QueryService<NurseryStock> {
             }
             if (criteria.getPosQuantity() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getPosQuantity(), NurseryStock_.posQuantity));
-            }
-            if (criteria.getDamageQuantity() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getDamageQuantity(), NurseryStock_.damageQuantity));
             }
             if (criteria.getNurseryStockDetailsId() != null) {
                 specification = specification.and(buildReferringEntitySpecification(criteria.getNurseryStockDetailsId(), NurseryStock_.nurseryStockDetails, NurseryStockDetails_.id));

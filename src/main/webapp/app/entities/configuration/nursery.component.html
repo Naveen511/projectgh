@@ -1,14 +1,13 @@
 <div class="animated fadeIn">
-    <!-- Display the particular nursery mapped details List-->
     <div id="collapseBasic" [collapse]="isCollapsed" class="row">
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
                     <i class="fa fa-align-justify"></i> Nursery Mapped Details
                     <button type="button" class="btn btn-sm btn-danger float-right" 
-                        (click)="isCollapsed = !isCollapsed" 
-                        [attr.aria-expanded]="isCollapsed" aria-controls="collapseBasic">
-                        <fa-icon [icon]="'times'"></fa-icon> close
+                        (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="isCollapsed" 
+                        aria-controls="collapseBasic">
+                            <fa-icon [icon]="'times'"></fa-icon> close
                     </button>
                 </div>
                 <div class="card-body table-responsive">
@@ -33,14 +32,10 @@
                                 <td>{{val.fromDate | date: 'dd/MM/yyyy'}}</td>
                                 <td>{{val.toDate | date: 'dd/MM/yyyy'}}</td>
                                 <td>{{val.description}}</td>
-                                <td>{{val.createdDate | date:'medium'}}</td>
+                                <td>{{val.createdAt | date: 'dd/MM/yyyy'}}</td>
                                 <td>
-                                    <span *ngIf="val.status == 1" class="badge badge-success">
-                                        Active
-                                    </span>
-                                    <span *ngIf="val.status == 2" class="badge badge-danger">
-                                        InActive
-                                    </span>
+                                    <span *ngIf="val.status == 1" class="badge badge-success">Active</span>
+                                    <span *ngIf="val.status == 2" class="badge badge-danger">InActive</span>
                                 </td>
                             </tr>
                         </tbody>
@@ -49,7 +44,6 @@
             </div>
         </div>
     </div>
-    <!-- End of nursery mapped details -->
     <!-- Display the Nursery List-->
     <div class="row">
         <div class="col-md-12">
@@ -61,8 +55,7 @@
             <!-- End of the success alert-->
             <div class="card">
                 <div class="card-header">
-                    <strong>
-                        <i class="fa fa-align-justify"></i> Nursey List</strong>
+                    <strong><i class="fa fa-align-justify"></i> Nursey List</strong>
                     <button type="button" class="btn btn-sm btn-brand btn-success float-right" 
                         data-toggle="modal" (click)="createNursery()"
                         ngbTooltip="Add nursery" placement="bottom">
@@ -72,30 +65,15 @@
                 <div class="card-body table-responsive">
                     <table class="table font12">
                         <thead>
-                            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" 
-                                [callback]="transition.bind(this)">
+                            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
                                 <th>S.No</th>
-                                <th jhiSortBy="financialYearNurseryBatchName">Year
-                                    <fa-icon [icon]="'sort'"></fa-icon>
-                                </th>
-                                <th jhiSortBy="zonalName">Zonal
-                                    <fa-icon [icon]="'sort'"></fa-icon>
-                                </th>
-                                <th jhiSortBy="sectorSectorName">Sector
-                                    <fa-icon [icon]="'sort'"></fa-icon>
-                                </th>
-                                <th jhiSortBy="code">Code
-                                    <fa-icon [icon]="'sort'"></fa-icon>
-                                </th>
-                                <th jhiSortBy="nurseryName">Name
-                                    <fa-icon [icon]="'sort'"></fa-icon>
-                                </th>
-                                <th jhiSortBy="nurseryAddress">Address
-                                    <fa-icon [icon]="'sort'"></fa-icon>
-                                </th>
-                                <th jhiSortBy="nurseryTypePickListValue">Type
-                                    <fa-icon [icon]="'sort'"></fa-icon>
-                                </th>
+                                <th jhiSortBy="financialYearNurseryBatchName">Year <fa-icon [icon]="'sort'"></fa-icon></th>
+                                <th jhiSortBy="zonalName">Zonal <fa-icon [icon]="'sort'"></fa-icon></th>
+                                <th jhiSortBy="sectorSectorName">Sector <fa-icon [icon]="'sort'"></fa-icon></th>
+                                <th jhiSortBy="code">Code <fa-icon [icon]="'sort'"></fa-icon></th>
+                                <th jhiSortBy="nurseryName">Name <fa-icon [icon]="'sort'"></fa-icon></th>
+                                <th jhiSortBy="nurseryAddress">Address <fa-icon [icon]="'sort'"></fa-icon></th>
+                                <th jhiSortBy="nurseryTypePickListValue">Type <fa-icon [icon]="'sort'"></fa-icon></th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -110,27 +88,24 @@
                                 <td>{{value.nurseryAddress}}</td>
                                 <td>{{value.nurseryTypePickListValue}}</td>
                                 <td>
-                                    <a class="text-success" data-toggle="modal"
-                                        ngbTooltip="Mapped Details " placement="left" 
-                                        (click)="getMapList(value.id)"
-                                        [attr.aria-expanded]="isCollapsed"
-                                        aria-controls="collapseBasic">
+                                    <!-- <button type="button" class="btn btn-sm btn-ghost-info" data-toggle="modal" (click)="getNurseryValue(value)"><fa-icon [icon]="'pencil-alt'"></fa-icon> Edit</button>
+                                    <button type="button" class="btn btn-sm btn-ghost-danger" (click)="deleteNursery(value)"><fa-icon [icon]="'times'"></fa-icon> Delete</button> -->
+                                    <a class="text-info" data-toggle="modal" ngbTooltip="Mapped Details " placement="left" 
+                                        (click)="getMapList(value.id)" [attr.aria-expanded]="isCollapsed" aria-controls="collapseBasic">
                                         <fa-icon [icon]="'eye'"></fa-icon>
                                     </a>
-                                    <a class="text-warning ml-2" data-toggle="modal"
-                                        ngbTooltip="Move to another sector " placement="left" 
-                                        (click)="getNurseryValue(value, movementStatus)">
-                                        <fa-icon [icon]="'fast-forward'"></fa-icon>
+                                    <a class="text-success ml-2" data-toggle="modal" ngbTooltip="Move to another sector " placement="left" 
+                                        (click)="getNurseryValue(value, 1)"><fa-icon [icon]="'fast-forward'"></fa-icon>
                                     </a>
-                                    <a class="text-primary ml-2" data-toggle="modal"
-                                        ngbTooltip="Edit " placement="left"
-                                        (click)="getNurseryValue(value, updateStatus)">
-                                        <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                    <a class="text-primary ml-2" data-toggle="modal" ngbTooltip="Edit " placement="left" 
+                                        (click)="getNurseryValue(value, 2)"><fa-icon [icon]="'pencil-alt'"></fa-icon>
                                     </a>
-                                    <a class="text-danger ml-2" ngbTooltip="Delete"
-                                        placement="top" (click)="softDelete(value)">
-                                        <fa-icon [icon]="'trash-alt'"></fa-icon>
+                                    <a class="text-danger ml-2" ngbTooltip="Delete" placement="top" 
+                                        (click)="softDelete(value)"><fa-icon [icon]="'times'"></fa-icon>
                                     </a>
+                                    <!-- <a class="text-success btn btn-sm btn-ghost-success" ngbTooltip="Move Nursery" placement="right" 
+                                        (click)="moveNursery(value)"><fa-icon [icon]="'flag'"></fa-icon>
+                                    </a> -->
                                 </td>
                             </tr>
                         </tbody>
@@ -138,14 +113,10 @@
                 </div>
                 <div *ngIf="nurserys && nurserys.length" class="card-footer">
                     <!-- <div class="row justify-content-center">
-                        <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5"
-                        [itemsPerPage]="itemsPerPage"></jhi-item-count>
+                        <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
                     </div> -->
                     <div class="row justify-content-center">
-                        <ngb-pagination [collectionSize]="totalItems" [(page)]="page"
-                            [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true"
-                            [boundaryLinks]="true" (pageChange)="loadPage(page)">
-                        </ngb-pagination>
+                        <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
                     </div>
                 </div>
             </div>
@@ -155,79 +126,72 @@
 <!-- End of the nursery List displaying-->
 
 <!-- Create and updte the nursery, Based on the nursery Id, we can able to update -->
-<div bsModal #nurseryModal="bs-modal" class="modal fade" tabindex="-1"
-    role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
-    [config]="{backdrop: 'static',  keyboard: false}">
-
+<div bsModal #nurseryModal="bs-modal" class="modal fade" tabindex="-1" 
+    role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    
     <div class="modal-dialog modal-primary modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <!-- <h6 class="modal-title">Update {{nurseryObject.nurseryName}}</h6> -->
                 <h6 class="modal-title">{{title}}</h6>
-                <button type="button" class="close"
+                <button type="button" class="close" 
                     (click)="closeNurseryModal()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body font13">
-                <form action="" method="post" enctype="multipart/form-data" 
-                    class="form-horizontal">
-                    <input [(ngModel)]="nurseryObject.id" type="hidden" id="id"
-                        name="id" class="form-control">
+                <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                    <input [(ngModel)]="nurseryObject.id" type="hidden" 
+                        id="id" name="id" class="form-control">
                     <div class="form-group row">
                         <div class="col-md-6">
                             <span class="text-danger" *ngIf="errorMessage"
-                            (close)="errorMessage = null">{{ errorMessage }}</span>
+                                (close)="errorMessage = null">{{ errorMessage }}</span>
                         </div>
                     </div>
                     <div *ngIf="!nurseryObject.id" class="row">
-                        <div class="form-group col-sm-3">
+                        <div class="form-group col-sm-4">
                             <label for="select1">Head Office *</label>
                             <select [(ngModel)]="nurseryObject.operationalHeadId" 
-                                id="operationalHeadId" name="operationalHeadId"
-                                class="form-control"
+                                id="operationalHeadId" name="operationalHeadId" class="form-control" 
                                 (change)="getZoneList(nurseryObject.operationalHeadId)">
                                 <option value="0" disabled selected>Select Head Office</option>
-                                <option *ngFor="let operationalHead of operationalHeads"
-                                    value={{operationalHead.id}}>
-                                    {{operationalHead.name}}
-                                </option>
+                                <option *ngFor="let operationalHead of operationalHeads" 
+                                    value={{operationalHead.id}}>{{operationalHead.name}}</option>
                             </select>
                         </div>
-                        <div class="form-group col-sm-3">
+                        <div class="form-group col-sm-4">
                             <label for="select1">Zonal Name *</label>
-                            <select [(ngModel)]="nurseryObject.zoneId" id="zoneId"
-                                name="zoneId" class="form-control" (change)="getSector(nurseryObject.zoneId)">
+                            <select [(ngModel)]="nurseryObject.zoneId" 
+                                id="zoneId" name="zoneId" class="form-control" 
+                                (change)="getSector(nurseryObject.zoneId)">
                                 <option value="0" disabled selected>Select Zonal Name</option>
-                                <option *ngFor="let zonal of zonals" value={{zonal.id}}>
-                                    {{zonal.zoneName}}
-                                </option>
+                                <option *ngFor="let zonal of zonals" 
+                                    value={{zonal.id}}>{{zonal.zoneName}}</option>
                             </select>
                         </div>
-                        <div class="form-group col-sm-3">
+                        <div class="form-group col-sm-4">
                             <label for="select1">Sector Name*</label>
-                            <select [(ngModel)]="nurseryObject.sectorId" id="sectorId"
-                                name="sectorId" class="form-control">
+                            <select [(ngModel)]="nurseryObject.sectorId" 
+                                id="sectorId" name="sectorId" class="form-control">
                                 <option value="0" disabled selected>Select Sector Name</option>
-                                <option *ngFor="let sectorValue of sectors" value={{sectorValue.id}}>
-                                    {{sectorValue.sectorName}}
-                                </option>
+                                <option *ngFor="let sectorValue of sectors" 
+                                    value={{sectorValue.id}}>{{sectorValue.sectorName}}</option>
                             </select>
-                        </div>
-                        <div class="form-group col-sm-3">
-                            <label for="text-input">Nursery Code *</label>
-                            <input [(ngModel)]="nurseryObject.code" type="text" id="code"
-                            name="code" class="form-control" placeholder="Name">
                         </div>
                     </div>
                     <div class="row">
-                        <div class="form-group col-sm-3">
+                        <div class="form-group col-sm-4">
+                            <label for="text-input">Nursery Code *</label>
+                            <input [(ngModel)]="nurseryObject.code" type="text" 
+                                id="code" name="code" class="form-control" placeholder="Name">
+                        </div>
+                        <div class="form-group col-sm-4">
                             <label for="text-input">Nursery Name *</label>
                             <input [(ngModel)]="nurseryObject.nurseryName" type="text" 
-                            id="nurseryName" name="nurseryName" class="form-control"
-                            placeholder="Name">
+                                id="nurseryName" name="nurseryName" class="form-control" placeholder="Name">
                         </div>
-                        <!-- <div class="form-group col-sm-4">
+                        <div class="form-group col-sm-4">
                             <label for="name">Pick Nursery Type* </label>
                             <select [(ngModel)]="nurseryObject.pickListId" id="pickListId" 
                                 name="pickListId" class="form-control" 
@@ -236,25 +200,31 @@
                                 <option *ngFor="let pickList of pickLists"
                                     value={{pickList.id}}>{{pickList.pickListName}}</option>
                             </select>
-                        </div> -->
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="form-group col-sm-3">
                             <label for="name">Nursery Type*</label>
                             <select [(ngModel)]="nurseryObject.nurseryTypeId"
                                 id="nurseryTypeId" name="nurseryTypeId" class="form-control">
                                 <option value="0" disabled selected>Select Type</option>
-                                <option *ngFor="let val of varietys" value={{val.id}}>
-                                    {{val.pickListValue}}
-                                </option>
+                                <option *ngFor="let val of varietys" 
+                                    value={{val.id}}>{{val.pickListValue}}</option>
                             </select>
                         </div>
                         <div class="form-group col-sm-3">
-                            <label for="text-input">From Date</label>
-                            <input [(ngModel)]="mapNurseryWithSector.fromDate" type="text" 
-                                id="fromDate" name="fromDate" readonly class="form-control"
-                                placeholder="From Date" ngbDatepicker 
-                                #dateFromDp="ngbDatepicker" (click)="dateFromDp.toggle()">
+                                <label for="name">From Date</label>
+                                <div class="input-group">
+                                        <input id="field_fromDate" type="text" class="form-control" name="fromDate" 
+                                        [(ngModel)]="mapNurseryWithSector.fromDate" ngbDatepicker  #fromDateDp="ngbDatepicker" readonly/>
+                                        <span class="input-group-append">
+                                            <button class="btn btn-secondary" (click)="fromDateDp.toggle()">
+                                                <fa-icon [icon]="'calendar-alt'"></fa-icon>
+                                            </button>
+                                        </span>
+                                </div>
                         </div>
-                        <div class="form-group col-sm-3">
+                        <div class="form-group col-sm-6">
                             <label for="textarea-input">Address</label>
                             <textarea [(ngModel)]="nurseryObject.nurseryAddress" 
                                 id="textarea-input" name="textarea-input" rows="3" 
@@ -262,66 +232,64 @@
                             </textarea>
                         </div>
                     </div>
-                    <div class="row">
-
-                    </div>
+                    <!-- <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="text-input">From Date</label>
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                <input id="field_fromDate" type="text" class="form-control" name="fromDate" 
+                                [(ngModel)]="mapNurseryWithSector.fromDate" ngbDatepicker  #fromDateDp="ngbDatepicker" readonly/>
+                                <span class="input-group-append">
+                                    <button class="btn btn-secondary" (click)="fromDateDp.toggle()">
+                                        <fa-icon [icon]="'calendar-alt'"></fa-icon>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div> -->
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" 
-                    (click)="closeNurseryModal()">Close
-                </button>
-                <button type="button" class="btn btn-primary"
-                    (click)="save()">Save
-                </button>
+                    (click)="closeNurseryModal()">Close</button>
+                <button type="button" class="btn btn-primary" 
+                    (click)="save()">Save</button>
             </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <!--End of the Create/Update nursery-->
 
 <!-- Move the nursery, Based on the sector Id -->
-<div bsModal #moveNursery="bs-modal" class="modal fade" tabindex="-1"
-    role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
-    [config]="{backdrop: 'static',  keyboard: false}">
+<div bsModal #moveNursery="bs-modal" class="modal fade" tabindex="-1" 
+    role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-primary" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h6 class="modal-title">{{title}}</h6>
                 <!-- <span class="text-danger"><b>{{errorMessage}}</b></span> -->
-                <button type="button" class="close" (click)="closeMovementModel()"
-                    aria-label="Close">
+                <button type="button" class="close" 
+                    (click)="closeMovementModel()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body font13">
-                <form action="" method="post" enctype="multipart/form-data" 
-                    class="form-horizontal">
-                    <input [(ngModel)]="nurseryObject.id" type="hidden" id="id"
-                        name="id" class="form-control">
+                <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                    <input [(ngModel)]="nurseryObject.id" type="hidden" id="id" name="id" class="form-control">
                     <div class="form-group row">
                         <div class="col-md-6">
                             <span class="text-danger" *ngIf="errorMessage"
-                            (close)="errorMessage = null">{{ errorMessage }}</span>
+                                (close)="errorMessage = null">{{ errorMessage }}</span>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="select1">
-                            Head Office *
-                        </label>
+                        <label class="col-md-3 col-form-label" for="select1">Head Office *</label>
                         <div class="col-md-9">
-                            <select [(ngModel)]="nurseryObject.operationalHeadId" 
-                                id="operationalHeadId" name="operationalHeadId" 
-                                class="form-control"
+                            <select [(ngModel)]="nurseryObject.operationalHeadId" id="operationalHeadId" 
+                                name="operationalHeadId" class="form-control" 
                                 (change)="getZoneList(nurseryObject.operationalHeadId)">
                                 <option value="0" disabled selected>Select Head Office</option>
-                                <option *ngFor="let operationalHead of operationalHeads"
-                                    value={{operationalHead.id}}>
-                                    {{operationalHead.name}}
-                                </option>
+                                <option *ngFor="let operationalHead of operationalHeads" 
+                                    value={{operationalHead.id}}>{{operationalHead.name}}</option>
                             </select>
                         </div>
                     </div>
@@ -329,75 +297,42 @@
                         <label class="col-md-3 col-form-label" for="select1">Zonal *</label>
                         <div class="col-md-9">
                             <select [(ngModel)]="nurseryObject.zonalId" id="zonalId" 
-                                name="zonalId" class="form-control"
+                                name="zonalId" class="form-control" 
                                 (change)="getSector(nurseryObject.zonalId)">
                                 <option value="0" disabled selected>Select Zonal</option>
-                                <option *ngFor="let zonal of zonals" value={{zonal.id}}>
-                                    {{zonal.zoneName}}
-                                </option>
+                                <option *ngFor="let zonal of zonals" 
+                                    value={{zonal.id}}>{{zonal.zoneName}}</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="select1">
-                            Sector *
-                        </label>
+                        <label class="col-md-3 col-form-label" for="select1">Sector *</label>
                         <div class="col-md-9">
                             <select [(ngModel)]="nurseryObject.sectorId" id="sectorId" 
                                 name="sectorId" class="form-control">
                                 <option value="0" disabled selected>Select Zonal</option>
-                                <option *ngFor="let sector of sectors" value={{sector.id}}>
-                                    {{sector.sectorName}}
-                                </option>
+                                <option *ngFor="let sector of sectors" 
+                                    value={{sector.id}}>{{sector.sectorName}}</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="text-input">
-                            From Date
-                        </label>
-                        <div class="col-md-9">
-                            <input [(ngModel)]="mapNurseryWithSector.fromDate" type="text" 
-                                id="fromDate" name="fromDate" readonly class="form-control"
-                                placeholder="From Date" ngbDatepicker 
-                                #fromDateDp="ngbDatepicker" (click)="fromDateDp.toggle()">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="text-input">
-                            To Date (Previous)
-                        </label>
-                        <div class="col-md-9">
-                            <input [(ngModel)]="mapNurseryWithSector.toDate" type="text" 
-                                id="toDate" name="toDate" readonly class="form-control" 
-                                placeholder="To Date" ngbDatepicker 
-                                #toDateDp="ngbDatepicker" (click)="toDateDp.toggle()">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="textarea-input">
-                            Description
-                        </label>
+                        <label class="col-md-3 col-form-label" for="textarea-input">Description</label>
                         <div class="col-md-9">
                             <textarea [(ngModel)]="mapNurseryWithSector.description" 
-                                id="description" name="description" rows="3" 
-                                class="form-control" placeholder="Description.."></textarea>
+                                id="description" name="description" 
+                            rows="3" class="form-control" placeholder="Description.."></textarea>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary"
-                    (click)="closeMovementModel()">Close
-                </button>
-                <button type="button" class="btn btn-primary"
-                    (click)="save()">Save
-                </button>
+                <button type="button" class="btn btn-secondary" 
+                    (click)="closeMovementModel()">Close</button>
+                <button type="button" class="btn btn-primary" 
+                    (click)="save()">Save</button>
             </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <!--End of the nursery movement-->

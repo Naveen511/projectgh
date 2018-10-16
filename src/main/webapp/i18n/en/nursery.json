@@ -29,8 +29,7 @@
             "nurseryStockDetails": "Nursery Stock Details",
             "financialYearNursery": "Financial Year Nursery",
             "incharge": "Incharge",
-            "mapNurseryWithSector": "Map Nursery With Sector",
-            "fromNurseryStockDetails": "From Nursery Stock Details"
+            "mapNurseryWithSector": "Map Nursery With Sector"
         }
     }
 }

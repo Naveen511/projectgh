@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date  : 2018/08/02
+ *  Date: 2018/08/02
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs ShadeAreaService
@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
+import java.util.List;
 /**
  * Service Interface for managing ShadeArea.
  */
@@ -53,6 +54,14 @@ public interface ShadeAreaService {
      * @param id the id of the entity
      */
     void delete(Long id);
+
+    /**
+     * Get the "batchId" shade area record.
+     *
+     * @param batchId the batchId of the entity
+     * @return the list of entity
+     */
+    List<ShadeAreaDTO> findParticularBatch(Long batchId);
 
     /**
      * Get the count of seedlings based on "batchId".

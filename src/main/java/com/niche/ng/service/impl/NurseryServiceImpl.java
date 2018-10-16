@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date  : 2018/08/02
+ *  Date: 2018/08/02
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs NurseryServiceImpl
@@ -26,14 +26,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.Optional;
+import java.util.List;
 /**
  * Service Implementation for managing Nursery.
- *
- * Implementing NurseryService with IMPL suffix class as NurseryServiceImpl.
- * Using of business logic in the service layer which is present in the service file
- * using impl as a interface to access the repository layer.
- * Once we got the responce from the repository layer, mapper convert the entity
- * object to data transfer object(DTO).
  */
 @Service
 @Transactional
@@ -105,11 +100,19 @@ public class NurseryServiceImpl implements NurseryService {
     }
 
     /**
-     * Get the count of nursery by status
+     * Get all the nursery by sectorId.
      *
-     * @param status the status of the entity
-     * @return Long value of nursery count
+     * @param sectorId the sectorId of the entity
+     * @return the list of entities
      */
+    @Override
+    @Transactional(readOnly = true)
+    public List<NurseryDTO> findSectorNurserys(Long sectorId) {
+        log.debug("Request to get Nursery : {}", sectorId);
+        List<Nursery> nursery = nurseryRepository.findBySectorId(sectorId);
+        return nurseryMapper.toDto(nursery);
+    }
+
     @Override
     public Long findActiveCount(Integer status) {
         return nurseryRepository.countByStatus(status);

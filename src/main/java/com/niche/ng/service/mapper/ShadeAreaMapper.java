@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date  : 2018/08/02
+ *  Date: 2018/08/02
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs ShadeAreaMapper
@@ -15,10 +15,9 @@ import com.niche.ng.domain.*;
 import com.niche.ng.service.dto.ShadeAreaDTO;
 
 import org.mapstruct.*;
+import java.util.List;
 /**
  * Mapper for the entity ShadeArea and its DTO ShadeAreaDTO.
- * Mapping the parent and child table to fetch the field value.
- * Converting the entity object into data transfer object(DTO).
  */
 @Mapper(componentModel = "spring", uses = {BatchMapper.class, FinancialYearSettingsMapper.class})
 public interface ShadeAreaMapper extends EntityMapper<ShadeAreaDTO, ShadeArea> {
@@ -32,6 +31,8 @@ public interface ShadeAreaMapper extends EntityMapper<ShadeAreaDTO, ShadeArea> {
     @Mapping(source = "batchId", target = "batch")
     @Mapping(source = "financialYearShadeAreaId", target = "financialYearShadeArea")
     ShadeArea toEntity(ShadeAreaDTO shadeAreaDTO);
+
+    List<ShadeAreaDTO> toDto(List<ShadeArea> shadeArea);
 
     default ShadeArea fromId(Long id) {
         if (id == null) {

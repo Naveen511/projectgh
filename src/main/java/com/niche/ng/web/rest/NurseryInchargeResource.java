@@ -1,14 +1,3 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date  : 2018/09/02
- *  Target: yarn
- *  -----------------------------------------------------------------------------
- *  File Description    : This file performs NurseryInchargeResource of CRUD Operation
- *
- *******************************************************************************/
 package com.niche.ng.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
@@ -38,8 +27,6 @@ import java.util.Optional;
 
 /**
  * REST controller for managing NurseryIncharge.
- * Used RequestMapping annotation to map the url with the client side.
- * Using service to access the values in the database.
  */
 @RestController
 @RequestMapping("/api")

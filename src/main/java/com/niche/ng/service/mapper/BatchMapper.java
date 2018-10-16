@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date  : 2018/08/02
+ *  Date: 2018/08/02
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs BatchMapper
@@ -15,12 +15,9 @@ import com.niche.ng.domain.*;
 import com.niche.ng.service.dto.BatchDTO;
 
 import org.mapstruct.*;
-import java.util.List;
 
 /**
  * Mapper for the entity Batch and its DTO BatchDTO.
- * Mapping the parent and child table to fetch the field value.
- * Converting the entity object into data transfer object(DTO).
  */
 @Mapper(componentModel = "spring", uses = {NurseryMapper.class, PickListValueMapper.class, MotherBedMapper.class, FinancialYearSettingsMapper.class})
 public interface BatchMapper extends EntityMapper<BatchDTO, Batch> {
@@ -48,10 +45,7 @@ public interface BatchMapper extends EntityMapper<BatchDTO, Batch> {
     @Mapping(source = "quantityTypeId", target = "quantityType")
     @Mapping(source = "motherBedId", target = "motherBed")
     @Mapping(source = "financialYearBatchId", target = "financialYearBatch")
-    @Mapping(target = "batchQuantities", ignore = true)
     Batch toEntity(BatchDTO batchDTO);
-
-    List<BatchDTO> toDto(List<Batch> batch);
 
     default Batch fromId(Long id) {
         if (id == null) {

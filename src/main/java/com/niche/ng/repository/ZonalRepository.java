@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date  : 2018/08/02
+ *  Date: 2018/08/02
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs ZonalRepository
@@ -15,16 +15,13 @@ import com.niche.ng.domain.Zonal;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
-
+import java.util.List;
 /**
  * Spring Data  repository for the Zonal entity.
- *
- * ZonalRepository Extends JpaRepository to handle the CRUD operation and
- * querying the values using keywords.
  */
 @SuppressWarnings("unused")
 @Repository
 public interface ZonalRepository extends JpaRepository<Zonal, Long>, JpaSpecificationExecutor<Zonal> {
-    // Query the zonal using a field status to get count.
+    List<Zonal> findByOperationalHeadIdAndStatus(Long operationalHeadId, Integer status);
     long countByStatus(Integer status);
 }

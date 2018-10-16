@@ -1,14 +1,3 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date  : 2018/10/02
- *  Target: yarn
- *  -----------------------------------------------------------------------------
- *  File Description    : This file performs BatchQuantityResource of CRUD Operation
- *
- *******************************************************************************/
 package com.niche.ng.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
@@ -38,8 +27,6 @@ import java.util.Optional;
 
 /**
  * REST controller for managing OperationalHead.
- * Used RequestMapping annotation to map the url with the client side.
- * Using service to access the values in the database.
  */
 @RestController
 @RequestMapping("/api")
@@ -145,7 +132,21 @@ public class OperationalHeadResource {
     }
 
     /**
-     * GET  /operational-heads/active-record:status : get the particular "status" operationalHead.
+     * GET  /operational-heads/active-record:status : get the "status" operationalHead.
+     *
+     * @param status the status of the operationalHeadDTO to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the operationalHeadDTO, or with status 404 (Not Found)
+     */
+    @GetMapping("/operational-heads/active-record/{status}")
+    @Timed
+    public ResponseEntity<List<OperationalHeadDTO>> getParticularStatusRecord(@PathVariable Integer status) {
+        log.debug("REST request to get a list of particular status of operationalHeadService");
+        List<OperationalHeadDTO> operationalHeadDTO = operationalHeadService.findParticularStatus(status);
+        return ResponseEntity.ok().body(operationalHeadDTO);
+    }
+
+    /**
+     * GET  /operational-heads/active-record:status : get the "status" operationalHead.
      *
      * @param status the status of the operationalHeadDTO to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the operationalHeadDTO, or with status 404 (Not Found)

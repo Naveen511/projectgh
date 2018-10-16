@@ -1,14 +1,3 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date  : 2018/08/22
- *  Target: yarn
- *  -----------------------------------------------------------------------------
- *  File Description    : This file performs CoverFillingQueryService
- *
- *******************************************************************************/
 package com.niche.ng.service;
 
 import java.util.List;

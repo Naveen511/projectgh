@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date  : 2018/08/02
+ *  Date: 2018/08/02
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs ShadeAreaServiceImpl
@@ -26,14 +26,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.Optional;
+import java.util.List;
 /**
  * Service Implementation for managing ShadeArea.
- *
- * Implementing ShadeAreaService with IMPL suffix class as ShadeAreaServiceImpl.
- * Using of business logic in the service layer which is present in the service file
- * using impl as a interface to access the repository layer.
- * Once we got the responce from the repository layer, mapper convert the entity
- * object to data transfer object(DTO).
  */
 @Service
 @Transactional
@@ -102,6 +97,20 @@ public class ShadeAreaServiceImpl implements ShadeAreaService {
     public void delete(Long id) {
         /// log.debug("Request to delete ShadeArea : {}", id);
         shadeAreaRepository.deleteById(id);
+    }
+
+    /**
+     * Get all the shadeArea by batchId.
+     *
+     * @param batchId the batchId of the entity
+     * @return the list of entities
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<ShadeAreaDTO> findParticularBatch(Long batchId) {
+        // log.debug("Request to get shade : {}", batchId);
+        List<ShadeArea> shade = shadeAreaRepository.findByBatchId(batchId);
+        return shadeAreaMapper.toDto(shade);
     }
 
     /**

@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date  : 2018/08/02
+ *  Date: 2018/08/02
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs DamageMapper
@@ -15,10 +15,9 @@ import com.niche.ng.domain.*;
 import com.niche.ng.service.dto.DamageDTO;
 
 import org.mapstruct.*;
+import java.util.List;
 /**
  * Mapper for the entity Damage and its DTO DamageDTO.
- * Mapping the parent and child table to fetch the field value.
- * Converting the entity object into data transfer object(DTO).
  */
 @Mapper(componentModel = "spring", uses = {BatchMapper.class, PickListValueMapper.class, FinancialYearSettingsMapper.class})
 public interface DamageMapper extends EntityMapper<DamageDTO, Damage> {
@@ -38,6 +37,8 @@ public interface DamageMapper extends EntityMapper<DamageDTO, Damage> {
     @Mapping(source = "damageAreaId", target = "damageArea")
     @Mapping(source = "financialYearDamageId", target = "financialYearDamage")
     Damage toEntity(DamageDTO damageDTO);
+
+    List<DamageDTO> toDto(List<Damage> damage);
 
     default Damage fromId(Long id) {
         if (id == null) {

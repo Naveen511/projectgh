@@ -1,14 +1,3 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date  : 2018/09/12
- *  Target: yarn
- *  -----------------------------------------------------------------------------
- *  File Description    : This file performs CoverFillingDetailsServiceImpl
- *
- *******************************************************************************/
 package com.niche.ng.service.impl;
 
 import com.niche.ng.service.CoverFillingDetailsService;
@@ -26,15 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.Optional;
+import java.util.List;
 /**
  * Service Implementation for managing CoverFillingDetails.
- *
- * Implementing CoverFillingDetailsService with IMPL suffix class as
- * CoverFillingDetailsServiceImpl.
- * Using of business logic in the service layer which is present in the service file
- * using impl as a interface to access the repository layer.
- * Once we got the responce from the repository layer, mapper convert the entity
- * object to data transfer object(DTO).
  */
 @Service
 @Transactional
@@ -103,5 +86,19 @@ public class CoverFillingDetailsServiceImpl implements CoverFillingDetailsServic
     public void delete(Long id) {
         log.debug("Request to delete CoverFillingDetails : {}", id);
         coverFillingDetailsRepository.deleteById(id);
+    }
+
+    /**
+     * Get all the nurseryInventoryDetails by nurseryInventoryId.
+     *
+     * @param nurseryInventoryId the nurseryInventoryId of the entity
+     * @return the list of entities
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<CoverFillingDetailsDTO> findParticularCoverPreparedDetails(Long coverFillingId) {
+        log.debug("Request to get coverFillingDetails : {}", coverFillingId);
+        List<CoverFillingDetails> coverFillingDetails = coverFillingDetailsRepository.findByCoverFillingId(coverFillingId);
+        return coverFillingDetailsMapper.toDto(coverFillingDetails);
     }
 }

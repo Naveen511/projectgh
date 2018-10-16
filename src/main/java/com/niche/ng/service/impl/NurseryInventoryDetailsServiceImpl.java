@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date  : 2018/08/25
+ *  Date: 2018/08/25
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs NurseryInventoryDetailsServiceImpl
@@ -24,16 +24,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 /**
  * Service Implementation for managing NurseryInventoryDetails.
- *
- * Implementing NurseryInventoryDetailsService with IMPL suffix class
- * as NurseryInventoryDetailsServiceImpl.
- * Using of business logic in the service layer which is present in the service file
- * using impl as a interface to access the repository layer.
- * Once we got the responce from the repository layer, mapper convert the entity
- * object to data transfer object(DTO).
  */
 @Service
 @Transactional
@@ -102,5 +96,34 @@ public class NurseryInventoryDetailsServiceImpl implements NurseryInventoryDetai
     public void delete(Long id) {
         log.debug("Request to delete NurseryInventoryDetails : {}", id);
         nurseryInventoryDetailsRepository.deleteById(id);
+    }
+
+    /**
+     * Get all the nurseryInventoryDetails by nurseryInventoryId.
+     *
+     * @param nurseryInventoryId the nurseryInventoryId of the entity
+     * @return the list of entities
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<NurseryInventoryDetailsDTO> findParticularInventoryDetails(Long nurseryInventoryId) {
+        log.debug("Request to get nurseryInventoryDetails : {}", nurseryInventoryId);
+        List<NurseryInventoryDetails> nurseryInventoryDetails = nurseryInventoryDetailsRepository.findByNurseryInventoryId(nurseryInventoryId);
+        return nurseryInventoryDetailsMapper.toDto(nurseryInventoryDetails);
+    }
+
+    /**
+     * Get all the nurseryInventoryDetails by nurseryInventoryId.
+     *
+     * @param nurseryInventoryId the nurseryInventoryId of the entity
+     * @param status the nurseryInventoryId of the entity
+     * @return the list of entities
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<NurseryInventoryDetailsDTO> findParticularInventoryDamageDetails(Long nurseryInventoryId, Integer status) {
+        log.debug("Request to get nurseryInventoryDetails : {}", nurseryInventoryId, status);
+        List<NurseryInventoryDetails> nurseryInventoryDetails = nurseryInventoryDetailsRepository.findByNurseryInventoryIdAndStatus(nurseryInventoryId, status);
+        return nurseryInventoryDetailsMapper.toDto(nurseryInventoryDetails);
     }
 }

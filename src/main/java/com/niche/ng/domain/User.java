@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date  : 2018/08/02
+ *  Date: 2018/08/02
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs User Generation.
@@ -33,15 +33,7 @@ import java.util.Set;
 import java.time.Instant;
 
 /**
- * User Domain Class
- * 
- * User class implements Serializable to convert instance class into 
- * series of bytes.
- * 
- * Generates the setter and getter for each fields in table.
- * Creates the default constructor which consist of all the fields in the table and 
- * empty constructor.
- * Generates the toString for get the values of the particular format.
+ * A user.
  */
 @Entity
 @Table(name = "jhi_user")
@@ -119,29 +111,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
     private Set<PersistentToken> persistentTokens = new HashSet<>();
 
-    /**
-     * To Get the Id from user table
-     * 
-     * @return id
-     */
     public Long getId() {
         return id;
     }
 
-    /**
-     * To Set the Id for user table
-     *
-     * @param id the id in user table
-     */
     public void setId(Long id) {
         this.id = id;
     }
 
-    /**
-     * To Get the login from user table
-     * 
-     * @return login
-     */
     public String getLogin() {
         return login;
     }
@@ -151,227 +128,102 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.login = StringUtils.lowerCase(login, Locale.ENGLISH);
     }
 
-    /**
-     * To Get the password from user table
-     * 
-     * @return password
-     */
     public String getPassword() {
         return password;
     }
 
-    /**
-     * To Set the password for user table
-     *
-     * @param password the password in user table
-     */
     public void setPassword(String password) {
         this.password = password;
     }
 
-    /**
-     * To Get the firstName from user table
-     * 
-     * @return firstName
-     */
     public String getFirstName() {
         return firstName;
     }
 
-    /**
-     * To Set the firstName for user table
-     *
-     * @param firstName the firstName in user table
-     */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    /**
-     * To Get the lastName from user table
-     * 
-     * @return lastName
-     */
     public String getLastName() {
         return lastName;
     }
 
-    /**
-     * To Set the lastName for user table
-     *
-     * @param lastName the lastName in user table
-     */
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    /**
-     * To Get the email from user table
-     * 
-     * @return email
-     */
     public String getEmail() {
         return email;
     }
 
-    /**
-     * To Set the email for user table
-     *
-     * @param email the email in user table
-     */
     public void setEmail(String email) {
         this.email = email;
     }
 
-    /**
-     * To Get the imageUrl from user table
-     * 
-     * @return imageUrl
-     */
     public String getImageUrl() {
         return imageUrl;
     }
 
-    /**
-     * To Set the imageUrl for user table
-     *
-     * @param imageUrl the imageUrl in user table
-     */
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
 
-    /**
-     * To Get the activated from user table
-     * 
-     * @return activated
-     */
     public boolean getActivated() {
         return activated;
     }
 
-    /**
-     * To Set the activated for user table
-     *
-     * @param activated the activated in user table
-     */
     public void setActivated(boolean activated) {
         this.activated = activated;
     }
 
-    /**
-     * To Get the activationKey from user table
-     * 
-     * @return activationKey
-     */
     public String getActivationKey() {
         return activationKey;
     }
 
-    /**
-     * To Set the activationKey for user table
-     *
-     * @param activationKey the activationKey in user table
-     */
     public void setActivationKey(String activationKey) {
         this.activationKey = activationKey;
     }
 
-    /**
-     * To Get the resetKey from user table
-     * 
-     * @return resetKey
-     */
     public String getResetKey() {
         return resetKey;
     }
 
-    /**
-     * To Set the resetKey for user table
-     *
-     * @param resetKey the resetKey in user table
-     */
     public void setResetKey(String resetKey) {
         this.resetKey = resetKey;
     }
 
-    /**
-     * To Get the resetDate from user table
-     * 
-     * @return resetDate
-     */
     public Instant getResetDate() {
         return resetDate;
     }
 
-    /**
-     * To Set the resetDate for user table
-     *
-     * @param resetDate the resetDate in user table
-     */
     public void setResetDate(Instant resetDate) {
         this.resetDate = resetDate;
     }
 
-    /**
-     * To Get the langKey from user table
-     * 
-     * @return langKey
-     */
     public String getLangKey() {
         return langKey;
     }
 
-    /**
-     * To Set the langKey for user table
-     *
-     * @param langKey the langKey in user table
-     */
     public void setLangKey(String langKey) {
         this.langKey = langKey;
     }
 
-    /**
-     * To Get the authorities from user table
-     * 
-     * @return authorities
-     */
     public Set<Authority> getAuthorities() {
         return authorities;
     }
 
-    /**
-     * To Set the authorities for user table
-     *
-     * @param authorities the authorities in user table
-     */
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
     }
 
-    /**
-     * To Get the persistentTokens from user table
-     * 
-     * @return persistentTokens
-     */
     public Set<PersistentToken> getPersistentTokens() {
         return persistentTokens;
     }
 
-    /**
-     * To Set the persistentTokens for user table
-     *
-     * @param persistentTokens the persistentTokens in user table
-     */
     public void setPersistentTokens(Set<PersistentToken> persistentTokens) {
         this.persistentTokens = persistentTokens;
     }
 
-    /**
-     * To check the equals
-     * 
-     * @return objects
-     */
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -385,21 +237,11 @@ public class User extends AbstractAuditingEntity implements Serializable {
         return !(user.getId() == null || getId() == null) && Objects.equals(getId(), user.getId());
     }
 
-    /**
-     * hash code for the id
-     * 
-     * @return objects
-     */
     @Override
     public int hashCode() {
         return Objects.hashCode(getId());
     }
 
-    /**
-     * toString to get the values
-     * 
-     * @return values
-     */
     @Override
     public String toString() {
         return "User{" +

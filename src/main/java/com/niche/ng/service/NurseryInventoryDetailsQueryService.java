@@ -3,10 +3,10 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date  : 2018/08/31
+ *  Date: 2018/08/31
  *  Target: yarn
  *  -----------------------------------------------------------------------------
- *  File Description    : This file performs NurseryInventoryDetailsQueryService
+ *  File Description    : This file performs NurseryINventoryDetailsService
  *
  *******************************************************************************/
 package com.niche.ng.service;

@@ -37,10 +37,6 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="it_status" type="integer">
-                <constraints nullable="true" />
-            </column>
-
             <column name="batch_id" type="bigint">
                 <constraints nullable="true" />
             </column>
@@ -58,10 +54,6 @@
             </column>
 
             <column name="financial_year_stock_details_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="from_nursery_stock_details_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 

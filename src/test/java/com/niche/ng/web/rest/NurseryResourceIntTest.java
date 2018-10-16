@@ -13,7 +13,6 @@ import com.niche.ng.domain.NurseryStockDetails;
 import com.niche.ng.domain.FinancialYearSettings;
 import com.niche.ng.domain.NurseryIncharge;
 import com.niche.ng.domain.MapNurseryWithSector;
-import com.niche.ng.domain.NurseryStockDetails;
 import com.niche.ng.repository.NurseryRepository;
 import com.niche.ng.service.NurseryService;
 import com.niche.ng.service.dto.NurseryDTO;
@@ -594,25 +593,6 @@ public class NurseryResourceIntTest {
 
         // Get all the nurseryList where mapNurseryWithSector equals to mapNurseryWithSectorId + 1
         defaultNurseryShouldNotBeFound("mapNurseryWithSectorId.equals=" + (mapNurseryWithSectorId + 1));
-    }
-
-
-    @Test
-    @Transactional
-    public void getAllNurseriesByFromNurseryStockDetailsIsEqualToSomething() throws Exception {
-        // Initialize the database
-        NurseryStockDetails fromNurseryStockDetails = NurseryStockDetailsResourceIntTest.createEntity(em);
-        em.persist(fromNurseryStockDetails);
-        em.flush();
-        nursery.addFromNurseryStockDetails(fromNurseryStockDetails);
-        nurseryRepository.saveAndFlush(nursery);
-        Long fromNurseryStockDetailsId = fromNurseryStockDetails.getId();
-
-        // Get all the nurseryList where fromNurseryStockDetails equals to fromNurseryStockDetailsId
-        defaultNurseryShouldBeFound("fromNurseryStockDetailsId.equals=" + fromNurseryStockDetailsId);
-
-        // Get all the nurseryList where fromNurseryStockDetails equals to fromNurseryStockDetailsId + 1
-        defaultNurseryShouldNotBeFound("fromNurseryStockDetailsId.equals=" + (fromNurseryStockDetailsId + 1));
     }
 
     /**

@@ -63,10 +63,6 @@
         {
             "fieldName": "posQuantity",
             "fieldType": "Integer"
-        },
-        {
-            "fieldName": "damageQuantity",
-            "fieldType": "Long"
         }
     ],
     "changelogDate": "20180818124915",

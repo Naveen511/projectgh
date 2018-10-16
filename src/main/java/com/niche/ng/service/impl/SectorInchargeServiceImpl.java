@@ -1,14 +1,3 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date  : 2018/08/16
- *  Target: yarn
- *  -----------------------------------------------------------------------------
- *  File Description    : This file performs SectorInchargeServiceImpl
- *
- *******************************************************************************/
 package com.niche.ng.service.impl;
 
 import com.niche.ng.service.SectorInchargeService;
@@ -28,13 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 /**
  * Service Implementation for managing SectorIncharge.
- *
- * Implementing SectorInchargeService with IMPL suffix class
- * as SectorInchargeServiceImpl.
- * Using of business logic in the service layer which is present in the service file
- * using impl as a interface to access the repository layer.
- * Once we got the responce from the repository layer, mapper convert the entity
- * object to data transfer object(DTO).
  */
 @Service
 @Transactional

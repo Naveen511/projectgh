@@ -15,14 +15,13 @@ import com.niche.ng.domain.PickListValue;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 /**
  * Spring Data  repository for the PickListValue entity.
- *
- * PickListValueRepository Extends JpaRepository to handle the CRUD operation and
- * querying the values using keywords.
  */
 @SuppressWarnings("unused")
 @Repository
 public interface PickListValueRepository extends JpaRepository<PickListValue, Long>, JpaSpecificationExecutor<PickListValue> {
-
+    List<PickListValue> findByPickListId(Long pickListId);
+    List<PickListValue> findByPickValueId(Long pickValueId);
 }

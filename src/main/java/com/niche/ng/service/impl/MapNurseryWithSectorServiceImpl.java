@@ -1,14 +1,3 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date  : 2018/09/16
- *  Target: yarn
- *  -----------------------------------------------------------------------------
- *  File Description    : This file performs MapNurseryWithSectorServiceImpl
- *
- *******************************************************************************/
 package com.niche.ng.service.impl;
 
 import com.niche.ng.service.MapNurseryWithSectorService;
@@ -25,15 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.List;
 /**
  * Service Implementation for managing MapNurseryWithSector.
- *
- * Implementing MapNurseryWithSectorService with IMPL suffix class
- * as MapNurseryWithSectorServiceImpl.
- * Using of business logic in the service layer which is present in the service file
- * using impl as a interface to access the repository layer.
- * Once we got the responce from the repository layer, mapper convert the entity
- * object to data transfer object(DTO).
  */
 @Service
 @Transactional
@@ -102,5 +85,33 @@ public class MapNurseryWithSectorServiceImpl implements MapNurseryWithSectorServ
     public void delete(Long id) {
         log.debug("Request to delete MapNurseryWithSector : {}", id);
         mapNurseryWithSectorRepository.deleteById(id);
+    }
+
+    /**
+     * Get all the nursery mapped record by nurseryId and status.
+     *
+     * @param nurseryId the nurseryId of the entity
+     * @return the list of entities
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<MapNurseryWithSectorDTO> findParticularNurseryActiveRecord(Long nurseryId, Integer status) {
+        // log.debug("Request to get nursery : {}", nurseryId);
+        List<MapNurseryWithSector> list = mapNurseryWithSectorRepository.findByNurseryIdAndStatus(nurseryId, status);
+        return mapNurseryWithSectorMapper.toDto(list);
+    }
+
+    /**
+     * Get all the nursery mapped record by nurseryId.
+     *
+     * @param nurseryId the nurseryId of the entity
+     * @return the list of entities
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<MapNurseryWithSectorDTO> findParticularNurseryRecord(Long nurseryId) {
+        // log.debug("Request to get Nursery : {}", nurseryId);
+        List<MapNurseryWithSector> list = mapNurseryWithSectorRepository.findByNurseryId(nurseryId);
+        return mapNurseryWithSectorMapper.toDto(list);
     }
 }

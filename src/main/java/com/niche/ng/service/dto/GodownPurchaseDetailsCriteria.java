@@ -1,15 +1,3 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date: 2018/08/31
- *  Target: yarn
- *  -----------------------------------------------------------------------------
- *  File Description    : This file performs GodownPurchaseDetailsCriteria and
-                            declared the table fields, data types for GodownPurchaseDetails table.
- *
- *******************************************************************************/
 package com.niche.ng.service.dto;
 
 import java.io.Serializable;
@@ -71,281 +59,126 @@ public class GodownPurchaseDetailsCriteria implements Serializable {
     public GodownPurchaseDetailsCriteria() {
     }
 
-    /**
-     * To Get the Id from GodownPurchaseDetails table
-     * 
-     * @return id
-     */
     public LongFilter getId() {
         return id;
     }
 
-    /**
-     * To set the id values for the GodownPurchaseDetails table.
-     * 
-     * @param id id value
-     */
     public void setId(LongFilter id) {
         this.id = id;
     }
 
-    /**
-     * To Get the quantity from GodownPurchaseDetails table
-     * 
-     * @return quantity
-     */
     public LongFilter getQuantity() {
         return quantity;
     }
 
-    /**
-     * To set the quantity values for the GodownPurchaseDetails table.
-     * 
-     * @param quantity quantity of the godownPurchaseDetails
-     */
     public void setQuantity(LongFilter quantity) {
         this.quantity = quantity;
     }
 
-    /**
-     * To Get the date from GodownPurchaseDetails table
-     * 
-     * @return date
-     */
     public LocalDateFilter getDate() {
         return date;
     }
 
-    /**
-     * To set the date values for the GodownPurchaseDetails table.
-     * 
-     * @param date date of the godownPurchaseDetails
-     */
     public void setDate(LocalDateFilter date) {
         this.date = date;
     }
 
-    /**
-     * To Get the price from GodownPurchaseDetails table
-     * 
-     * @return price
-     */
     public LongFilter getPrice() {
         return price;
     }
 
-    /**
-     * To set the price values for the GodownPurchaseDetails table.
-     * 
-     * @param price price of the godownPurchaseDetails
-     */
     public void setPrice(LongFilter price) {
         this.price = price;
     }
 
-    /**
-     * To Get the ownedBy from GodownPurchaseDetails table
-     * 
-     * @return ownedBy
-     */
     public StringFilter getOwnedBy() {
         return ownedBy;
     }
 
-    /**
-     * To set the ownedBy values for the GodownPurchaseDetails table.
-     * 
-     * @param ownedBy ownedBy of the godownPurchaseDetails
-     */
     public void setOwnedBy(StringFilter ownedBy) {
         this.ownedBy = ownedBy;
     }
 
-    /**
-     * To Get the vendorName from GodownPurchaseDetails table
-     * 
-     * @return vendorName
-     */
     public StringFilter getVendorName() {
         return vendorName;
     }
 
-    /**
-     * To set the vendorName values for the GodownPurchaseDetails table.
-     * 
-     * @param vendorName vendorName of the godownPurchaseDetails
-     */
     public void setVendorName(StringFilter vendorName) {
         this.vendorName = vendorName;
     }
 
-    /**
-     * To Get the vendorAddress from GodownPurchaseDetails table
-     * 
-     * @return vendorAddress
-     */
     public StringFilter getVendorAddress() {
         return vendorAddress;
     }
 
-    /**
-     * To set the vendorAddress values for the GodownPurchaseDetails table.
-     * 
-     * @param vendorAddress vendorAddress of the godownPurchaseDetails
-     */
     public void setVendorAddress(StringFilter vendorAddress) {
         this.vendorAddress = vendorAddress;
     }
 
-    /**
-     * To Get the vendorPhone from GodownPurchaseDetails table
-     * 
-     * @return vendorPhone
-     */
     public LongFilter getVendorPhone() {
         return vendorPhone;
     }
 
-    /**
-     * To set the vendorPhone values for the GodownPurchaseDetails table.
-     * 
-     * @param vendorPhone vendorPhone of the godownPurchaseDetails
-     */
     public void setVendorPhone(LongFilter vendorPhone) {
         this.vendorPhone = vendorPhone;
     }
 
-    /**
-     * To Get the description from GodownPurchaseDetails table
-     * 
-     * @return description
-     */
     public StringFilter getDescription() {
         return description;
     }
 
-    /**
-     * To set the description values for the GodownPurchaseDetails table.
-     * 
-     * @param description description of the godownPurchaseDetails
-     */
     public void setDescription(StringFilter description) {
         this.description = description;
     }
 
-    /**
-     * To Get the status from GodownPurchaseDetails table
-     * 
-     * @return status
-     */
     public IntegerFilter getStatus() {
         return status;
     }
 
-    /**
-     * To set the status values for the GodownPurchaseDetails table.
-     * 
-     * @param status status of the godownPurchaseDetails
-     */
     public void setStatus(IntegerFilter status) {
         this.status = status;
     }
 
-    /**
-     * To Get the pickListVarietyId from GodownPurchaseDetails table
-     * 
-     * @return pickListVarietyId
-     */
     public LongFilter getPickListVarietyId() {
         return pickListVarietyId;
     }
 
-    /**
-     * To set the pickListVarietyId values for the GodownPurchaseDetails table.
-     * 
-     * @param pickListVarietyId pickListVarietyId of the godownPurchaseDetails
-     */
     public void setPickListVarietyId(LongFilter pickListVarietyId) {
         this.pickListVarietyId = pickListVarietyId;
     }
 
-    /**
-     * To Get the pickListCategoryId from GodownPurchaseDetails table
-     * 
-     * @return pickListCategoryId
-     */
     public LongFilter getPickListCategoryId() {
         return pickListCategoryId;
     }
 
-    /**
-     * To set the pickListCategoryId values for the GodownPurchaseDetails table.
-     * 
-     * @param pickListCategoryId pickListCategoryId of the godownPurchaseDetails
-     */
     public void setPickListCategoryId(LongFilter pickListCategoryId) {
         this.pickListCategoryId = pickListCategoryId;
     }
 
-    /**
-     * To Get the pickListQuantityTypeId from GodownPurchaseDetails table
-     * 
-     * @return pickListQuantityTypeId
-     */
     public LongFilter getPickListQuantityTypeId() {
         return pickListQuantityTypeId;
     }
 
-    /**
-     * To set the pickListQuantityTypeId values for the GodownPurchaseDetails table.
-     * 
-     * @param pickListQuantityTypeId pickListQuantityTypeId of the godownPurchaseDetails
-     */
     public void setPickListQuantityTypeId(LongFilter pickListQuantityTypeId) {
         this.pickListQuantityTypeId = pickListQuantityTypeId;
     }
 
-    /**
-     * To Get the godownId from GodownPurchaseDetails table
-     * 
-     * @return godownId
-     */
     public LongFilter getGodownId() {
         return godownId;
     }
 
-    /**
-     * To set the godownId values for the GodownPurchaseDetails table.
-     * 
-     * @param godownId godownId of the godownPurchaseDetails
-     */
     public void setGodownId(LongFilter godownId) {
         this.godownId = godownId;
     }
 
-    /**
-     * To Get the financialYearGodownPurchaseId from GodownPurchaseDetails table
-     * 
-     * @return financialYearGodownPurchaseId
-     */
     public LongFilter getFinancialYearGodownPurchaseId() {
         return financialYearGodownPurchaseId;
     }
 
-    /**
-     * To set the financialYearGodownPurchaseId values for the GodownPurchaseDetails table.
-     * 
-     * @param financialYearGodownPurchaseId financialYearGodownPurchaseId of the godownPurchaseDetails
-     */
     public void setFinancialYearGodownPurchaseId(LongFilter financialYearGodownPurchaseId) {
         this.financialYearGodownPurchaseId = financialYearGodownPurchaseId;
     }
 
-    /**
-     * toString to get the values
-     * 
-     * @return values
-     */
     @Override
     public String toString() {
         return "GodownPurchaseDetailsCriteria{" +

@@ -1,14 +1,3 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date  : 2018/10/02
- *  Target: yarn
- *  -----------------------------------------------------------------------------
- *  File Description    : This file performs ZonalInchargeResource of CRUD Operation
- *
- *******************************************************************************/
 package com.niche.ng.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
@@ -37,8 +26,6 @@ import java.util.Optional;
 
 /**
  * REST controller for managing ZonalIncharge.
- * Used RequestMapping annotation to map the url with the client side.
- * Using service to access the values in the database.
  */
 @RestController
 @RequestMapping("/api")
@@ -119,8 +106,7 @@ public class ZonalInchargeResource {
      * GET  /zonal-incharges/:id : get the "id" zonalIncharge.
      *
      * @param id the id of the zonalInchargeDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the zonalInchargeDTO, 
-     *         or with status 404 (Not Found)
+     * @return the ResponseEntity with status 200 (OK) and with body the zonalInchargeDTO, or with status 404 (Not Found)
      */
     @GetMapping("/zonal-incharges/{id}")
     @Timed

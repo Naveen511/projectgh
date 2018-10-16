@@ -12,7 +12,6 @@ import com.niche.ng.domain.PickListValue;
 import com.niche.ng.domain.PickListValue;
 import com.niche.ng.domain.MotherBed;
 import com.niche.ng.domain.FinancialYearSettings;
-import com.niche.ng.domain.BatchQuantity;
 import com.niche.ng.repository.BatchRepository;
 import com.niche.ng.service.BatchService;
 import com.niche.ng.service.dto.BatchDTO;
@@ -1063,25 +1062,6 @@ public class BatchResourceIntTest {
 
         // Get all the batchList where financialYearBatch equals to financialYearBatchId + 1
         defaultBatchShouldNotBeFound("financialYearBatchId.equals=" + (financialYearBatchId + 1));
-    }
-
-
-    @Test
-    @Transactional
-    public void getAllBatchesByBatchQuantityIsEqualToSomething() throws Exception {
-        // Initialize the database
-        BatchQuantity batchQuantity = BatchQuantityResourceIntTest.createEntity(em);
-        em.persist(batchQuantity);
-        em.flush();
-        batch.addBatchQuantity(batchQuantity);
-        batchRepository.saveAndFlush(batch);
-        Long batchQuantityId = batchQuantity.getId();
-
-        // Get all the batchList where batchQuantity equals to batchQuantityId
-        defaultBatchShouldBeFound("batchQuantityId.equals=" + batchQuantityId);
-
-        // Get all the batchList where batchQuantity equals to batchQuantityId + 1
-        defaultBatchShouldNotBeFound("batchQuantityId.equals=" + (batchQuantityId + 1));
     }
 
     /**

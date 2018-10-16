@@ -46,8 +46,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = ProjectghApp.class)
 public class MotherBedResourceIntTest {
 
-    private static final String DEFAULT_VALUE = "AAAAAAAAAA";
-    private static final String UPDATED_VALUE = "BBBBBBBBBB";
+    private static final Integer DEFAULT_VALUE = 1;
+    private static final Integer UPDATED_VALUE = 2;
 
     private static final Integer DEFAULT_STATUS = 1;
     private static final Integer UPDATED_STATUS = 2;
@@ -186,7 +186,7 @@ public class MotherBedResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(motherBed.getId().intValue())))
-            .andExpect(jsonPath("$.[*].value").value(hasItem(DEFAULT_VALUE.toString())))
+            .andExpect(jsonPath("$.[*].value").value(hasItem(DEFAULT_VALUE)))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)));
     }
     
@@ -202,7 +202,7 @@ public class MotherBedResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(motherBed.getId().intValue()))
-            .andExpect(jsonPath("$.value").value(DEFAULT_VALUE.toString()))
+            .andExpect(jsonPath("$.value").value(DEFAULT_VALUE))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS));
     }
 
@@ -244,6 +244,33 @@ public class MotherBedResourceIntTest {
         // Get all the motherBedList where value is null
         defaultMotherBedShouldNotBeFound("value.specified=false");
     }
+
+    @Test
+    @Transactional
+    public void getAllMotherBedsByValueIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        motherBedRepository.saveAndFlush(motherBed);
+
+        // Get all the motherBedList where value greater than or equals to DEFAULT_VALUE
+        defaultMotherBedShouldBeFound("value.greaterOrEqualThan=" + DEFAULT_VALUE);
+
+        // Get all the motherBedList where value greater than or equals to UPDATED_VALUE
+        defaultMotherBedShouldNotBeFound("value.greaterOrEqualThan=" + UPDATED_VALUE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllMotherBedsByValueIsLessThanSomething() throws Exception {
+        // Initialize the database
+        motherBedRepository.saveAndFlush(motherBed);
+
+        // Get all the motherBedList where value less than or equals to DEFAULT_VALUE
+        defaultMotherBedShouldNotBeFound("value.lessThan=" + DEFAULT_VALUE);
+
+        // Get all the motherBedList where value less than or equals to UPDATED_VALUE
+        defaultMotherBedShouldBeFound("value.lessThan=" + UPDATED_VALUE);
+    }
+
 
     @Test
     @Transactional
@@ -356,7 +383,7 @@ public class MotherBedResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(motherBed.getId().intValue())))
-            .andExpect(jsonPath("$.[*].value").value(hasItem(DEFAULT_VALUE.toString())))
+            .andExpect(jsonPath("$.[*].value").value(hasItem(DEFAULT_VALUE)))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)));
     }
 

@@ -38,8 +38,6 @@ import java.util.Optional;
 
 /**
  * REST controller for managing Damage.
- * Used RequestMapping annotation to map the url with the client side.
- * Using service to access the values in the database.
  */
 @RestController
 @RequestMapping("/api")
@@ -145,11 +143,38 @@ public class DamageResource {
     }
 
     /**
-     * GET  /damages/count:batchId : get the count of damage based on particular status.
+     * GET  /damages/batch/:batchId : get all the damages of particular batchId.
+     *
+     * @param batchId the batchId of the DamageDTO to retrieve
+     * @return the ResponseEntity with status 200 (OK) and the list of damages in body
+     */
+    @GetMapping("/damages/batch/{batchId}")
+    @Timed
+    public ResponseEntity<List<DamageDTO>> getParticularBatchRecord(@PathVariable Long batchId) {
+        log.debug("REST request to get a list of particular batch damages");
+        List<DamageDTO> damageList = damageService.findParticularBatch(batchId);
+        return ResponseEntity.ok().body(damageList);
+    }
+
+    /**
+     * GET  /damages/damage/:status : get all the damages of particular status.
+     *
+     * @param status the status of the DamageDTO to retrieve
+     * @return the ResponseEntity with status 200 (OK) and the list of damages in body
+     */
+    @GetMapping("/damages/damage/{status}")
+    @Timed
+    public ResponseEntity<List<DamageDTO>> getParticularStatusRecord(@PathVariable Integer status) {
+        log.debug("REST request to get a list of particular batch damages");
+        List<DamageDTO> damageList = damageService.findParticularStatus(status);
+        return ResponseEntity.ok().body(damageList);
+    }
+
+    /**
+     * GET  /damages/count:batchId : get the "batchId" damage.
      *
      * @param batchId the batchId of the damageDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the damage count, 
-     *         or with status 404 (Not Found)
+     * @return the ResponseEntity with status 200 (OK) and with body the damage count, or with status 404 (Not Found)
      */
     @GetMapping("/damages/count/{batchId}")
     @Timed

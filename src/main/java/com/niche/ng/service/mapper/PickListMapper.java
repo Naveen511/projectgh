@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date  : 2018/08/02
+ *  Date: 2018/08/02
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs PickListMapper
@@ -18,8 +18,6 @@ import org.mapstruct.*;
 
 /**
  * Mapper for the entity PickList and its DTO PickListDTO.
- * Mapping the parent and child table to fetch the field value.
- * Converting the entity object into data transfer object(DTO).
  */
 @Mapper(componentModel = "spring", uses = {})
 public interface PickListMapper extends EntityMapper<PickListDTO, PickList> {

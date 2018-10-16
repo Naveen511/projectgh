@@ -1,13 +1,4 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date: 2018/08/02 11:27:58
- *  Target: yarn
- *******************************************************************************/
-
-// Import needed model and dependency
+import { Moment } from 'moment';
 import { INursery } from 'app/shared/model//nursery.model';
 import { ISectorIncharge } from 'app/shared/model//sector-incharge.model';
 import { IMapSectorWithZonal } from 'app/shared/model//map-sector-with-zonal.model';
@@ -55,5 +46,4 @@ export class SectorModel {
     incharges?: ISectorIncharge[];
     mapSectorWithZonals?: IMapSectorWithZonal[];
     mapNurseryWithSectors?: IMapNurseryWithSector[];
-    operationalHeadId?: number;
 }

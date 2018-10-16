@@ -38,8 +38,6 @@ import java.util.Optional;
 
 /**
  * REST controller for managing PickListValue.
- * Used RequestMapping annotation to map the url with the client side.
- * Using service to access the values in the database.
  */
 @RestController
 @RequestMapping("/api")
@@ -142,5 +140,33 @@ public class PickListValueResource {
         log.debug("REST request to delete PickListValue : {}", id);
         pickListValueService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    /**
+     * GET  /pick-list-values/zoanl/:pickListId : get all the sectors of particular pickValueId.
+     *
+     * @param pickListId the pickListId of the sectorDTO to retrieve
+     * @return the ResponseEntity with status 200 (OK) and the list of sectors in body
+     */
+    @GetMapping("/pick-list-values/variety/{pickListId}")
+    @Timed
+    public ResponseEntity<List<PickListValueDTO>> getVarietys(@PathVariable Long pickListId) {
+        log.debug("REST request to get a list of particular zonal Sectors");
+        List<PickListValueDTO> varietyList = pickListValueService.findVarietys(pickListId);
+        return ResponseEntity.ok().body(varietyList);
+    }
+
+    /**
+     * GET  /pick-list-values/category/:pickValueId : get all the sectors of particular pickListId.
+     *
+     * @param pickValueId the pickValueId of the sectorDTO to retrieve
+     * @return the ResponseEntity with status 200 (OK) and the list of sectors in body
+     */
+    @GetMapping("/pick-list-values/category/{pickValueId}")
+    @Timed
+    public ResponseEntity<List<PickListValueDTO>> getCategorys(@PathVariable Long pickValueId) {
+        log.debug("REST request to get a list of particular zonal Sectors");
+        List<PickListValueDTO> categoryList = pickListValueService.findCategorys(pickValueId);
+        return ResponseEntity.ok().body(categoryList);
     }
 }

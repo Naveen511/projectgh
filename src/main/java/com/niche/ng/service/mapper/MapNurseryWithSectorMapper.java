@@ -1,24 +1,12 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date  : 2018/09/12
- *  Target: yarn
- *  -----------------------------------------------------------------------------
- *  File Description    : This file performs MapNurseryWithSectorMapper
- *
- *******************************************************************************/
 package com.niche.ng.service.mapper;
 
 import com.niche.ng.domain.*;
 import com.niche.ng.service.dto.MapNurseryWithSectorDTO;
 
 import org.mapstruct.*;
+import java.util.List;
 /**
  * Mapper for the entity MapNurseryWithSector and its DTO MapNurseryWithSectorDTO.
- * Mapping the parent and child table to fetch the field value.
- * Converting the entity object into data transfer object(DTO).
  */
 @Mapper(componentModel = "spring", uses = {NurseryMapper.class, SectorMapper.class})
 public interface MapNurseryWithSectorMapper extends EntityMapper<MapNurseryWithSectorDTO, MapNurseryWithSector> {
@@ -32,6 +20,8 @@ public interface MapNurseryWithSectorMapper extends EntityMapper<MapNurseryWithS
     @Mapping(source = "nurseryId", target = "nursery")
     @Mapping(source = "sectorId", target = "sector")
     MapNurseryWithSector toEntity(MapNurseryWithSectorDTO mapNurseryWithSectorDTO);
+
+    List<MapNurseryWithSectorDTO> toDto(List<MapNurseryWithSector> mapNurseryWithSector);
 
     default MapNurseryWithSector fromId(Long id) {
         if (id == null) {

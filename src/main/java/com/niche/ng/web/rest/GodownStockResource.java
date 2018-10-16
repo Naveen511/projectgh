@@ -37,8 +37,6 @@ import java.util.Optional;
 
 /**
  * REST controller for managing GodownStock.
- * Used RequestMapping annotation to map the url with the client side.
- * Using service to access the values in the database.
  */
 @RestController
 @RequestMapping("/api")
@@ -141,5 +139,19 @@ public class GodownStockResource {
         log.debug("REST request to delete GodownStock : {}", id);
         godownStockService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    /**
+     * GET  /godown-stocks/godownId/pickListCategoryId : get all the values of same Id.
+     *
+     * @param godownId the godownId of the sectorDTO to retrieve
+     * @return the ResponseEntity with status 200 (OK) and the list of sectors in body
+     */
+    @GetMapping("/godown-stocks/{godownId}/{pickListCategoryId}")
+    @Timed
+    public ResponseEntity<List<GodownStockDTO>> getGodownCategoryStock(@PathVariable Long godownId, @PathVariable Long pickListCategoryId) {
+        log.debug("REST request to get a list of particular category stock");
+        List<GodownStockDTO> list = godownStockService.findStock(godownId, pickListCategoryId);
+        return ResponseEntity.ok().body(list);
     }
 }

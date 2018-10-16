@@ -1,235 +1,186 @@
 <div class="animated fadeIn">
-    <!-- Display the godown stock details list -->
     <div class="row col-sm-12">
-        <!-- Display the success Message alert-->
-        <div>
-            <ngb-alert *ngIf="successMessage" type="success"
-            (close)="successMessage = null">
-                {{ successMessage }}
-            </ngb-alert>
-        </div>
-        <!-- End of the success alert-->
-        <div id="viewStock" [collapse]="isCollapsedStockDetails">
+        <div id="viewStock" [collapse]="isCollapsedStockDetails" >
             <!-- <div class="col-sm-12"> -->
-            <div class="card">
-                <div class="card-header">
-                    <i class="fa fa-align-justify"></i> Godown Stock Details List
-                    <button type="button" class="btn btn-sm btn-danger float-right"
-                    (click)="isCollapsedStockDetails = !isCollapsedStockDetails"
-                    [attr.aria-expanded]="isCollapsedStockDetails"
-                    aria-controls="collapseBasic">
-                        <fa-icon [icon]="'times'"></fa-icon> close
+                <div class="card">
+                    <div class="card-header">
+                      <i class="fa fa-align-justify"></i> Godown Stock Details List
+                      <button type="button" class="btn btn-sm btn-danger float-right" 
+                        (click)="isCollapsedStockDetails = !isCollapsedStockDetails" 
+                        [attr.aria-expanded]="isCollapsedStockDetails" 
+                        aria-controls="collapseBasic">
+                            <fa-icon [icon]="'times'"></fa-icon> close
                     </button>
+                    </div>
+                    <div class="card-body table-responsive">
+                        <table class="table font12">
+                            <thead>
+                                <tr>
+                                    <th>S No.</th>
+                                    <th>Date</th>
+                                    <th>Quantity</th>
+                                    <th>Description</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let value of godownStockDetails; let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{value.date | date: 'dd/MM/yyyy'}}</td>
+                                    <td>{{value.quantity}}</td>
+                                    <td>{{value.description}}</td>
+                                    <td>{{value.price}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-                <div class="card-body table-responsive">
-                    <table class="table font12">
-                        <thead>
-                            <tr>
-                                <th>S No.</th>
-                                <th>Date</th>
-                                <th>Quantity</th>
-                                <th>Description</th>
-                                <th>Price</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let value of godownStockDetails; let i = index">
-                                <td>{{i+1}}</td>
-                                <td>{{value.date | date: 'dd/MM/yyyy'}}</td>
-                                <td>{{value.quantity}}</td>
-                                <td>{{value.description}}</td>
-                                <td>{{value.price}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
             <!-- </div> -->
         </div>
     </div>
-    <!-- End of the godown stock details list -->
-
-    <!-- Add the stock purchase list form -->
-    <div class="row font12">
-        <div class="col-sm-12">
-            <div id="addStock" [collapse]="isCollapsed">
+    <div class="row col-sm-12">
+        <div id="addStock" [collapse]="isCollapsed" >
+            <!-- <div class="col-sm-12"> -->
                 <div class="card">
                     <div class="card-header">
-                        <strong>Add Stock </strong> Form
-                        <button type="button" class="btn btn-sm btn-danger float-right"
-                            (click)="isCollapsed = !isCollapsed"
-                            [attr.aria-expanded]="isCollapsed"
-                            aria-controls="collapseBasic">
-                            <fa-icon [icon]="'times'"></fa-icon> close
-                        </button>
+                        <strong>Add Purchase List </strong> Form
                     </div>
                     <div class="card-body">
-                        <form action="" method="post" enctype="multipart/form-data"
-                        class="form-horizontal">
-                            <input [(ngModel)]="godownStock.id" type="hidden" id="id"
-                            name="id" class="form-control">
+                        <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                            <input [(ngModel)]="godownStock.id" type="hidden" id="id" name="id" class="form-control">
                             <div class="row">
-                                <!-- <div class="form-group col-sm-3">
+                                <div class="form-group col-sm-3">
                                     <label class="col-form-label" for="select1">Godown Name </label>
-                                    <select [(ngModel)]="godownStock.godownId" id="godownId" name="godownId" class="form-control">
+                                    <select [(ngModel)]="godownStock.godownId" id="godownId" name="godownId" class="form-control" >
                                         <option value="0" disabled selected>Select Type</option>
                                         <option *ngFor="let type of godown" value={{type.id}}>{{type.name}}</option>
                                     </select>
-                                </div> -->
+                                </div>
                                 <div class="form-group col-sm-3">
                                     <label class="" for="name">Date *</label>
-                                    <input id="field_stockDate" type="text"
-                                    class="form-control" name="date"
-                                    [(ngModel)]="godownStockDetail.date" readonly
-                                    ngbDatepicker #stockDateDp="ngbDatepicker"
+                                    <input id="field_stockDate" type="text" class="form-control" 
+                                    name="date" [(ngModel)]="godownStockDetail.date"
+                                    ngbDatepicker  #stockDateDp="ngbDatepicker"
                                     (click)="stockDateDp.toggle()"/>
                                 </div>
                                 <div class="form-group col-sm-3">
+                                    <label for="name">Pick Name *</label>
+                                    <select [(ngModel)]="godownStock.pickListId" 
+                                        id="pickListId" name="pickListId" class="form-control"
+                                        (change)="getVariety(godownStock.pickListId)" required>
+                                        <option value="0" disabled selected>Select</option>
+                                        <option *ngFor="let pickList of pickLists" 
+                                            value={{pickList.id}}>{{pickList.pickListName}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-sm-3">
                                     <label for="name">Variety * </label>
-                                    <select [(ngModel)]="godownStock.pickListVarietyId"
-                                        id="pickListVarietyId" name="pickListVarietyId"
-                                        class="form-control"
-                                        (change)="getCategory(godownStock.pickListVarietyId)"
-                                        required>
+                                    <select [(ngModel)]="godownStock.pickListVarietyId" 
+                                        id="pickListVarietyId" name="pickListVarietyId" class="form-control"
+                                        (change)="getCategory(godownStock.pickListVarietyId)" required>
                                         <option value="0" disabled selected>Select Variety Name</option>
-                                        <option *ngFor="let val of varietys" value={{val.id}}>
-                                            {{val.pickListValue}}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-sm-3">
-                                    <label for="name">Category *</label>
-                                    <select [(ngModel)]="godownStock.pickListCategoryId"
-                                    id="pickListCategoryId" name="pickListCategoryId"
-                                    class="form-control" required>
-                                        <option value="0" disabled selected>Select Category Name</option>
-                                        <option *ngFor="let category of categorys" value={{category.id}}>
-                                            {{category.pickListValue}}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-sm-3">
-                                    <label class="col-form-label" for="select1">Quantity Type *</label>
-                                    <select [(ngModel)]="godownStock.pickListQuantityTypeId"
-                                        id="pickListQuantityTypeId" name="pickListQuantityTypeId"
-                                        class="form-control">
-                                        <option value="0" disabled selected>Select Quantity Type</option>
-                                        <option *ngFor="let type of quantityTypes" value={{type.id}}>
-                                            {{type.pickListValue}}
-                                        </option>
+                                        <option *ngFor="let val of varietys" value={{val.id}}>{{val.pickListValue}}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-sm-3">
-                                    <label class="col-form-label" for="select1">
-                                        Quantity *
-                                    </label>
-                                    <input [(ngModel)]="godownStockDetail.quantity"
-                                    type="text" id="quantity" name="quantity"
-                                    class="form-control" placeholder="Quantity"
-                                    (keypress)="numberOnly($event)">
+                                    <label for="name">Category *</label>
+                                    <select [(ngModel)]="godownStock.pickListCategoryId" 
+                                        id="pickListCategoryId" name="pickListCategoryId" class="form-control" required>
+                                        <option value="0" disabled selected>Select Category Name</option>
+                                    <option *ngFor="let category of categorys" value={{category.id}}>{{category.pickListValue}}</option>
+                                    </select>
                                 </div>
                                 <div class="form-group col-sm-3">
-                                    <label class="col-form-label" for="text-input">
-                                        Price
-                                    </label>
-                                    <input [(ngModel)]="godownStockDetail.price"
-                                    type="text" id="price" name="price"
-                                    class="form-control" placeholder="Price"
-                                    (keypress)="numberOnly($event)">
+                                    <label class="col-form-label" for="select1">Pick Quantity Type </label>
+                                    <select [(ngModel)]="godownStock.pickListQuantityId" 
+                                        id="pickListQuantityId" name="pickListQuantityId" class="form-control" 
+                                        (change)="getQuantityType(godownStock.pickListQuantityId)">
+                                        <option value="0" disabled selected>Select Type</option>
+                                        <option *ngFor="let type of pickLists" value={{type.id}}>{{type.pickListName}}</option>
+                                    </select>
                                 </div>
-                                <div class="form-group col-sm-5">
-                                    <label class="col-form-label" for="text-input">
-                                        Description
-                                    </label>
-                                    <textarea [(ngModel)]="godownStockDetail.description"
-                                    type="text" id="description" name="description"
-                                    class="form-control" placeholder="Description">
-                                    </textarea>
+                                <div class="form-group col-sm-3">
+                                    <label class="col-form-label" for="select1">Quantity Type </label>
+                                    <select [(ngModel)]="godownStock.pickListQuantityTypeId" 
+                                            id="pickListQuantityTypeId" name="pickListQuantityTypeId" class="form-control" >
+                                            <option value="0" disabled selected>Select Quantity Type</option>
+                                            <option *ngFor="let type of quantityTypes"
+                                            value={{type.id}}>{{type.pickListValue}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <label class="col-form-label" for="select1">Quantity </label>
+                                    <input [(ngModel)]="godownStockDetail.quantity" 
+                                    type="text" id="quantity" name="quantity" 
+                                    class="form-control" placeholder="Quantity">
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <div class="col-md-6">
-                                    <span class="text-danger" *ngIf="errorMessage"
-                                        (close)="errorMessage = null"><b>{{ errorMessage }}</b>
-                                    </span>
+                            <div class="row">
+                                <div class="form-group col-sm-3">
+                                    <label class="col-form-label" for="text-input">Price</label>
+                                    <input [(ngModel)]="godownStockDetail.price" type="text" id="price" name="price" 
+                                    class="form-control" placeholder="Price">
+                                </div>
+                                <div class="form-group col-sm-5">
+                                    <label class="col-form-label" for="text-input">Description</label>
+                                    <textarea [(ngModel)]="godownStockDetail.description" type="text" id="description" name="description" 
+                                    class="form-control" placeholder="Description">
+                                    </textarea>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-sm btn-primary"
-                        (click)="addStockDetail()">
-                            <i class="fa fa-dot-circle-o">
+                        <button type="submit" class="btn btn-sm btn-primary" 
+                            (click)="addStockDetail()"><i class="fa fa-dot-circle-o">
                             </i> Create Stock</button>
-                        <button type="reset" class="btn btn-sm btn-danger"
-                        (click)="createGodownStock()">
+                        <button type="reset" class="btn btn-sm btn-danger">
                             <i class="fa fa-ban"></i> Reset</button>
                     </div>
                 </div>
-            </div>
+            <!-- </div> -->
         </div>
     </div>
-    <!-- End of the stock purchase list form -->
 
-    <!-- To display the godown stock list -->
-    <div class="row">
+    <div class="row"> <!-- justify-content-center -->
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <i class="fa fa-align-justify"></i> Godown Stock List
-                    <!-- <button type="button" data-toggle="collapse" 
+                  <i class="fa fa-align-justify"></i> Godown Stock List
+                  <!-- <button type="button" data-toggle="collapse" 
                   class="btn btn-sm btn-success float-right"
                     (click)="isCollapse = !isCollapse" (click)="addStockDetail()"
                         [attr.aria-expanded]="!isCollapse" aria-controls="addStock"><fa-icon [icon]="'plus'"></fa-icon> Add
                     </button> -->
 
-                    <button type="button" class="btn btn-sm btn-success float-right"
-                    (click)="createGodownStock()">
+                    <button type="button" class="btn btn-sm btn-success float-right" 
+                    (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="isCollapsed" 
+                    aria-controls="collapseBasic">
                         <fa-icon [icon]="'plus'"></fa-icon> Add
                     </button>
-                    <!-- <button type="button" class="btn btn-sm btn-success float-right" 
+                  <!-- <button type="button" class="btn btn-sm btn-success float-right" 
                   data-toggle="modal" (click)="addGodownStock()"><fa-icon [icon]="'plus'"></fa-icon> Add</button> -->
                 </div>
-                <div class="card-body table-responsive font12">
-                    <div class="text-left"><b>
-                        <span class="text-info">
-                            <fa-icon [icon]="'eye'"></fa-icon> -  View stock Details</span>,
-                        <span class="text-success">
-                            <fa-icon [icon]="'plus'"></fa-icon> -  Add more quantity</span>
-                        </b>
-                    </div>
+                <div class="card-body table-responsive">
                     <table class="table font12">
                         <thead>
-                            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse"
-                            [callback]="transition.bind(this)">
+                            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
                                 <th>S No.</th>
-                                <!-- <th jhiSortBy="godownName">Godown Name
-                                    <fa-icon [icon]="'sort'"></fa-icon>
-                                </th> -->
-                                <th jhiSortBy="pickListVarietyPickListValue">Variety
-                                    <fa-icon [icon]="'sort'"></fa-icon>
-                                </th>
-                                <th jhiSortBy="pickListCategoryPickListValue">Category
-                                    <fa-icon [icon]="'sort'"></fa-icon>
-                                </th>
-                                <th jhiSortBy="currentQuantity">Current Quantity
-                                    <fa-icon [icon]="'sort'"></fa-icon>
-                                </th>
-                                <th jhiSortBy="addedQuantity">Added Quantity
-                                    <fa-icon [icon]="'sort'"></fa-icon>
-                                </th>
-                                <th jhiSortBy="consumedQuantity">Consume Quantity
-                                    <fa-icon [icon]="'sort'"></fa-icon>
-                                </th>
+                                <th jhiSortBy="godownName">Godown Name <fa-icon [icon]="'sort'"></fa-icon></th>
+                                <th jhiSortBy="pickListVarietyPickListValue">Variety <fa-icon [icon]="'sort'"></fa-icon></th>
+                                <th jhiSortBy="pickListCategoryPickListValue">Category <fa-icon [icon]="'sort'"></fa-icon></th>
+                                <th jhiSortBy="currentQuantity">Current Quantity <fa-icon [icon]="'sort'"></fa-icon></th>
+                                <th jhiSortBy="addedQuantity">Added Quantity <fa-icon [icon]="'sort'"></fa-icon></th>
+                                <th jhiSortBy="consumedQuantity">Consume Quantity <fa-icon [icon]="'sort'"></fa-icon></th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let value of godownStocks; let i = index; trackBy: trackId">
                                 <td>{{i+1}}</td>
-                                <!-- <td>{{value.godownName}}</td> -->
+                                <td>{{value.godownName}}</td>
                                 <td>{{value.pickListVarietyPickListValue}}</td>
                                 <td>{{value.pickListCategoryPickListValue}}</td>
                                 <td>{{value.currentQuantity}}</td>
@@ -237,116 +188,83 @@
                                 <td>{{value.consumedQuantity}}</td>
                                 <td>
                                     <a class="text-info" title="View stock Details"
-                                    (click)="getStockDetails(value.id)"
-                                    [attr.aria-expanded]="isCollapsedStockDetails"
+                                        (click)="getStockDetails(value.id)" 
+                                        [attr.aria-expanded]="isCollapsedStockDetails" 
                                     aria-controls="collapseBasic">
                                         <fa-icon [icon]="'eye'"></fa-icon>
                                     </a>
-                                    <a class="text-success ml-2" data-toggle="modal"
-                                    title="Add more quantity" (click)="addMoreStock(value)">
-                                        <fa-icon [icon]="'plus'"></fa-icon>
-                                    </a>
+                                    <a class="text-success ml-2" data-toggle="modal" title="Add more quantity"
+                                    (click)="addMoreStock(value)"><fa-icon [icon]="'plus'"></fa-icon></a>
 
-                                </td>
+                                </td> 
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <div *ngIf="godownStocks && godownStocks.length" class="card-footer">
-                    <!-- <div class="row justify-content-center">
-                        <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
-                    </div> -->
-                    <div class="row justify-content-center">
-                        <ngb-pagination [collectionSize]="totalItems" [(page)]="page"
-                            [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true"
-                            [boundaryLinks]="true" (pageChange)="loadPage(page)">
-                        </ngb-pagination>
+                <div *ngIf="godownStock && godownStock.length" class="card-footer">
+                        <!-- <div class="row justify-content-center">
+                            <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+                        </div> -->
+                        <div class="row justify-content-center">
+                            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+                        </div>
                     </div>
-                </div>
             </div>
         </div>
     </div>
-    <!-- End of the godown stock list -->
 
-    <!-- Add the particular stock into the godown stock management -->
-    <div bsModal #addParticularStock="bs-modal" class="modal fade" tabindex="-1"
-        role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
-        [config]="{backdrop: 'static',  keyboard: false}">
-        <div class="modal-dialog modal-primary" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h6 class="modal-title">Add Stock</h6>
-                    <!-- <h6 class="modal-title">Add Seeds : {{nurseryInventory.nurserysNurseryName}}</h6> -->
-                    <button type="button" class="close" (click)="addParticularStock.hide()"
-                    aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="" method="post" enctype="multipart/form-data"
-                    class="form-horizontal">
-                        <input [(ngModel)]="godownStockDetail.godownStockId" type="hidden"
-                        id="godownStockId" name="godownStockId" class="form-control">
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="text-input">
-                                Date *
-                            </label>
+    <div bsModal #addParticularStock="bs-modal" class="modal fade" tabindex="-1" 
+        role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-primary" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <!-- <h6 class="modal-title">Add Seeds : {{nurseryInventory.nurserysNurseryName}}</h6> -->
+                        <button type="button" class="close" 
+                            (click)="addParticularStock.hide()" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                            <input [(ngModel)]="godownStockDetail.godownStockId" type="hidden" 
+                                id="godownStockId" name="godownStockId" 
+                            class="form-control">
+                            <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="text-input">Date *</label>
                             <div class="col-md-9">
-                                <input id="field_date" type="text" class="form-control"
-                                name="date" [(ngModel)]="godownStockDetail.date"
-                                readonly ngbDatepicker #addInventoryDateDp="ngbDatepicker"
-                                (click)="addInventoryDateDp.toggle()" />
+                                <input id="field_date" type="text" class="form-control" name="date" 
+                                [(ngModel)]="godownStockDetail.date" 
+                                ngbDatepicker  #addInventoryDateDp="ngbDatepicker" 
+                                (click)="addInventoryDateDp.toggle()"/>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="text-input">
-                                Quantity *
-                            </label>
+                            </div>
+                            <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="text-input">Quantity *</label>
                             <div class="col-md-9">
-                                <input [(ngModel)]="godownStockDetail.quantity" type="text"
-                                id="quantity" name="quantity" class="form-control"
-                                placeholder="Quantity" (keypress)="numberOnly($event)">
+                                <input [(ngModel)]="godownStockDetail.quantity" type="text" 
+                                id="quantity" name="quantity" class="form-control" placeholder="Quantity">
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="text-input">
-                                Price
-                            </label>
-                            <div class="col-md-9">
-                                <input [(ngModel)]="godownStockDetail.price"
-                                type="text" id="price" name="price" 
-                                class="form-control" placeholder="Price"
-                                (keypress)="numberOnly($event)">
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="text-input">
-                                Description
-                            </label>
-                            <div class="col-md-9">
-                                <textarea [(ngModel)]="godownStockDetail.description"
-                                    type="text" id="description" name="description"
-                                    class="form-control" placeholder="Description">
-                                </textarea>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="text-input">Description</label>
+                                <div class="col-md-9">
+                                <input [(ngModel)]="godownStockDetail.description" type="text" 
+                                id="description" name="description" class="form-control" placeholder="Description">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-md-6">
+                            <div>
                                 <span class="text-danger" *ngIf="errorMessage"
-                                    (close)="errorMessage = null">{{ errorMessage }}</span>
+                                (close)="errorMessage = null">{{ errorMessage }}</span>
                             </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" (click)="addParticularStock.hide()">
-                        Close
-                    </button>
-                    <button type="button" class="btn btn-primary" (click)="addInventoryQuantity(godownStock)">
-                        Save
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- End the add stock -->
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" 
+                            (click)="addParticularStock.hide()">Close</button>
+                        <button type="button" class="btn btn-primary" 
+                            (click)="addInventoryQuantity(godownStock)">Save</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
 </div>

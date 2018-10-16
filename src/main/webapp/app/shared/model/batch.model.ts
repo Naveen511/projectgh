@@ -1,18 +1,7 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date: 2018/08/10 11:27:58
- *  Target: yarn
- *******************************************************************************/
-
-// Import needed model and dependency
 import { Moment } from 'moment';
 import { IDamage } from 'app/shared/model//damage.model';
 import { IShadeArea } from 'app/shared/model//shade-area.model';
 import { INurseryStockDetails } from 'app/shared/model//nursery-stock-details.model';
-import { IBatchQuantity } from 'app/shared/model//batch-quantity.model';
 
 export interface IBatch {
     id?: number;
@@ -41,7 +30,6 @@ export interface IBatch {
     motherBedId?: number;
     financialYearBatchBatchName?: string;
     financialYearBatchId?: number;
-    batchQuantities?: IBatchQuantity[];
 }
 
 export class Batch implements IBatch {
@@ -71,8 +59,7 @@ export class Batch implements IBatch {
         public motherBedValue?: string,
         public motherBedId?: number,
         public financialYearBatchBatchName?: string,
-        public financialYearBatchId?: number,
-        public batchQuantities?: IBatchQuantity[]
+        public financialYearBatchId?: number
     ) {}
 }
 
@@ -104,22 +91,4 @@ export class BatchModel {
     motherBedId?: number;
     financialYearBatchBatchName?: string;
     financialYearBatchId?: number;
-    batchQuantities?: IBatchQuantity[];
-    zoneId?: number;
-    sectorId?: number;
-    pickListId?: number;
-    pickListDamageAreaId?: number;
-    damageAreaId?: number;
-    date?: Moment;
-    noOfSeedlings?: number;
-    noOfQuantity?: number;
-    pickListDescriptionId?: number;
-    descriptionId?: number;
 }
-
-// Constant variables
-export const DISPLAY_NAME_VARIETY = 'VARIETY';
-export const DISPLAY_NAME_QUANTITY_TYPE = 'QUANTITY TYPE';
-export const DISPLAY_NAME_DAMAGE_AREA = 'DAMAGE AREA';
-export const DISPLAY_NAME_DAMAGE_REASON = 'DAMAGE REASON';
-export const STATUS_BATCH_CLOSE = 4;

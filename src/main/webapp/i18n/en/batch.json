@@ -34,8 +34,7 @@
             "pickListCategory": "Pick List Category",
             "quantityType": "Quantity Type",
             "motherBed": "Mother Bed",
-            "financialYearBatch": "Financial Year Batch",
-            "batchQuantity": "Batch Quantity"
+            "financialYearBatch": "Financial Year Batch"
         }
     }
 }

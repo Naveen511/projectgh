@@ -1,13 +1,3 @@
-/******************************************************************************
- *  Property of Nichehands
- *  Nichehands Confidential Proprietary
- *  Nichehands Copyright (C) 2018 All rights reserved
- *  ----------------------------------------------------------------------------
- *  Date: 2018/08/20
- *  Target: yarn
- *******************************************************************************/
-
-// Import needed dependency
 import { Moment } from 'moment';
 
 export interface IGodownPurchaseDetails {
@@ -83,8 +73,3 @@ export class GodownPurchaseDetailsModel {
     financialYearGodownPurchaseBatchName?: string;
     financialYearGodownPurchaseId?: number;
 }
-
-// Constant variable
-export const DISPLAY_NAME_VARIETY = 'VARIETY';
-export const DISPLAY_NAME_QUANTITY_TYPE = 'QUANTITY TYPE';
-export const STATUS_ADDED_TO_STOCK = 2;

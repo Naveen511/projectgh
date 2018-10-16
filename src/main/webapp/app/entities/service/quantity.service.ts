@@ -32,10 +32,6 @@ export class QuantityService {
         return this.http.get<IQuantity[]>(this.resourceUrl, { params: options, observe: 'response' });
     }
 
-    // getExpectedQuantity(pickListQuantityId: number, quantityTypeId: number): Observable<EntityArrayResponseType> {
-    //     return this.http.get<IQuantity[]>(`${this.resourceUrl}/quantity/${pickListQuantityId}/${quantityTypeId}`, { observe: 'response' });
-    // }
-
     // commented for making the delete as soft one which means not to delete from db
     // delete(id: number): Observable<HttpResponse<any>> {
     //     return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });

@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date: 2018/08/02
+ *  Date  : 2018/08/02
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs SectorService
@@ -17,7 +17,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
-import java.util.List;
 
 /**
  * Service Interface for managing Sector.
@@ -57,18 +56,10 @@ public interface SectorService {
     void delete(Long id);
 
     /**
-     * Get the "zonalId" sector.
+     * Get count by "status" sectors.
      *
-     * @param zonalId the zonalId of the entity
-     * @return the list of entity
-     */
-    List<SectorDTO> findZonalSectors(Long zonalId);
-
-    /**
-     * Get the "count" operationalHead.
-     *
-     * @param status the batchId of the entity
-     * @return the list of entity
+     * @param status the status of the entity
+     * @return the count of sector
      */
     Long findActiveCount(Integer status);
 }

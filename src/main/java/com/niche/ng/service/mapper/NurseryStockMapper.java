@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date: 2018/08/02
+ *  Date  : 2018/08/02
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs NurseryStockMapper
@@ -15,10 +15,11 @@ import com.niche.ng.domain.*;
 import com.niche.ng.service.dto.NurseryStockDTO;
 
 import org.mapstruct.*;
-import java.util.List;
 
 /**
  * Mapper for the entity NurseryStock and its DTO NurseryStockDTO.
+ * Mapping the parent and child table to fetch the field value.
+ * Converting the entity object into data transfer object(DTO).
  */
 @Mapper(componentModel = "spring", uses = {NurseryMapper.class, PickListValueMapper.class, FinancialYearSettingsMapper.class})
 public interface NurseryStockMapper extends EntityMapper<NurseryStockDTO, NurseryStock> {
@@ -40,8 +41,6 @@ public interface NurseryStockMapper extends EntityMapper<NurseryStockDTO, Nurser
     @Mapping(source = "financialYearNurseryStockId", target = "financialYearNurseryStock")
     @Mapping(target = "pointOfSaleDetails", ignore = true)
     NurseryStock toEntity(NurseryStockDTO nurseryStockDTO);
-
-    List<NurseryStockDTO> toDto(List<NurseryStock> nurseryStock);
 
     default NurseryStock fromId(Long id) {
         if (id == null) {

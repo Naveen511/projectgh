@@ -38,6 +38,8 @@ import java.util.Optional;
 
 /**
  * REST controller for managing Zonal.
+ * Used RequestMapping annotation to map the url with the client side.
+ * Using service to access the values in the database.
  */
 @RestController
 @RequestMapping("/api")
@@ -141,27 +143,13 @@ public class ZonalResource {
         zonalService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
-    
-    /**
-     * GET  /zonals/headoffice/:operationalHeadId/:status : get all the zonals of particular operationalHeadId.
-     *
-     * @param operationalHeadId the operationalHeadId of the ZonalDTO to retrieve
-     * @param status of the entity
-     * @return the ResponseEntity with status 200 (OK) and the list of zonal in body
-     */
-    @GetMapping("/zonals/headoffice/{operationalHeadId}/{status}")
-    @Timed
-    public ResponseEntity<List<ZonalDTO>> getParticularHeadOfficeZonal(@PathVariable Long operationalHeadId, @PathVariable Integer status) {
-        log.debug("REST request to get a list of particular head office zonals");
-        List<ZonalDTO> list = zonalService.findParticularHeadOfficeZonal(operationalHeadId, status);
-        return ResponseEntity.ok().body(list);
-    }
 
     /**
-     * GET  /zonals/active-record:status : get the "status" zonals.
+     * GET  /zonals/active-record:status : get the particular "status" zonals.
      *
      * @param status the status of the ZonalDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the ZonalDTO, or with status 404 (Not Found)
+     * @return the ResponseEntity with status 200 (OK) and with body the ZonalDTO, 
+     *         or with status 404 (Not Found)
      */
     @GetMapping("/zonals/count/{status}")
     @Timed

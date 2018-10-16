@@ -1,19 +1,20 @@
 <div class="animated fadeIn">
     <!-- Display the Finacial year List-->
-    <div class="row"> <!-- justify-content-center -->
+    <div class="row">
+        <!-- justify-content-center -->
         <div class="col-sm-9">
             <!-- Display the success Message alert-->
             <div>
                 <ngb-alert *ngIf="successMessage" type="success" 
-                    (close)="successMessage = null">{{ successMessage }}</ngb-alert>
+                (close)="successMessage = null">{{ successMessage }}</ngb-alert>
             </div>
             <!-- End of the success alert-->
-            <div class="card">
+            <div class="card"> <!--Display list of financial year -->
                 <div class="card-header">
-                  <i class="fa fa-align-justify"></i> Calendar List
-                  <button type="button" class="btn btn-sm btn-success float-right" 
-                  data-toggle="modal" (click)="create()">
-                    <fa-icon [icon]="'plus'"></fa-icon> Add</button>
+                    <i class="fa fa-align-justify"></i> Calendar List
+                    <button type="button" class="btn btn-sm btn-success float-right" 
+                    data-toggle="modal" (click)="create()">
+                        <fa-icon [icon]="'plus'"></fa-icon> Add</button>
                 </div>
                 <div class="card-body table-responsive">
                     <table class="table font12">
@@ -36,8 +37,9 @@
                                 <td>{{value.startDate | date: 'dd/MM/yyyy'}}</td>
                                 <td>{{value.endDate | date: 'dd/MM/yyyy'}}</td>
                                 <td>
-                                    <select [(ngModel)]="value.status" id="status" name="status" 
-                                    class="form-control" (change)="changeStatus(value)" required>
+                                    <select [(ngModel)]="value.status" id="status" 
+                                    name="status" class="form-control"
+                                    (change)="changeStatus(value)" required>
                                         <option value="0" disabled selected>Select</option>
                                         <option *ngFor="let list of statusArray" value={{list.value}}>
                                             {{list.name}}
@@ -45,38 +47,51 @@
                                     </select>
                                 </td>
                                 <td class="text-center">
-                                    <button type="button" class="btn btn-sm btn-ghost-info" 
-                                        data-toggle="modal" (click)="getParticularRow(value)">
-                                        <fa-icon [icon]="'pencil-alt'"></fa-icon> Edit</button>
-                                    <button type="button" class="btn btn-sm btn-ghost-danger" 
-                                        (click)="softDelete(value)">
-                                        <fa-icon [icon]="'times'"></fa-icon> Delete
+                                    <!-- <button type="button" class="btn btn-sm btn-ghost-info" 
+                                    data-toggle="modal" (click)="getParticularRow(value)">
+                                        <fa-icon [icon]="'pencil-alt'"></fa-icon> Edit
                                     </button>
+                                    <button type="button" class="btn btn-sm btn-ghost-danger" 
+                                    (click)="softDelete(value)">
+                                        <fa-icon [icon]="'trash-alt'"></fa-icon> Delete
+                                    </button> -->
+                                    <a class="text-primary ml-2" data-toggle="modal"
+                                        ngbTooltip="Edit " placement="left"
+                                        (click)="getParticularRow(value)">
+                                        <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                    </a>
+                                    <a class="text-danger ml-2" ngbTooltip="Delete"
+                                        placement="top" (click)="softDelete(value)">
+                                        <fa-icon [icon]="'trash-alt'"></fa-icon>
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </div><!-- End of the list view div -->
         </div>
-    </div>
+    </div> <!--End of the financial yesr list-->
 </div>
-
+<!-- creation and updation form of financial year -->
 <div bsModal #settingsModal="bs-modal" class="modal fade" tabindex="-1" 
-    role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+    [config]="{backdrop: 'static',  keyboard: false}">
     <div class="modal-dialog modal-primary" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h6 class="modal-title">Create / Update</h6>
-                <button type="button" class="close" 
-                    (click)="settingsModal.hide()" aria-label="Close">
+                <button type="button" class="close" (click)="settingsModal.hide()"
+                aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-                    <input [(ngModel)]="setting.id" type="hidden" id="id" name="id" class="form-control">
-                    <div class="form-group row">
+                <form action="" method="post" enctype="multipart/form-data"
+                class="form-horizontal">
+                    <input [(ngModel)]="setting.id" type="hidden" id="id" name="id"
+                    class="form-control">
+                    <!-- <div class="form-group row">
                         <label class="col-md-3 col-form-label" for="text-input">Pick Type *</label>
                         <div class="col-md-9">
                             <select [(ngModel)]="setting.pickListId" id="pickListId" name="pickListId" 
@@ -86,7 +101,7 @@
                                 value={{pickList.id}}>{{pickList.pickListName}}</option>
                         </select>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label" for="text-input">Year *</label>
                         <div class="col-md-9">
@@ -111,13 +126,10 @@
                         <label class="col-md-3 col-form-label" for="text-input">Start Date</label>
                         <div class="col-md-9">
                             <input [(ngModel)]="setting.startDate" type="text" 
-                                id="startDate" name="startDate" readonly 
-                                class="form-control" placeholder="Start Date"
-                                ngbDatepicker  #startDateDp="ngbDatepicker" (click)="startDateDp.toggle()">
-
-                            <!-- <input id="field_date" type="text" class="form-control" name="date" 
-                                [(ngModel)]="nurseryInventoryDetails.date" 
-                                ngbDatepicker  #seedsDateDp="ngbDatepicker" (click)="seedsDateDp.toggle()"/> -->
+                            id="startDate" name="startDate" readonly class="form-control"
+                            placeholder="Start Date" ngbDatepicker 
+                            #startDateDp="ngbDatepicker" 
+                            (click)="startDateDp.toggle()">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -126,7 +138,8 @@
                             <input [(ngModel)]="setting.endDate" type="text" 
                                 id="endDate" name="endDate" readonly 
                                 class="form-control" placeholder="End Date"
-                                ngbDatepicker  #endDateDp="ngbDatepicker" (click)="endDateDp.toggle()">
+                                ngbDatepicker #endDateDp="ngbDatepicker" 
+                                (click)="endDateDp.toggle()">
                         </div>
                     </div>
                 </form>
@@ -137,6 +150,8 @@
                 <button type="button" class="btn btn-primary" 
                     (click)="save()">Save</button>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div> <!--End of the financial year create and update modal form -->

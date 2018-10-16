@@ -6,17 +6,14 @@ import { EntityAuditEvent } from './entity-audit-event.model';
 
 @Injectable({ providedIn: 'root' })
 export class EntityAuditService {
-
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {}
 
     getAllAudited(): Observable<string[]> {
         return this.http.get<string[]>('api/audits/entity/all');
     }
 
     findByEntity(entity: string, limit: number): Observable<HttpResponse<EntityAuditEvent[]>> {
-        const params: HttpParams = new HttpParams()
-            .append('entityType', entity)
-            .append('limit', limit.toString());
+        const params: HttpParams = new HttpParams().append('entityType', entity).append('limit', limit.toString());
 
         return this.http.get<EntityAuditEvent[]>('api/audits/entity/changes', {
             params,
@@ -36,7 +33,12 @@ export class EntityAuditService {
         });
     }
 
-    findByParticularUpdatedEntityDetails(entity: string, entityId: number, status: string, limit: number): Observable<HttpResponse<EntityAuditEvent[]>> {
+    findByParticularUpdatedEntityDetails(
+        entity: string,
+        entityId: number,
+        status: string,
+        limit: number
+    ): Observable<HttpResponse<EntityAuditEvent[]>> {
         const params: HttpParams = new HttpParams()
             .append('entityType', entity)
             .append('entityId', entityId.toString())

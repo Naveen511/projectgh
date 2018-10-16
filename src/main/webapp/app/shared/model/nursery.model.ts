@@ -1,4 +1,13 @@
-import { Moment } from 'moment';
+/******************************************************************************
+ *  Property of Nichehands
+ *  Nichehands Confidential Proprietary
+ *  Nichehands Copyright (C) 2018 All rights reserved
+ *  ----------------------------------------------------------------------------
+ *  Date: 2018/08/02 11:27:58
+ *  Target: yarn
+ *******************************************************************************/
+
+// Import needed model and dependency
 import { IBatch } from 'app/shared/model//batch.model';
 import { INurseryStock } from 'app/shared/model//nursery-stock.model';
 import { IMotherBed } from 'app/shared/model//mother-bed.model';
@@ -27,6 +36,7 @@ export interface INursery {
     zonalName?: string;
     incharges?: INurseryIncharge[];
     mapNurseryWithSectors?: IMapNurseryWithSector[];
+    fromNurseryStockDetails?: INurseryStockDetails[];
 }
 
 export class Nursery implements INursery {
@@ -49,7 +59,8 @@ export class Nursery implements INursery {
         public financialYearNurseryId?: number,
         public zonalName?: string,
         public incharges?: INurseryIncharge[],
-        public mapNurseryWithSectors?: IMapNurseryWithSector[]
+        public mapNurseryWithSectors?: IMapNurseryWithSector[],
+        public fromNurseryStockDetails?: INurseryStockDetails[]
     ) {}
 }
 
@@ -75,4 +86,10 @@ export class NurseryModel {
     zonalName?: string;
     incharges?: INurseryIncharge[];
     mapNurseryWithSectors?: IMapNurseryWithSector[];
+    fromNurseryStockDetails?: INurseryStockDetails[];
+    operationalHeadId?: number;
+    zonalId?: number;
 }
+
+// Constant variable
+export const DISPLAY_NAME_NURSERY_TYPE = 'NURSERY TYPE';

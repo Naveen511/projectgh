@@ -1,28 +1,41 @@
 <div class="animated fadeIn">
-    <!-- Display the success Message alert-->
-    <div class="col-md-8 text-center">
-        <span class="text-success" *ngIf="successMessage"
-            (close)="successMessage = null">{{ successMessage }}</span>
-    </div>
-    <!-- End of the success alert-->
-
-    <!-- Display the Zone List-->
-    <div class="row"> <!-- justify-content-center -->
+    <!-- Display the Godown List-->
+    <div class="row">
         <div class="col-sm-8">
+            <!-- Display the success/error Message alert-->
+            <div>
+                <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">
+                    {{ successMessage }}
+                </ngb-alert>
+
+                <!-- <ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = null">
+                    {{ errorMessage }}
+                </ngb-alert> -->
+            </div>
+            <!-- End of the success/error alert-->
             <div class="card">
                 <div class="card-header">
-                  <i class="fa fa-align-justify"></i> Godown List
-                  <button type="button" class="btn btn-sm btn-success float-right" 
-                  data-toggle="modal" (click)="createGodown()"><fa-icon [icon]="'plus'"></fa-icon> Add</button>
+                    <i class="fa fa-align-justify"></i> Godown List
+                    <button type="button" class="btn btn-sm btn-success float-right" 
+                    data-toggle="modal" (click)="createGodown()">
+                        <fa-icon [icon]="'plus'"></fa-icon> Add
+                    </button>
                 </div>
                 <div class="card-body table-responsive">
                     <table class="table font12">
                         <thead>
-                            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+                            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse"
+                            [callback]="transition.bind(this)">
                                 <th>S No.</th>
-                                <th jhiSortBy="name">Name <fa-icon [icon]="'sort'"></fa-icon></th>
-                                <th jhiSortBy="address">Address <fa-icon [icon]="'sort'"></fa-icon></th>
-                                <th jhiSortBy="incharge">Incharge <fa-icon [icon]="'sort'"></fa-icon></th>
+                                <th jhiSortBy="name">Name
+                                    <fa-icon [icon]="'sort'"></fa-icon>
+                                </th>
+                                <th jhiSortBy="address">Address
+                                    <fa-icon [icon]="'sort'"></fa-icon>
+                                </th>
+                                <!-- <th jhiSortBy="incharge">Incharge
+                                    <fa-icon [icon]="'sort'"></fa-icon>
+                                </th> -->
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -31,68 +44,96 @@
                                 <td>{{i+1}}</td>
                                 <td>{{value.name}}</td>
                                 <td>{{value.address}}</td>
-                                <td></td>
+                                <!-- <td></td> -->
                                 <td>
-                                    <button type="button" class="btn btn-sm btn-ghost-info" 
-                                        data-toggle="modal" (click)="getGodownValue(value)">
-                                        <fa-icon [icon]="'pencil-alt'"></fa-icon> Edit</button>
-                                    <button type="button" class="btn btn-sm btn-ghost-danger" 
-                                        (click)="softDelete(value)">
-                                        <fa-icon [icon]="'times'"></fa-icon> Delete</button>
+                                    <a class="text-primary lg-2" data-toggle="modal" 
+                                    placement="top" (click)="getGodownValue(value)" 
+                                    ngbTooltip="Edit">
+                                        <fa-icon [icon]="'pencil-alt'"> </fa-icon>
+                                    </a>
+                                    <a class="text-danger ml-2" data-toggle="modal" 
+                                    ngbTooltip="Delete" placement="top" 
+                                    (click)="softDelete(value)">
+                                        <fa-icon [icon]="'trash-alt'"> </fa-icon>
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <div *ngIf="godowns && godowns.length" class="card-footer">
-                        <!-- <div class="row justify-content-center">
-                            <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+                    <!-- <div class="row justify-content-center">
+                            <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5"
+                            [itemsPerPage]="itemsPerPage"></jhi-item-count>
                         </div> -->
-                        <div class="row justify-content-center">
-                            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
-                        </div>
+                    <div class="row justify-content-center">
+                        <ngb-pagination [collectionSize]="totalItems" [(page)]="page"
+                            [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true"
+                            [boundaryLinks]="true" (pageChange)="loadPage(page)">
+                        </ngb-pagination>
                     </div>
+                </div>
             </div>
         </div>
     </div>
+    <!-- End of the Godown List displaying-->
 </div>
 
-<div bsModal #godownModal="bs-modal" class="modal fade" tabindex="-1" 
-    role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!-- Create and updte the Godown name and address details-->
+<div bsModal #godownModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel" aria-hidden="true"
+    [config]="{backdrop: 'static',  keyboard: false}">
     <div class="modal-dialog modal-primary" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <!-- <h6 class="modal-title">Create / Update {{godownObject.name}}</h6> -->
                 <h6 class="modal-title">{{title}}</h6>
-                <button type="button" class="close" (click)="godownModal.hide()" aria-label="Close">
+                <button type="button" class="close" (click)="closeGodownModal()"
+                aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body font13">
-                <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-                    <input [(ngModel)]="godownObject.id" type="hidden" id="id" name="id" class="form-control">
+                <form action="" method="post" enctype="multipart/form-data" 
+                    class="form-horizontal">
+                    <input [(ngModel)]="godownObject.id" type="hidden" id="id"
+                        name="id" class="form-control">
                     <div class="form-group row">
-                        <label class="col-md-4 col-form-label" for="text-input">Godown Name *</label>
+                        <label class="col-md-4 col-form-label" for="text-input">
+                            Godown Name *
+                        </label>
                         <div class="col-md-8">
-                            <input [(ngModel)]="godownObject.name" type="text" id="Name" name="Name" 
-                            class="form-control" placeholder="Name">
+                            <input [(ngModel)]="godownObject.name" type="text" id="Name"
+                                name="Name" class="form-control" placeholder="Name">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-4 col-form-label" for="textarea-input">Address</label>
+                        <label class="col-md-4 col-form-label" for="textarea-input">
+                            Address
+                        </label>
                         <div class="col-md-8">
-                            <textarea [(ngModel)]="godownObject.address" id="address" name="Address" 
-                            rows="3" class="form-control" placeholder="Address.."></textarea>
+                            <textarea [(ngModel)]="godownObject.address" id="address"
+                                name="Address" rows="3" class="form-control"
+                                placeholder="Address..">
+                            </textarea>
                         </div>
+                    </div>
+                    <div>
+                        <span class="text-danger" *ngIf="errorMessage"
+                            (close)="errorMessage = null">{{ errorMessage }}</span>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" 
-                    (click)="godownModal.hide()">Close</button>
-                <button type="button" class="btn btn-primary" 
+                <button type="button" class="btn btn-secondary"
+                    (click)="closeGodownModal()">Close
+                </button>
+                <button type="button" class="btn btn-primary"
                     (click)="save()">Save</button>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!--End of the Create/Update Godown-->

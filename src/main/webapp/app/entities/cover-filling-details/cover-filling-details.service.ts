@@ -49,13 +49,6 @@ export class CoverFillingDetailsService {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
-    // Get particular inventory based on the nurseryId
-    getParticularCover(coverFillingId: number): Observable<EntityArrayResponseType> {
-        return this.http
-            .get<ICoverFillingDetails[]>(`${this.resourceUrl}/cover-filling/${coverFillingId}`, { observe: 'response' })
-            .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
-    }
-
     private convertDateFromClient(coverFillingDetails: ICoverFillingDetails): ICoverFillingDetails {
         const copy: ICoverFillingDetails = Object.assign({}, coverFillingDetails, {
             date:

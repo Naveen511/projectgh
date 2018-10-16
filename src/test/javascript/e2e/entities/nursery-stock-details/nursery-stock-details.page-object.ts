@@ -21,11 +21,13 @@ export class NurseryStockDetailsUpdatePage {
     quantityInput = element(by.id('field_quantity'));
     descriptionInput = element(by.id('field_description'));
     statusInput = element(by.id('field_status'));
+    itStatusInput = element(by.id('field_itStatus'));
     batchSelect = element(by.id('field_batch'));
     nurseryStockSelect = element(by.id('field_nurseryStock'));
     itNurserySelect = element(by.id('field_itNursery'));
     saplingDamageAreaSelect = element(by.id('field_saplingDamageArea'));
     financialYearStockDetailsSelect = element(by.id('field_financialYearStockDetails'));
+    fromNurseryStockDetailsSelect = element(by.id('field_fromNurseryStockDetails'));
 
     getPageTitle() {
         return this.pageTitle.getAttribute('jhiTranslate');
@@ -61,6 +63,14 @@ export class NurseryStockDetailsUpdatePage {
 
     getStatusInput() {
         return this.statusInput.getAttribute('value');
+    }
+
+    setItStatusInput(itStatus): promise.Promise<void> {
+        return this.itStatusInput.sendKeys(itStatus);
+    }
+
+    getItStatusInput() {
+        return this.itStatusInput.getAttribute('value');
     }
 
     batchSelectLastOption(): promise.Promise<void> {
@@ -156,6 +166,25 @@ export class NurseryStockDetailsUpdatePage {
 
     getFinancialYearStockDetailsSelectedOption() {
         return this.financialYearStockDetailsSelect.element(by.css('option:checked')).getText();
+    }
+
+    fromNurseryStockDetailsSelectLastOption(): promise.Promise<void> {
+        return this.fromNurseryStockDetailsSelect
+            .all(by.tagName('option'))
+            .last()
+            .click();
+    }
+
+    fromNurseryStockDetailsSelectOption(option): promise.Promise<void> {
+        return this.fromNurseryStockDetailsSelect.sendKeys(option);
+    }
+
+    getFromNurseryStockDetailsSelect(): ElementFinder {
+        return this.fromNurseryStockDetailsSelect;
+    }
+
+    getFromNurseryStockDetailsSelectedOption() {
+        return this.fromNurseryStockDetailsSelect.element(by.css('option:checked')).getText();
     }
 
     save(): promise.Promise<void> {

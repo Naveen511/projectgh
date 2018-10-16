@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date: 2018/08/02
+ *  Date  : 2018/08/02
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs PickListValueMapper
@@ -15,9 +15,10 @@ import com.niche.ng.domain.*;
 import com.niche.ng.service.dto.PickListValueDTO;
 
 import org.mapstruct.*;
-import java.util.List;
 /**
  * Mapper for the entity PickListValue and its DTO PickListValueDTO.
+ * Mapping the parent and child table to fetch the field value.
+ * Converting the entity object into data transfer object(DTO).
  */
 @Mapper(componentModel = "spring", uses = {PickListMapper.class})
 public interface PickListValueMapper extends EntityMapper<PickListValueDTO, PickListValue> {
@@ -60,8 +61,6 @@ public interface PickListValueMapper extends EntityMapper<PickListValueDTO, Pick
     @Mapping(target = "nurseryInventoryDamageDescs", ignore = true)
     @Mapping(target = "coverFillingDamageDescs", ignore = true)
     PickListValue toEntity(PickListValueDTO pickListValueDTO);
-
-    List<PickListValueDTO> toDto(List<PickListValue> pickListValue);
 
     default PickListValue fromId(Long id) {
         if (id == null) {

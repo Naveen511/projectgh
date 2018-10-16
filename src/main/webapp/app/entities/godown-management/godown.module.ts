@@ -1,3 +1,11 @@
+/******************************************************************************
+ *  Property of Nichehands
+ *  Nichehands Confidential Proprietary
+ *  Nichehands Copyright (C) 2018 All rights reserved
+ *  ----------------------------------------------------------------------------
+ *  Date: 2018/08/22
+ *  Target: yarn
+ *******************************************************************************/
 // Angular
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -33,11 +41,8 @@ import { ProjectghSharedModule } from 'app/shared';
         ProjectghSharedModule
     ],
     declarations: [GodownComponent, GodownPurchaseComponent, GodownStockComponent],
-    providers: [
-        { provide: NgbDateAdapter, useClass: NgbDateMomentAdapter }
-    ],
+    providers: [{ provide: NgbDateAdapter, useClass: NgbDateMomentAdapter }],
     exports: [NgbModule],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-
 export class GodownModule {}

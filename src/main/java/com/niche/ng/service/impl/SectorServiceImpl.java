@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date: 2018/08/02
+ *  Date  : 2018/08/02
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs SectorServiceImpl
@@ -26,9 +26,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.Optional;
-import java.util.List;
 /**
  * Service Implementation for managing Sector.
+ *
+ * Implementing SectorService with IMPL suffix class as SectorServiceImpl.
+ * Using of business logic in the service layer which is present in the service file
+ * using impl as a interface to access the repository layer.
+ * Once we got the responce from the repository layer, mapper convert the entity
+ * object to data transfer object(DTO).
  */
 @Service
 @Transactional
@@ -98,21 +103,13 @@ public class SectorServiceImpl implements SectorService {
         log.debug("Request to delete Sector : {}", id);
         sectorRepository.deleteById(id);
     }
-    
-    /**
-     * Get all the sectors by zonalId.
-     *
-     * @param zonalId the zonalId of the entity
-     * @return the list of entities
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public List<SectorDTO> findZonalSectors(Long zonalId) {
-        log.debug("Request to get Sectors : {}", zonalId);
-        List<Sector> sector = sectorRepository.findByZonalId(zonalId);
-        return sectorMapper.toDto(sector);
-    }
 
+    /**
+     * Get the count of sector by status
+     *
+     * @param status the status of the entity
+     * @return Long value of nursery count
+     */
     @Override
     public Long findActiveCount(Integer status) {
         return sectorRepository.countByStatus(status);

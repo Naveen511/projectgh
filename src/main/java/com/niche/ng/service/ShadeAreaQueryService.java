@@ -1,3 +1,14 @@
+/******************************************************************************
+ *  Property of Nichehands
+ *  Nichehands Confidential Proprietary
+ *  Nichehands Copyright (C) 2018 All rights reserved
+ *  ----------------------------------------------------------------------------
+ *  Date  : 2018/08/10
+ *  Target: yarn
+ *  -----------------------------------------------------------------------------
+ *  File Description    : This file performs ShadeAreaQueryService
+ *
+ *******************************************************************************/
 package com.niche.ng.service;
 
 import java.util.List;
@@ -90,6 +101,9 @@ public class ShadeAreaQueryService extends QueryService<ShadeArea> {
             }
             if (criteria.getSaplings() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getSaplings(), ShadeArea_.saplings));
+            }
+            if (criteria.getRound() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getRound(), ShadeArea_.round));
             }
             if (criteria.getBatchId() != null) {
                 specification = specification.and(buildReferringEntitySpecification(criteria.getBatchId(), ShadeArea_.batch, Batch_.id));

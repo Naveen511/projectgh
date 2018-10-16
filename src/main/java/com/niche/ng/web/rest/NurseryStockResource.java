@@ -37,6 +37,8 @@ import java.util.Optional;
 
 /**
  * REST controller for managing NurseryStock.
+ * Used RequestMapping annotation to map the url with the client side.
+ * Using service to access the values in the database.
  */
 @RestController
 @RequestMapping("/api")
@@ -128,20 +130,6 @@ public class NurseryStockResource {
     }
 
     /**
-     * GET  /nursery-stocks/:id : get the "id" nurseryStock.
-     *
-     * @param id the id of the nurseryStockDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the nurseryStockDTO, or with status 404 (Not Found)
-     */
-    @GetMapping("/nursery-stocks/nursery/{nurseryId}")
-    @Timed
-    public ResponseEntity<List<NurseryStockDTO>> getparticularNursery(@PathVariable Long nurseryId) {
-        log.debug("REST request to get NurseryStock : {}", nurseryId);
-        List<NurseryStockDTO> list = nurseryStockService.findNurseryId(nurseryId);
-        return ResponseEntity.ok().body(list);
-    }
-
-    /**
      * DELETE  /nursery-stocks/:id : delete the "id" nurseryStock.
      *
      * @param id the id of the nurseryStockDTO to delete
@@ -153,20 +141,5 @@ public class NurseryStockResource {
         log.debug("REST request to delete NurseryStock : {}", id);
         nurseryStockService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
-    }
-
-    /**
-     * GET  /nursery-stocks/stock/:nurseryId/pickListCategoryId : get all the NurseryStockDTO of particular nursery category.
-     *
-     * @param nurseryId the nurseryId of the NurseryStockDTO to retrieve
-     * @param pickListCategoryId the pickListCategoryId of the NurseryStockDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and the list of sectors in body
-     */
-    @GetMapping("/nursery-stocks/stock/{nurseryId}/{pickListCategoryId}")
-    @Timed
-    public ResponseEntity<List<NurseryStockDTO>> getNurseryCategoryStock(@PathVariable Long nurseryId, @PathVariable Long pickListCategoryId) {
-        log.debug("REST request to get a list of particular category stock");
-        List<NurseryStockDTO> list = nurseryStockService.findStock(nurseryId, pickListCategoryId);
-        return ResponseEntity.ok().body(list);
     }
 }

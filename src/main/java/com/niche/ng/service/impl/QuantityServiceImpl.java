@@ -1,3 +1,14 @@
+/******************************************************************************
+ *  Property of Nichehands
+ *  Nichehands Confidential Proprietary
+ *  Nichehands Copyright (C) 2018 All rights reserved
+ *  ----------------------------------------------------------------------------
+ *  Date  : 2018/09/06
+ *  Target: yarn
+ *  -----------------------------------------------------------------------------
+ *  File Description    : This file performs QuantityServiceImpl
+ *
+ *******************************************************************************/
 package com.niche.ng.service.impl;
 
 import com.niche.ng.service.QuantityService;
@@ -13,10 +24,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 /**
  * Service Implementation for managing Quantity.
+ *
+ * Implementing QuantityService with IMPL suffix class as QuantityServiceImpl.
+ * Using of business logic in the service layer which is present in the service file
+ * using impl as a interface to access the repository layer.
+ * Once we got the responce from the repository layer, mapper convert the entity
+ * object to data transfer object(DTO).
  */
 @Service
 @Transactional
@@ -87,9 +103,17 @@ public class QuantityServiceImpl implements QuantityService {
         quantityRepository.deleteById(id);
     }
 
-    @Override
+    /**
+     * Get all the quantities by pickListQuantityId and quantityTypeId.
+     *
+     * @param pickListQuantityId the pickListQuantityId of the entity
+     * @param quantityTypeId the quantityTypeId of the entity
+     * @return the list of entities
+     */
+    /* @Override
+    @Transactional(readOnly = true)
     public List<QuantityDTO> findQuantity(Long pickListQuantityId, Long quantityTypeId) {
         List<Quantity> test = quantityRepository.findByPickListVarietyIdAndPickListCategoryId(pickListQuantityId,quantityTypeId);
         return quantityMapper.toDto(test);
-    }
+    } */
 }

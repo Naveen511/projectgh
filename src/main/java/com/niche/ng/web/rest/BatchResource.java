@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date: 2018/08/07
+ *  Date  : 2018/08/07
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs BatchResource of CRUD Operation
@@ -39,6 +39,8 @@ import java.time.LocalDate;
 
 /**
  * REST controller for managing Batch.
+ * Used RequestMapping annotation to map the url with the client side.
+ * Using service to access the values in the database.
  */
 @RestController
 @RequestMapping("/api")

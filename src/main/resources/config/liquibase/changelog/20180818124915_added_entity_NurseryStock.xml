@@ -45,6 +45,10 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="damage_quantity" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
             <column name="nursery_id" type="bigint">
                 <constraints nullable="true" />
             </column>

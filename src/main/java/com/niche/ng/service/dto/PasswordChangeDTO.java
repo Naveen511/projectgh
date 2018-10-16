@@ -3,10 +3,11 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date: 2018/08/02
+ *  Date: 2018/08/31
  *  Target: yarn
  *  -----------------------------------------------------------------------------
- *  File Description    : This file performs PasswordChangeDTO
+ *  File Description    : This file performs PasswordChangeDTO and
+                            declared the table fields, data types for password table.
  *
  *******************************************************************************/
 package com.niche.ng.service.dto;

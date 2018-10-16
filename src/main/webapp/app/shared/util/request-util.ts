@@ -17,7 +17,7 @@ export const createRequestOption = (req?: any): HttpParams => {
             for (const k in req.filter) {
                 if (k) {
                     options = options.append(k, req.filter[k]);
-               }
+                }
             }
         }
     }

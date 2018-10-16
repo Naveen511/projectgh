@@ -46,5 +46,4 @@ public class DatabaseConfiguration {
         log.debug("Starting H2 database");
         return H2ConfigurationHelper.createServer();
     }
-
 }

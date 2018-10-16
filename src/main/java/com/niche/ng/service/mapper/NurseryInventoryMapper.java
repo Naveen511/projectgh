@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date: 2018/08/25
+ *  Date  : 2018/08/25
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs NurseryInventoryMapper
@@ -15,9 +15,10 @@ import com.niche.ng.domain.*;
 import com.niche.ng.service.dto.NurseryInventoryDTO;
 
 import org.mapstruct.*;
-import java.util.List;
 /**
  * Mapper for the entity NurseryInventory and its DTO NurseryInventoryDTO.
+ * Mapping the parent and child table to fetch the field value.
+ * Converting the entity object into data transfer object(DTO).
  */
 @Mapper(componentModel = "spring", uses = {NurseryMapper.class, PickListValueMapper.class})
 public interface NurseryInventoryMapper extends EntityMapper<NurseryInventoryDTO, NurseryInventory> {
@@ -38,8 +39,6 @@ public interface NurseryInventoryMapper extends EntityMapper<NurseryInventoryDTO
     @Mapping(target = "nurseryInventoryDetails", ignore = true)
     @Mapping(source = "quantityTypeId", target = "quantityType")
     NurseryInventory toEntity(NurseryInventoryDTO nurseryInventoryDTO);
-
-    List<NurseryInventoryDTO> toDto(List<NurseryInventory> nurseryInventory);
 
     default NurseryInventory fromId(Long id) {
         if (id == null) {

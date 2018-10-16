@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date: 2018/08/02
+ *  Date  : 2018/08/02
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs NurseryStockDetailsService
@@ -17,7 +17,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
-import java.util.List;
 
 /**
  * Service Interface for managing NurseryStockDetails.
@@ -55,28 +54,4 @@ public interface NurseryStockDetailsService {
      * @param id the id of the entity
      */
     void delete(Long id);
-
-    /**
-     * Get the "nurseryStockId" NurseryStockDetails.
-     *
-     * @param nurseryStockId the nurseryStockId of the entity
-     * @return the list of entity
-     */
-    List<NurseryStockDetailsDTO> findParticularStockDetails(Long nurseryStockId);
-
-    /**
-     * Get the "status" NurseryStockDetails.
-     *
-     * @param status the status of the entity
-     * @return the list of entity
-     */
-    List<NurseryStockDetailsDTO> findParticularStatusRecord(Integer status);
-
-    /**
-     * Get the "itNurseryId" NurseryStockDetails.
-     *
-     * @param itNurseryId the nurseryStockId of the entity
-     * @return the list of entity
-     */
-    List<NurseryStockDetailsDTO> findParticularNurseryStockDetails(Long itNurseryId);
 }

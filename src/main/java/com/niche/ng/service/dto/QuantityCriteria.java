@@ -1,3 +1,15 @@
+/******************************************************************************
+ *  Property of Nichehands
+ *  Nichehands Confidential Proprietary
+ *  Nichehands Copyright (C) 2018 All rights reserved
+ *  ----------------------------------------------------------------------------
+ *  Date: 2018/08/31
+ *  Target: yarn
+ *  -----------------------------------------------------------------------------
+ *  File Description    : This file performs QuantityCriteria and declared 
+                            the table fields, data types for Quantity table.
+ *
+ *******************************************************************************/
 package com.niche.ng.service.dto;
 
 import java.io.Serializable;
@@ -7,11 +19,9 @@ import io.github.jhipster.service.filter.Filter;
 import io.github.jhipster.service.filter.FloatFilter;
 import io.github.jhipster.service.filter.IntegerFilter;
 import io.github.jhipster.service.filter.LongFilter;
+
+
 import io.github.jhipster.service.filter.StringFilter;
-
-
-
-
 
 
 /**
@@ -69,6 +79,11 @@ public class QuantityCriteria implements Serializable {
         this.pickListCategoryId = pickListCategoryId;
     }
 
+    /**
+     * toString to get the values
+     * 
+     * @return values
+     */
     @Override
     public String toString() {
         return "QuantityCriteria{" +

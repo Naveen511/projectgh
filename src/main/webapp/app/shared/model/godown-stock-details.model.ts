@@ -1,3 +1,13 @@
+/******************************************************************************
+ *  Property of Nichehands
+ *  Nichehands Confidential Proprietary
+ *  Nichehands Copyright (C) 2018 All rights reserved
+ *  ----------------------------------------------------------------------------
+ *  Date: 2018/08/27
+ *  Target: yarn
+ *******************************************************************************/
+
+// Import needed dependency
 import { Moment } from 'moment';
 
 export interface IGodownStockDetails {
@@ -38,6 +48,8 @@ export class GodownStockDetailsModel {
     financialYearGodownStockDetailsId?: number;
 }
 
-export const STATUS_ADD = 1;
+// Constant variable
+export const STATUS_DIRECT_ADD = 1;
+export const STATUS_ADDED_FROM_PURCHASE = 4;
 export const STATUS_CONSUME = 2;
 export const STATUS_DAMAGE = 3;

@@ -1,3 +1,14 @@
+/******************************************************************************
+ *  Property of Nichehands
+ *  Nichehands Confidential Proprietary
+ *  Nichehands Copyright (C) 2018 All rights reserved
+ *  ----------------------------------------------------------------------------
+ *  Date  : 2018/08/02
+ *  Target: yarn
+ *  -----------------------------------------------------------------------------
+ *  File Description    : This file performs PickListQueryService
+ *
+ *******************************************************************************/
 package com.niche.ng.service;
 
 import java.util.List;
@@ -81,6 +92,9 @@ public class PickListQueryService extends QueryService<PickList> {
             }
             if (criteria.getStatus() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getStatus(), PickList_.status));
+            }
+            if (criteria.getDisplayLabelName() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getDisplayLabelName(), PickList_.displayLabelName));
             }
             if (criteria.getPickListValuesId() != null) {
                 specification = specification.and(buildReferringEntitySpecification(criteria.getPickListValuesId(), PickList_.pickListValues, PickListValue_.id));

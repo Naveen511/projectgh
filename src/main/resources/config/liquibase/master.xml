@@ -37,6 +37,8 @@
     <include file="config/liquibase/changelog/20180914112902_added_entity_MapNurseryWithSector.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180914123202_added_entity_NurseryIncharge.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180920135905_added_entity_EntityAuditEvent.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181003064928_added_entity_BatchQuantity.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/changelog.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20180818124908_added_entity_constraints_Sector.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180818124909_added_entity_constraints_Nursery.xml" relativeToChangelogFile="false"/>
@@ -65,5 +67,6 @@
     <include file="config/liquibase/changelog/20180914100532_added_entity_constraints_SectorIncharge.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180914112902_added_entity_constraints_MapNurseryWithSector.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180914123202_added_entity_constraints_NurseryIncharge.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181003064928_added_entity_constraints_BatchQuantity.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

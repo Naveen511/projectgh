@@ -21,6 +21,7 @@
             "status": "Status",
             "damage": "Damage",
             "saplings": "Saplings",
+            "round": "Round",
             "batch": "Batch",
             "financialYearShadeArea": "Financial Year Shade Area"
         }

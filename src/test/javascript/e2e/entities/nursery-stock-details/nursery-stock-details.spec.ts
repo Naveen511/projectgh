@@ -38,11 +38,14 @@ describe('NurseryStockDetails e2e test', () => {
         expect(nurseryStockDetailsUpdatePage.getDescriptionInput()).toMatch('description');
         nurseryStockDetailsUpdatePage.setStatusInput('5');
         expect(nurseryStockDetailsUpdatePage.getStatusInput()).toMatch('5');
+        nurseryStockDetailsUpdatePage.setItStatusInput('5');
+        expect(nurseryStockDetailsUpdatePage.getItStatusInput()).toMatch('5');
         nurseryStockDetailsUpdatePage.batchSelectLastOption();
         nurseryStockDetailsUpdatePage.nurseryStockSelectLastOption();
         nurseryStockDetailsUpdatePage.itNurserySelectLastOption();
         nurseryStockDetailsUpdatePage.saplingDamageAreaSelectLastOption();
         nurseryStockDetailsUpdatePage.financialYearStockDetailsSelectLastOption();
+        nurseryStockDetailsUpdatePage.fromNurseryStockDetailsSelectLastOption();
         nurseryStockDetailsUpdatePage.save();
         expect(nurseryStockDetailsUpdatePage.getSaveButton().isPresent()).toBeFalsy();
     });

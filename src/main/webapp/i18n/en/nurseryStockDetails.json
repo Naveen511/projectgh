@@ -20,11 +20,13 @@
             "quantity": "Quantity",
             "description": "Description",
             "status": "Status",
+            "itStatus": "It Status",
             "batch": "Batch",
             "nurseryStock": "Nursery Stock",
             "itNursery": "It Nursery",
             "saplingDamageArea": "Sapling Damage Area",
-            "financialYearStockDetails": "Financial Year Stock Details"
+            "financialYearStockDetails": "Financial Year Stock Details",
+            "fromNurseryStockDetails": "From Nursery Stock Details"
         }
     }
 }

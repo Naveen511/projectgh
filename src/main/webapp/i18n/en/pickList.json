@@ -18,6 +18,7 @@
             },
             "pickListName": "Pick List Name",
             "status": "Status",
+            "displayLabelName": "Display Label Name",
             "pickListValues": "Pick List Values"
         }
     }

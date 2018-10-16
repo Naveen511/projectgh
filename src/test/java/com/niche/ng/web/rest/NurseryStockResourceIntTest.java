@@ -68,6 +68,9 @@ public class NurseryStockResourceIntTest {
     private static final Integer DEFAULT_POS_QUANTITY = 1;
     private static final Integer UPDATED_POS_QUANTITY = 2;
 
+    private static final Long DEFAULT_DAMAGE_QUANTITY = 1L;
+    private static final Long UPDATED_DAMAGE_QUANTITY = 2L;
+
     @Autowired
     private NurseryStockRepository nurseryStockRepository;
 
@@ -122,7 +125,8 @@ public class NurseryStockResourceIntTest {
             .consumedQuantity(DEFAULT_CONSUMED_QUANTITY)
             .description(DEFAULT_DESCRIPTION)
             .status(DEFAULT_STATUS)
-            .posQuantity(DEFAULT_POS_QUANTITY);
+            .posQuantity(DEFAULT_POS_QUANTITY)
+            .damageQuantity(DEFAULT_DAMAGE_QUANTITY);
         return nurseryStock;
     }
 
@@ -153,6 +157,7 @@ public class NurseryStockResourceIntTest {
         assertThat(testNurseryStock.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testNurseryStock.getStatus()).isEqualTo(DEFAULT_STATUS);
         assertThat(testNurseryStock.getPosQuantity()).isEqualTo(DEFAULT_POS_QUANTITY);
+        assertThat(testNurseryStock.getDamageQuantity()).isEqualTo(DEFAULT_DAMAGE_QUANTITY);
     }
 
     @Test
@@ -191,7 +196,8 @@ public class NurseryStockResourceIntTest {
             .andExpect(jsonPath("$.[*].consumedQuantity").value(hasItem(DEFAULT_CONSUMED_QUANTITY.intValue())))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)))
-            .andExpect(jsonPath("$.[*].posQuantity").value(hasItem(DEFAULT_POS_QUANTITY)));
+            .andExpect(jsonPath("$.[*].posQuantity").value(hasItem(DEFAULT_POS_QUANTITY)))
+            .andExpect(jsonPath("$.[*].damageQuantity").value(hasItem(DEFAULT_DAMAGE_QUANTITY.intValue())));
     }
     
 
@@ -211,7 +217,8 @@ public class NurseryStockResourceIntTest {
             .andExpect(jsonPath("$.consumedQuantity").value(DEFAULT_CONSUMED_QUANTITY.intValue()))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS))
-            .andExpect(jsonPath("$.posQuantity").value(DEFAULT_POS_QUANTITY));
+            .andExpect(jsonPath("$.posQuantity").value(DEFAULT_POS_QUANTITY))
+            .andExpect(jsonPath("$.damageQuantity").value(DEFAULT_DAMAGE_QUANTITY.intValue()));
     }
 
     @Test
@@ -585,6 +592,72 @@ public class NurseryStockResourceIntTest {
 
     @Test
     @Transactional
+    public void getAllNurseryStocksByDamageQuantityIsEqualToSomething() throws Exception {
+        // Initialize the database
+        nurseryStockRepository.saveAndFlush(nurseryStock);
+
+        // Get all the nurseryStockList where damageQuantity equals to DEFAULT_DAMAGE_QUANTITY
+        defaultNurseryStockShouldBeFound("damageQuantity.equals=" + DEFAULT_DAMAGE_QUANTITY);
+
+        // Get all the nurseryStockList where damageQuantity equals to UPDATED_DAMAGE_QUANTITY
+        defaultNurseryStockShouldNotBeFound("damageQuantity.equals=" + UPDATED_DAMAGE_QUANTITY);
+    }
+
+    @Test
+    @Transactional
+    public void getAllNurseryStocksByDamageQuantityIsInShouldWork() throws Exception {
+        // Initialize the database
+        nurseryStockRepository.saveAndFlush(nurseryStock);
+
+        // Get all the nurseryStockList where damageQuantity in DEFAULT_DAMAGE_QUANTITY or UPDATED_DAMAGE_QUANTITY
+        defaultNurseryStockShouldBeFound("damageQuantity.in=" + DEFAULT_DAMAGE_QUANTITY + "," + UPDATED_DAMAGE_QUANTITY);
+
+        // Get all the nurseryStockList where damageQuantity equals to UPDATED_DAMAGE_QUANTITY
+        defaultNurseryStockShouldNotBeFound("damageQuantity.in=" + UPDATED_DAMAGE_QUANTITY);
+    }
+
+    @Test
+    @Transactional
+    public void getAllNurseryStocksByDamageQuantityIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        nurseryStockRepository.saveAndFlush(nurseryStock);
+
+        // Get all the nurseryStockList where damageQuantity is not null
+        defaultNurseryStockShouldBeFound("damageQuantity.specified=true");
+
+        // Get all the nurseryStockList where damageQuantity is null
+        defaultNurseryStockShouldNotBeFound("damageQuantity.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllNurseryStocksByDamageQuantityIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        nurseryStockRepository.saveAndFlush(nurseryStock);
+
+        // Get all the nurseryStockList where damageQuantity greater than or equals to DEFAULT_DAMAGE_QUANTITY
+        defaultNurseryStockShouldBeFound("damageQuantity.greaterOrEqualThan=" + DEFAULT_DAMAGE_QUANTITY);
+
+        // Get all the nurseryStockList where damageQuantity greater than or equals to UPDATED_DAMAGE_QUANTITY
+        defaultNurseryStockShouldNotBeFound("damageQuantity.greaterOrEqualThan=" + UPDATED_DAMAGE_QUANTITY);
+    }
+
+    @Test
+    @Transactional
+    public void getAllNurseryStocksByDamageQuantityIsLessThanSomething() throws Exception {
+        // Initialize the database
+        nurseryStockRepository.saveAndFlush(nurseryStock);
+
+        // Get all the nurseryStockList where damageQuantity less than or equals to DEFAULT_DAMAGE_QUANTITY
+        defaultNurseryStockShouldNotBeFound("damageQuantity.lessThan=" + DEFAULT_DAMAGE_QUANTITY);
+
+        // Get all the nurseryStockList where damageQuantity less than or equals to UPDATED_DAMAGE_QUANTITY
+        defaultNurseryStockShouldBeFound("damageQuantity.lessThan=" + UPDATED_DAMAGE_QUANTITY);
+    }
+
+
+    @Test
+    @Transactional
     public void getAllNurseryStocksByNurseryStockDetailsIsEqualToSomething() throws Exception {
         // Initialize the database
         NurseryStockDetails nurseryStockDetails = NurseryStockDetailsResourceIntTest.createEntity(em);
@@ -709,7 +782,8 @@ public class NurseryStockResourceIntTest {
             .andExpect(jsonPath("$.[*].consumedQuantity").value(hasItem(DEFAULT_CONSUMED_QUANTITY.intValue())))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)))
-            .andExpect(jsonPath("$.[*].posQuantity").value(hasItem(DEFAULT_POS_QUANTITY)));
+            .andExpect(jsonPath("$.[*].posQuantity").value(hasItem(DEFAULT_POS_QUANTITY)))
+            .andExpect(jsonPath("$.[*].damageQuantity").value(hasItem(DEFAULT_DAMAGE_QUANTITY.intValue())));
     }
 
     /**
@@ -749,7 +823,8 @@ public class NurseryStockResourceIntTest {
             .consumedQuantity(UPDATED_CONSUMED_QUANTITY)
             .description(UPDATED_DESCRIPTION)
             .status(UPDATED_STATUS)
-            .posQuantity(UPDATED_POS_QUANTITY);
+            .posQuantity(UPDATED_POS_QUANTITY)
+            .damageQuantity(UPDATED_DAMAGE_QUANTITY);
         NurseryStockDTO nurseryStockDTO = nurseryStockMapper.toDto(updatedNurseryStock);
 
         restNurseryStockMockMvc.perform(put("/api/nursery-stocks")
@@ -767,6 +842,7 @@ public class NurseryStockResourceIntTest {
         assertThat(testNurseryStock.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testNurseryStock.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testNurseryStock.getPosQuantity()).isEqualTo(UPDATED_POS_QUANTITY);
+        assertThat(testNurseryStock.getDamageQuantity()).isEqualTo(UPDATED_DAMAGE_QUANTITY);
     }
 
     @Test

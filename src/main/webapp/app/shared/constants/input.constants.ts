@@ -2,6 +2,7 @@ import { Moment } from 'moment';
 
 export const DATE_FORMAT = 'YYYY-MM-DD';
 export const DATE_TIME_FORMAT = 'YYYY-MM-DDThh:mm';
+
 // List of months
 export const MONTHS = [
     { value: 1, name: 'January' },
@@ -19,10 +20,7 @@ export const MONTHS = [
 ];
 
 // Default Status
-export const DEFAULT_STATUS = [
-    { value: 1, name: 'ACTIVE' },
-    { value: 2, name: 'INACTIVE' }
-];
+export const DEFAULT_STATUS = [{ value: 1, name: 'ACTIVE' }, { value: 2, name: 'INACTIVE' }];
 
 // Default damage status
 export const SOFT_DELETE_STATUS = -1;
@@ -34,4 +32,13 @@ export class Filter {
     toDate?: Moment;
 }
 
+// Constant for active status
 export const STATUS_ACTIVE = 1;
+
+// Constant for alert time out
+export const ALERT_TIME_OUT_5000 = 5000;
+export const ALERT_TIME_OUT_3000 = 3000;
+
+// Constant for title - Whether it is movement or update
+export const STATUS_MOVEMENT = 1;
+export const STATUS_UPDATE = 2;

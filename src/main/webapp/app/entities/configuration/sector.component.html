@@ -1,13 +1,15 @@
 <div class="animated fadeIn">
+    <!-- Display the particular sector mapped details List-->
     <div id="collapseBasic" [collapse]="isCollapsed" class="row">
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
                     <i class="fa fa-align-justify"></i> Sector Mapped Details
                     <button type="button" class="btn btn-sm btn-danger float-right" 
-                        (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="isCollapsed" 
+                        (click)="isCollapsed = !isCollapsed" 
+                        [attr.aria-expanded]="isCollapsed"
                         aria-controls="collapseBasic">
-                            <fa-icon [icon]="'times'"></fa-icon> close
+                        <fa-icon [icon]="'times'"></fa-icon> close
                     </button>
                 </div>
                 <div class="card-body table-responsive">
@@ -32,10 +34,14 @@
                                 <td>{{val.fromDate | date: 'dd/MM/yyyy'}}</td>
                                 <td>{{val.toDate | date: 'dd/MM/yyyy'}}</td>
                                 <td>{{val.description}}</td>
-                                <td>{{val.createdAt | date: 'dd/MM/yyyy'}}</td>
+                                <td>{{val.createdDate | date:'medium'}}</td>
                                 <td>
-                                    <span *ngIf="val.status == 1" class="badge badge-success">Active</span>
-                                    <span *ngIf="val.status == 2" class="badge badge-danger">InActive</span>
+                                    <span *ngIf="val.status == 1" class="badge badge-success">
+                                        Active
+                                    </span>
+                                    <span *ngIf="val.status == 2" class="badge badge-danger">
+                                        InActive
+                                    </span>
                                 </td>
                             </tr>
                         </tbody>
@@ -43,14 +49,14 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> <!-- End of sector mapped details -->
     <!-- Display the sector list -->
     <div class="row">
         <div class="col-sm-12">
             <!-- Display the success Message alert-->
             <div>
                 <ngb-alert *ngIf="successMessage" type="success" 
-                    (close)="successMessage = null">{{ successMessage }}</ngb-alert>
+                (close)="successMessage = null">{{ successMessage }}</ngb-alert>
             </div>
             <!-- End of the success alert-->
             <div class="card">
@@ -62,17 +68,51 @@
                         <fa-icon [icon]="'plus'"></fa-icon> Add
                     </button>
                 </div>
+                <!-- Filter the report based on the report
+                <div class="row">
+                    <div class="form-group col-sm-3">
+                        <label for="name">Date From</label>
+                        <input id="field_fromDate" type="text" class="form-control"
+                            name="fromDate" ngbDatepicker  #fromDate="ngbDatepicker"
+                            [(ngModel)]="filter.fromDate" (click)="fromDate.toggle()"
+                            placeholder="Date From"/>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="name">Date To</label>
+                            <input id="field_date" type="text" class="form-control" 
+                            name="toDate" ngbDatepicker  #toDate="ngbDatepicker"
+                            [(ngModel)]="filter.toDate" (click)="toDate.toggle()"
+                            placeholder="Date To"/>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <button type="button" class="btn btn-sm btn-info" 
+                        (click)="getReport()">
+                            <i class="fa fa-dot-circle-o"></i> Filter
+                        </button>
+                    </div>
+                </div>
+                End of the report-->
                 <div class="card-body table-responsive">
                     <table class="table font12">
                         <thead>
-                            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+                            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" 
+                                [callback]="transition.bind(this)">
                                 <th>S No.</th>
-                                <th jhiSortBy="financialYearSectorBatchName">Year <fa-icon [icon]="'sort'"></fa-icon></th>
-                                <th jhiSortBy="zonalZoneName">Zonal <fa-icon [icon]="'sort'"></fa-icon></th>
-                                <th jhiSortBy="sectorName">Name <fa-icon [icon]="'sort'"></fa-icon></th>
-                                <!-- <th jhiSortBy="sectorAddress">Address <fa-icon [icon]="'sort'"></fa-icon></th> -->
-                                <th jhiSortBy="createdAt">Created At <fa-icon [icon]="'sort'"></fa-icon></th>
-                                <th jhiSortBy="updatedAt">Updated At <fa-icon [icon]="'sort'"></fa-icon></th>
+                                <th jhiSortBy="financialYearSectorBatchName">Year
+                                    <fa-icon [icon]="'sort'"></fa-icon>
+                                </th>
+                                <th jhiSortBy="zonalZoneName">Zonal
+                                    <fa-icon [icon]="'sort'"></fa-icon>
+                                </th>
+                                <th jhiSortBy="sectorName">Name
+                                    <fa-icon [icon]="'sort'"></fa-icon>
+                                </th>
+                                <th jhiSortBy="createdAt">Created At
+                                    <fa-icon [icon]="'sort'"></fa-icon>
+                                </th>
+                                <th jhiSortBy="updatedAt">Updated At
+                                    <fa-icon [icon]="'sort'"></fa-icon>
+                                </th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -82,31 +122,29 @@
                                 <td>{{sector.financialYearSectorBatchName}}</td>
                                 <td>{{sector.zonalZoneName}}</td>
                                 <td>{{sector.sectorName}}</td>
-                                <!-- <td>{{sector.sectorAddress}}</td> -->
-                                <td>{{sector.createdAt | date:'medium'}}</td>
-                                <td>{{sector.updatedAt | date:'medium'}}</td>
-                                <td class="text-center">
-                                    <!-- <button type="button" class="btn btn-sm btn-ghost-info" 
-                                        data-toggle="modal" (click)="getSectorValue(sector)"
-                                        ngbTooltip="Edit sector" placement="bottom">
-                                        <fa-icon [icon]="'pencil-alt'"></fa-icon> Edit</button>
-                                    <button type="button" class="btn btn-sm btn-ghost-danger" 
-                                        (click)="deleteSector(sector)"
-                                        ngbTooltip="Delete sector" placement="bottom">
-                                        <fa-icon [icon]="'times'"></fa-icon> Delete
-                                    </button> -->
-                                    <a class="text-info" data-toggle="modal" ngbTooltip="Mapped Details " placement="left" 
-                                        (click)="getMapList(sector.id)" [attr.aria-expanded]="isCollapsed" aria-controls="collapseBasic">
+                                <td>{{sector.createdDate | date:'medium'}}</td>
+                                <td>{{sector.lastModifiedDate | date:'medium'}}</td>
+                                <td class="text-center">                                    
+                                    <a class="text-success" data-toggle="modal" 
+                                        ngbTooltip="Mapped Details " placement="left" 
+                                        (click)="getMapList(sector.id)" 
+                                        [attr.aria-expanded]="isCollapsed"
+                                        aria-controls="collapseBasic">
                                         <fa-icon [icon]="'eye'"></fa-icon>
                                     </a>
-                                    <a class="text-success ml-2" data-toggle="modal" ngbTooltip="Move to another zonal " placement="left" 
-                                        (click)="getSectorValue(sector, 1)"><fa-icon [icon]="'fast-forward'"></fa-icon>
+                                    <a class="text-warning ml-2" data-toggle="modal" 
+                                        ngbTooltip="Move to another zonal " placement="left" 
+                                        (click)="getSectorValue(sector, movementStatus)">
+                                        <fa-icon [icon]="'fast-forward'"></fa-icon>
                                     </a>
-                                    <a class="text-primary ml-2" data-toggle="modal" ngbTooltip="Edit " placement="left" 
-                                        (click)="getSectorValue(sector,2)"><fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                    <a class="text-primary ml-2" data-toggle="modal" 
+                                        ngbTooltip="Edit " placement="left" 
+                                        (click)="getSectorValue(sector, updateStatus)">
+                                        <fa-icon [icon]="'pencil-alt'"></fa-icon>
                                     </a>
-                                    <a class="text-danger ml-2" ngbTooltip="Delete" placement="top" 
-                                        (click)="softDelete(sector)"><fa-icon [icon]="'times'"></fa-icon>
+                                    <a class="text-danger ml-2" ngbTooltip="Delete" 
+                                        placement="top" (click)="softDelete(sector)">
+                                        <fa-icon [icon]="'trash-alt'"></fa-icon>
                                     </a>
                                 </td>
                             </tr>
@@ -115,48 +153,59 @@
                 </div>
                 <div *ngIf="sectors && sectors.length" class="card-footer">
                     <!-- <div class="row justify-content-center">
-                        <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+                        <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" 
+                        [itemsPerPage]="itemsPerPage"></jhi-item-count>
                     </div> -->
                     <div class="row justify-content-center">
-                        <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+                        <ngb-pagination [collectionSize]="totalItems" [(page)]="page" 
+                            [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" 
+                            [boundaryLinks]="true" (pageChange)="loadPage(page)">
+                        </ngb-pagination>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> <!-- End of sector list -->
 </div>
 <!-- End of the sectot List displaying-->
 
 <!-- Create and updte the sectot, Based on the Sector Id, we can able to update -->
-<div bsModal #sectorModal="bs-modal" class="modal fade" tabindex="-1" 
-    role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div bsModal #sectorModal="bs-modal" class="modal fade" tabindex="-1"
+    role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+    [config]="{backdrop: 'static',  keyboard: false}">
     <div class="modal-dialog modal-primary" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h6 class="modal-title">{{title}}</h6>
-                <button type="button" class="close" 
-                    (click)="closeSectorModal()" aria-label="Close">
+                <button type="button" class="close" (click)="closeSectorModal()"
+                    aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body font13">
-                <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-                    <input [(ngModel)]="sectorObject.id" type="hidden" id="id" name="id" class="form-control">
+                <form action="" method="post" enctype="multipart/form-data" 
+                    class="form-horizontal">
+                    <input [(ngModel)]="sectorObject.id" type="hidden" id="id" name="id"
+                        class="form-control">
                     <div class="form-group row">
                         <div class="col-md-6">
                             <span class="text-danger" *ngIf="errorMessage"
-                                (close)="errorMessage = null">{{ errorMessage }}</span>
+                            (close)="errorMessage = null">{{ errorMessage }}</span>
                         </div>
                     </div>
                     <div *ngIf="!sectorObject.id" class="form-group row">
-                        <label class="col-md-3 col-form-label" for="select1">Head Office *</label>
+                        <label class="col-md-3 col-form-label" for="select1">
+                            Head Office *
+                        </label>
                         <div class="col-md-9">
-                            <select [(ngModel)]="sectorObject.operationalHeadId" id="operationalHeadId" 
-                                name="operationalHeadId" class="form-control" 
+                            <select [(ngModel)]="sectorObject.operationalHeadId"
+                                id="operationalHeadId" name="operationalHeadId"
+                                class="form-control"
                                 (change)="getZoneList(sectorObject.operationalHeadId)">
                                 <option value="0" disabled selected>Select Head Office</option>
-                                <option *ngFor="let operationalHead of operationalHeads" 
-                                    value={{operationalHead.id}}>{{operationalHead.name}}</option>
+                                <option *ngFor="let operationalHead of operationalHeads" value={{operationalHead.id}}>
+                                    {{operationalHead.name}}
+                                </option>
                             </select>
                         </div>
                     </div>
@@ -166,71 +215,88 @@
                             <select [(ngModel)]="sectorObject.zonalId" id="zonalId" 
                                 name="zonalId" class="form-control">
                                 <option value="0" disabled selected>Select Zone Name</option>
-                                <option *ngFor="let zone of zonals" 
-                                    value={{zone.id}}>{{zone.zoneName}}</option>
+                                <option *ngFor="let zone of zonals" value={{zone.id}}>
+                                    {{zone.zoneName}}
+                                </option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="text-input">Sector Name *</label>
+                        <label class="col-md-3 col-form-label" for="text-input">
+                            Sector Name *
+                        </label>
                         <div class="col-md-9">
-                            <input [(ngModel)]="sectorObject.sectorName" 
-                                type="text" id="text-input" name="text-input"
-                                class="form-control" placeholder="Sector Name">
+                            <input [(ngModel)]="sectorObject.sectorName" type="text"
+                            id="text-input" name="text-input" class="form-control"
+                            placeholder="Sector Name">
                         </div>
                     </div>
-                    <!-- <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="textarea-input">Address</label>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="text-input">
+                            From Date
+                        </label>
                         <div class="col-md-9">
-                            <textarea [(ngModel)]="sectorObject.sectorAddress" 
-                                id="textarea-input" name="textarea-input" 
-                                rows="3" class="form-control" placeholder="Address..">
-                            </textarea>
+                            <input [(ngModel)]="mapSectorWithZonal.fromDate" type="text" 
+                                id="fromDate" name="fromDate" readonly class="form-control"
+                                placeholder="From Date" ngbDatepicker 
+                                #dateFromDp="ngbDatepicker" (click)="dateFromDp.toggle()">
                         </div>
-                    </div> -->
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" 
-                    (click)="closeSectorModal()">Close</button>
-                <button type="button" class="btn btn-primary" 
-                    (click)="save()">Save</button>
+                <button type="button" class="btn btn-secondary" (click)="closeSectorModal()">
+                    Close
+                </button>
+                <button type="button" class="btn btn-primary" (click)="save()">
+                    Save
+                </button>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- End of create and update form modal -->
 
 <!-- Move the sector, Based on the zonal Id -->
-<div bsModal #moveSector="bs-modal" class="modal fade" tabindex="-1" 
-    role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div bsModal #moveSector="bs-modal" class="modal fade" tabindex="-1"
+    role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+    [config]="{backdrop: 'static',  keyboard: false}">
     <div class="modal-dialog modal-primary" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h6 class="modal-title">{{title}}</h6>
                 <!-- <span class="text-danger"><b>{{errorMessage}}</b></span> -->
-                <button type="button" class="close" 
-                    (click)="closeMovementModel()" aria-label="Close">
+                <button type="button" class="close" (click)="closeMovementModel()"
+                    aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body font13">
-                <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-                    <input [(ngModel)]="sectorObject.id" type="hidden" id="id" name="id" class="form-control">
+                <form action="" method="post" enctype="multipart/form-data"
+                    class="form-horizontal">
+                    <input [(ngModel)]="sectorObject.id" type="hidden" id="id" name="id"
+                        class="form-control">
                     <div class="form-group row">
                         <div class="col-md-6">
                             <span class="text-danger" *ngIf="errorMessage"
-                                (close)="errorMessage = null">{{ errorMessage }}</span>
+                            (close)="errorMessage = null">{{ errorMessage }}</span>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="select1">Head Office *</label>
+                        <label class="col-md-3 col-form-label" for="select1">
+                            Head Office *
+                        </label>
                         <div class="col-md-9">
-                            <select [(ngModel)]="sectorObject.operationalHeadId" id="operationalHeadId" 
-                                name="operationalHeadId" class="form-control" 
+                            <select [(ngModel)]="sectorObject.operationalHeadId"
+                                id="operationalHeadId" name="operationalHeadId"
+                                class="form-control"
                                 (change)="getZoneList(sectorObject.operationalHeadId)">
                                 <option value="0" disabled selected>Select Head Office</option>
-                                <option *ngFor="let operationalHead of operationalHeads" 
-                                    value={{operationalHead.id}}>{{operationalHead.name}}</option>
+                                <option *ngFor="let operationalHead of operationalHeads" value={{operationalHead.id}}>
+                                    {{operationalHead.name}}
+                                </option>
                             </select>
                         </div>
                     </div>
@@ -240,28 +306,57 @@
                             <select [(ngModel)]="sectorObject.zonalId" id="zonalId" 
                                 name="zonalId" class="form-control">
                                 <option value="0" disabled selected>Select Zonal</option>
-                                <option *ngFor="let zonal of zonals" 
-                                    value={{zonal.id}}>{{zonal.zoneName}}</option>
+                                <option *ngFor="let zonal of zonals" value={{zonal.id}}>
+                                    {{zonal.zoneName}}
+                                </option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="textarea-input">Description</label>
+                        <label class="col-md-3 col-form-label" for="text-input">
+                            From Date
+                        </label>
+                        <div class="col-md-9">
+                            <input [(ngModel)]="mapSectorWithZonal.fromDate" type="text" 
+                                id="fromDate" name="fromDate" readonly class="form-control"
+
+                                placeholder="From Date" ngbDatepicker
+                                #fromDateDp="ngbDatepicker" (click)="fromDateDp.toggle()">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="text-input">
+                            To Date (Previous)
+                        </label>
+                        <div class="col-md-9">
+                            <input [(ngModel)]="mapSectorWithZonal.toDate" type="text" 
+                                id="toDate" name="toDate" readonly class="form-control" 
+                                placeholder="To Date" ngbDatepicker 
+                                #toDateDp="ngbDatepicker" (click)="toDateDp.toggle()">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="textarea-input">
+                            Description
+                        </label>
                         <div class="col-md-9">
                             <textarea [(ngModel)]="mapSectorWithZonal.description" 
-                                id="description" name="description" 
-                            rows="3" class="form-control" placeholder="Description.."></textarea>
+                                id="description" name="description" rows="3"
+                                class="form-control" placeholder="Description.."></textarea>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" 
-                    (click)="closeMovementModel()">Close</button>
-                <button type="button" class="btn btn-primary" 
-                    (click)="save()">Save</button>
+                <button type="button" class="btn btn-secondary" (click)="closeMovementModel()">
+                    Close
+                </button>
+                <button type="button" class="btn btn-primary" (click)="save()">
+                    Save
+                </button>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<!--End of the sector movement-->
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div> <!--End of the sector movement-->

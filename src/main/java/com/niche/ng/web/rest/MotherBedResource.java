@@ -38,6 +38,8 @@ import java.util.Optional;
 
 /**
  * REST controller for managing MotherBed.
+ * Used RequestMapping annotation to map the url with the client side.
+ * Using service to access the values in the database.
  */
 @RestController
 @RequestMapping("/api")
@@ -141,34 +143,4 @@ public class MotherBedResource {
         motherBedService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
-
-    /**
-     * GET  /mother-beds/nursery/:nurseryId : get all the motherBeds of particular nurseryId.
-     *
-     * @param nurseryId the nurseryId of the motherBedDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and the list of sectors in body
-     */
-    @GetMapping("/mother-beds/nursery/{nurseryId}")
-    @Timed
-    public ResponseEntity<List<MotherBedDTO>> getSectorNurserys(@PathVariable Long nurseryId) {
-        log.debug("REST request to get a list of particular nursery motherBeds");
-        List<MotherBedDTO> motherBedList = motherBedService.findNurseryMotherBeds(nurseryId);
-        return ResponseEntity.ok().body(motherBedList);
-    }
-
-    /**
-     * GET  /mother-beds/nursery/:nurseryId : get all the motherBeds of particular nurseryId.
-     *
-     * @param nurseryId the nurseryId of the motherBedDTO to retrieve
-     * @param status the status of the entity
-     * @return the ResponseEntity with status 200 (OK) and the list of sectors in body
-     */
-    @GetMapping("/mother-beds/nursery/{nurseryId}/{status}")
-    @Timed
-    public ResponseEntity<List<MotherBedDTO>> getMotherBedNursery(@PathVariable Long nurseryId, @PathVariable Integer status) {
-        log.debug("REST request to get a list of particular nursery motherBeds");
-        List<MotherBedDTO> motherBedList = motherBedService.findAvailableNurseryMotherBeds(nurseryId, status);
-        return ResponseEntity.ok().body(motherBedList);
-    }
-
 }

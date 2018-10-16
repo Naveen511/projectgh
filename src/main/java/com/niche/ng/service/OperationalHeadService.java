@@ -1,3 +1,14 @@
+/******************************************************************************
+ *  Property of Nichehands
+ *  Nichehands Confidential Proprietary
+ *  Nichehands Copyright (C) 2018 All rights reserved
+ *  ----------------------------------------------------------------------------
+ *  Date  : 2018/09/02
+ *  Target: yarn
+ *  -----------------------------------------------------------------------------
+ *  File Description    : This file performs OperationalHeadService
+ *
+ *******************************************************************************/
 package com.niche.ng.service;
 
 import com.niche.ng.service.dto.OperationalHeadDTO;
@@ -6,7 +17,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
-import java.util.List;
 /**
  * Service Interface for managing OperationalHead.
  */
@@ -43,20 +53,12 @@ public interface OperationalHeadService {
      * @param id the id of the entity
      */
     void delete(Long id);
-    
-    /**
-     * Get the "status" operationalHead.
-     *
-     * @param status the batchId of the entity
-     * @return the list of entity
-     */
-    List<OperationalHeadDTO> findParticularStatus(Integer status);
 
-     /**
-     * Get the "count" operationalHead.
+    /**
+     * Get count by "status" operationalHead.
      *
-     * @param status the batchId of the entity
-     * @return the list of entity
+     * @param status the status of the entity
+     * @return the count of opertionalHead
      */
     Long findActiveCount(Integer status);
 }

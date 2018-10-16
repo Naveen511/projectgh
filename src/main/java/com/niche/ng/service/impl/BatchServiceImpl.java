@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date: 2018/08/02
+ *  Date  : 2018/08/02
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs BatchServiceImpl
@@ -24,13 +24,18 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import java.util.Optional;
 import java.util.List;
 import java.time.LocalDate;
 
 /**
  * Service Implementation for managing Batch.
+ *
+ * Implementing BatchService with IMPL suffix class as BatchImpl.
+ * Using of business logic in the service layer which is present in the service file
+ * using impl as a interface to access the repository layer.
+ * Once we got the responce from the repository layer, mapper convert the entity
+ * object to data transfer object(DTO).
  */
 @Service
 @Transactional
@@ -100,10 +105,17 @@ public class BatchServiceImpl implements BatchService {
         batchRepository.deleteById(id);
     }
 
+    /**
+     * Get the list of batches between a date
+     *
+     * @param fromDate the sowingDate of the entity
+     * @param toDate the sowingDate of the entity
+     * @return the list of entities
+     */
     @Override
     @Transactional(readOnly = true)
     public List<BatchDTO> findDateBetween(LocalDate fromDate, LocalDate toDate) {
-        log.debug("Request to get get Report : {}", fromDate + " " + toDate);
+        // log.debug("Request to get get Report : {}", fromDate + " " + toDate);
         List<Batch> list = batchRepository.findBySowingDateBetween(fromDate, toDate);
         return batchMapper.toDto(list);
     }

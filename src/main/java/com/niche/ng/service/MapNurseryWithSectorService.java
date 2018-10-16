@@ -1,3 +1,14 @@
+/******************************************************************************
+ *  Property of Nichehands
+ *  Nichehands Confidential Proprietary
+ *  Nichehands Copyright (C) 2018 All rights reserved
+ *  ----------------------------------------------------------------------------
+ *  Date  : 2018/09/05
+ *  Target: yarn
+ *  -----------------------------------------------------------------------------
+ *  File Description    : This file performs MapNurseryWithSectorService
+ *
+ *******************************************************************************/
 package com.niche.ng.service;
 
 import com.niche.ng.service.dto.MapNurseryWithSectorDTO;
@@ -6,7 +17,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
-import java.util.List;
 /**
  * Service Interface for managing MapNurseryWithSector.
  */
@@ -43,21 +53,4 @@ public interface MapNurseryWithSectorService {
      * @param id the id of the entity
      */
     void delete(Long id);
-
-    /**
-     * Get the "nurseryId" records.
-     *
-     * @param nurseryId the nurseryId of the entity
-     * @param status the status of the entity
-     * @return the list of entity
-     */
-    List<MapNurseryWithSectorDTO> findParticularNurseryActiveRecord(Long nurseryId, Integer status);
-
-    /**
-     * Get the "nurseryId" records.
-     *
-     * @param nurseryId the nurseryId of the entity
-     * @return the list of entity
-     */
-    List<MapNurseryWithSectorDTO> findParticularNurseryRecord(Long nurseryId);
 }

@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date: 2018/08/02
+ *  Date  : 2018/08/02
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs NurseryService
@@ -17,7 +17,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
-import java.util.List;
 /**
  * Service Interface for managing Nursery.
  */
@@ -55,19 +54,11 @@ public interface NurseryService {
      */
     void delete(Long id);
 
-    /**
-     * Get the "sectorId" nursery.
-     *
-     * @param sectorId the sectorId of the entity
-     * @return the list of entity
-     */
-    List<NurseryDTO> findSectorNurserys(Long sectorId);
-
      /**
-     * Get the "count" operationalHead.
+     * Get count by "status" nurserys.
      *
-     * @param status the batchId of the entity
-     * @return the list of entity
+     * @param status the status of the entity
+     * @return long value
      */
     Long findActiveCount(Integer status);
 }

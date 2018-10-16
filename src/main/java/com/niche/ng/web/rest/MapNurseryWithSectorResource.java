@@ -1,3 +1,14 @@
+/******************************************************************************
+ *  Property of Nichehands
+ *  Nichehands Confidential Proprietary
+ *  Nichehands Copyright (C) 2018 All rights reserved
+ *  ----------------------------------------------------------------------------
+ *  Date  : 2018/08/22
+ *  Target: yarn
+ *  -----------------------------------------------------------------------------
+ *  File Description    : This file performs MapNurseryWithSectorResource of CRUD Operation
+ *
+ *******************************************************************************/
 package com.niche.ng.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
@@ -27,6 +38,8 @@ import java.util.Optional;
 
 /**
  * REST controller for managing MapNurseryWithSector.
+ * Used RequestMapping annotation to map the url with the client side.
+ * Using service to access the values in the database.
  */
 @RestController
 @RequestMapping("/api")
@@ -129,34 +142,5 @@ public class MapNurseryWithSectorResource {
         log.debug("REST request to delete MapNurseryWithSector : {}", id);
         mapNurseryWithSectorService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
-    }
-
-    /**
-     * GET  /map-nursery-with-sectors/nursery/:nurseryId/:status : get all the nursery of particular nurseryId.
-     *
-     * @param nurseryId the nurseryId of the MapNurseryWithSectorDTO to retrieve
-     * @param status the status of the MapNurseryWithSectorDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and the list of sectors in body
-     */
-    @GetMapping("/map-nursery-with-sectors/nursery/{nurseryId}/{status}")
-    @Timed
-    public ResponseEntity<List<MapNurseryWithSectorDTO>> getParticularNurseryActiveRecord(@PathVariable Long nurseryId, @PathVariable Integer status) {
-        log.debug("REST request to get a list of particular nursery active record");
-        List<MapNurseryWithSectorDTO> list = mapNurseryWithSectorService.findParticularNurseryActiveRecord(nurseryId, status);
-        return ResponseEntity.ok().body(list);
-    }
-
-    /**
-     * GET  /map-nursery-with-sectors/nursery/:nurseryId : get all the nursery of particular nurseryId.
-     *
-     * @param nurseryId the nurseryId of the MapNurseryWithSectorDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and the list of sectors in body
-     */
-    @GetMapping("/map-nursery-with-sectors/nursery/{nurseryId}")
-    @Timed
-    public ResponseEntity<List<MapNurseryWithSectorDTO>> getParticularNurseryRecord(@PathVariable Long nurseryId) {
-        log.debug("REST request to get a list of particular nursery record");
-        List<MapNurseryWithSectorDTO> list = mapNurseryWithSectorService.findParticularNurseryRecord(nurseryId);
-        return ResponseEntity.ok().body(list);
     }
 }

@@ -20,6 +20,7 @@
             <th jhiSortBy="status"><span jhiTranslate="projectghApp.shadeArea.status">Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="damage"><span jhiTranslate="projectghApp.shadeArea.damage">Damage</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="saplings"><span jhiTranslate="projectghApp.shadeArea.saplings">Saplings</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="round"><span jhiTranslate="projectghApp.shadeArea.round">Round</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="batchBatchName"><span jhiTranslate="projectghApp.shadeArea.batch">Batch</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="financialYearShadeAreaBatchName"><span jhiTranslate="projectghApp.shadeArea.financialYearShadeArea">Financial Year Shade Area</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
@@ -33,6 +34,7 @@
                 <td>{{shadeArea.status}}</td>
                 <td>{{shadeArea.damage}}</td>
                 <td>{{shadeArea.saplings}}</td>
+                <td>{{shadeArea.round}}</td>
                 <td>
                     <div *ngIf="shadeArea.batchId">
                         <a [routerLink]="['../batch', shadeArea.batchId , 'view' ]" >{{shadeArea.batchBatchName}}</a>

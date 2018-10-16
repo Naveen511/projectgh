@@ -1,4 +1,13 @@
-import { Moment } from 'moment';
+/******************************************************************************
+ *  Property of Nichehands
+ *  Nichehands Confidential Proprietary
+ *  Nichehands Copyright (C) 2018 All rights reserved
+ *  ----------------------------------------------------------------------------
+ *  Date: 2018/08/02
+ *  Target: yarn
+ *******************************************************************************/
+
+// Import needed model and dependency
 import { ISector } from 'app/shared/model//sector.model';
 import { IMapZonalWithOh } from 'app/shared/model//map-zonal-with-oh.model';
 import { IZonalIncharge } from 'app/shared/model//zonal-incharge.model';
@@ -48,4 +57,5 @@ export class ZonalModel {
     mapSectorWithZonals?: IMapSectorWithZonal[];
 }
 
+// Constant variable
 export const STATUS_ACTIVE = 1;

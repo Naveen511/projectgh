@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date: 2018/08/22
+ *  Date  : 2018/08/22
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs MotherBedServiceImpl
@@ -26,9 +26,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.Optional;
-import java.util.List;
 /**
  * Service Implementation for managing MotherBed.
+ *
+ * Implementing MotherBedService with IMPL suffix class as MotherBedServiceImpl.
+ * Using of business logic in the service layer which is present in the service file
+ * using impl as a interface to access the repository layer.
+ * Once we got the responce from the repository layer, mapper convert the entity
+ * object to data transfer object(DTO).
  */
 @Service
 @Transactional
@@ -97,33 +102,5 @@ public class MotherBedServiceImpl implements MotherBedService {
     public void delete(Long id) {
         log.debug("Request to delete MotherBed : {}", id);
         motherBedRepository.deleteById(id);
-    }
-
-    /**
-     * Get all the motherBed by nurseryId.
-     *
-     * @param nurseryId the nurseryId of the entity
-     * @return the list of entities
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public List<MotherBedDTO> findNurseryMotherBeds(Long nurseryId) {
-        log.debug("Request to get motherBed : {}", nurseryId);
-        List<MotherBed> motherBedList = motherBedRepository.findByNurseryId(nurseryId);
-        return motherBedMapper.toDto(motherBedList);
-    }
-
-    /**
-     * Get all the motherBed by nurseryId.
-     *
-     * @param nurseryId the nurseryId of the entity
-     * @return the list of entities
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public List<MotherBedDTO> findAvailableNurseryMotherBeds(Long nurseryId, Integer status) {
-        log.debug("Request to get motherBed : {}", nurseryId);
-        List<MotherBed> motherBedList = motherBedRepository.findByNurseryIdAndStatus(nurseryId,status);
-        return motherBedMapper.toDto(motherBedList);
     }
 }

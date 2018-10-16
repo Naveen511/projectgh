@@ -50,6 +50,11 @@
                     <input type="number" class="form-control" name="status" id="field_status"
                         [(ngModel)]="nurseryStockDetails.status" />
                 </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.nurseryStockDetails.itStatus" for="field_itStatus">It Status</label>
+                    <input type="number" class="form-control" name="itStatus" id="field_itStatus"
+                        [(ngModel)]="nurseryStockDetails.itStatus" />
+                </div>
 
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="projectghApp.nurseryStockDetails.batch" for="field_batch">Batch</label>
@@ -84,6 +89,13 @@
                     <select class="form-control" id="field_financialYearStockDetails" name="financialYearStockDetails" [(ngModel)]="nurseryStockDetails.financialYearStockDetailsId" >
                         <option [ngValue]="null"></option>
                         <option [ngValue]="financialYearSettingsOption.id" *ngFor="let financialYearSettingsOption of financialyearsettings; trackBy: trackFinancialYearSettingsById">{{financialYearSettingsOption.batchName}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="projectghApp.nurseryStockDetails.fromNurseryStockDetails" for="field_fromNurseryStockDetails">From Nursery Stock Details</label>
+                    <select class="form-control" id="field_fromNurseryStockDetails" name="fromNurseryStockDetails" [(ngModel)]="nurseryStockDetails.fromNurseryStockDetailsId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="nurseryOption.id" *ngFor="let nurseryOption of nurseries; trackBy: trackNurseryById">{{nurseryOption.nurseryName}}</option>
                     </select>
                 </div>
             </div>

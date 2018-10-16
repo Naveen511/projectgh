@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date: 2018/08/02
+ *  Date  : 2018/08/02
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs GodownStockMapper
@@ -15,10 +15,11 @@ import com.niche.ng.domain.*;
 import com.niche.ng.service.dto.GodownStockDTO;
 
 import org.mapstruct.*;
-import java.util.List;
 
 /**
  * Mapper for the entity GodownStock and its DTO GodownStockDTO.
+ * Mapping the parent and child table to fetch the field value.
+ * Converting the entity object into data transfer object(DTO).
  */
 @Mapper(componentModel = "spring", uses = {PickListValueMapper.class, GodownMapper.class, FinancialYearSettingsMapper.class})
 public interface GodownStockMapper extends EntityMapper<GodownStockDTO, GodownStock> {
@@ -42,8 +43,6 @@ public interface GodownStockMapper extends EntityMapper<GodownStockDTO, GodownSt
     @Mapping(source = "godownId", target = "godown")
     @Mapping(source = "financialYearGodownStockId", target = "financialYearGodownStock")
     GodownStock toEntity(GodownStockDTO godownStockDTO);
-
-    List<GodownStockDTO> toDto(List<GodownStock> godownStock);
 
     default GodownStock fromId(Long id) {
         if (id == null) {

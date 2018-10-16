@@ -21,6 +21,10 @@
                 <dd>
                     <span>{{nurseryStockDetails.status}}</span>
                 </dd>
+                <dt><span jhiTranslate="projectghApp.nurseryStockDetails.itStatus">It Status</span></dt>
+                <dd>
+                    <span>{{nurseryStockDetails.itStatus}}</span>
+                </dd>
                 <dt><span jhiTranslate="projectghApp.nurseryStockDetails.batch">Batch</span></dt>
                 <dd>
                     <div *ngIf="nurseryStockDetails.batchId">
@@ -49,6 +53,12 @@
                 <dd>
                     <div *ngIf="nurseryStockDetails.financialYearStockDetailsId">
                         <a [routerLink]="['/financial-year-settings', nurseryStockDetails.financialYearStockDetailsId, 'view']">{{nurseryStockDetails.financialYearStockDetailsBatchName}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.nurseryStockDetails.fromNurseryStockDetails">From Nursery Stock Details</span></dt>
+                <dd>
+                    <div *ngIf="nurseryStockDetails.fromNurseryStockDetailsId">
+                        <a [routerLink]="['/nursery', nurseryStockDetails.fromNurseryStockDetailsId, 'view']">{{nurseryStockDetails.fromNurseryStockDetailsNurseryName}}</a>
                     </div>
                 </dd>
             </dl>

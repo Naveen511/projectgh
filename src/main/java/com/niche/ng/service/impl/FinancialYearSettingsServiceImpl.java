@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date: 2018/08/31
+ *  Date  : 2018/08/31
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs FinancialYearSettingsServiceImpl
@@ -26,9 +26,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.Optional;
-import java.util.List;
 /**
  * Service Implementation for managing FinancialYearSettings.
+ *
+ * Implementing FinancialYearSettingsService with IMPL suffix class
+ * as FinancialYearSettingsServiceImpl.
+ * Using of business logic in the service layer which is present in the service file
+ * using impl as a interface to access the repository layer.
+ * Once we got the responce from the repository layer, mapper convert the entity
+ * object to data transfer object(DTO).
  */
 @Service
 @Transactional
@@ -97,19 +103,5 @@ public class FinancialYearSettingsServiceImpl implements FinancialYearSettingsSe
     public void delete(Long id) {
         log.debug("Request to delete FinancialYearSettings : {}", id);
         financialYearSettingsRepository.deleteById(id);
-    }
-
-    /**
-     * Get one financialYearSettings by status.
-     *
-     * @param status the status of the entity
-     * @return the entity
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public List<FinancialYearSettingsDTO> findActiveRecord(Integer status) {
-        log.debug("Request to get FinancialYearSettings : {}", status);
-        List<FinancialYearSettings> list = financialYearSettingsRepository.findByStatus(status);
-        return financialYearSettingsMapper.toDto(list);
     }
 }

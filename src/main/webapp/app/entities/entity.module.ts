@@ -30,6 +30,7 @@ import { ProjectghMapSectorWithZonalModule } from './map-sector-with-zonal/map-s
 import { ProjectghSectorInchargeModule } from './sector-incharge/sector-incharge.module';
 import { ProjectghMapNurseryWithSectorModule } from './map-nursery-with-sector/map-nursery-with-sector.module';
 import { ProjectghNurseryInchargeModule } from './nursery-incharge/nursery-incharge.module';
+import { ProjectghBatchQuantityModule } from './batch-quantity/batch-quantity.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -65,6 +66,7 @@ import { ProjectghNurseryInchargeModule } from './nursery-incharge/nursery-incha
         ProjectghSectorInchargeModule,
         ProjectghMapNurseryWithSectorModule,
         ProjectghNurseryInchargeModule,
+        ProjectghBatchQuantityModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],

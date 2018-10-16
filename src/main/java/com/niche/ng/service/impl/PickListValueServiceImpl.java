@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date: 2018/08/02
+ *  Date  : 2018/08/02
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs PickListValueServiceImplementation
@@ -26,9 +26,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.Optional;
-import java.util.List;
 /**
  * Service Implementation for managing PickListValue.
+ *
+ * Implementing PickListValueService with IMPL suffix class as PickListValueServiceImpl.
+ * Using of business logic in the service layer which is present in the service file
+ * using impl as a interface to access the repository layer.
+ * Once we got the responce from the repository layer, mapper convert the entity
+ * object to data transfer object(DTO).
  */
 @Service
 @Transactional
@@ -97,33 +102,5 @@ public class PickListValueServiceImpl implements PickListValueService {
     public void delete(Long id) {
         log.debug("Request to delete PickListValue : {}", id);
         pickListValueRepository.deleteById(id);
-    }
-    
-    /**
-     * Get all the sectors by zonalId.
-     *
-     * @param pickListId the zonalId of the entity
-     * @return the list of entities
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public List<PickListValueDTO> findVarietys(Long pickListId) {
-        log.debug("Request to get Sectors : {}", pickListId);
-        List<PickListValue> varietyList = pickListValueRepository.findByPickListId(pickListId);
-        return pickListValueMapper.toDto(varietyList);
-    }
-
-    /**
-     * Get all the sectors by zonalId.
-     *
-     * @param pickValueId the pickValueId of the entity
-     * @return the list of entities
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public List<PickListValueDTO> findCategorys(Long pickValueId) {
-        log.debug("Request to get Sectors : {}", pickValueId);
-        List<PickListValue> categoryList = pickListValueRepository.findByPickValueId(pickValueId);
-        return pickListValueMapper.toDto(categoryList);
     }
 }

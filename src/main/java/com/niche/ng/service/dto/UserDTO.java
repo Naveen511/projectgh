@@ -3,10 +3,11 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date: 2018/08/02
+ *  Date: 2018/08/31
  *  Target: yarn
  *  -----------------------------------------------------------------------------
- *  File Description    : This file performs UserDTO
+ *  File Description    : This file performs UserDTO and
+                            declared the table fields, data types for user table.
  *
  *******************************************************************************/
 package com.niche.ng.service.dto;
@@ -190,6 +191,11 @@ public class UserDTO {
         this.authorities = authorities;
     }
 
+    /**
+     * toString to get the values
+     * 
+     * @return values
+     */
     @Override
     public String toString() {
         return "UserDTO{" +

@@ -1,3 +1,14 @@
+/******************************************************************************
+ *  Property of Nichehands
+ *  Nichehands Confidential Proprietary
+ *  Nichehands Copyright (C) 2018 All rights reserved
+ *  ----------------------------------------------------------------------------
+ *  Date  : 2018/09/02
+ *  Target: yarn
+ *  -----------------------------------------------------------------------------
+ *  File Description    : This file performs NurseryInventoryResource of CRUD Operation
+ *
+ *******************************************************************************/
 package com.niche.ng.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
@@ -27,6 +38,8 @@ import java.util.Optional;
 
 /**
  * REST controller for managing NurseryInventory.
+ * Used RequestMapping annotation to map the url with the client side.
+ * Using service to access the values in the database.
  */
 @RestController
 @RequestMapping("/api")
@@ -130,46 +143,4 @@ public class NurseryInventoryResource {
         nurseryInventoryService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
-
-    /**
-     * GET  /nursery-inventories/inventory/:nurseryId/:pickListCategoryId : get all the sectors of particular zonalId.
-     *
-     * @param nurseryId the zonalId of the sectorDTO to retrieve
-     * @param pickListCategoryId the zonalId of the sectorDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and the list of sectors in body
-     */
-    @GetMapping("/nursery-inventories/inventory/{nurseryId}/{pickListCategoryId}")
-    @Timed
-    public ResponseEntity<List<NurseryInventoryDTO>> getNurseryCategoryInventory(@PathVariable Long nurseryId, @PathVariable Long pickListCategoryId) {
-        log.debug("REST request to get a list of particular category inventory");
-        List<NurseryInventoryDTO> list = nurseryInventoryService.findInventory(nurseryId, pickListCategoryId);
-        return ResponseEntity.ok().body(list);
-    }
-
-    /**
-     * GET  /nursery-inventories/inventory/ : {nurseryId} : get all the sectors of particular zonalId.
-     *
-     * @param nurseryId the zonalId of the sectorDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and the list of sectors in body
-     */
-    @GetMapping("/nursery-inventories/inventory/cover/{nurseryId}/{status}")
-    @Timed
-    public ResponseEntity<List<NurseryInventoryDTO>> getCoverInventory(@PathVariable Long nurseryId, @PathVariable Integer status) {
-        log.debug("REST request to get a list of particular category inventory");
-        List<NurseryInventoryDTO> list = nurseryInventoryService.findCoverInventory(nurseryId, status);
-        return ResponseEntity.ok().body(list);
-    }
-
-    /**
-     * GET /nursery-inventories/inventory/:status : To get all the seeds from inventory table
-     * @param status status of the Seeds : NurseryInvetoryDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and the list of inventory in body
-     */
-     @GetMapping("/nursery-inventories/inventory/seeds/{status}")
-     @Timed
-     public ResponseEntity<List<NurseryInventoryDTO>> getSeedsStatusRecord(@PathVariable Integer status) {
-        log.debug("REST request to get a list of particular seeds from the inventory");
-        List<NurseryInventoryDTO> inventoryList = nurseryInventoryService.findParticularStatus(status);
-        return ResponseEntity.ok().body(inventoryList);
-     }
 }

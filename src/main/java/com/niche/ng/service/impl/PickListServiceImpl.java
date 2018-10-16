@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date: 2018/08/02
+ *  Date  : 2018/08/02
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs PickListServiceImplementation
@@ -24,10 +24,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import java.util.Optional;
 /**
  * Service Implementation for managing PickList.
+ *
+ * Implementing PickListService with IMPL suffix class as PickListServiceImpl.
+ * Using of business logic in the service layer which is present in the service file
+ * using impl as a interface to access the repository layer.
+ * Once we got the responce from the repository layer, mapper convert the entity
+ * object to data transfer object(DTO).
  */
 @Service
 @Transactional

@@ -1,3 +1,13 @@
+/******************************************************************************
+ *  Property of Nichehands
+ *  Nichehands Confidential Proprietary
+ *  Nichehands Copyright (C) 2018 All rights reserved
+ *  ----------------------------------------------------------------------------
+ *  Date: 2018/08/24
+ *  Target: yarn
+ *******************************************************************************/
+
+// Import needed model and dependency
 import { Moment } from 'moment';
 import { ICoverFillingDetails } from 'app/shared/model//cover-filling-details.model';
 

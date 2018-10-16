@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date: 2018/08/31
+ *  Date  : 2018/08/31
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs FinancialYearSettingMapper
@@ -18,6 +18,8 @@ import org.mapstruct.*;
 
 /**
  * Mapper for the entity FinancialYearSettings and its DTO FinancialYearSettingsDTO.
+ * Mapping the parent and child table to fetch the field value.
+ * Converting the entity object into data transfer object(DTO).
  */
 @Mapper(componentModel = "spring", uses = {PickListValueMapper.class})
 public interface FinancialYearSettingsMapper extends EntityMapper<FinancialYearSettingsDTO, FinancialYearSettings> {

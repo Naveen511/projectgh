@@ -14,7 +14,7 @@ package com.niche.ng.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * Properties specific to Project GH.
+ * Properties specific to Projectgh.
  * <p>
  * Properties are configured in the application.yml file.
  * See {@link io.github.jhipster.config.JHipsterProperties} for a good example.

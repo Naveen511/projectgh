@@ -17,6 +17,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * Spring Data JPA repository for the Authority entity.
+ *
+ * AuthorityRepository Extends JpaRepository to handle the CRUD operation and
+ * querying the values using keywords.
  */
 public interface AuthorityRepository extends JpaRepository<Authority, String> {
 }

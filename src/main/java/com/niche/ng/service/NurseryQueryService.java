@@ -1,3 +1,14 @@
+/******************************************************************************
+ *  Property of Nichehands
+ *  Nichehands Confidential Proprietary
+ *  Nichehands Copyright (C) 2018 All rights reserved
+ *  ----------------------------------------------------------------------------
+ *  Date  : 2018/08/02
+ *  Target: yarn
+ *  -----------------------------------------------------------------------------
+ *  File Description    : This file performs NurseryQueryService
+ *
+ *******************************************************************************/
 package com.niche.ng.service;
 
 import java.util.List;
@@ -117,6 +128,9 @@ public class NurseryQueryService extends QueryService<Nursery> {
             }
             if (criteria.getMapNurseryWithSectorId() != null) {
                 specification = specification.and(buildReferringEntitySpecification(criteria.getMapNurseryWithSectorId(), Nursery_.mapNurseryWithSectors, MapNurseryWithSector_.id));
+            }
+            if (criteria.getFromNurseryStockDetailsId() != null) {
+                specification = specification.and(buildReferringEntitySpecification(criteria.getFromNurseryStockDetailsId(), Nursery_.fromNurseryStockDetails, NurseryStockDetails_.id));
             }
         }
         return specification;

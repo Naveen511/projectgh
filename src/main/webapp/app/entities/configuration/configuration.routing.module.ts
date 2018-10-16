@@ -1,7 +1,17 @@
+/******************************************************************************
+ *  Property of Nichehands
+ *  Nichehands Confidential Proprietary
+ *  Nichehands Copyright (C) 2018 All rights reserved
+ *  ----------------------------------------------------------------------------
+ *  Date: 2018/08/02 11:27:58
+ *  Target: yarn
+ *******************************************************************************/
+// Import angular dependency
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { JhiResolvePagingParams } from 'ng-jhipster';
 
+// Import the component
 import { OperationalHeadComponent } from 'app/entities/configuration/operational-head.component';
 import { ZonalComponent } from 'app/entities/configuration/zonal.component';
 import { SectorComponent } from 'app/entities/configuration/sector.component';
@@ -9,6 +19,8 @@ import { NurseryComponent } from 'app/entities/configuration/nursery.component';
 import { PickListComponent } from 'app/entities/configuration/pick-list.component';
 import { FinancialYearSettingsComponent } from 'app/entities/configuration/financial-year-settings.component';
 
+// Constant value to set sidebar link for head office, zonal, sector, nursery, lookup,
+// financial year with default params to list data.
 const routes: Routes = [
     {
         path: '',

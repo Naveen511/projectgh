@@ -38,6 +38,8 @@ import java.util.Optional;
 
 /**
  * REST controller for managing Sector.
+ * Used RequestMapping annotation to map the url with the client side.
+ * Using service to access the values in the database.
  */
 @RestController
 @RequestMapping("/api")
@@ -143,24 +145,11 @@ public class SectorResource {
     }
 
     /**
-     * GET  /sectors/zoanl/:zonalId : get all the sectors of particular zonalId.
-     *
-     * @param zonalId the zonalId of the sectorDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and the list of sectors in body
-     */
-    @GetMapping("/sectors/zonal/{zonalId}")
-    @Timed
-    public ResponseEntity<List<SectorDTO>> getZonalSectors(@PathVariable Long zonalId) {
-        log.debug("REST request to get a list of particular zonal Sectors");
-        List<SectorDTO> sectorList = sectorService.findZonalSectors(zonalId);
-        return ResponseEntity.ok().body(sectorList);
-    }
-
-    /**
-     * GET  /sectors/active-record:status : get the "status" Sector.
+     * GET  /sectors/active-record:status : get the particular "status" Sector details.
      *
      * @param status the status of the sectorDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the sectorDTO, or with status 404 (Not Found)
+     * @return the ResponseEntity with status 200 (OK) and with body the sectorDTO, 
+     *         or with status 404 (Not Found)
      */
     @GetMapping("/sectors/count/{status}")
     @Timed

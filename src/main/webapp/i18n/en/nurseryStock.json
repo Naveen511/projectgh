@@ -22,6 +22,7 @@
             "description": "Description",
             "status": "Status",
             "posQuantity": "Pos Quantity",
+            "damageQuantity": "Damage Quantity",
             "nurseryStockDetails": "Nursery Stock Details",
             "nursery": "Nursery",
             "pickListVariety": "Pick List Variety",

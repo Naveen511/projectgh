@@ -1,3 +1,13 @@
+/******************************************************************************
+ *  Property of Nichehands
+ *  Nichehands Confidential Proprietary
+ *  Nichehands Copyright (C) 2018 All rights reserved
+ *  ----------------------------------------------------------------------------
+ *  Date: 2018/08/20
+ *  Target: yarn
+ *******************************************************************************/
+
+// Import needed model and dependency
 import { Moment } from 'moment';
 import { IZonal } from 'app/shared/model//zonal.model';
 import { ISector } from 'app/shared/model//sector.model';
@@ -32,6 +42,7 @@ export interface IFinancialYearSettings {
     godownStocks?: IGodownStock[];
     godownStockDetails?: IGodownStockDetails[];
     godownPurchaseDetails?: IGodownPurchaseDetails[];
+    pickListId?: number;
 }
 
 export class FinancialYearSettings implements IFinancialYearSettings {
@@ -54,7 +65,8 @@ export class FinancialYearSettings implements IFinancialYearSettings {
         public godowns?: IGodown[],
         public godownStocks?: IGodownStock[],
         public godownStockDetails?: IGodownStockDetails[],
-        public godownPurchaseDetails?: IGodownPurchaseDetails[]
+        public godownPurchaseDetails?: IGodownPurchaseDetails[],
+        public pickListId?: number
     ) {}
 }
 
@@ -78,7 +90,10 @@ export class FinancialYearSettingsModel {
     godownStocks?: IGodownStock[];
     godownStockDetails?: IGodownStockDetails[];
     godownPurchaseDetails?: IGodownPurchaseDetails[];
+    pickListId?: number;
 }
 
+// Constant variable
 export const STATUS_ACTIVE = 1;
 export const STATUS_INACTIVE = 2;
+export const DISPLAY_NAME_YEAR = 'YEAR';

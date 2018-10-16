@@ -1,4 +1,13 @@
-import { Moment } from 'moment';
+/******************************************************************************
+ *  Property of Nichehands
+ *  Nichehands Confidential Proprietary
+ *  Nichehands Copyright (C) 2018 All rights reserved
+ *  ----------------------------------------------------------------------------
+ *  Date: 2018/08/20
+ *  Target: yarn
+ *******************************************************************************/
+
+// Import needed model
 import { IGodownPurchaseDetails } from 'app/shared/model//godown-purchase-details.model';
 import { IGodownStock } from 'app/shared/model//godown-stock.model';
 

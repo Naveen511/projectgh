@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date: 2018/08/22
+ *  Date  : 2018/08/22
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs MotherBedMapper
@@ -15,10 +15,11 @@ import com.niche.ng.domain.*;
 import com.niche.ng.service.dto.MotherBedDTO;
 
 import org.mapstruct.*;
-import java.util.List;
 
 /**
  * Mapper for the entity MotherBed and its DTO MotherBedDTO.
+ * Mapping the parent and child table to fetch the field value.
+ * Converting the entity object into data transfer object(DTO).
  */
 @Mapper(componentModel = "spring", uses = {NurseryMapper.class})
 public interface MotherBedMapper extends EntityMapper<MotherBedDTO, MotherBed> {
@@ -30,8 +31,6 @@ public interface MotherBedMapper extends EntityMapper<MotherBedDTO, MotherBed> {
     @Mapping(source = "nurseryId", target = "nursery")
     @Mapping(target = "batchMotherBeds", ignore = true)
     MotherBed toEntity(MotherBedDTO motherBedDTO);
-
-    List<MotherBedDTO> toDto(List<MotherBed> nursery);
 
     default MotherBed fromId(Long id) {
         if (id == null) {

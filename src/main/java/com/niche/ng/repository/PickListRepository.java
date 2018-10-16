@@ -18,6 +18,9 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Spring Data  repository for the PickList entity.
+ *
+ * PickListRepository Extends JpaRepository to handle the CRUD operation and
+ * querying the values using keywords.
  */
 @SuppressWarnings("unused")
 @Repository

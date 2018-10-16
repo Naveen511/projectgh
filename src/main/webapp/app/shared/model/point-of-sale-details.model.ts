@@ -1,3 +1,13 @@
+/******************************************************************************
+ *  Property of Nichehands
+ *  Nichehands Confidential Proprietary
+ *  Nichehands Copyright (C) 2018 All rights reserved
+ *  ----------------------------------------------------------------------------
+ *  Date: 2018/08/02 11:27:58
+ *  Target: yarn
+ *******************************************************************************/
+
+// Import needed model and dependency
 import { Moment } from 'moment';
 
 export interface IPointOfSaleDetails {
@@ -37,7 +47,6 @@ export class PointOfSaleDetails implements IPointOfSaleDetails {
         public pickListCategoryPickListValue?: string,
         public pickListCategoryId?: number,
         public nurseryStockId?: number
-
     ) {}
 }
 

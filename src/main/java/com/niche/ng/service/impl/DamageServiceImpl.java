@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date: 2018/08/02
+ *  Date  : 2018/08/02
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs DamageServiceImpl
@@ -26,9 +26,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.Optional;
-import java.util.List;
 /**
  * Service Implementation for managing Damage.
+ *
+ * Implementing DamageService with IMPL suffix class as DamageServiceImpl.
+ * Using of business logic in the service layer which is present in the service file
+ * using impl as a interface to access the repository layer.
+ * Once we got the responce from the repository layer, mapper convert the entity
+ * object to data transfer object(DTO).
  */
 @Service
 @Transactional
@@ -100,35 +105,7 @@ public class DamageServiceImpl implements DamageService {
     }
 
     /**
-     * Get all the damage by batchId.
-     *
-     * @param batchId the batchId of the entity
-     * @return the list of entities
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public List<DamageDTO> findParticularBatch(Long batchId) {
-        log.debug("Request to get damage : {}", batchId);
-        List<Damage> damage = damageRepository.findByBatchId(batchId);
-        return damageMapper.toDto(damage);
-    }
-
-    /**
-     * Get all the damage by status.
-     *
-     * @param status the status of the entity
-     * @return the list of entities
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public List<DamageDTO> findParticularStatus(Integer status) {
-        log.debug("Request to get damage : {}", status);
-        List<Damage> damage = damageRepository.findByStatus(status);
-        return damageMapper.toDto(damage);
-    }
-
-    /**
-     * Get the count of damage count of particular batch
+     * Get the count of damage by batchId
      *
      * @param batchId the batchId of the entity
      * @return string value of damage count

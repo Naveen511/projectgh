@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date: 2018/08/02
+ *  Date  : 2018/08/02
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs ZonalServiceImpl
@@ -24,11 +24,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import java.util.Optional;
-import java.util.List;
 /**
  * Service Implementation for managing Zonal.
+ *
+ * Implementing ZonalService with IMPL suffix class as ZonalServiceImpl.
+ * Using of business logic in the service layer which is present in the service file
+ * using impl as a interface to access the repository layer.
+ * Once we got the responce from the repository layer, mapper convert the entity
+ * object to data transfer object(DTO).
  */
 @Service
 @Transactional
@@ -100,20 +104,11 @@ public class ZonalServiceImpl implements ZonalService {
     }
 
     /**
-     * Get all the zonals by operationalHeadId.
+     * Get the count of zonal by status
      *
-     * @param operationalHeadId the operationalHeadId of the entity
-     * @param status of the entity
-     * @return the list of entities
+     * @param status the status of the entity
+     * @return Long value of nursery count
      */
-    @Override
-    @Transactional(readOnly = true)
-    public List<ZonalDTO> findParticularHeadOfficeZonal(Long operationalHeadId, Integer status) {
-        log.debug("Request to get Sectors : {}", operationalHeadId);
-        List<Zonal> list = zonalRepository.findByOperationalHeadIdAndStatus(operationalHeadId, status);
-        return zonalMapper.toDto(list);
-    }
-
     @Override
     public Long findActiveCount(Integer status) {
         return zonalRepository.countByStatus(status);

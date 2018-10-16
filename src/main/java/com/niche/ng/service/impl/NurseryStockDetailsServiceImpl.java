@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date: 2018/08/02
+ *  Date  : 2018/08/02
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs NurseryStockDetailsServiceImplementaion
@@ -26,9 +26,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.Optional;
-import java.util.List;
 /**
  * Service Implementation for managing NurseryStockDetails.
+ *
+ * Implementing NurseryStockDetailsService with IMPL suffix class
+ * as NurseryStockDetailsServiceImpl.
+ * Using of business logic in the service layer which is present in the service file
+ * using impl as a interface to access the repository layer.
+ * Once we got the responce from the repository layer, mapper convert the entity
+ * object to data transfer object(DTO).
  */
 @Service
 @Transactional
@@ -97,47 +103,5 @@ public class NurseryStockDetailsServiceImpl implements NurseryStockDetailsServic
     public void delete(Long id) {
         log.debug("Request to delete NurseryStockDetails : {}", id);
         nurseryStockDetailsRepository.deleteById(id);
-    }
-
-    /**
-     * Get all the nurseryStockDetails by nurseryStockId.
-     *
-     * @param nurseryStockId the nurseryStockId of the entity
-     * @return the list of entities
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public List<NurseryStockDetailsDTO> findParticularStockDetails(Long nurseryStockId) {
-        log.debug("Request to get nurseryStockDetails : {}", nurseryStockId);
-        List<NurseryStockDetails> nurseryStockDetails = nurseryStockDetailsRepository.findByNurseryStockId(nurseryStockId);
-        return nurseryStockDetailsMapper.toDto(nurseryStockDetails);
-    }
-
-    /**
-     * Get all the nurseryStockDetails by status.
-     *
-     * @param status the status of the entity
-     * @return the list of entities
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public List<NurseryStockDetailsDTO> findParticularStatusRecord(Integer status) {
-        log.debug("Request to get nurseryStockDetails : {}", status);
-        List<NurseryStockDetails> nurseryStockDetails = nurseryStockDetailsRepository.findByStatus(status);
-        return nurseryStockDetailsMapper.toDto(nurseryStockDetails);
-    }
-
-    /**
-     * Get all the nurseryStockDetails by itNurseryId.
-     *
-     * @param itNurseryId the nurseryStockId of the entity
-     * @return the list of entities
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public List<NurseryStockDetailsDTO> findParticularNurseryStockDetails(Long itNurseryId) {
-        log.debug("Request to get nurseryStockDetails : {}", itNurseryId);
-        List<NurseryStockDetails> itNurseryStockDetails = nurseryStockDetailsRepository.findByItNurseryId(itNurseryId);
-        return nurseryStockDetailsMapper.toDto(itNurseryStockDetails);
     }
 }

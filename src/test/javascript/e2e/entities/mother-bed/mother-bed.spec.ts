@@ -30,8 +30,8 @@ describe('MotherBed e2e test', () => {
 
     /* it('should create and save MotherBeds', () => {
         motherBedComponentsPage.clickOnCreateButton();
-        motherBedUpdatePage.setValueInput('5');
-        expect(motherBedUpdatePage.getValueInput()).toMatch('5');
+        motherBedUpdatePage.setValueInput('value');
+        expect(motherBedUpdatePage.getValueInput()).toMatch('value');
         motherBedUpdatePage.setStatusInput('5');
         expect(motherBedUpdatePage.getStatusInput()).toMatch('5');
         motherBedUpdatePage.nurserySelectLastOption();

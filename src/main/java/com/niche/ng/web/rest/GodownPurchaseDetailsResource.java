@@ -38,6 +38,8 @@ import java.util.Optional;
 
 /**
  * REST controller for managing GodownPurchaseDetails.
+ * Used RequestMapping annotation to map the url with the client side.
+ * Using service to access the values in the database.
  */
 @RestController
 @RequestMapping("/api")
@@ -141,5 +143,4 @@ public class GodownPurchaseDetailsResource {
         godownPurchaseDetailsService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
-
 }

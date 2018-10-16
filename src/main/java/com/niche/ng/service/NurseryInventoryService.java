@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date: 2018/08/25
+ *  Date  : 2018/08/25
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs NurseryInventoryService
@@ -17,7 +17,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
-import java.util.List;
 
 /**
  * Service Interface for managing NurseryInventory.
@@ -55,29 +54,4 @@ public interface NurseryInventoryService {
      * @param id the id of the entity
      */
     void delete(Long id);
-
-    /**
-     * Get the "nurseryId, categoryId" nurseryStock.
-     *
-     * @param nurseryId the nurseryId of the entity
-     * @param pickListCategoryId the pickListCategoryId of the entity
-     * @return the list of entity
-     */
-    List<NurseryInventoryDTO> findInventory(Long nurseryId, Long pickListCategoryId);
-
-    /**
-     * Get the "nurseryId, categoryId" nurseryStock.
-     *
-     * @param nurseryId the nurseryId of the entity
-     * @return the list of entity
-     */
-    List<NurseryInventoryDTO> findCoverInventory(Long nurseryId, Integer status);
-
-    /**
-     * Get the "status" Nursery Inventory.
-     *
-     * @param status the status of the entity
-     * @return the list of entity
-     */
-    List<NurseryInventoryDTO> findParticularStatus(Integer status);
 }

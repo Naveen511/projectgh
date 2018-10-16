@@ -41,6 +41,11 @@
         {
             "fieldName": "saplings",
             "fieldType": "Integer"
+        },
+        {
+            "fieldName": "round",
+            "fieldType": "Integer",
+            "fieldValidateRules": []
         }
     ],
     "changelogDate": "20180818124914",

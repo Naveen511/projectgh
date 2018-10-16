@@ -1,3 +1,14 @@
+/******************************************************************************
+ *  Property of Nichehands
+ *  Nichehands Confidential Proprietary
+ *  Nichehands Copyright (C) 2018 All rights reserved
+ *  ----------------------------------------------------------------------------
+ *  Date  : 2018/08/22
+ *  Target: yarn
+ *  -----------------------------------------------------------------------------
+ *  File Description    : This file performs NurseryStockDetailsQueryService
+ *
+ *******************************************************************************/
 package com.niche.ng.service;
 
 import java.util.List;
@@ -88,6 +99,9 @@ public class NurseryStockDetailsQueryService extends QueryService<NurseryStockDe
             if (criteria.getStatus() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getStatus(), NurseryStockDetails_.status));
             }
+            if (criteria.getItStatus() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getItStatus(), NurseryStockDetails_.itStatus));
+            }
             if (criteria.getBatchId() != null) {
                 specification = specification.and(buildReferringEntitySpecification(criteria.getBatchId(), NurseryStockDetails_.batch, Batch_.id));
             }
@@ -102,6 +116,9 @@ public class NurseryStockDetailsQueryService extends QueryService<NurseryStockDe
             }
             if (criteria.getFinancialYearStockDetailsId() != null) {
                 specification = specification.and(buildReferringEntitySpecification(criteria.getFinancialYearStockDetailsId(), NurseryStockDetails_.financialYearStockDetails, FinancialYearSettings_.id));
+            }
+            if (criteria.getFromNurseryStockDetailsId() != null) {
+                specification = specification.and(buildReferringEntitySpecification(criteria.getFromNurseryStockDetailsId(), NurseryStockDetails_.fromNurseryStockDetails, Nursery_.id));
             }
         }
         return specification;

@@ -1,3 +1,15 @@
+/******************************************************************************
+ *  Property of Nichehands
+ *  Nichehands Confidential Proprietary
+ *  Nichehands Copyright (C) 2018 All rights reserved
+ *  ----------------------------------------------------------------------------
+ *  Date: 2018/08/31
+ *  Target: yarn
+ *  -----------------------------------------------------------------------------
+ *  File Description    : This file performs MotherBedCriteria and
+                            declared the table fields, data types for MotherBed table.
+ *
+ *******************************************************************************/
 package com.niche.ng.service.dto;
 
 import java.io.Serializable;
@@ -8,10 +20,6 @@ import io.github.jhipster.service.filter.FloatFilter;
 import io.github.jhipster.service.filter.IntegerFilter;
 import io.github.jhipster.service.filter.LongFilter;
 import io.github.jhipster.service.filter.StringFilter;
-
-
-
-
 
 
 /**
@@ -36,49 +44,107 @@ public class MotherBedCriteria implements Serializable {
 
     private LongFilter batchMotherBedId;
 
+    /**
+     * MotherBedCriteria from MotherBed table
+     */
     public MotherBedCriteria() {
     }
 
+    /**
+     * To Get the Id from MotherBed table
+     * 
+     * @return id
+     */
     public LongFilter getId() {
         return id;
     }
 
+    /**
+     * To set the id values for the MotherBed table.
+     * 
+     * @param id id value of the MotherBed
+     */
     public void setId(LongFilter id) {
         this.id = id;
     }
 
+    /**
+     * To Get the value from MotherBed table
+     * 
+     * @return value
+     */
     public StringFilter getValue() {
         return value;
     }
 
+    /**
+     * To set the id values for the MotherBed table.
+     * 
+     * @param value value of the MotherBed
+     */
     public void setValue(StringFilter value) {
         this.value = value;
     }
 
+    /**
+     * To Get the status from MotherBed table
+     * 
+     * @return status
+     */
     public IntegerFilter getStatus() {
         return status;
     }
 
+    /**
+     * To set the status for the MotherBed table.
+     * 
+     * @param status status of the MotherBed
+     */
     public void setStatus(IntegerFilter status) {
         this.status = status;
     }
 
+    /**
+     * To Get the nurseryId from MotherBed table
+     * 
+     * @return nurseryId
+     */
     public LongFilter getNurseryId() {
         return nurseryId;
     }
 
+    /**
+     * To set the nurseryId values for the MotherBed table.
+     * 
+     * @param nurseryId nurseryId value of the MotherBed
+     */
     public void setNurseryId(LongFilter nurseryId) {
         this.nurseryId = nurseryId;
     }
 
+    /**
+     * To Get the batchMotherBedId from MotherBed table
+     * 
+     * @return batchMotherBedId
+     */
     public LongFilter getBatchMotherBedId() {
         return batchMotherBedId;
     }
 
+    /**
+     * To set the batchMotherBedId values for the MotherBed table.
+     * 
+     * @param batchMotherBedId batchMotherBedId value of the MotherBed
+     */
     public void setBatchMotherBedId(LongFilter batchMotherBedId) {
         this.batchMotherBedId = batchMotherBedId;
     }
 
+    /**
+     * toString to get the values
+     * 
+     * @return values
+     */
     @Override
     public String toString() {
         return "MotherBedCriteria{" +

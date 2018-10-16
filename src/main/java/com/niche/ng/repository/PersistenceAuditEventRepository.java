@@ -21,16 +21,24 @@ import java.util.List;
 
 /**
  * Spring Data JPA repository for the PersistentAuditEvent entity.
+ *
+ * PersistenceAuditEventRepository Extends JpaRepository to handle the CRUD operation and
+ * querying the values using keywords.
  */
 public interface PersistenceAuditEventRepository extends JpaRepository<PersistentAuditEvent, Long> {
 
+    // Query the list of persistentAuditEvent using a field principal.
     List<PersistentAuditEvent> findByPrincipal(String principal);
 
+    // Query the list of persistentAuditEvent using a field after.
     List<PersistentAuditEvent> findByAuditEventDateAfter(Instant after);
 
+    // Query the list of persistentAuditEvent using a field principal and after.
     List<PersistentAuditEvent> findByPrincipalAndAuditEventDateAfter(String principal, Instant after);
 
+    // Query the list of persistentAuditEvent using a field principle and type.
     List<PersistentAuditEvent> findByPrincipalAndAuditEventDateAfterAndAuditEventType(String principle, Instant after, String type);
 
+    // Query the list of persistentAuditEvent between 2 date using a field date.
     Page<PersistentAuditEvent> findAllByAuditEventDateBetween(Instant fromDate, Instant toDate, Pageable pageable);
 }

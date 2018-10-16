@@ -1,3 +1,14 @@
+/******************************************************************************
+ *  Property of Nichehands
+ *  Nichehands Confidential Proprietary
+ *  Nichehands Copyright (C) 2018 All rights reserved
+ *  ----------------------------------------------------------------------------
+ *  Date  : 2018/08/22
+ *  Target: yarn
+ *  -----------------------------------------------------------------------------
+ *  File Description    : This file performs SectorInchargeService
+ *
+ *******************************************************************************/
 package com.niche.ng.service;
 
 import com.niche.ng.service.dto.SectorInchargeDTO;

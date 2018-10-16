@@ -38,6 +38,8 @@ import java.util.Optional;
 
 /**
  * REST controller for managing NurseryStockDetails.
+ * Used RequestMapping annotation to map the url with the client side.
+ * Using service to access the values in the database.
  */
 @RestController
 @RequestMapping("/api")
@@ -140,50 +142,5 @@ public class NurseryStockDetailsResource {
         log.debug("REST request to delete NurseryStockDetails : {}", id);
         nurseryStockDetailsService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
-    }
-
-    /**
-     * GET  /nursery-stock-details/stock/:nurseryStockId : get all the stock details 
-     * of particular nurseryStockId.
-     *
-     * @param nurseryStockId the nurseryStockId of the NurseryStockDetailsDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and the list of nurseryStockId in body
-     */
-    @GetMapping("/nursery-stock-details/stock/{nurseryStockId}")
-    @Timed
-    public ResponseEntity<List<NurseryStockDetailsDTO>> getParticularStockDetails(@PathVariable Long nurseryStockId) {
-        log.debug("REST request to get a list of particular nursery stock details");
-        List<NurseryStockDetailsDTO> list = nurseryStockDetailsService.findParticularStockDetails(nurseryStockId);
-        return ResponseEntity.ok().body(list);
-    }
-
-    /**
-     * GET  /nursery-stock-details/damage/:status : get all the stock details 
-     * of particular status.
-     *
-     * @param status the status of the NurseryStockDetailsDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and the list of status in body
-     */
-    @GetMapping("/nursery-stock-details/damage/{status}")
-    @Timed
-    public ResponseEntity<List<NurseryStockDetailsDTO>> getParticularStatusRecord(@PathVariable Integer status) {
-        log.debug("REST request to get a list of particular status nursery stock details");
-        List<NurseryStockDetailsDTO> list = nurseryStockDetailsService.findParticularStatusRecord(status);
-        return ResponseEntity.ok().body(list);
-    }
-
-    /**
-     * GET  /nursery-stock-details/stock/:itNurseryId : get all the stock details 
-     * of particular itNurseryId.
-     *
-     * @param itNurseryId the itNurseryId of the NurseryStockDetailsDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and the list of nurseryStockId in body
-     */
-    @GetMapping("/nursery-stock-details/stock/itNurseryList/{itNurseryId}")
-    @Timed
-    public ResponseEntity<List<NurseryStockDetailsDTO>> getParticularNurseryList(@PathVariable Long itNurseryId) {
-        log.debug("REST request to get a list of particular nursery stock details");
-        List<NurseryStockDetailsDTO> list = nurseryStockDetailsService.findParticularNurseryStockDetails(itNurseryId);
-        return ResponseEntity.ok().body(list);
     }
 }

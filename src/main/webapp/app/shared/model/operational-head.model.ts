@@ -1,4 +1,13 @@
-import { Moment } from 'moment';
+/******************************************************************************
+ *  Property of Nichehands
+ *  Nichehands Confidential Proprietary
+ *  Nichehands Copyright (C) 2018 All rights reserved
+ *  ----------------------------------------------------------------------------
+ *  Date: 2018/08/02 11:27:58
+ *  Target: yarn
+ *******************************************************************************/
+
+// Import needed model and dependency
 import { IZonal } from 'app/shared/model//zonal.model';
 import { IMapZonalWithOh } from 'app/shared/model//map-zonal-with-oh.model';
 
@@ -31,4 +40,5 @@ export class OperationalHeadModel {
     mapZonalWithOhs?: IMapZonalWithOh[];
 }
 
+// Constant variable
 export const STATUS_ACTIVE = 1;

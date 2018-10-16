@@ -1,0 +1,45 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="batchQuantity">
+            <h2><span jhiTranslate="projectghApp.batchQuantity.detail.title">Batch Quantity</span> {{batchQuantity.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="projectghApp.batchQuantity.quantity">Quantity</span></dt>
+                <dd>
+                    <span>{{batchQuantity.quantity}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.batchQuantity.date">Date</span></dt>
+                <dd>
+                    <span>{{batchQuantity.date}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.batchQuantity.remarks">Remarks</span></dt>
+                <dd>
+                    <span>{{batchQuantity.remarks}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.batchQuantity.status">Status</span></dt>
+                <dd>
+                    <span>{{batchQuantity.status}}</span>
+                </dd>
+                <dt><span jhiTranslate="projectghApp.batchQuantity.batch">Batch</span></dt>
+                <dd>
+                    <div *ngIf="batchQuantity.batchId">
+                        <a [routerLink]="['/batch', batchQuantity.batchId, 'view']">{{batchQuantity.batchBatchName}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/batch-quantity', batchQuantity.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

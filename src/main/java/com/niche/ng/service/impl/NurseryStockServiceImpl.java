@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date: 2018/08/02
+ *  Date  : 2018/08/02
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs NurseryStockServiceImplementation
@@ -11,6 +11,7 @@
  *******************************************************************************/
 package com.niche.ng.service.impl;
 
+import java.util.List;
 import com.niche.ng.service.NurseryStockService;
 import com.niche.ng.domain.NurseryStock;
 import com.niche.ng.repository.NurseryStockRepository;
@@ -26,9 +27,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.Optional;
-import java.util.List;
 /**
  * Service Implementation for managing NurseryStock.
+ *
+ * Implementing NurseryStockService with IMPL suffix class as NurseryStockServiceImpl.
+ * Using of business logic in the service layer which is present in the service file
+ * using impl as a interface to access the repository layer.
+ * Once we got the responce from the repository layer, mapper convert the entity
+ * object to data transfer object(DTO).
  */
 @Service
 @Transactional
@@ -89,20 +95,6 @@ public class NurseryStockServiceImpl implements NurseryStockService {
     }
 
     /**
-     * Get one nurseryStock by id.
-     *
-     * @param id the id of the entity
-     * @return the entity
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public List<NurseryStockDTO> findNurseryId(Long nurseryId) {
-        log.debug("Request to get NurseryStock : {}", nurseryId);
-        List<NurseryStock> stock = nurseryStockRepository.findByNurseryId(nurseryId);
-        return nurseryStockMapper.toDto(stock);
-    }
-
-    /**
      * Delete the nurseryStock by id.
      *
      * @param id the id of the entity
@@ -111,23 +103,5 @@ public class NurseryStockServiceImpl implements NurseryStockService {
     public void delete(Long id) {
         log.debug("Request to delete NurseryStock : {}", id);
         nurseryStockRepository.deleteById(id);
-    }
-
-    /**
-     * Get all the nursery stock by nurseryId, pickListCategoryId.
-     *
-     * @param nurseryId the nurseryId of the entity
-     * @param pickListCategoryId the pickListCategoryId of the entity
-     * @return the list of entities
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public List<NurseryStockDTO> findStock(Long nurseryId, Long pickListCategoryId) {
-        log.debug("Request to get Nursery Stock : {}", nurseryId +", "+ pickListCategoryId);
-        // List<NurseryStock> stock = nurseryStockRepository.findByNurseryIdAndPickListVarietyIdAndPickListCategoryIdIn(nurseryId, pickListVarietyId, pickListCategoryId);
-        // List<NurseryStock> stock = nurseryStockRepository.findByNurseryIdAndPickListVarietyIdInAndPickListCategoryIdIn(nurseryId, pickListVarietyId, pickListCategoryId);
-        List<NurseryStock> stock = nurseryStockRepository.findByNurseryIdAndPickListCategoryId(nurseryId, pickListCategoryId);
-        // List<NurseryStock> stock = nurseryStockRepository.findByNurseryIdAndPickListVarietyIdIn(nurseryId, pickListVarietyId);
-        return nurseryStockMapper.toDto(stock);
     }
 }

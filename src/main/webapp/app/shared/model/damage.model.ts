@@ -1,3 +1,13 @@
+/******************************************************************************
+ *  Property of Nichehands
+ *  Nichehands Confidential Proprietary
+ *  Nichehands Copyright (C) 2018 All rights reserved
+ *  ----------------------------------------------------------------------------
+ *  Date: 2018/08/02 11:27:58
+ *  Target: yarn
+ *******************************************************************************/
+
+// Import needed dependency
 import { Moment } from 'moment';
 
 export interface IDamage {
@@ -48,6 +58,7 @@ export class DamageModel {
     financialYearDamageId?: number;
 }
 
+// Constant variable
 export const STATUS_SEEDS = 1;
 export const STATUS_SEEDLING = 2;
 export const STATUS_SAPLING = 3;

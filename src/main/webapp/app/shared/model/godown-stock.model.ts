@@ -1,4 +1,13 @@
-import { Moment } from 'moment';
+/******************************************************************************
+ *  Property of Nichehands
+ *  Nichehands Confidential Proprietary
+ *  Nichehands Copyright (C) 2018 All rights reserved
+ *  ----------------------------------------------------------------------------
+ *  Date: 2018/08/27
+ *  Target: yarn
+ *******************************************************************************/
+
+// Import needed model
 import { IGodownStockDetails } from 'app/shared/model//godown-stock-details.model';
 
 export interface IGodownStock {
@@ -61,7 +70,12 @@ export class GodownStockModel {
     godownId?: number;
     financialYearGodownStockBatchName?: string;
     financialYearGodownStockId?: number;
+    pickListQuantityId?: number;
+    pickListId?: number;
+    length?: number;
 }
 
-export const STATUS_DIRECT = 1;
-export const STATUS_FROM_BATCH = 2;
+// Constant variable
+export const STATUS_ACTIVE = 1;
+export const DISPLAY_NAME_VARIETY = 'VARIETY';
+export const DISPLAY_NAME_QUANTITY_TYPE = 'QUANTITY TYPE';

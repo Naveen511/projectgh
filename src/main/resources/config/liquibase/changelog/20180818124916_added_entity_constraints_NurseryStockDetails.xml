@@ -38,5 +38,12 @@
                                  referencedColumnNames="id"
                                  referencedTableName="financial_year_settings"/>
 
+        <addForeignKeyConstraint baseColumnNames="from_nursery_stock_details_id"
+                                 baseTableName="nursery_stock_details"
+                                 constraintName="fk_nursery_stock_details_from_nursery_stock_details_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="nursery"/>
+
+
     </changeSet>
 </databaseChangeLog>

@@ -23,6 +23,7 @@ export class NurseryStockUpdatePage {
     descriptionInput = element(by.id('field_description'));
     statusInput = element(by.id('field_status'));
     posQuantityInput = element(by.id('field_posQuantity'));
+    damageQuantityInput = element(by.id('field_damageQuantity'));
     nurserySelect = element(by.id('field_nursery'));
     pickListVarietySelect = element(by.id('field_pickListVariety'));
     pickListCategorySelect = element(by.id('field_pickListCategory'));
@@ -78,6 +79,14 @@ export class NurseryStockUpdatePage {
 
     getPosQuantityInput() {
         return this.posQuantityInput.getAttribute('value');
+    }
+
+    setDamageQuantityInput(damageQuantity): promise.Promise<void> {
+        return this.damageQuantityInput.sendKeys(damageQuantity);
+    }
+
+    getDamageQuantityInput() {
+        return this.damageQuantityInput.getAttribute('value');
     }
 
     nurserySelectLastOption(): promise.Promise<void> {

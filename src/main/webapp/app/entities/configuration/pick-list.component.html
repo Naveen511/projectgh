@@ -4,231 +4,26 @@
     <div class="row font12">
         <div class="col-sm-7">
             <div>
-                <ngb-alert *ngIf="successMessage" type="success" 
-                (close)="successMessage = null">{{ successMessage }}</ngb-alert>
+                <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">
+                    {{ successMessage }}
+                </ngb-alert>
             </div>
             <tabset>
-                <tab>
-                    <ng-template tabHeading><i class="icon-basket-loaded"> Pick List</i>
+                <tab><!-- Display list of pick list data  -->
+                    <ng-template tabHeading>
+                        <i class="icon-basket-loaded"> Pick List</i>
                     </ng-template>
-                    <button type="button" class="badge badge-success float-right" 
+                    <button type="button" class="btn btn-ghost-success btn-sm float-right" 
                     data-toggle="modal" (click)="createPickList()">
                         <fa-icon [icon]="'plus'"></fa-icon> Add
                     </button>
                     <!-- <div class="col-sm-6"> -->
-                        <table class="table font12">
-                            <thead>
-                                <tr>
-                                    <th>S No.</th>
-                                    <th>Name</th>
-                                    <th class="text-center">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let pickList of pickLists; let l = index">
-                                    <td>{{l+1}}</td>
-                                    <td>{{pickList.pickListName}}</td>
-                                    <td class="text-center">
-                                        <a class="text-primary lg-2" data-toggle="modal" placement="top"
-                                            (click)="getPickListValue(pickList)"
-                                            ngbTooltip="Edit"><fa-icon [icon]="'pencil-alt'"> </fa-icon>
-                                        </a>
-                                        <a class="text-danger sm-2" data-toggle="modal" 
-                                            ngbTooltip="Delete" placement="top"
-                                            (click)="softDeletePickList(pickList)">
-                                            <fa-icon [icon]="'times'"> </fa-icon>
-                                        </a>
-    
-    
-                                        <!-- <div class="btn-group font12" role="group">
-                                            <button type="button" class="btn btn-sm btn-primary" 
-                                                data-toggle="modal" (click)="getPickListValue(pickList)"
-                                                ngbTooltip="Edit" placement="bottom">
-                                                <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-danger" 
-                                                (click)="deletePickList(pickList)"
-                                                ngbTooltip="Delete" placement="bottom">
-                                                <fa-icon [icon]="'times'"></fa-icon>
-                                            </button>
-                                        </div> -->
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    <!-- </div> -->
-                    </tab>
-                    <tab>
-                        <ng-template tabHeading>
-                            <i class="icon-basket-loaded"> Pick List Value</i>
-                        </ng-template>
-                        <button type="button" class="badge badge-success float-right" 
-                            data-toggle="modal" (click)="createPickListValue()">
-                            <fa-icon [icon]="'plus'"></fa-icon> Add
-                        </button>
-                        <table class="table font12">
-                            <thead>
-                                <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-                                    <th>S No.</th>
-                                    <th jhiSortBy="pickListPickListName">Name <fa-icon [icon]="'sort'"></fa-icon></th>
-                                    <th jhiSortBy="pickListValue">Value <fa-icon [icon]="'sort'"></fa-icon></th>
-                                    <th jhiSortBy="pickValuePickListValue">Variety <fa-icon [icon]="'sort'"></fa-icon></th>
-                                    <th class="text-center">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let pickListvalue of pickListValues; let i = index; trackBy: trackId">
-                                    <td>{{i+1}}</td>
-                                    <td>{{pickListvalue.pickListPickListName}}</td>
-                                    <td>{{pickListvalue.pickListValue}}</td>
-                                    <td>{{pickListvalue.pickValuePickListValue}}</td>
-                                    <td class="text-center">
-                                        <!-- <button type="button"  class="btn btn-sm btn-ghost-success" 
-                                            data-toggle="modal" (click)="openChildModel(pickListvalue)">
-                                            <fa-icon [icon]="'plus'"></fa-icon> Add
-                                        </button>
-                                        <button type="button"  class="btn btn-sm btn-ghost-info"
-                                            data-toggle="modal" (click)="getPickValue(pickListvalue)">
-                                            <fa-icon [icon]="'pencil-alt'"></fa-icon> Edit
-                                        </button>
-                                        <button type="button" class="btn btn-sm btn-ghost-danger" 
-                                            (click)="deletePickListValue(pickListvalue)">
-                                            <fa-icon [icon]="'times'"></fa-icon> Delete
-                                        </button> -->
-
-                                        <a class="text-success sm-2" data-toggle="modal" 
-                                            (click)="openChildModel(pickListvalue)"
-                                            placement="top" ngbTooltip="Add"><fa-icon [icon]="'plus'"> </fa-icon>
-                                        </a>
-                                        <a class="text-info sm-2" data-toggle="modal" 
-                                            ngbTooltip="Edit" placement="top"
-                                            (click)="getPickValue(pickListvalue)">
-                                            <fa-icon [icon]="'pencil-alt'"> </fa-icon>
-                                        </a>
-                                        <a class="text-danger sm-2" data-toggle="modal" 
-                                            ngbTooltip="Delete" placement="top"
-                                            (click)="softDeletePickListValue(pickListvalue)">
-                                            <fa-icon [icon]="'times'"> </fa-icon>
-                                        </a>
-
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div *ngIf="pickListValues && pickListValues.length" class="card-footer">
-                            <!-- <div class="row justify-content-center">
-                                <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
-                            </div> -->
-                            <div class="row justify-content-center">
-                                <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
-                            </div>
-                        </div>
-                    </tab>
-                    <tab>
-                    <ng-template tabHeading><i class="icon-basket-loaded"> Mother Bed List</i></ng-template>
-                    <button type="button" class="badge badge-success float-right" 
-                        data-toggle="modal" (click)="showMotherBedCreateForm()">
-                        <fa-icon [icon]="'plus'"></fa-icon> Add
-                    </button>
-                        <table class="table font12">
-                            <thead>
-                                <tr>
-                                    <th>S No.</th>
-                                    <th>Nursery</th>
-                                    <th>Number</th>
-                                    <th>Status</th>
-                                    <th class="text-center">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let motherBed of motherBedList; let l = index">
-                                    <td>{{l+1}}</td>
-                                    <td>{{motherBed.nurseryNurseryName}}</td>
-                                    <td>{{motherBed.value}}</td>
-                                    <td>
-                                        <span *ngIf="motherBed.status == 1" class="text-success">Available</span>
-                                        <span *ngIf="motherBed.status == 3" class="text-danger">Occupied</span>
-                                    </td>
-                                    <td>
-                                        <!-- <button type="button" class="btn btn-sm btn-ghost-info" 
-                                            data-toggle="modal">
-                                            <fa-icon [icon]="'pencil-alt'"></fa-icon> Edit
-                                        </button>
-                                        <button type="button" class="btn btn-sm btn-ghost-danger">
-                                            <fa-icon [icon]="'times'"></fa-icon> Delete
-                                        </button> -->
-
-                                        <a class="text-info sm-2" data-toggle="modal" 
-                                            ngbTooltip="Edit" placement="top">
-                                            <fa-icon [icon]="'pencil-alt'"> </fa-icon>
-                                        </a>
-                                        <a class="text-danger sm-2" data-toggle="modal" 
-                                            ngbTooltip="Delete" placement="top" (click)="softDeleteMothedBed(motherBed)">
-                                            <fa-icon [icon]="'times'"> </fa-icon>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </tab>
-                    <!-- <tab>
-                        <ng-template tabHeading><i class="icon-basket-loaded"> Quantity List</i></ng-template>
-                        <button type="button" class="badge badge-success float-right" 
-                    data-toggle="modal" (click)="createQuantityList()"><fa-icon [icon]="'plus'"></fa-icon> Add
-                    </button>
-                        <table class="table font12">
-                            <thead>
-                                <tr>
-                                    <th>S No.</th>
-                                    <th>Variety</th>
-                                    <th>Category</th>
-                                    <th>Approximate Quantity</th>
-                                    <th class="text-center">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let quantitys of quantity; let l = index">
-                                    <td>{{l+1}}</td>
-                                    <td>{{quantitys.pickListVarietyPickListValue}}</td>
-                                    <td>{{quantitys.pickListCategoryPickListValue}}</td>
-                                    <td>{{quantitys.approxQuantity}}</td>
-                                    <td>
-                                        <a class="text-primary sm-2" data-toggle="modal" 
-                                            (click)="getQuantity(quantitys)"
-                                            placement="top" ngbTooltip="Edit">
-                                            <fa-icon [icon]="'pencil-alt'"> </fa-icon>
-                                        </a>
-                                        <a class="text-danger sm-2" data-toggle="modal" 
-                                            ngbTooltip="Delete" placement="top"
-                                            (click)="deleteQuantity(quantitys)">
-                                            <fa-icon [icon]="'times'"></fa-icon>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </tab> -->
-                </tabset>
-            </div>
-        </div>
-    <!-- End of the success alert-->
-    
-    <!-- <div class="row">
-        <div class="col-sm-5">
-            <div class="card">
-                <div class="card-header">
-                    <i class="fa fa-align-justify"></i> Pick List
-                    <button type="button" class="btn btn-sm btn-brand btn-success float-right" 
-                    data-toggle="modal" (click)="createPickList()">
-                        <fa-icon [icon]="'plus'"></fa-icon> Add
-                    </button>
-                </div>
-                <div class="card-body table-responsive">
                     <table class="table font12">
                         <thead>
                             <tr>
                                 <th>S No.</th>
                                 <th>Name</th>
+                                <th>Display Label Name</th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -236,48 +31,114 @@
                             <tr *ngFor="let pickList of pickLists; let l = index">
                                 <td>{{l+1}}</td>
                                 <td>{{pickList.pickListName}}</td>
+                                <td>{{pickList.displayLabelName}}</td>
                                 <td class="text-center">
-                                    <button type="button" class="btn btn-sm btn-ghost-info" 
-                                        data-toggle="modal" (click)="getPickListValue(pickList)">
-                                        <fa-icon [icon]="'pencil-alt'"></fa-icon> Edit</button>
-                                    <button type="button" class="btn btn-sm btn-ghost-danger" 
-                                        (click)="deletePickList(pickList)">
-                                        <fa-icon [icon]="'times'"></fa-icon> Delete</button>
-
-
-                                    <div class="btn-group mr-2" role="group">
-                                        <button type="button" class="btn btn-sm btn-primary" 
-                                            data-toggle="modal" (click)="getPickListValue(pickList)"
-                                            ngbTooltip="Edit" placement="bottom">
-                                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                                        </button>
-                                        <button type="button" class="btn btn-sm btn-danger" 
-                                            (click)="deletePickList(pickList)"
-                                            ngbTooltip="Delete" placement="bottom">
-                                            <fa-icon [icon]="'times'"></fa-icon>
-                                        </button>
-                                    </div>
+                                    <a class="text-primary lg-2" data-toggle="modal" 
+                                    placement="top" (click)="getPickListValue(pickList)" 
+                                    ngbTooltip="Edit">
+                                        <fa-icon [icon]="'pencil-alt'"> </fa-icon>
+                                    </a>
+                                    <a class="text-danger sm-2" data-toggle="modal" 
+                                    ngbTooltip="Delete" placement="top" 
+                                    (click)="softDeletePickList(pickList)">
+                                        <fa-icon [icon]="'trash-alt'"> </fa-icon>
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <i class="fa fa-align-justify"></i> MotherBed List
-                    <button type="button" class="btn btn-sm btn-success float-right" 
-                    data-toggle="modal" (click)="showMotherBedCreateForm()"><fa-icon [icon]="'plus'"></fa-icon> Add
+                    <div *ngIf="pickLists && pickLists.length" class="card-footer">
+                        <!-- <div class="row justify-content-center">
+                                <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" 
+                                [itemsPerPage]="itemsPerPage"></jhi-item-count>
+                            </div> -->
+                        <div class="row justify-content-center">
+                            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" 
+                            [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" 
+                            [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+                        </div>
+                    </div>
+                    <!-- </div> -->
+                </tab> <!-- End of pick list data  -->
+                <tab> <!-- Display list of pick list value data  -->
+                    <ng-template tabHeading>
+                        <i class="icon-basket-loaded"> Pick List Value</i>
+                    </ng-template>
+                    <button type="button" class="btn btn-sm btn-ghost-success float-right" 
+                    data-toggle="modal" (click)="createPickListValue()">
+                        <fa-icon [icon]="'plus'"></fa-icon> Add
                     </button>
-                </div>
-                <div class="card-body table-responsive">
+                    <table class="table font12">
+                        <thead>
+                            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" 
+                            [callback]="transition.bind(this)">
+                                <th>S No.</th>
+                                <th jhiSortBy="pickListPickListName">Name
+                                    <fa-icon [icon]="'sort'"></fa-icon>
+                                </th>
+                                <th jhiSortBy="pickListValue">Value
+                                    <fa-icon [icon]="'sort'"></fa-icon>
+                                </th>
+                                <th jhiSortBy="pickValuePickListValue">Variety
+                                    <fa-icon [icon]="'sort'"></fa-icon>
+                                </th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let pickListvalue of pickListValues; let i = index; trackBy: trackId">
+                                <td>{{i+1}}</td>
+                                <td>{{pickListvalue.pickListPickListName}}</td>
+                                <td>{{pickListvalue.pickListValue}}</td>
+                                <td>{{pickListvalue.pickValuePickListValue}}</td>
+                                <td class="text-center">
+                                    <a class="text-success sm-2" data-toggle="modal" 
+                                    (click)="openChildModel(pickListvalue)" placement="top" 
+                                    ngbTooltip="Add">
+                                        <fa-icon [icon]="'plus'"> </fa-icon>
+                                    </a>
+                                    <a class="text-info sm-2" data-toggle="modal" 
+                                    ngbTooltip="Edit" placement="top" 
+                                    (click)="getPickValue(pickListvalue)">
+                                        <fa-icon [icon]="'pencil-alt'"> </fa-icon>
+                                    </a>
+                                    <a class="text-danger sm-2" data-toggle="modal" 
+                                    ngbTooltip="Delete" placement="top" 
+                                    (click)="softDeletePickListValue(pickListvalue)">
+                                        <fa-icon [icon]="'trash-alt'"> </fa-icon>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div *ngIf="pickListValues && pickListValues.length" class="card-footer">
+                        <!-- <div class="row justify-content-center">
+                                <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" 
+                                [itemsPerPage]="itemsPerPage"></jhi-item-count>
+                            </div> -->
+                        <div class="row justify-content-center">
+                            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" 
+                            [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" 
+                            [boundaryLinks]="true"
+                                (pageChange)="loadPage(page)"></ngb-pagination>
+                        </div>
+                    </div>
+                </tab> <!-- End of pick list value data  -->
+                <tab> <!-- Display list of motherBed data  -->
+                    <ng-template tabHeading>
+                        <i class="icon-basket-loaded"> Mother Bed List</i>
+                    </ng-template>
+                    <button type="button" class="btn btn-sm btn-ghost-success float-right" 
+                    data-toggle="modal" (click)="showMotherBedCreateForm()">
+                        <fa-icon [icon]="'plus'"></fa-icon> Add
+                    </button>
                     <table class="table font12">
                         <thead>
                             <tr>
                                 <th>S No.</th>
-                                <th>Nursery name</th>
-                                <th>Value</th>
+                                <th>Nursery</th>
+                                <th>Number</th>
+                                <th>Status</th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -287,330 +148,301 @@
                                 <td>{{motherBed.nurseryNurseryName}}</td>
                                 <td>{{motherBed.value}}</td>
                                 <td>
-                                    <button type="button" class="btn btn-sm btn-ghost-info" data-toggle="modal"><fa-icon [icon]="'pencil-alt'"></fa-icon> Edit</button>
-                                    <button type="button" class="btn btn-sm btn-ghost-danger"><fa-icon [icon]="'times'"></fa-icon> Delete</button>
+                                    <span *ngIf="motherBed.status == 1" class="text-success">Available</span>
+                                    <span *ngIf="motherBed.status == 3" class="text-danger">Occupied</span>
                                 </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm-7">
-            <div class="card">
-                <div class="card-header">
-                    <i class="fa fa-align-justify"></i> Pick List Value
-                    <button type="button" class="btn btn-sm btn-success float-right" 
-                    data-toggle="modal" (click)="createPickListValue()"><fa-icon [icon]="'plus'"></fa-icon> Add
-                    </button>
-                </div>
-                <div class="card-body table-responsive">
-                    <table class="table font12">
-                        <thead>
-                            <tr>
-                                <th>S No.</th>
-                                <th>Name</th>
-                                <th>Value</th>
-                                <th>Variety</th>
-                                <th class="text-center">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let pickListvalue of pickListValues; let i = index">
-                                <td>{{i+1}}</td>
-                                <td>{{pickListvalue.pickListPickListName}}</td>
-                                <td>{{pickListvalue.pickListValue}}</td>
-                                <td>{{pickListvalue.pickValuePickListValue}}</td>
                                 <td>
-                                    <button type="button"  class="btn btn-sm btn-ghost-success" 
-                                        data-toggle="modal" (click)="openChildModel(pickListvalue)">
-                                        <fa-icon [icon]="'plus'"></fa-icon> Add
-                                    </button>
-                                    <button type="button"  class="btn btn-sm btn-ghost-info"
-                                        data-toggle="modal" (click)="getPickValue(pickListvalue)">
-                                        <fa-icon [icon]="'pencil-alt'"></fa-icon> Edit
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-ghost-danger" 
-                                        (click)="deletePickListValue(pickListvalue)">
-                                        <fa-icon [icon]="'times'"></fa-icon> Delete
-                                    </button>
+                                    <a class="text-info sm-2" data-toggle="modal" 
+                                    ngbTooltip="Edit" placement="top">
+                                        <fa-icon [icon]="'pencil-alt'"> </fa-icon>
+                                    </a>
+                                    <a class="text-danger sm-2" data-toggle="modal" 
+                                    ngbTooltip="Delete" placement="top" 
+                                    (click)="softDeleteMothedBed(motherBed)">
+                                        <fa-icon [icon]="'trash-alt'"> </fa-icon>
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                </div>
-            </div>
+                </tab> <!-- End of motherBed list  -->
+            </tabset>
         </div>
     </div>
-</div>
-
-<div class="row">
-        <div class="col-sm-5">
-            <div class="card">
-                <div class="card-header">
-                    <i class="fa fa-align-justify"></i> Quantity List
-                    <button type="button" class="btn btn-sm btn-success float-right" 
-                    data-toggle="modal" (click)="createQuantityList()"><fa-icon [icon]="'plus'"></fa-icon> Add
-                    </button>
-                </div>
-                <div class="card-body table-responsive">
-                    <table class="table font12">
-                        <thead>
-                            <tr>
-                                <th>S No.</th>
-                                <th>Variety</th>
-                                <th>Category</th>
-                                <th>Approximate Quantity</th>
-                                <th class="text-center">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let quantitys of quantity; let l = index">
-                                <td>{{l+1}}</td>
-                                <td>{{quantitys.pickListVarietyPickListValue}}</td>
-                                <td>{{quantitys.pickListCategoryPickListValue}}</td>
-                                <td>{{quantitys.approxQuantity}}</td>
-                                <td>
-                                    <button type="button" class="btn btn-sm btn-ghost-info" data-toggle="modal" (click)="getQuantity(quantitys)"><fa-icon [icon]="'pencil-alt'"></fa-icon> Edit</button>
-                                    <button type="button" class="btn btn-sm btn-ghost-danger" (click)="deleteQuantity(quantitys)"><fa-icon [icon]="'times'"></fa-icon> Delete</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div> -->
+    <!-- End of the success alert-->
 </div>
 
 <!-- Pick list creation/updation form-->
 <div bsModal #pickListModal="bs-modal" class="modal fade" tabindex="-1" 
-    role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+    [config]="{backdrop: 'static',  keyboard: false}">
     <div class="modal-dialog modal-primary" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <!-- <h6 class="modal-title">Create/Update {{pickListObject.pickListName}}</h6> -->
                 <h6 class="modal-title">{{title}}</h6>
-                <button type="button" class="close" 
-                    (click)="pickListModal.hide()" aria-label="Close">
+                <button type="button" class="close" (click)="closePickListModal()" 
+                aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-                    <input [(ngModel)]="pickListObject.id" type="hidden" id="id" name="id" class="form-control">
+                    <input [(ngModel)]="pickListObject.id" type="hidden" id="id" 
+                    name="id" class="form-control">
                     <div class="form-group row">
-                    <label class="col-md-3 col-form-label" for="text-input">Name *</label>
-                    <div class="col-md-9">
-                        <input [(ngModel)]="pickListObject.pickListName" 
-                            type="text" id="pickListName" name="pickListName" 
-                            class="form-control" placeholder="Name">
+                        <label class="col-md-3 col-form-label" for="text-input">Name *</label>
+                        <div class="col-md-9">
+                            <input [(ngModel)]="pickListObject.pickListName" type="text" 
+                            id="pickListName" name="pickListName" class="form-control" 
+                            placeholder="Name">
+                        </div>
                     </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="text-input">
+                            Display Label Name *
+                        </label>
+                        <div class="col-md-9">
+                            <input [(ngModel)]="pickListObject.displayLabelName" 
+                            type="text" id="displayLabelName" name="displayLabelName" 
+                            class="form-control" placeholder="Display Label Name">
+                        </div>
                     </div>
                     <div>
-                        <span class="text-danger" *ngIf="errorMessage"
+                        <span class="text-danger" *ngIf="errorMessage" 
                         (close)="errorMessage = null">{{ errorMessage }}</span>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" 
-                    (click)="pickListModal.hide()">Close</button>
-                <button type="button" class="btn btn-primary" 
-                    (click)="savePickList()">Save</button>
+                <button type="button" class="btn btn-secondary" (click)="closePickListModal()">
+                    Close
+                </button>
+                <button type="button" class="btn btn-primary" (click)="savePickList()">
+                    Save
+                </button>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
 <!--End of the picklist form creation/updation-->
 
 <!-- Start Pick list value creation and updation-->
-<div bsModal #pickListValueModal="bs-modal" class="modal fade" 
-    tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div bsModal #pickListValueModal="bs-modal" class="modal fade" tabindex="-1" 
+    role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+    [config]="{backdrop: 'static',  keyboard: false}">
     <div class="modal-dialog modal-primary" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <!-- <h6 class="modal-title">Create/Update {{pickListValueObject.pickListValue}}</h6> -->
                 <h6 class="modal-title">{{title}}</h6>
 
-                <button type="button" class="close" (click)="pickListValueModal.hide()" aria-label="Close">
+                <button type="button" class="close" (click)="closePickListValueModal()" 
+                aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-                    <input [(ngModel)]="pickListValueObject.id" type="hidden" id="id" name="id" class="form-control">
+                    <input [(ngModel)]="pickListValueObject.id" type="hidden" id="id" 
+                    name="id" class="form-control">
                     <div *ngIf="!pickListValueObject.id" class="form-group row">
                         <label class="col-md-4 col-form-label" for="select1">PickList Name *</label>
                         <div class="col-md-8">
-                        <select [(ngModel)]="pickListValueObject.pickListId" id="pickListId" 
+                            <select [(ngModel)]="pickListValueObject.pickListId" id="pickListId" 
                             name="pickListId" class="form-control">
-                            <option value="0" disabled selected>Select PickList Name</option>
-                            <option *ngFor="let val of pickLists" value={{val.id}}>
-                                {{val.pickListName}}
-                            </option>
-                        </select>
-                        </div>    
+                                <option value="0" disabled selected>Select PickList Name</option>
+                                <option *ngFor="let val of pickLists" value={{val.id}}>
+                                    {{val.pickListName}}
+                                </option>
+                            </select>
+                        </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-md-4 col-form-label" for="text-input">Name *</label>
                         <div class="col-md-8">
-                            <input [(ngModel)]="pickListValueObject.pickListValue" 
-                                type="text" id="pickListValue" 
-                                name="pickListValue" class="form-control" 
-                                placeholder="Name">
+                            <input [(ngModel)]="pickListValueObject.pickListValue" type="text" 
+                            id="pickListValue" name="pickListValue" class="form-control" 
+                            placeholder="Name">
                         </div>
                     </div>
                     <div>
-                        <span class="text-danger" *ngIf="errorMessage"
-                            (close)="errorMessage = null">{{ errorMessage }}</span>
+                        <span class="text-danger" *ngIf="errorMessage" (close)="errorMessage = null">{{ errorMessage }}</span>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" 
-                (click)="pickListValueModal.hide()">Close</button>
-            <button type="button" class="btn btn-primary" 
-                (click)="savePickValue()">Save</button>
+                <button type="button" class="btn btn-secondary" (click)="closePickListValueModal()">
+                    Close
+                </button>
+                <button type="button" class="btn btn-primary" (click)="savePickValue()">
+                    Save
+                </button>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-  
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- End of modal -->
+
+<!-- Start sub Pick list value creation and updation-->
 <div bsModal #subPickListModal="bs-modal" class="modal fade" tabindex="-1" 
-    role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+    [config]="{backdrop: 'static',  keyboard: false}">
     <div class="modal-dialog modal-primary" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h6 class="modal-title">Add Sub Category</h6>
-                <button type="button" class="close" 
-                    (click)="subPickListModal.hide()" aria-label="Close">
+                <button type="button" class="close" (click)="closeSubPickListModal()" 
+                aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-                    <input [(ngModel)]="pickListValueObject.id" type="hidden" 
-                        id="id" name="id" class="form-control">
+                <form action="" method="post" enctype="multipart/form-data" 
+                class="form-horizontal">
+                    <input [(ngModel)]="pickListValueObject.id" type="hidden" id="id" 
+                    name="id" class="form-control">
                     <div class="form-group row">
-                        <label class="col-md-4 col-form-label" 
-                            for="text-input">Category Name *</label>
+                        <label class="col-md-4 col-form-label" for="text-input">
+                            Category Name *
+                        </label>
                         <div class="col-md-8">
-                            <input [(ngModel)]="pickListValueObject.subChildValue" 
-                                type="text" id="subChildValue" name="subChildValue"
-                                class="form-control" placeholder="Name">
+                            <input [(ngModel)]="pickListValueObject.subChildValue" type="text" 
+                            id="subChildValue" name="subChildValue" class="form-control" 
+                            placeholder="Name">
                         </div>
                     </div>
                     <div>
-                        <span class="text-danger" *ngIf="errorMessage"
+                        <span class="text-danger" *ngIf="errorMessage" 
                         (close)="errorMessage = null">{{ errorMessage }}</span>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" 
-                    (click)="subPickListModal.hide()">Close</button>
-                <button type="button" class="btn btn-primary" 
-                    (click)="addChild(pickListValueObject)">Save</button>
+                <button type="button" class="btn btn-secondary"
+                    (click)="closeSubPickListModal()">Close
+                </button>
+                <button type="button" class="btn btn-primary"
+                    (click)="addChild(pickListValueObject)">Save
+                </button>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- End of modal -->
 
+<!-- Mother Bed for nursery - creation/updation form-->
 <div bsModal #motherBedModal="bs-modal" class="modal fade" tabindex="-1" 
-    role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+    [config]="{backdrop: 'static',  keyboard: false}">
     <div class="modal-dialog modal-primary" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h6 class="modal-title">Create/Update {{pickListObject.pickListName}}</h6>
-                <button type="button" class="close" 
-                    (click)="motherBedModal.hide()" aria-label="Close">
+                <button type="button" class="close" (click)="closeMotherBedModal()" 
+                aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-                    <input [(ngModel)]="motherBedObject.id" type="hidden" id="id" name="id" class="form-control">
+                    <input [(ngModel)]="motherBedObject.id" type="hidden" 
+                    id="id" name="id" class="form-control">
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label" for="select1">Zonal *</label>
                         <div class="col-md-9">
-                            <select [(ngModel)]="motherBedObject.zoneId"
-                                id="zoneId" name="zoneId" class="form-control" 
-                                (change)="getSector(motherBedObject.zoneId)">
+                            <select [(ngModel)]="motherBedObject.zoneId" id="zoneId" name="zoneId" 
+                            class="form-control" (change)="getSector(motherBedObject.zoneId)">
                                 <option value="0" disabled selected>Select Zonal Name</option>
-                                <option *ngFor="let zone of zonals" 
-                                    value={{zone.id}}>{{zone.zoneName}}</option>
+                                <option *ngFor="let zone of zonals" value={{zone.id}}>
+                                    {{zone.zoneName}}
+                                </option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label" for="select1">Sector *</label>
                         <div class="col-md-9">
-                            <select [(ngModel)]="motherBedObject.sectorId" id="sectorId" name="sectorId" 
-                                class="form-control" (change)="getNursery(motherBedObject.sectorId)">
+                            <select [(ngModel)]="motherBedObject.sectorId" id="sectorId" 
+                            name="sectorId" class="form-control"
+                            (change)="getNursery(motherBedObject.sectorId)">
                                 <option value="0" disabled selected>Select Sector Name</option>
-                                <option *ngFor="let sectorValue of sectors" 
-                                    value={{sectorValue.id}}>{{sectorValue.sectorName}}</option>
+                                <option *ngFor="let sectorValue of sectors" value={{sectorValue.id}}>{{sectorValue.sectorName}}</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label" for="name">Nursery *</label>
                         <div class="col-md-9">
-                            <select [(ngModel)]="motherBedObject.nurseryId" 
-                                id="nurseryId" name="nurseryId" class="form-control" required>
+                            <select [(ngModel)]="motherBedObject.nurseryId" id="nurseryId" 
+                            name="nurseryId" class="form-control" required>
                                 <option value="0" disabled selected>Select Nursery Name</option>
-                                <option *ngFor="let nursery of nurserys" value={{nursery.id}}>{{nursery.nurseryName}}</option>
+                                <option *ngFor="let nursery of nurserys" value={{nursery.id}}>
+                                    {{nursery.nurseryName}}
+                                </option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label" for="text-input">Number *</label>
                         <div class="col-md-9">
-                            <input [(ngModel)]="motherBedObject.value" type="text" 
-                                id="value" name="value" class="form-control" placeholder="Name">
+                            <input [(ngModel)]="motherBedObject.value" type="text" id="value" 
+                            name="value" class="form-control" placeholder="MotherBed Number">
                         </div>
                     </div>
                     <div>
-                        <span class="text-danger" *ngIf="errorMessage"
+                        <span class="text-danger" *ngIf="errorMessage" 
                         (close)="errorMessage = null">{{ errorMessage }}</span>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" 
-                    (click)="motherBedModal.hide()">Close</button>
-                <button type="button" class="btn btn-primary" 
-                    (click)="saveMotherBed()">Save</button>
+                <button type="button" class="btn btn-secondary"
+                    (click)="closeMotherBedModal()">Close
+                </button>
+                <button type="button" class="btn btn-primary"
+                    (click)="saveMotherBed()">Save
+                </button>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- End of modal -->
 
+<!-- Quantity lookup creation/updation form-->
 <div bsModal #quantityModal="bs-modal" class="modal fade" tabindex="-1" 
-    role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+    [config]="{backdrop: 'static',  keyboard: false}">
     <div class="modal-dialog modal-primary" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h6 class="modal-title">Create/Update </h6>
-                <button type="button" class="close" 
-                    (click)="quantityModal.hide()" aria-label="Close">
+                <button type="button" class="close" (click)="quantityModal.hide()"
+                aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-                    <input [(ngModel)]="quantityObject.id" type="hidden" 
-                        id="id" name="id" class="form-control">
+                <form action="" method="post" enctype="multipart/form-data" 
+                class="form-horizontal">
+                    <input [(ngModel)]="quantityObject.id" type="hidden" id="id" name="id" 
+                    class="form-control">
                     <div class="form-group row">
                         <label class="col-md-4 col-form-label" for="text-input">Pick Name *</label>
                         <div class="col-md-8">
-                            <select [(ngModel)]="quantityObject.pickListId" 
-                                id="pickListId" name="pickListId" class="form-control"
+                            <select [(ngModel)]="quantityObject.pickListId" id="pickListId" 
+                            name="pickListId" class="form-control"
                             (change)="getVariety(quantityObject.pickListId)" required>
-                            <option value="0" disabled selected>Select</option>
-                            <option *ngFor="let pickList of pickLists" value={{pickList.id}}>{{pickList.pickListName}}</option>
+                                <option value="0" disabled selected>Select</option>
+                                <option *ngFor="let pickList of pickLists"
+                                value={{pickList.id}}>{{pickList.pickListName}}</option>
                             </select>
                         </div>
                     </div>
@@ -618,12 +450,12 @@
                         <label class="col-md-4 col-form-label" for="text-input">Variety *</label>
                         <div class="col-md-8">
                             <select [(ngModel)]="quantityObject.pickListVarietyId" 
-                                id="pickListVarietyId" name="pickListVarietyId" class="form-control"
-                            (change)="getCategory(quantityObject.pickListVarietyId)" required>
-                            <option value="0" disabled selected>Select Variety Name</option>
-                            <option *ngFor="let val of variety" value={{val.id}}>
-                                {{val.pickListValue}}</option>
-                        </select>
+                            id="pickListVarietyId" name="pickListVarietyId" 
+                            class="form-control" (change)="getCategory(quantityObject.pickListVarietyId)" required>
+                                <option value="0" disabled selected>Select Variety Name</option>
+                                <option *ngFor="let val of variety" value={{val.id}}>
+                                    {{val.pickListValue}}</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -640,12 +472,13 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-4 col-form-label" 
-                            for="text-input">Expected Quantity *</label>
+                        <label class="col-md-4 col-form-label" for="text-input">
+                            Approximate Quantity *
+                        </label>
                         <div class="col-md-8">
-                            <input [(ngModel)]="quantityObject.approxQuantity" 
-                                type="text" id="quantity" 
-                                name="quantity" class="form-control" placeholder="Quantity">
+                            <input [(ngModel)]="quantityObject.approxQuantity" type="text"
+                            id="quantity" name="quantity" class="form-control"
+                            placeholder="Quantity">
                         </div>
                     </div>
                     <div>
@@ -655,11 +488,13 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary"
-                    (click)="quantityModal.hide()">Close</button>
-                <button type="button" class="btn btn-primary"
-                    (click)="saveQuantity()">Save</button>
+                <button type="button" class="btn btn-secondary" (click)="quantityModal.hide()">
+                    Close
+                </button>
+                <button type="button" class="btn btn-primary" (click)="saveQuantity()">
+                    Save
+                </button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+</div><!-- End of modal -->

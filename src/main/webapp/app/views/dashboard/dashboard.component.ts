@@ -38,16 +38,6 @@ export class DashboardComponent implements OnInit {
 
     stockDetailLabel: INurseryStock[];
 
-    // operationalCount: number;
-    constructor(
-        private operationalHeadService: OperationalHeadService,
-        private zonalService: ZonalService,
-        private sectorService: SectorService,
-        private nurseryService: NurseryService,
-        private pickListValueService: PickListValueService,
-        private nurseryStockService: NurseryStockService
-    ) {}
-
     // barChart
     public barChartOptions: any = {
         scaleShowVerticalLines: false,
@@ -355,9 +345,9 @@ export class DashboardComponent implements OnInit {
             mode: 'index',
             position: 'nearest',
             callbacks: {
-                labelColor: function(tooltipItem, chart) {
-                    return { backgroundColor: chart.data.datasets[tooltipItem.datasetIndex].borderColor };
-                }
+                // labelColor: function(tooltipItem, chart) {
+                // return { backgroundColor: chart.data.datasets[tooltipItem.datasetIndex].borderColor };
+                // }
             }
         },
         responsive: true,
@@ -367,11 +357,11 @@ export class DashboardComponent implements OnInit {
                 {
                     gridLines: {
                         drawOnChartArea: false
-                    },
-                    ticks: {
-                        callback: function(value: any) {
-                            return value.charAt(0);
-                        }
+                        // },
+                        // ticks: {
+                        // callback: function(value: any) {
+                        // return value.charAt(0);
+                        // }
                     }
                 }
             ],
@@ -502,6 +492,16 @@ export class DashboardComponent implements OnInit {
         return Math.floor(Math.random() * (max - min + 1) + min);
     }
 
+    // operationalCount: number;
+    constructor(
+        private operationalHeadService: OperationalHeadService,
+        private zonalService: ZonalService,
+        private sectorService: SectorService,
+        private nurseryService: NurseryService,
+        private pickListValueService: PickListValueService,
+        private nurseryStockService: NurseryStockService
+    ) {}
+
     ngOnInit(): void {
         // generate random values for mainChart
         // for (let i = 0; i <= this.mainChartElements; i++) {
@@ -535,22 +535,27 @@ export class DashboardComponent implements OnInit {
             // console.log('count', this.nurseryCount);
         });
 
-        this.nurseryStockService.particularNursery(1401).subscribe((res: HttpResponse<INurseryStock[]>) => {
-            // console.log("category", res.body);
-            this.stockDetailLabel = res.body;
-            console.log('category', this.stockDetailLabel);
-            for (const result of this.stockDetailLabel) {
-                this.ids.push(result.pickListCategoryPickListValue);
-                this.addedQuan.push(result.addedQuantity);
-                this.consumedQuan.push(result.consumedQuantity);
-                this.currentQuan.push(result.currentQuantity);
-                // console.log("ids", this.ids);
-            }
-            console.log('Category', this.ids);
-            // console.log("addedQuantity", this.addedQuan);
-            // console.log("consumedQuantity", this.consumedQuan);
-            // console.log("currentQuantity", this.currentQuan);
-        });
+        // this.nurseryStockService.particularNursery(1401)
+        this.nurseryStockService
+            .query({
+                filter: { 'nurseryId.equals': 1401 }
+            })
+            .subscribe((res: HttpResponse<INurseryStock[]>) => {
+                // console.log("category", res.body);
+                this.stockDetailLabel = res.body;
+                console.log('category', this.stockDetailLabel);
+                for (const result of this.stockDetailLabel) {
+                    this.ids.push(result.pickListCategoryPickListValue);
+                    this.addedQuan.push(result.addedQuantity);
+                    this.consumedQuan.push(result.consumedQuantity);
+                    this.currentQuan.push(result.currentQuantity);
+                    // console.log("ids", this.ids);
+                }
+                console.log('Category', this.ids);
+                // console.log("addedQuantity", this.addedQuan);
+                // console.log("consumedQuantity", this.consumedQuan);
+                // console.log("currentQuantity", this.currentQuan);
+            });
 
         // this.pickListValueService.query().subscribe((res: HttpResponse<IPickListValue[]>) => {
         //     // console.log("category", res.body);

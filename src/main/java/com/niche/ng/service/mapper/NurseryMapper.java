@@ -3,7 +3,7 @@
  *  Nichehands Confidential Proprietary
  *  Nichehands Copyright (C) 2018 All rights reserved
  *  ----------------------------------------------------------------------------
- *  Date: 2018/08/02
+ *  Date  : 2018/08/02
  *  Target: yarn
  *  -----------------------------------------------------------------------------
  *  File Description    : This file performs NurseryMapper
@@ -15,10 +15,11 @@ import com.niche.ng.domain.*;
 import com.niche.ng.service.dto.NurseryDTO;
 
 import org.mapstruct.*;
-import java.util.List;
 
 /**
  * Mapper for the entity Nursery and its DTO NurseryDTO.
+ * Mapping the parent and child table to fetch the field value.
+ * Converting the entity object into data transfer object(DTO).
  */
 @Mapper(componentModel = "spring", uses = {SectorMapper.class, PickListValueMapper.class, FinancialYearSettingsMapper.class})
 public interface NurseryMapper extends EntityMapper<NurseryDTO, Nursery> {
@@ -32,8 +33,6 @@ public interface NurseryMapper extends EntityMapper<NurseryDTO, Nursery> {
     @Mapping(source = "financialYearNursery.batchName", target = "financialYearNurseryBatchName")
     NurseryDTO toDto(Nursery nursery);
 
-    List<NurseryDTO> toDto(List<Nursery> nursery);
-
     @Mapping(target = "batchs", ignore = true)
     @Mapping(target = "nurseryStocks", ignore = true)
     @Mapping(source = "sectorId", target = "sector")
@@ -44,6 +43,7 @@ public interface NurseryMapper extends EntityMapper<NurseryDTO, Nursery> {
     @Mapping(source = "financialYearNurseryId", target = "financialYearNursery")
     @Mapping(target = "incharges", ignore = true)
     @Mapping(target = "mapNurseryWithSectors", ignore = true)
+    @Mapping(target = "fromNurseryStockDetails", ignore = true)
     Nursery toEntity(NurseryDTO nurseryDTO);
 
     default Nursery fromId(Long id) {

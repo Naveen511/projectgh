@@ -22,6 +22,7 @@ export class ShadeAreaUpdatePage {
     statusInput = element(by.id('field_status'));
     damageInput = element(by.id('field_damage'));
     saplingsInput = element(by.id('field_saplings'));
+    roundInput = element(by.id('field_round'));
     batchSelect = element(by.id('field_batch'));
     financialYearShadeAreaSelect = element(by.id('field_financialYearShadeArea'));
 
@@ -67,6 +68,14 @@ export class ShadeAreaUpdatePage {
 
     getSaplingsInput() {
         return this.saplingsInput.getAttribute('value');
+    }
+
+    setRoundInput(round): promise.Promise<void> {
+        return this.roundInput.sendKeys(round);
+    }
+
+    getRoundInput() {
+        return this.roundInput.getAttribute('value');
     }
 
     batchSelectLastOption(): promise.Promise<void> {

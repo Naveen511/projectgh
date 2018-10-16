@@ -1,3 +1,14 @@
+/******************************************************************************
+ *  Property of Nichehands
+ *  Nichehands Confidential Proprietary
+ *  Nichehands Copyright (C) 2018 All rights reserved
+ *  ----------------------------------------------------------------------------
+ *  Date  : 2018/08/22
+ *  Target: yarn
+ *  -----------------------------------------------------------------------------
+ *  File Description    : This file performs MapSectorWithZonalResource of CRUD Operation
+ *
+ *******************************************************************************/
 package com.niche.ng.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
@@ -27,6 +38,8 @@ import java.util.Optional;
 
 /**
  * REST controller for managing MapSectorWithZonal.
+ * Used RequestMapping annotation to map the url with the client side.
+ * Using service to access the values in the database.
  */
 @RestController
 @RequestMapping("/api")
@@ -129,34 +142,5 @@ public class MapSectorWithZonalResource {
         log.debug("REST request to delete MapSectorWithZonal : {}", id);
         mapSectorWithZonalService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
-    }
-
-    /**
-     * GET  /map-sector-with-zonals/sector/:sectorId/:status : get all the sectors of particular sectorId.
-     *
-     * @param sectorId the sectorId of the MapSectorWithZonalDTO to retrieve
-     * @param status the status of the MapSectorWithZonalDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and the list of sectors in body
-     */
-    @GetMapping("/map-sector-with-zonals/sector/{sectorId}/{status}")
-    @Timed
-    public ResponseEntity<List<MapSectorWithZonalDTO>> getParticularSectorActiveRecord(@PathVariable Long sectorId, @PathVariable Integer status) {
-        log.debug("REST request to get a list of particular sector active record");
-        List<MapSectorWithZonalDTO> list = mapSectorWithZonalService.findParticularSectorActiveRecord(sectorId, status);
-        return ResponseEntity.ok().body(list);
-    }
-
-    /**
-     * GET  /map-sector-with-zonals/sector/:sectorId : get all the sectors of particular sectorId.
-     *
-     * @param sectorId the sectorId of the MapSectorWithZonalDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and the list of sectors in body
-     */
-    @GetMapping("/map-sector-with-zonals/sector/{sectorId}")
-    @Timed
-    public ResponseEntity<List<MapSectorWithZonalDTO>> getParticularSectorRecord(@PathVariable Long sectorId) {
-        log.debug("REST request to get a list of particular sector record");
-        List<MapSectorWithZonalDTO> list = mapSectorWithZonalService.findParticularSectorRecord(sectorId);
-        return ResponseEntity.ok().body(list);
     }
 }

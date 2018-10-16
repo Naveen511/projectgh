@@ -63,6 +63,9 @@ public class ShadeAreaResourceIntTest {
     private static final Integer DEFAULT_SAPLINGS = 1;
     private static final Integer UPDATED_SAPLINGS = 2;
 
+    private static final Integer DEFAULT_ROUND = 1;
+    private static final Integer UPDATED_ROUND = 2;
+
     @Autowired
     private ShadeAreaRepository shadeAreaRepository;
 
@@ -116,7 +119,8 @@ public class ShadeAreaResourceIntTest {
             .date(DEFAULT_DATE)
             .status(DEFAULT_STATUS)
             .damage(DEFAULT_DAMAGE)
-            .saplings(DEFAULT_SAPLINGS);
+            .saplings(DEFAULT_SAPLINGS)
+            .round(DEFAULT_ROUND);
         return shadeArea;
     }
 
@@ -146,6 +150,7 @@ public class ShadeAreaResourceIntTest {
         assertThat(testShadeArea.getStatus()).isEqualTo(DEFAULT_STATUS);
         assertThat(testShadeArea.getDamage()).isEqualTo(DEFAULT_DAMAGE);
         assertThat(testShadeArea.getSaplings()).isEqualTo(DEFAULT_SAPLINGS);
+        assertThat(testShadeArea.getRound()).isEqualTo(DEFAULT_ROUND);
     }
 
     @Test
@@ -221,7 +226,8 @@ public class ShadeAreaResourceIntTest {
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)))
             .andExpect(jsonPath("$.[*].damage").value(hasItem(DEFAULT_DAMAGE)))
-            .andExpect(jsonPath("$.[*].saplings").value(hasItem(DEFAULT_SAPLINGS)));
+            .andExpect(jsonPath("$.[*].saplings").value(hasItem(DEFAULT_SAPLINGS)))
+            .andExpect(jsonPath("$.[*].round").value(hasItem(DEFAULT_ROUND)));
     }
     
 
@@ -240,7 +246,8 @@ public class ShadeAreaResourceIntTest {
             .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS))
             .andExpect(jsonPath("$.damage").value(DEFAULT_DAMAGE))
-            .andExpect(jsonPath("$.saplings").value(DEFAULT_SAPLINGS));
+            .andExpect(jsonPath("$.saplings").value(DEFAULT_SAPLINGS))
+            .andExpect(jsonPath("$.round").value(DEFAULT_ROUND));
     }
 
     @Test
@@ -575,6 +582,72 @@ public class ShadeAreaResourceIntTest {
 
     @Test
     @Transactional
+    public void getAllShadeAreasByRoundIsEqualToSomething() throws Exception {
+        // Initialize the database
+        shadeAreaRepository.saveAndFlush(shadeArea);
+
+        // Get all the shadeAreaList where round equals to DEFAULT_ROUND
+        defaultShadeAreaShouldBeFound("round.equals=" + DEFAULT_ROUND);
+
+        // Get all the shadeAreaList where round equals to UPDATED_ROUND
+        defaultShadeAreaShouldNotBeFound("round.equals=" + UPDATED_ROUND);
+    }
+
+    @Test
+    @Transactional
+    public void getAllShadeAreasByRoundIsInShouldWork() throws Exception {
+        // Initialize the database
+        shadeAreaRepository.saveAndFlush(shadeArea);
+
+        // Get all the shadeAreaList where round in DEFAULT_ROUND or UPDATED_ROUND
+        defaultShadeAreaShouldBeFound("round.in=" + DEFAULT_ROUND + "," + UPDATED_ROUND);
+
+        // Get all the shadeAreaList where round equals to UPDATED_ROUND
+        defaultShadeAreaShouldNotBeFound("round.in=" + UPDATED_ROUND);
+    }
+
+    @Test
+    @Transactional
+    public void getAllShadeAreasByRoundIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        shadeAreaRepository.saveAndFlush(shadeArea);
+
+        // Get all the shadeAreaList where round is not null
+        defaultShadeAreaShouldBeFound("round.specified=true");
+
+        // Get all the shadeAreaList where round is null
+        defaultShadeAreaShouldNotBeFound("round.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllShadeAreasByRoundIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        shadeAreaRepository.saveAndFlush(shadeArea);
+
+        // Get all the shadeAreaList where round greater than or equals to DEFAULT_ROUND
+        defaultShadeAreaShouldBeFound("round.greaterOrEqualThan=" + DEFAULT_ROUND);
+
+        // Get all the shadeAreaList where round greater than or equals to UPDATED_ROUND
+        defaultShadeAreaShouldNotBeFound("round.greaterOrEqualThan=" + UPDATED_ROUND);
+    }
+
+    @Test
+    @Transactional
+    public void getAllShadeAreasByRoundIsLessThanSomething() throws Exception {
+        // Initialize the database
+        shadeAreaRepository.saveAndFlush(shadeArea);
+
+        // Get all the shadeAreaList where round less than or equals to DEFAULT_ROUND
+        defaultShadeAreaShouldNotBeFound("round.lessThan=" + DEFAULT_ROUND);
+
+        // Get all the shadeAreaList where round less than or equals to UPDATED_ROUND
+        defaultShadeAreaShouldBeFound("round.lessThan=" + UPDATED_ROUND);
+    }
+
+
+    @Test
+    @Transactional
     public void getAllShadeAreasByBatchIsEqualToSomething() throws Exception {
         // Initialize the database
         Batch batch = BatchResourceIntTest.createEntity(em);
@@ -622,7 +695,8 @@ public class ShadeAreaResourceIntTest {
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)))
             .andExpect(jsonPath("$.[*].damage").value(hasItem(DEFAULT_DAMAGE)))
-            .andExpect(jsonPath("$.[*].saplings").value(hasItem(DEFAULT_SAPLINGS)));
+            .andExpect(jsonPath("$.[*].saplings").value(hasItem(DEFAULT_SAPLINGS)))
+            .andExpect(jsonPath("$.[*].round").value(hasItem(DEFAULT_ROUND)));
     }
 
     /**
@@ -661,7 +735,8 @@ public class ShadeAreaResourceIntTest {
             .date(UPDATED_DATE)
             .status(UPDATED_STATUS)
             .damage(UPDATED_DAMAGE)
-            .saplings(UPDATED_SAPLINGS);
+            .saplings(UPDATED_SAPLINGS)
+            .round(UPDATED_ROUND);
         ShadeAreaDTO shadeAreaDTO = shadeAreaMapper.toDto(updatedShadeArea);
 
         restShadeAreaMockMvc.perform(put("/api/shade-areas")
@@ -678,6 +753,7 @@ public class ShadeAreaResourceIntTest {
         assertThat(testShadeArea.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testShadeArea.getDamage()).isEqualTo(UPDATED_DAMAGE);
         assertThat(testShadeArea.getSaplings()).isEqualTo(UPDATED_SAPLINGS);
+        assertThat(testShadeArea.getRound()).isEqualTo(UPDATED_ROUND);
     }
 
     @Test

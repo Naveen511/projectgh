@@ -1,3 +1,14 @@
+/******************************************************************************
+ *  Property of Nichehands
+ *  Nichehands Confidential Proprietary
+ *  Nichehands Copyright (C) 2018 All rights reserved
+ *  ----------------------------------------------------------------------------
+ *  Date  : 2018/08/02
+ *  Target: yarn
+ *  -----------------------------------------------------------------------------
+ *  File Description    : This file performs BatchQueryService
+ *
+ *******************************************************************************/
 package com.niche.ng.service;
 
 import java.util.List;
@@ -132,6 +143,9 @@ public class BatchQueryService extends QueryService<Batch> {
             }
             if (criteria.getFinancialYearBatchId() != null) {
                 specification = specification.and(buildReferringEntitySpecification(criteria.getFinancialYearBatchId(), Batch_.financialYearBatch, FinancialYearSettings_.id));
+            }
+            if (criteria.getBatchQuantityId() != null) {
+                specification = specification.and(buildReferringEntitySpecification(criteria.getBatchQuantityId(), Batch_.batchQuantities, BatchQuantity_.id));
             }
         }
         return specification;

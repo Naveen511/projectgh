@@ -57,8 +57,8 @@ public class GodownPurchaseDetailsResourceIntTest {
     private static final LocalDate DEFAULT_DATE = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DATE = LocalDate.now(ZoneId.systemDefault());
 
-    private static final Long DEFAULT_PRICE = 1L;
-    private static final Long UPDATED_PRICE = 2L;
+    private static final Float DEFAULT_PRICE = 1F;
+    private static final Float UPDATED_PRICE = 2F;
 
     private static final String DEFAULT_OWNED_BY = "AAAAAAAAAA";
     private static final String UPDATED_OWNED_BY = "BBBBBBBBBB";
@@ -242,7 +242,7 @@ public class GodownPurchaseDetailsResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(godownPurchaseDetails.getId().intValue())))
             .andExpect(jsonPath("$.[*].quantity").value(hasItem(DEFAULT_QUANTITY.intValue())))
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
-            .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE.intValue())))
+            .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE.doubleValue())))
             .andExpect(jsonPath("$.[*].ownedBy").value(hasItem(DEFAULT_OWNED_BY.toString())))
             .andExpect(jsonPath("$.[*].vendorName").value(hasItem(DEFAULT_VENDOR_NAME.toString())))
             .andExpect(jsonPath("$.[*].vendorAddress").value(hasItem(DEFAULT_VENDOR_ADDRESS.toString())))
@@ -265,7 +265,7 @@ public class GodownPurchaseDetailsResourceIntTest {
             .andExpect(jsonPath("$.id").value(godownPurchaseDetails.getId().intValue()))
             .andExpect(jsonPath("$.quantity").value(DEFAULT_QUANTITY.intValue()))
             .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
-            .andExpect(jsonPath("$.price").value(DEFAULT_PRICE.intValue()))
+            .andExpect(jsonPath("$.price").value(DEFAULT_PRICE.doubleValue()))
             .andExpect(jsonPath("$.ownedBy").value(DEFAULT_OWNED_BY.toString()))
             .andExpect(jsonPath("$.vendorName").value(DEFAULT_VENDOR_NAME.toString()))
             .andExpect(jsonPath("$.vendorAddress").value(DEFAULT_VENDOR_ADDRESS.toString()))
@@ -864,7 +864,7 @@ public class GodownPurchaseDetailsResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(godownPurchaseDetails.getId().intValue())))
             .andExpect(jsonPath("$.[*].quantity").value(hasItem(DEFAULT_QUANTITY.intValue())))
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
-            .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE.intValue())))
+            .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE.doubleValue())))
             .andExpect(jsonPath("$.[*].ownedBy").value(hasItem(DEFAULT_OWNED_BY.toString())))
             .andExpect(jsonPath("$.[*].vendorName").value(hasItem(DEFAULT_VENDOR_NAME.toString())))
             .andExpect(jsonPath("$.[*].vendorAddress").value(hasItem(DEFAULT_VENDOR_ADDRESS.toString())))

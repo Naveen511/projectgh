@@ -94,27 +94,27 @@
                 </button>
             </div>
             <div class="modal-body font13">
-                <form action="" method="post" enctype="multipart/form-data" 
+                <form method="post" enctype="multipart/form-data" 
                     class="form-horizontal">
                     <input [(ngModel)]="godownObject.id" type="hidden" id="id"
                         name="id" class="form-control">
                     <div class="form-group row">
-                        <label class="col-md-4 col-form-label" for="text-input">
+                        <label class="col-md-4 col-form-label" for="name">
                             Godown Name *
                         </label>
                         <div class="col-md-8">
-                            <input [(ngModel)]="godownObject.name" type="text" id="Name"
+                            <input [(ngModel)]="godownObject.name" type="text" id="name"
                                 name="Name" class="form-control" placeholder="Name">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-4 col-form-label" for="textarea-input">
+                        <label class="col-md-4 col-form-label" for="address">
                             Address
                         </label>
                         <div class="col-md-8">
                             <textarea [(ngModel)]="godownObject.address" id="address"
                                 name="Address" rows="3" class="form-control"
-                                placeholder="Address..">
+                                placeholder="Address">
                             </textarea>
                         </div>
                     </div>

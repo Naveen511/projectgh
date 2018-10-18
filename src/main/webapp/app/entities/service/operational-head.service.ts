@@ -29,7 +29,8 @@ export class OperationalHeadService {
 
     constructor(private http: HttpClient) {}
 
-    /** Send a POST method request to create the head office and
+    /**
+     * Send a POST method request to create the head office and
      * get created record as response
      *
      * @param operationalHead - single object
@@ -37,7 +38,8 @@ export class OperationalHeadService {
      * @returns object of values
      */
     create(operationalHead: IOperationalHead): Observable<EntityResponseType> {
-        return this.http.post<IOperationalHead>(this.resourceUrl, operationalHead, { observe: 'response' });
+        return this.http
+            .post<IOperationalHead>(this.resourceUrl, operationalHead, { observe: 'response' });
     }
 
     /**
@@ -49,7 +51,8 @@ export class OperationalHeadService {
      * @returns object of values
      */
     update(operationalHead: IOperationalHead): Observable<EntityResponseType> {
-        return this.http.put<IOperationalHead>(this.resourceUrl, operationalHead, { observe: 'response' });
+        return this.http
+            .put<IOperationalHead>(this.resourceUrl, operationalHead, { observe: 'response' });
     }
 
     /**
@@ -61,7 +64,8 @@ export class OperationalHeadService {
      * @returns object of values
      */
     find(id: number): Observable<EntityResponseType> {
-        return this.http.get<IOperationalHead>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+        return this.http
+            .get<IOperationalHead>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
     /**
@@ -73,7 +77,8 @@ export class OperationalHeadService {
      */
     query(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
-        return this.http.get<IOperationalHead[]>(this.resourceUrl, { params: options, observe: 'response' });
+        return this.http
+            .get<IOperationalHead[]>(this.resourceUrl, { params: options, observe: 'response' });
     }
 
     /**

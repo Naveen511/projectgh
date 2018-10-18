@@ -6,28 +6,44 @@
  *  Date   : 2018/08/02 11:27:58
  *  Target : yarn
  *******************************************************************************/
+
+// Import angular dependency, model, service and shared
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
+import { HttpResponse, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { JhiParseLinks } from 'ng-jhipster';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
+
 import { IZonal } from 'app/shared/model/zonal.model';
 import { ISector } from 'app/shared/model/sector.model';
 import { INursery } from 'app/shared/model/nursery.model';
 import { IPickList } from 'app/shared/model/pick-list.model';
 import { IPickListValue } from 'app/shared/model/pick-list-value.model';
-import {
-    IBatch,
-    BatchModel,
-    DISPLAY_NAME_VARIETY,
-    DISPLAY_NAME_QUANTITY_TYPE,
-    DISPLAY_NAME_DAMAGE_AREA,
-    DISPLAY_NAME_DAMAGE_REASON,
-    STATUS_BATCH_CLOSE
-} from 'app/shared/model/batch.model';
+import { IBatch, BatchModel,
+    DISPLAY_NAME_VARIETY, DISPLAY_NAME_QUANTITY_TYPE,
+    DISPLAY_NAME_DAMAGE_AREA, DISPLAY_NAME_DAMAGE_REASON,
+    STATUS_BATCH_CLOSE, STATUS_SHOWING_TYPE_COVER } from 'app/shared/model/batch.model';
 import { IShadeArea, ShadeAreaModel, ShadeArea } from 'app/shared/model/shade-area.model';
-import { NurseryStockModel, STATUS_FROM_BATCH, INurseryStock } from 'app/shared/model/nursery-stock.model';
-import { NurseryStockDetailsModel, STATUS_ADD, NurseryStockDetails } from 'app/shared/model/nursery-stock-details.model';
-import { IDamage, DamageModel, STATUS_SEEDS, STATUS_SEEDLING } from 'app/shared/model/damage.model';
-import { ZonalService } from 'app/entities/service/zonal.service';
-import { SectorService } from 'app/entities/service/sector.service';
+import {
+    NurseryStockModel, STATUS_FROM_BATCH, INurseryStock
+} from 'app/shared/model/nursery-stock.model';
+import {
+    NurseryStockDetailsModel, STATUS_ADD, NurseryStockDetails
+} from 'app/shared/model/nursery-stock-details.model';
+import {
+    IDamage, DamageModel, STATUS_SEEDS, STATUS_SEEDLING
+} from 'app/shared/model/damage.model';
+import {
+    IMotherBed, MotherBedModel, STATUS_OCCUPIED, STATUS_AVAILABLE
+} from 'app/shared/model/mother-bed.model';
+import {
+    BatchQuantityModel, IBatchQuantity, STATUS_ADDED
+} from 'app/shared/model/batch-quantity.model';
+
+// import { ZonalService } from 'app/entities/service/zonal.service';
+// import { SectorService } from 'app/entities/service/sector.service';
 import { NurseryService } from 'app/entities/service/nursery.service';
 import { BatchService } from 'app/entities/service/batch.service';
 import { DamageService } from 'app/entities/service/damage.service';
@@ -35,26 +51,24 @@ import { PickListService } from 'app/entities/service/pick-list.service';
 import { PickListValueService } from 'app/entities/service/pick-list-value.service';
 import { ShadeAreaService } from 'app/entities/service/shade-area.service';
 import { NurseryStockService } from 'app/entities/service/nursery-stock.service';
-import { NurseryStockDetailsService } from 'app/entities/service/nursery-stock-details.service';
-
-import * as moment from 'moment';
-import { DATE_TIME_FORMAT, MONTHS, ITEMS_PER_PAGE, Filter, SOFT_DELETE_STATUS, STATUS_ACTIVE } from 'app/shared';
-import { HttpResponse, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, empty } from 'rxjs';
-import { IMotherBed, MotherBedModel, STATUS_OCCUPIED, STATUS_AVAILABLE } from 'app/shared/model/mother-bed.model';
+import {
+    NurseryStockDetailsService
+} from 'app/entities/service/nursery-stock-details.service';
 import { MotherBedService } from 'app/entities/service/mother-bed.service';
-import { FinancialYearSettingsService } from 'app/entities/service/financial-year-settings.service';
+import {
+    FinancialYearSettingsService
+} from 'app/entities/service/financial-year-settings.service';
 import { IFinancialYearSettings } from 'app/shared/model/financial-year-settings.model';
-
-import { JhiParseLinks } from 'ng-jhipster';
-import { ActivatedRoute, Router } from '@angular/router';
-import { BatchQuantityModel, IBatchQuantity, STATUS_ADDED } from 'app/shared/model/batch-quantity.model';
 import { BatchQuantityService } from 'app/entities/service/batch-quantity.service';
-import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
+
+import {
+    DATE_TIME_FORMAT, MONTHS, ITEMS_PER_PAGE, SOFT_DELETE_STATUS, STATUS_ACTIVE
+} from 'app/shared';
 
 // Display the error Message and subject details
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import * as moment from 'moment';
 
 // Mention the html, css/sass files
 @Component({
@@ -80,7 +94,6 @@ export class BatchmgntComponent implements OnInit {
     nurseryStockDetails: NurseryStockDetailsModel = new NurseryStockDetailsModel();
     motherBedModel: MotherBedModel = new MotherBedModel();
     batchQuantity: BatchQuantityModel = new BatchQuantityModel();
-    filter: Filter = new Filter();
     sowingDateDp: any;
     closedDateDp: any;
     dateDamageDp: any;
@@ -93,21 +106,26 @@ export class BatchmgntComponent implements OnInit {
     shadeCount: any;
     quantityType: any;
     motherBedValue: any;
+    quantityTypeKg: string;
+    quantityTypeNos: string;
+
+    // Used for date filtering
+    // filter: Filter = new Filter();
 
     // create empty array for each service
     zonals: IZonal[];
     sectors: ISector[];
     nurserys: INursery[];
     pickLists: IPickList[];
-    varietys: IPickListValue[];
-    categorys: IPickListValue[];
+    varieties: IPickListValue[];
+    categories: IPickListValue[];
     quantityTypes: IPickListValue[];
     damageAreas: IPickListValue[];
-    batchs: IBatch[];
+    batches: IBatch[];
     shadeAreas: IShadeArea[];
     damages: IDamage[];
     motherBeds: IMotherBed[];
-    batchQuantitys: IBatchQuantity[];
+    batchQuantities: IBatchQuantity[];
     months = MONTHS;
     addStockStatus = STATUS_ADD;
     financialYearId: number;
@@ -156,8 +174,8 @@ export class BatchmgntComponent implements OnInit {
     @ViewChild('quantityRecordModal') public quantityRecordModal: ModalDirective;
 
     constructor(
-        private zonalService: ZonalService,
-        private sectorService: SectorService,
+        // private zonalService: ZonalService,
+        // private sectorService: SectorService,
         private nurseryService: NurseryService,
         private pickListService: PickListService,
         private pickListValueService: PickListValueService,
@@ -194,6 +212,10 @@ export class BatchmgntComponent implements OnInit {
         };
         // Disable the future date
         config.outsideDays = 'hidden';
+
+        // Set the constant for Quantity type- Kg and Nos
+        this.quantityTypeKg = 'KG';
+        this.quantityTypeNos = 'NOS';
     }
 
     ngOnInit() {
@@ -204,20 +226,22 @@ export class BatchmgntComponent implements OnInit {
         this.getActiveRecord();
 
         // To get the shade area list
-        this.getShadeAreaList();
+        // this.getShadeAreaList();
         // To get the seedlings damage list
-        this.getDamageList();
+        // this.getDamageList();
 
         // To set the time for automatic alert close
         setTimeout(() => (this.staticAlertClosed = true), 5000);
 
         // Set the success message with debounce time
         this.success.subscribe(message => (this.successMessage = message));
-        this.success.pipe(debounceTime(3000)).subscribe(() => (this.successMessage = null));
+        this.success.pipe(debounceTime(3000))
+        .subscribe(() => (this.successMessage = null));
 
         // To set the error message with debounce time
         this.error.subscribe(message => (this.errorMessage = message));
-        this.error.pipe(debounceTime(5000)).subscribe(() => (this.errorMessage = null));
+        this.error.pipe(debounceTime(5000))
+        .subscribe(() => (this.errorMessage = null));
 
         // console.log("Inside Batch Component");
         // commented by Naveen to get the nursery id for batch craetion
@@ -231,35 +255,30 @@ export class BatchmgntComponent implements OnInit {
         }); */
 
         // To get the active nursery of 0th index
-        this.nurseryService
-            .query({
+        /**  this.nurseryService.query({
+            filter: {
+                'status.equals': STATUS_ACTIVE
+            }
+        }).subscribe((res: HttpResponse<INursery[]>) => {
+            // console.log(res.body);
+            this.activeNurseryId = res.body[0].id;
+            // console.log('body', this.activeNurseryId);
+            // To get the active motherbed list
+            this.motherBedService.query({
                 filter: {
-                    'status.equals': STATUS_ACTIVE
+                    'status.equals': STATUS_AVAILABLE
                 }
-            })
-            .subscribe((res: HttpResponse<INursery[]>) => {
-                // console.log(res.body);
-                this.activeNurseryId = res.body[0].id;
-                // console.log('body', this.activeNurseryId);
-                // To get the active motherbed list
-                this.motherBedService
-                    .query({
-                        filter: {
-                            'status.equals': STATUS_AVAILABLE
-                        }
-                    })
-                    .subscribe((output: HttpResponse<IMotherBed[]>) => {
-                        this.motherBeds = output.body;
-                        // console.log('available ', this.motherBeds);
-                    });
+            }).subscribe((output: HttpResponse<IMotherBed[]>) => {
+                this.motherBeds = output.body;
+                // console.log('available ', this.motherBeds);
             });
+        });
 
         // Get the list of picklist
         this.pickListService
             .query({
                 filter: { 'status.equals': STATUS_ACTIVE }
-            })
-            .subscribe((res: HttpResponse<IPickList[]>) => {
+            }).subscribe((res: HttpResponse<IPickList[]>) => {
                 this.pickLists = res.body;
             });
 
@@ -271,8 +290,7 @@ export class BatchmgntComponent implements OnInit {
                     'status.equals': STATUS_ACTIVE,
                     'displayLabelName.equals': DISPLAY_NAME_VARIETY
                 }
-            })
-            .subscribe((res: HttpResponse<IPickList[]>) => {
+            }).subscribe((res: HttpResponse<IPickList[]>) => {
                 if (res.body.length > 0) {
                     this.getVariety(res.body[0].id);
                 }
@@ -280,22 +298,57 @@ export class BatchmgntComponent implements OnInit {
 
         // To get the pick list Id for Pick List Nursery Type
         // this.pickListService.getPickListId(DISPLAY_NAME_QUANTITY_TYPE)
-        this.pickListService
-            .query({
-                filter: {
-                    'status.equals': STATUS_ACTIVE,
-                    'displayLabelName.equals': DISPLAY_NAME_QUANTITY_TYPE
-                }
-            })
-            .subscribe((res: HttpResponse<IPickList[]>) => {
-                if (res.body.length > 0) {
-                    this.getQuantityType(res.body[0].id);
-                }
-            });
+        this.pickListService.query({
+            filter: {
+                'status.equals': STATUS_ACTIVE,
+                'displayLabelName.equals': DISPLAY_NAME_QUANTITY_TYPE
+            }
+        }).subscribe((res: HttpResponse<IPickList[]>) => {
+            if (res.body.length > 0) {
+                this.getQuantityType(res.body[0].id);
+            }
+        }); */
     }
 
     /**
-     * To make the clicked visibility for checkbox
+     * To create the batch, show the create batch form
+     *
+     */
+    createBatch(): void {
+        // Hide the form and reset the batch creation form
+        this.isCollapsed = false;
+        this.resetForm();
+
+        this.nurseryService.query({ filter: { 'status.equals': STATUS_ACTIVE }
+        }).subscribe((res: HttpResponse<INursery[]>) => {
+            this.activeNurseryId = res.body[0].id;
+        });
+
+        // To get the pick list Id for Pick List Nursery Type
+        // this.pickListService.getPickListId(DISPLAY_NAME_VARIETY)
+        this.pickListService.query({ filter: {
+            'status.equals': STATUS_ACTIVE,
+            'displayLabelName.equals': DISPLAY_NAME_VARIETY
+            }}).subscribe((res: HttpResponse<IPickList[]>) => {
+                if (res.body.length > 0) {
+                    this.getVariety(res.body[0].id);
+                }
+            });
+
+        // To get the pick list Id for Pick List Nursery Type
+        // this.pickListService.getPickListId(DISPLAY_NAME_QUANTITY_TYPE)
+        this.pickListService.query({ filter: {
+            'status.equals': STATUS_ACTIVE,
+            'displayLabelName.equals': DISPLAY_NAME_QUANTITY_TYPE
+        }}).subscribe((res: HttpResponse<IPickList[]>) => {
+            if (res.body.length > 0) {
+                this.getQuantityType(res.body[0].id);
+            }
+        });
+    }
+
+    /**
+     * To make the toggle visibility for checkbox
      *
      * @param e checked status
      */
@@ -314,7 +367,9 @@ export class BatchmgntComponent implements OnInit {
                 size: this.itemsPerPage,
                 sort: this.sort()
             })
-            .subscribe((res: HttpResponse<IBatch[]>) => this.paginateBatchs(res.body, res.headers));
+            .subscribe((res: HttpResponse<IBatch[]>) => {
+                this.paginateBatchs(res.body, res.headers);
+            });
     }
 
     /**
@@ -326,8 +381,7 @@ export class BatchmgntComponent implements OnInit {
         this.settingsService
             .query({
                 filter: { 'status.equals': STATUS_ACTIVE }
-            })
-            .subscribe((res: HttpResponse<IFinancialYearSettings[]>) => {
+            }).subscribe((res: HttpResponse<IFinancialYearSettings[]>) => {
                 // Assign a value to an object
                 this.financialYearId = res.body[0].id;
             });
@@ -337,9 +391,10 @@ export class BatchmgntComponent implements OnInit {
      * Get the shadeAreaList from the shade area table
      */
     getShadeAreaList(): void {
-        console.log('Indide getShadeAreaList');
+        // console.log('Indide getShadeAreaList');
         // Get the list of shade area
-        this.shadeAreaService.query().subscribe((res: HttpResponse<IShadeArea[]>) => {
+        this.shadeAreaService.query()
+        .subscribe((res: HttpResponse<IShadeArea[]>) => {
             this.shadeAreas = res.body;
         });
     }
@@ -422,10 +477,9 @@ export class BatchmgntComponent implements OnInit {
                     'status.equals': STATUS_ACTIVE,
                     'pickListId.equals': id
                 }
-            })
-            .subscribe((res: HttpResponse<IPickListValue[]>) => {
+            }).subscribe((res: HttpResponse<IPickListValue[]>) => {
                 // console.log(res.body);
-                this.varietys = res.body;
+                this.varieties = res.body;
             });
     }
 
@@ -442,8 +496,7 @@ export class BatchmgntComponent implements OnInit {
                     'status.equals': STATUS_ACTIVE,
                     'pickListId.equals': id
                 }
-            })
-            .subscribe((res: HttpResponse<IPickListValue[]>) => {
+            }).subscribe((res: HttpResponse<IPickListValue[]>) => {
                 // console.log(res.body);
                 this.quantityTypes = res.body;
             });
@@ -462,15 +515,14 @@ export class BatchmgntComponent implements OnInit {
                     'status.equals': STATUS_ACTIVE,
                     'pickValueId.equals': id
                 }
-            })
-            .subscribe((res: HttpResponse<IPickListValue[]>) => {
+            }).subscribe((res: HttpResponse<IPickListValue[]>) => {
                 // console.log(res.body);
-                this.categorys = res.body;
+                this.categories = res.body;
             });
     }
 
     /**
-     * Get the quantity type based on the pick list value table id
+     * Get the damage area based on the pick list value table id
      *
      * @param id id of damage area
      */
@@ -482,8 +534,7 @@ export class BatchmgntComponent implements OnInit {
                     'status.equals': STATUS_ACTIVE,
                     'pickListId.equals': id
                 }
-            })
-            .subscribe((res: HttpResponse<IPickListValue[]>) => {
+            }).subscribe((res: HttpResponse<IPickListValue[]>) => {
                 // console.log(res.body);
                 this.damageAreas = res.body;
             });
@@ -505,14 +556,14 @@ export class BatchmgntComponent implements OnInit {
         } else if (this.batch.showingType == 2) {
             this.subscribeToSaveResponse(this.batchService.create(this.batch));
         } else {
-            alert('please choose motherbed');
+            this.error.next('Please choose motherbed.');
         }
     }
 
     /**
      * Call the save response function
      *
-     * @param result result values
+     * @param result as object of batch formation
      */
     private subscribeToSaveResponse(result: Observable<HttpResponse<IBatch>>) {
         result.subscribe(
@@ -536,7 +587,6 @@ export class BatchmgntComponent implements OnInit {
                 // console.log('after motherbed update', this.motherBedModel);
                 this.batch = new BatchModel();
                 // alert('Batch Created Successfully.');
-                this.error.next('Batch created successfully');
                 this.getBatchList();
                 this.isCollapsed = true;
                 this.batchQuantity = new BatchQuantityModel();
@@ -544,7 +594,8 @@ export class BatchmgntComponent implements OnInit {
                 this.batchQuantity.quantity = res.body.quantity;
                 this.batchQuantity.date = res.body.sowingDate;
                 this.batchQuantity.status = STATUS_ADDED;
-                this.saveBatchQuantity();
+                this.saveBatchQuantity('Batch created successfully.');
+                this.categories = null;
             },
             (res: HttpErrorResponse) => {
                 // alert('Batch Not Saved.');
@@ -564,7 +615,7 @@ export class BatchmgntComponent implements OnInit {
         this.batch.status = SOFT_DELETE_STATUS;
         this.batchService.update(this.batch).subscribe(
             data => {
-                alert('Successfully Deleted.');
+                alert('Successfully deleted.');
                 if (this.batch.motherBedId != null) {
                     this.motherBedModel.id = this.batch.motherBedId;
                     this.motherBedModel.value = this.batch.motherBedValue;
@@ -573,7 +624,7 @@ export class BatchmgntComponent implements OnInit {
                     // console.log('motherbed update', this.motherBedModel);
                     this.motherBedService.update(this.motherBedModel).subscribe(
                         result => {
-                            console.log('data ', result.body);
+                            // console.log('data ', result.body);
                         },
                         (err: HttpErrorResponse) => {
                             alert(err.error.fieldErrors[0].message);
@@ -589,14 +640,26 @@ export class BatchmgntComponent implements OnInit {
         );
     }
 
+    // Get the motherbed list
+    getMotherBed(showingStatus): void {
+        // If the showing type as not equal to cover
+        if (showingStatus !== STATUS_SHOWING_TYPE_COVER) {
+            this.motherBedService.query({ filter: { 'status.equals': STATUS_AVAILABLE }})
+            .subscribe((output: HttpResponse<IMotherBed[]>) => {
+                this.motherBeds = output.body;
+            });
+        }
+    }
+
     /**
      * To get the quantity type values while the user click on the event
      *
      * @param event event values
      */
     getQuantityTypeValue(event: Event) {
-        const selectedText = event.target['options'][event.target['options'].selectedIndex].text;
-        this.quantityType = selectedText;
+        // const selectedText = event.target['options'][event.target['options'].selectedIndex].text;
+        // this.quantityType = selectedText;
+        this.quantityType = event.target['options'][event.target['options'].selectedIndex].text;
         // console.log(this.quantityType);
     }
 
@@ -606,15 +669,15 @@ export class BatchmgntComponent implements OnInit {
      * @param event event values
      */
     getMotherBedTypeValue(event: Event) {
-        const selectedText = event.target['options'][event.target['options'].selectedIndex].text;
-        this.motherBedValue = selectedText;
+        // const selectedText = event.target['options'][event.target['options'].selectedIndex].text;
+        this.motherBedValue = event.target['options'][event.target['options'].selectedIndex].text;
         // console.log('motherbed value', this.motherBedValue);
     }
 
     // commented for making the delete as soft one which means not to delete from db
     // deleteBatch(batch: BatchModel): void {
     //     this.batchService.delete(batch.id).subscribe(data => {
-    //         this.batchs = this.batchs.filter(u => u !== batch);
+    //         this.batches = this.batchs.filter(u => u !== batch);
     //         alert('Successfully Deleted.');
     //     });
     // }
@@ -642,7 +705,10 @@ export class BatchmgntComponent implements OnInit {
         this.damageModal.show();
         this.updateBatchValue = value;
         this.updateBatchValue.status = STATUS_SEEDS;
+        this.getDamageAreaAndReason();
+    }
 
+    getDamageAreaAndReason(): void {
         // To get the pick list Id for Pick List Nursery Type
         // this.pickListService.getPickListId(DISPLAY_NAME_DAMAGE_AREA)
         this.pickListService
@@ -651,8 +717,7 @@ export class BatchmgntComponent implements OnInit {
                     'status.equals': STATUS_ACTIVE,
                     'displayLabelName.equals': DISPLAY_NAME_DAMAGE_AREA
                 }
-            })
-            .subscribe((res: HttpResponse<IPickList[]>) => {
+            }).subscribe((res: HttpResponse<IPickList[]>) => {
                 if (res.body.length > 0) {
                     this.getDamageArea(res.body[0].id);
                 }
@@ -666,8 +731,7 @@ export class BatchmgntComponent implements OnInit {
                     'status.equals': STATUS_ACTIVE,
                     'displayLabelName.equals': DISPLAY_NAME_DAMAGE_REASON
                 }
-            })
-            .subscribe((res: HttpResponse<IPickList[]>) => {
+            }).subscribe((res: HttpResponse<IPickList[]>) => {
                 if (res.body.length > 0) {
                     this.getVariety(res.body[0].id);
                 }
@@ -697,7 +761,12 @@ export class BatchmgntComponent implements OnInit {
         // console.log(value);
         this.updateBatchValue.id = value.batchId;
         this.updateBatchValue.status = STATUS_SEEDLING;
+        this.updateBatchValue.noOfSeedlings = value.noOfSeedlings;
+        this.updateBatchValue.seedlingsCount = value.saplings;
+        this.updateBatchValue.damagecount = value.damage;
+        console.log('updateBatchValue', this.updateBatchValue);
         this.damageModal.show();
+        this.getDamageAreaAndReason();
     }
 
     /**
@@ -732,18 +801,22 @@ export class BatchmgntComponent implements OnInit {
      * @param batch batch values
      */
     closeBatch(batch: BatchModel): void {
-        if (this.batch.closedDate === null || this.batch.closedDate === undefined) {
-            this.error.next('Close date should not be empty');
+        if ((batch.closedDate === null)
+            || (batch.closedDate === undefined)
+        ) {
+            this.error.next('Close date cannot be blank.');
         } else {
-            this.shadeAreaService.getParticularBatchShadeCount(this.updateBatchValue.id).subscribe((result: HttpResponse<String>) => {
+            this.shadeAreaService.getParticularBatchShadeCount(this.updateBatchValue.id)
+            .subscribe((result: HttpResponse<String>) => {
                 // console.log('len', result.body);
-                this.shadeCount = result.body != null ? result.body : 0;
-                this.damageService.getParticularBatchDamageCount(this.updateBatchValue.id).subscribe((resource: HttpResponse<String>) => {
-                    this.damageCount = resource.body != null ? resource.body : 0;
+                this.shadeCount = (result.body != null) ? result.body : 0 ;
+                this.damageService.getParticularBatchDamageCount(this.updateBatchValue.id)
+                .subscribe((resource: HttpResponse<String>) => {
+                    this.damageCount = (resource.body != null) ? resource.body : 0 ;
                     // console.log('damage', this.damageCount);
                     this.shadeDamageCount = this.shadeCount + this.damageCount;
-                    console.log('batch', batch.quantity);
-                    console.log('shade', this.shadeDamageCount);
+                    // console.log('batch', batch.quantity);
+                    // console.log('shade', this.shadeDamageCount);
                     if (batch.quantity === this.shadeDamageCount) {
                         this.batch = batch;
                         this.batch.status = STATUS_BATCH_CLOSE;
@@ -751,13 +824,13 @@ export class BatchmgntComponent implements OnInit {
                         this.batchService.update(this.batch).subscribe(
                             data => {
                                 // alert('Bacth Closed Successfully.');
-                                this.success.next('Batch closed successfully');
+                                this.success.next('Batch closed successfully.');
                                 if (this.batch.motherBedId != null) {
                                     this.motherBedModel.id = this.batch.motherBedId;
                                     this.motherBedModel.value = this.batch.motherBedValue;
                                     this.motherBedModel.nurseryId = this.batch.nurseryId;
                                     this.motherBedModel.status = STATUS_AVAILABLE;
-                                    console.log('motherbed update', this.motherBedModel);
+                                    // console.log('motherbed update', this.motherBedModel);
                                     this.motherBedService.update(this.motherBedModel).subscribe(
                                         output => {
                                             // console.log('data ', output.body);
@@ -779,7 +852,7 @@ export class BatchmgntComponent implements OnInit {
                         // this.closeBatchModal.hide();
                     } else {
                         const difference = this.updateBatchValue.quantity - this.shadeDamageCount;
-                        alert('You ant able to close the batch. Because, you have ' + difference + ' seedlings.');
+                        alert('You cant able to close the batch. Because, you have ' + difference + ' seedlings in your batch.');
                         // Hide the closeBatchModal
                         this.closeBatchModal.hide();
                         // alert('Motherbed having seedlings please move to another area');
@@ -795,60 +868,59 @@ export class BatchmgntComponent implements OnInit {
      * @param value damage value
      */
     createDamage(value: DamageModel): void {
-        if (value.damageAreaId === null || value.damageAreaId === undefined) {
-            this.error.next('Damage area should not be empty');
-        } else if (value.noOfQuantity === null || value.noOfQuantity === undefined || value.noOfQuantity <= 0) {
-            this.error.next('Quantity should not be empty or 0');
+        if ((value.damageAreaId === null)
+            || (value.damageAreaId === undefined)
+        ) {
+            this.error.next('Damage area cannot be blank.');
+        } else if ((value.noOfQuantity === null)
+            || (value.noOfQuantity === undefined)
+            || (value.noOfQuantity <= 0 )
+        ) {
+            this.error.next('Quantity cannot be blank or 0.');
         } else {
             // this.damage = value;
             // console.log(value);
             // if (this.shadeArea.noOfSeedlings <= this.damage.noOfQuantity) {}
             if (this.updateBatchValue.status === STATUS_SEEDS) {
-                this.shadeAreaService.getParticularBatchShadeCount(this.updateBatchValue.id).subscribe((result: HttpResponse<String>) => {
+                this.shadeAreaService.getParticularBatchShadeCount(this.updateBatchValue.id)
+                .subscribe((result: HttpResponse<String>) => {
                     // console.log('len', result.body);
-                    this.shadeCount = result.body != null ? result.body : 0;
+                    this.shadeCount = (result.body != null) ? result.body : 0 ;
                     // console.log('shade', this.shadeCount);
                     // Get the count of damage moved the damage area
-                    this.damageService
-                        .getParticularBatchDamageCount(this.updateBatchValue.id)
-                        .subscribe((resource: HttpResponse<String>) => {
-                            this.damageCount = resource.body != null ? resource.body : 0;
-                            this.shadeDamageAndUserCount = +(this.shadeCount + this.damageCount) + +value.noOfQuantity;
-                            console.log('shadeDamageAndUserCount', this.shadeDamageAndUserCount);
-                            if (this.updateBatchValue.quantity == this.shadeDamageAndUserCount) {
-                                console.log('quantity equal');
-                                this.quantityDamageCheck(value);
-                            } else if (this.updateBatchValue.quantity < this.shadeDamageAndUserCount) {
-                                console.log('quantity exceed');
-                                const shadeDamageCount = this.shadeCount + this.damageCount;
-                                const difference = this.updateBatchValue.quantity - shadeDamageCount;
-                                // alert('Quantity exceeds then the actual quantity.You have ' + difference + ' seedlings in your batch.');
-                                this.error.next(
-                                    'Quantity exceeds then the actual quantity.You have ' + difference + ' seedlings in your batch.'
-                                );
-                            } else if (this.updateBatchValue.quantity > this.shadeDamageAndUserCount) {
-                                console.log('quantity not exceed');
-                                // alert('Quantity cannot be blank');
-                                this.quantityDamageCheck(value);
-                            }
-                        });
+                    this.damageService.getParticularBatchDamageCount(this.updateBatchValue.id)
+                    .subscribe((resource: HttpResponse<String>) => {
+                        this.damageCount = (resource.body != null) ? resource.body : 0 ;
+                        this.shadeDamageAndUserCount = +(this.shadeCount + this.damageCount) + +value.noOfQuantity;
+                        // console.log('shadeDamageAndUserCount', this.shadeDamageAndUserCount);
+                        if (this.updateBatchValue.quantity == this.shadeDamageAndUserCount) {
+                            // console.log('quantity equal');
+                            this.quantityDamageCheck(value);
+                        } else if (this.updateBatchValue.quantity < this.shadeDamageAndUserCount) {
+                            // console.log('quantity exceed');
+                            const shadeDamageCount = this.shadeCount + this.damageCount;
+                            const difference = this.updateBatchValue.quantity - shadeDamageCount;
+                            // alert('Quantity exceeds than the actual quantity.You have ' + difference + ' seedlings in your batch.');
+                            this.error.next('Quantity exceeds than the actual quantity. You have ' + difference + ' seedlings in your batch.');
+                        } else if (this.updateBatchValue.quantity > this.shadeDamageAndUserCount) {
+                            // console.log('quantity not exceed');
+                            // alert('Quantity cannot be blank');
+                            this.quantityDamageCheck(value);
+                        }
+                    });
                 });
             } else if (this.updateBatchValue.status === STATUS_SEEDLING) {
-                this.quantityDamageCheck(value);
-                // console.log(value);
-                // const movedamage = (value.damage != null) ? value.damage : 0;
-                // const movesaplings = (value.saplings != null) ? value.saplings : 0;
-                // const remaining = +value.noOfSeedlings - +(+movedamage + +movesaplings);
-                // console.log('seed', value.noOfSeedlings);
-                // console.log('dam', value.damage);
-                // console.log('sap', value.saplings);
-                // console.log(remaining);
-                // if (value.noOfQuantity <= this.updateBatchValue.noOfQuantity
-                //     && value.noOfQuantity <= remaining) {
-                //         this.quantityDamageCheck(value);
-                // } else {
-                //     alert('Quantity exceeds then the actual quantity.You have ' + remaining + ' seedlings in your batch.');
-                // }
+                const movedamage = (this.updateBatchValue.damagecount != null) ? this.updateBatchValue.damagecount : 0;
+                const movesaplings = (this.updateBatchValue.seedlingsCount != null) ? this.updateBatchValue.seedlingsCount : 0;
+                const seedlingshadedamageCount = +(movesaplings + movedamage) + +value.noOfQuantity;
+                if (this.updateBatchValue.noOfSeedlings == seedlingshadedamageCount) {
+                    this.quantityDamageCheck(value);
+                } else if (this.updateBatchValue.noOfSeedlings < seedlingshadedamageCount) {
+                    const remaining =  +this.updateBatchValue.noOfSeedlings - +(+movedamage + +movesaplings);
+                    alert('Quantity exceeds than the actual quantity.You have ' + remaining + ' seedlings in your batch.');
+                } else if (this.updateBatchValue.noOfSeedlings > seedlingshadedamageCount) {
+                    this.quantityDamageCheck(value);
+                }
             }
         }
     }
@@ -877,7 +949,7 @@ export class BatchmgntComponent implements OnInit {
                     this.updateShadeAreaQuantity();
                 }
                 // alert('Damage Created Successfully.');
-                this.success.next('Damage created successfully.');
+                this.success.next('Successfully added to damage.');
                 this.getBatchList();
                 this.damageModal.hide();
             },
@@ -894,22 +966,27 @@ export class BatchmgntComponent implements OnInit {
      * @param value  shadearea values
      */
     createShadeArea(value: ShadeAreaModel): void {
-        if (value.noOfSeedlings === null || value.noOfSeedlings === undefined || value.noOfSeedlings <= 0) {
-            this.error.next('Quantity should not be empty or 0');
+        if ((value.noOfSeedlings === null)
+            || (value.noOfSeedlings === undefined)
+            || (value.noOfSeedlings <= 0 )
+        ) {
+            this.error.next('Quantity cannot be blank or 0');
         } else {
             // this.shadeArea = value;
-            console.log('shade area', value);
+            // console.log('shade area', value);
             this.updateBatchValue = value;
             // console.log('compare', this.updateBatchValue.quantity);
             // console.log('compares', value.noOfSeedlings);
-            this.shadeAreaService.getParticularBatchShadeCount(this.updateBatchValue.id).subscribe((result: HttpResponse<String>) => {
+            this.shadeAreaService.getParticularBatchShadeCount(this.updateBatchValue.id)
+            .subscribe((result: HttpResponse<String>) => {
                 // console.log('len', result.body);
-                this.shadeCount = result.body != null ? result.body : 0;
-                console.log('shade', this.shadeCount);
+                this.shadeCount = (result.body != null) ? result.body : 0;
+                // console.log('shade', this.shadeCount);
                 // Get the count of damage moved the damage area
 
-                this.damageService.getParticularBatchDamageCount(this.updateBatchValue.id).subscribe((resource: HttpResponse<String>) => {
-                    this.damageCount = resource.body != null ? resource.body : 0;
+                this.damageService.getParticularBatchDamageCount(this.updateBatchValue.id)
+                .subscribe((resource: HttpResponse<String>) => {
+                    this.damageCount = (resource.body != null) ? resource.body : 0;
                     // console.log('damage', this.damageCount);
                     this.shadeDamageAndUserCount = +(this.shadeCount + this.damageCount) + +value.noOfSeedlings;
                     // console.log('shadeDamageAndUserCount', this.shadeDamageAndUserCount);
@@ -920,17 +997,18 @@ export class BatchmgntComponent implements OnInit {
                         }
                         this.quantityCheck(value);
                     } else if (this.updateBatchValue.quantity < this.shadeDamageAndUserCount) {
-                        console.log('quantity exceed');
+                        // console.log('quantity exceed');
                         const shadeDamageCount = this.shadeCount + this.damageCount;
                         const difference = this.updateBatchValue.quantity - shadeDamageCount;
-                        // alert('Quantity exceeds then the actual quantity.You have ' + difference + ' seedlings in your batch.');
-                        this.error.next('Quantity exceeds then the actual quantity.You have ' + difference + ' seedlings in your batch.');
+                        // alert('Quantity exceeds than the actual quantity.You have ' + difference + ' seedlings in your batch.');
+                        this.error.next('Quantity exceeds than the actual quantity. You have ' + difference + ' seedlings in your batch.');
                     } else if (this.updateBatchValue.quantity > this.shadeDamageAndUserCount) {
-                        console.log('quantity not exceed');
+                        // console.log('quantity not exceed');
                         // alert('Quantity cannot be blank');
                         if (this.theCheckbox === true) {
                             const difference = this.updateBatchValue.quantity - this.shadeDamageAndUserCount;
-                            alert('you have ' + difference + ' seedling in your batch, ');
+                            // alert('You have ' + difference + ' seedling in your batch.');
+                            this.error.next('You have ' + difference + ' seedling in your batch.');
                             // alert('you cant able to close the batch, Because your remaining seedlings count is'
                             //     + difference + 'so please move to shade after close the batch')
                         } else {
@@ -980,7 +1058,8 @@ export class BatchmgntComponent implements OnInit {
                 );
             },
             (res: HttpErrorResponse) => {
-                alert(res.error.fieldErrors[0].message);
+                this.error.next(res.error.fieldErrors[0].message);
+                // alert(res.error.fieldErrors[0].message);
             }
         );
         // this.shiftBatchModal.hide();
@@ -995,7 +1074,8 @@ export class BatchmgntComponent implements OnInit {
         if (this.nurseryStockDetails.quantity <= this.shadeArea.noOfSeedlings) {
             this.batch = new BatchModel();
             // console.log(this.nurseryStockDetails);
-            this.batchService.find(this.nurseryStockDetails.batchId).subscribe(output => {
+            this.batchService.find(this.nurseryStockDetails.batchId)
+            .subscribe(output => {
                 this.batch = output.body;
                 this.nurseryStock.nurseryId = this.batch.nurseryId;
                 this.nurseryStock.pickListVarietyId = this.batch.pickListVarietyId;
@@ -1004,49 +1084,49 @@ export class BatchmgntComponent implements OnInit {
                 // this.nurseryStock.nurseryStockDetails = [this.nurseryStockDetails];
                 // console.log(this.nurseryStock);
                 // this.nurseryStockService.getNurseryCategoryStock(this.nurseryStock.nurseryId, this.nurseryStock.pickListCategoryId)
-                this.nurseryStockService
-                    .query({
-                        filter: {
-                            'nurseryId.equals': this.nurseryStock.nurseryId,
-                            'pickListCategoryId.equals': this.nurseryStock.pickListCategoryId
-                        }
-                    })
-                    .subscribe((res: HttpResponse<INurseryStock[]>) => {
-                        this.nurseryStock.status = STATUS_FROM_BATCH;
-                        // If the length is greater than 0, update the old batch records
-                        if (res.body.length > 0) {
-                            this.nurseryStock = res.body[res.body.length - 1];
-                            this.nurseryStock.currentQuantity = +this.nurseryStock.currentQuantity + +this.nurseryStockDetails.quantity;
-                            this.nurseryStock.addedQuantity = +this.nurseryStock.addedQuantity + +this.nurseryStockDetails.quantity;
-                            this.nurseryStockService.update(this.nurseryStock).subscribe(
-                                data => {
-                                    // alert('Bacth Closed Successfully.');
-                                    this.nurseryStockDetails.nurseryStockId = data.body.id;
-                                    this.createNurseryStockDetails(this.nurseryStockDetails);
-                                },
-                                (err: HttpErrorResponse) => {
-                                    alert(err.error.fieldErrors[0].message);
-                                }
-                            );
-                        } else {
-                            this.nurseryStock.currentQuantity = this.nurseryStockDetails.quantity;
-                            this.nurseryStock.addedQuantity = this.nurseryStockDetails.quantity;
-                            this.nurseryStock.financialYearNurseryStockId = this.financialYearId;
-                            this.nurseryStockService.create(this.nurseryStock).subscribe(
-                                data => {
-                                    // console.log(data.body);
-                                    this.nurseryStockDetails.nurseryStockId = data.body.id;
-                                    this.createNurseryStockDetails(this.nurseryStockDetails);
-                                },
-                                (err: HttpErrorResponse) => {
-                                    alert(err.error.fieldErrors[0].message);
-                                }
-                            );
-                        }
-                    });
+                this.nurseryStockService.query({
+                    filter: {
+                        'nurseryId.equals': this.nurseryStock.nurseryId,
+                        'pickListCategoryId.equals': this.nurseryStock.pickListCategoryId
+                    }
+                })
+                .subscribe((res: HttpResponse<INurseryStock[]>) => {
+                    this.nurseryStock.status = STATUS_FROM_BATCH;
+                    // If the length is greater than 0, update the old batch records
+                    if (res.body.length > 0) {
+                        this.nurseryStock = res.body[res.body.length - 1];
+                        this.nurseryStock.currentQuantity = +this.nurseryStock.currentQuantity + +this.nurseryStockDetails.quantity;
+                        this.nurseryStock.addedQuantity = +this.nurseryStock.addedQuantity + +this.nurseryStockDetails.quantity;
+                        this.nurseryStockService.update(this.nurseryStock)
+                        .subscribe(
+                            data => {
+                                // alert('Bacth Closed Successfully.');
+                                this.nurseryStockDetails.nurseryStockId = data.body.id;
+                                this.createNurseryStockDetails(this.nurseryStockDetails);
+                            },
+                            (err: HttpErrorResponse) => {
+                                alert(err.error.fieldErrors[0].message);
+                            }
+                        );
+                    } else {
+                        this.nurseryStock.currentQuantity = this.nurseryStockDetails.quantity;
+                        this.nurseryStock.addedQuantity = this.nurseryStockDetails.quantity;
+                        this.nurseryStock.financialYearNurseryStockId = this.financialYearId;
+                        this.nurseryStockService.create(this.nurseryStock)
+                        .subscribe(data => {
+                                // console.log(data.body);
+                                this.nurseryStockDetails.nurseryStockId = data.body.id;
+                                this.createNurseryStockDetails(this.nurseryStockDetails);
+                            },
+                            (err: HttpErrorResponse) => {
+                                alert(err.error.fieldErrors[0].message);
+                            }
+                        );
+                    }
+                });
             });
         } else {
-            alert('quantity exceeds than the actual quantity');
+            alert('Quantity exceeds than the actual quantity.');
         }
     }
 
@@ -1064,7 +1144,7 @@ export class BatchmgntComponent implements OnInit {
         this.nurseryStockDetailsService.create(this.nurseryStockDetails).subscribe(
             data => {
                 // console.log(data.body);
-                alert('Successfully Moved To Seasoning Area.');
+                alert('Successfully moved to seasoning area.');
                 this.stockModal.hide();
                 this.shadeArea.saplings = +this.shadeArea.saplings + +this.nurseryStockDetails.quantity;
                 this.updateShadeAreaQuantity();
@@ -1082,12 +1162,12 @@ export class BatchmgntComponent implements OnInit {
      */
     updateQuantity() {
         this.updateBatchValue.quantity = +this.updateBatchValue.quantity + +this.batchQuantity.quantity;
-        this.batchService.update(this.updateBatchValue).subscribe(
+        this.batchService.update(this.updateBatchValue)
+        .subscribe(
             data => {
                 this.batchQuantity.batchId = data.body.id;
                 this.batchQuantity.status = STATUS_ADDED;
-                alert('Successfully updated the quantity.');
-                this.saveBatchQuantity();
+                this.saveBatchQuantity('Successfully updated the quantity.');
             },
             (res: HttpErrorResponse) => {
                 // alert(res.error.fieldErrors[0].message);
@@ -1099,10 +1179,12 @@ export class BatchmgntComponent implements OnInit {
     /**
      * To save the batch Quantity and update the date of updation
      */
-    saveBatchQuantity() {
+    saveBatchQuantity(message: string) {
         this.batchQuantity.date = moment(this.batchQuantity.date, DATE_TIME_FORMAT);
         this.batchQuantityService.create(this.batchQuantity).subscribe(
             data => {
+                // Display the alert message
+                alert(message);
                 // console.log(data.body);
                 this.addQuantityModal.hide();
             },
@@ -1122,13 +1204,12 @@ export class BatchmgntComponent implements OnInit {
         this.damageRecordModal.show();
         // Get the list of damage
         // this.damageService.getParticularBatchRecord(batchId)
-        this.damageService
-            .query({
-                filter: { 'batchId.equals': batchId }
-            })
-            .subscribe((res: HttpResponse<IDamage[]>) => {
-                this.damages = res.body;
-            });
+        this.damageService.query({
+            filter: { 'batchId.equals': batchId }
+        })
+        .subscribe((res: HttpResponse<IDamage[]>) => {
+            this.damages = res.body;
+        });
     }
 
     /**
@@ -1140,13 +1221,12 @@ export class BatchmgntComponent implements OnInit {
         this.shadeAreaRecordModal.show();
         // Get the list of shade area record
         // this.shadeAreaService.getParticularBatchRecord(batchId)
-        this.shadeAreaService
-            .query({
-                filter: { 'batchId.equals': batchId }
-            })
-            .subscribe((res: HttpResponse<IShadeArea[]>) => {
-                this.shadeAreas = res.body;
-            });
+        this.shadeAreaService.query({
+            filter: { 'batchId.equals': batchId }
+        })
+        .subscribe((res: HttpResponse<IShadeArea[]>) => {
+            this.shadeAreas = res.body;
+        });
     }
 
     /**
@@ -1156,12 +1236,14 @@ export class BatchmgntComponent implements OnInit {
      */
     getParticularBatchShadeDamageCount(batchId): void {
         // Get the count of stock moved the shade area
-        this.shadeAreaService.getParticularBatchShadeCount(batchId).subscribe((res: HttpResponse<String>) => {
+        this.shadeAreaService.getParticularBatchShadeCount(batchId)
+        .subscribe((res: HttpResponse<String>) => {
             this.shadeCount = res.body;
         });
 
         // Get the count of damage moved the damage area
-        this.damageService.getParticularBatchDamageCount(batchId).subscribe((res: HttpResponse<String>) => {
+        this.damageService.getParticularBatchDamageCount(batchId)
+        .subscribe((res: HttpResponse<String>) => {
             this.damageCount = res.body;
         });
     }
@@ -1178,9 +1260,8 @@ export class BatchmgntComponent implements OnInit {
         this.batchQuantityService
             .query({
                 filter: { 'batchId.equals': batchId }
-            })
-            .subscribe((res: HttpResponse<IBatchQuantity[]>) => {
-                this.batchQuantitys = res.body;
+            }).subscribe((res: HttpResponse<IBatchQuantity[]>) => {
+                this.batchQuantities = res.body;
             });
     }
 
@@ -1200,14 +1281,14 @@ export class BatchmgntComponent implements OnInit {
      * To get the report based on the from date and to date
      * Assign the date to the value
      */
-    getReport(): void {
-        // console.log(this.filter);
+    /** getReport(): void {
         this.batchService
-            .getReport(moment(this.filter.fromDate, DATE_TIME_FORMAT), moment(this.filter.toDate, DATE_TIME_FORMAT))
-            .subscribe((res: HttpResponse<IBatch[]>) => {
-                console.log(res.body);
+            .getReport(
+                moment(this.filter.fromDate, DATE_TIME_FORMAT),
+                moment(this.filter.toDate, DATE_TIME_FORMAT)
+            ).subscribe((res: HttpResponse<IBatch[]>) => {
             });
-    }
+    }  */
 
     /**
      * Reset the values of updateBatch table
@@ -1257,7 +1338,7 @@ export class BatchmgntComponent implements OnInit {
      * If entered value is number allow to enter otherwise return as false
      */
     numberOnly(event): boolean {
-        const charCode = event.which ? event.which : event.keyCode;
+        const charCode = (event.which) ? event.which : event.keyCode;
         if (charCode > 31 && (charCode < 48 || charCode > 57)) {
             return false;
         }
@@ -1343,6 +1424,6 @@ export class BatchmgntComponent implements OnInit {
         this.links = this.parseLinks.parse(headers.get('link'));
         this.totalItems = parseInt(headers.get('X-Total-Count'), 10);
         this.queryCount = this.totalItems;
-        this.batchs = data;
+        this.batches = data;
     }
 }

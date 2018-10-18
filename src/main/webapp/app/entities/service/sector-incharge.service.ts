@@ -32,7 +32,8 @@ export class SectorInchargeService {
 
     constructor(private http: HttpClient) {}
 
-    /** Send a POST method request to create the sectorIncharge and
+    /**
+     * Send a POST method request to create the sectorIncharge and
      * get created record as response
      *
      * @param sectorIncharge - single object

@@ -7,42 +7,54 @@
  *  Target: yarn
  *******************************************************************************/
 
+// Import needed model, service, shared and angular dependency
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { PickListService } from 'app/entities/service/pick-list.service';
-import { PickListValueService } from 'app/entities/service/pick-list-value.service';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { JhiParseLinks } from 'ng-jhipster';
-
-import { ITEMS_PER_PAGE, STATUS_ACTIVE, SOFT_DELETE_STATUS, ALERT_TIME_OUT_5000 } from 'app/shared';
 import { HttpResponse, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { PickListModel, IPickList } from 'app/shared/model/pick-list.model';
-import { PickListValueModel, IPickListValue } from 'app/shared/model/pick-list-value.model';
 import { ModalDirective } from 'ngx-bootstrap';
-import { QuantityModel, IQuantity } from 'app/shared/model/quantity.model';
-import { QuantityService } from 'app/entities/quantity';
-import { IMotherBed, MotherBedModel } from 'app/shared/model/mother-bed.model';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
+
+import { PickListService } from 'app/entities/service/pick-list.service';
+import { PickListValueService } from 'app/entities/service/pick-list-value.service';
 import { MotherBedService } from 'app/entities/service/mother-bed.service';
 import { ZonalService } from 'app/entities/service/zonal.service';
 import { NurseryService } from 'app/entities/service/nursery.service';
 import { SectorService } from 'app/entities/service/sector.service';
+
+import { IMotherBed, MotherBedModel,
+    STATUS_AVAILABLE , STATUS_OCCUPIED
+} from 'app/shared/model/mother-bed.model';
+import { PickListModel, IPickList } from 'app/shared/model/pick-list.model';
+import {
+    PickListValueModel, IPickListValue
+} from 'app/shared/model/pick-list-value.model';
 import { IZonal } from 'app/shared/model/zonal.model';
 import { ISector } from 'app/shared/model/sector.model';
 import { INursery } from 'app/shared/model/nursery.model';
 
-// Display the alert message of success and error
-import { Subject } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import {
+    ITEMS_PER_PAGE, STATUS_ACTIVE, SOFT_DELETE_STATUS, ALERT_TIME_OUT_5000
+} from 'app/shared';
 
+// Mension the html, css/sass files
 @Component({
     selector: 'jhi-picklist',
     templateUrl: 'pick-list.component.html'
 })
+
+/**
+ * Class PickListComponent used to create/update a pickList, pickListValue, motherBed,
+ * and List all pickList, pickListValue and motherBed
+ * Declared an object to create and update.
+ * Declared an Array variable to set list of values
+ * Using a modal popup directive create and update form is displayed.
+ */
 export class PickListComponent implements OnInit {
     pickListObject: PickListModel = new PickListModel();
     pickListValueObject: PickListValueModel = new PickListModel();
-    quantityObject: QuantityModel = new QuantityModel();
     motherBedObject: MotherBedModel = new MotherBedModel();
     // create empty array for each service
     pickLists: IPickList[];
@@ -53,13 +65,11 @@ export class PickListComponent implements OnInit {
     nurserys: INursery[];
 
     // Quanity Table values
-    variety: IPickListValue[];
-    categorys: IPickListValue[];
-    quantity: IQuantity[];
+    varieties: IPickListValue[];
+    categories: IPickListValue[];
 
-    // Title and alertTitle declation as String
+    // Title declation as String
     title: String;
-    alertTitle: String;
 
     // To display the success message
     private success = new Subject<string>();
@@ -71,6 +81,10 @@ export class PickListComponent implements OnInit {
 
     // By default close the alert with statc time
     staticAlertClosed = false;
+
+    // Set the status for occupied and available
+    statusOccupied: number;
+    statusAvailable: number;
 
     // To set value for url params
     routeData: any;
@@ -93,7 +107,6 @@ export class PickListComponent implements OnInit {
     constructor(
         private pickListService: PickListService,
         private pickListValueService: PickListValueService,
-        private quantityService: QuantityService,
         private motherBedService: MotherBedService,
         private zonalService: ZonalService,
         private nurseryService: NurseryService,
@@ -109,26 +122,31 @@ export class PickListComponent implements OnInit {
             this.previousPage = data.pagingParams.page;
             this.reverse = data.pagingParams.ascending;
             this.predicate = data.pagingParams.predicate;
+            this.statusAvailable = STATUS_AVAILABLE;
+            this.statusOccupied = STATUS_OCCUPIED;
         });
     }
 
     ngOnInit() {
         // Call a function to get list of active records
         this.getPickList();
-        this.getAllPickListValue();
-        this.getMotherBedList();
-        this.getZonalList();
+
+        // this.getAllPickListValue();
+        // this.getMotherBedList();
+        // this.getZonalList();
 
         // To set the time for automatic alert close
         setTimeout(() => (this.staticAlertClosed = true), ALERT_TIME_OUT_5000);
 
         // Set the success message with debounce time
         this.success.subscribe(message => (this.successMessage = message));
-        this.success.pipe(debounceTime(ALERT_TIME_OUT_5000)).subscribe(() => (this.successMessage = null));
+        this.success.pipe(debounceTime(ALERT_TIME_OUT_5000))
+            .subscribe(() => (this.successMessage = null));
 
         // To set the error message with debounce time
         this.error.subscribe(message => (this.errorMessage = message));
-        this.error.pipe(debounceTime(ALERT_TIME_OUT_5000)).subscribe(() => (this.errorMessage = null));
+        this.error.pipe(debounceTime(ALERT_TIME_OUT_5000))
+            .subscribe(() => (this.errorMessage = null));
     }
 
     /**
@@ -136,21 +154,10 @@ export class PickListComponent implements OnInit {
      */
     getPickList(): void {
         // Get the list of pickList
-        this.pickListService
-            .query({
-                filter: { 'status.equals': STATUS_ACTIVE }
-            })
-            .subscribe((res: HttpResponse<IPickList[]>) => {
-                this.pickLists = res.body;
-            });
-    }
-
-    /**
-     * Get quantity list from the picklist table
-     */
-    getQuantityList(): void {
-        this.quantityService.query().subscribe((res: HttpResponse<IQuantity[]>) => {
-            this.quantity = res.body;
+        this.pickListService.query({
+            filter: { 'status.equals': STATUS_ACTIVE }
+        }).subscribe((res: HttpResponse<IPickList[]>) => {
+            this.pickLists = res.body;
         });
     }
 
@@ -160,16 +167,14 @@ export class PickListComponent implements OnInit {
      */
     getAllPickListValue(): void {
         // Get the list of pickListValue
-        this.pickListValueService
-            .query({
-                page: this.page - 1,
-                size: this.itemsPerPage,
-                sort: this.sort(),
-                filter: { 'status.equals': STATUS_ACTIVE }
-            })
-            .subscribe((res: HttpResponse<IPickListValue[]>) => {
-                this.paginatePickValues(res.body, res.headers);
-            });
+        this.pickListValueService.query({
+            page: this.page - 1,
+            size: this.itemsPerPage,
+            sort: this.sort(),
+            filter: { 'status.equals': STATUS_ACTIVE }
+        }).subscribe((res: HttpResponse<IPickListValue[]>) => {
+            this.paginatePickValues(res.body, res.headers);
+        });
     }
 
     /**
@@ -177,13 +182,11 @@ export class PickListComponent implements OnInit {
      */
     getMotherBedList(): void {
         // Get the list of motherBeds
-        this.motherBedService
-            .query({
-                filter: { 'status.equals': STATUS_ACTIVE }
-            })
-            .subscribe((res: HttpResponse<IMotherBed[]>) => {
-                this.motherBedList = res.body;
-            });
+        this.motherBedService.query({
+            filter: { 'status.equals': STATUS_ACTIVE }
+        }).subscribe((res: HttpResponse<IMotherBed[]>) => {
+            this.motherBedList = res.body;
+        });
     }
 
     /**
@@ -191,13 +194,11 @@ export class PickListComponent implements OnInit {
      */
     getZonalList(): void {
         // Get the list of zone
-        this.zonalService
-            .query({
-                filter: { 'status.equals': STATUS_ACTIVE }
-            })
-            .subscribe((res: HttpResponse<IZonal[]>) => {
-                this.zonals = res.body;
-            });
+        this.zonalService.query({
+            filter: { 'status.equals': STATUS_ACTIVE }
+        }).subscribe((res: HttpResponse<IZonal[]>) => {
+            this.zonals = res.body;
+        });
     }
 
     /**
@@ -207,16 +208,14 @@ export class PickListComponent implements OnInit {
     getSector(zoneId): void {
         // Get the list of sector
         // this.sectorService.getSectors(zoneId)
-        this.sectorService
-            .query({
-                filter: {
-                    'status.equals': STATUS_ACTIVE,
-                    'zonalId.equals': zoneId
-                }
-            })
-            .subscribe((res: HttpResponse<ISector[]>) => {
-                this.sectors = res.body;
-            });
+        this.sectorService.query({
+            filter: {
+                'status.equals': STATUS_ACTIVE,
+                'zonalId.equals': zoneId
+            }
+        }).subscribe((res: HttpResponse<ISector[]>) => {
+            this.sectors = res.body;
+        });
     }
 
     /**
@@ -226,17 +225,15 @@ export class PickListComponent implements OnInit {
     getNursery(sectorId): void {
         // Get the list of nursery
         // this.nurseryService.getNurserys(sectorId)
-        this.nurseryService
-            .query({
-                filter: {
-                    'status.equals': STATUS_ACTIVE,
-                    'sectorId.equals': sectorId
-                }
-            })
-            .subscribe((res: HttpResponse<INursery[]>) => {
-                // console.log(res.body);
-                this.nurserys = res.body;
-            });
+        this.nurseryService.query({
+            filter: {
+                'status.equals': STATUS_ACTIVE,
+                'sectorId.equals': sectorId
+            }
+        }).subscribe((res: HttpResponse<INursery[]>) => {
+            // console.log(res.body);
+            this.nurserys = res.body;
+        });
     }
 
     /**
@@ -247,14 +244,15 @@ export class PickListComponent implements OnInit {
         // If the id is not undefined, to update the old records of the picklist
         if (this.pickListObject.id !== undefined) {
             // Set the title for the alert
-            this.alertTitle = 'updated';
             // update the picklist using the picklist object
-            this.subscribeToSaveResponse(this.pickListService.update(this.pickListObject), this.alertTitle);
+            this.subscribeToSaveResponse(
+                this.pickListService.update(this.pickListObject), 'updated'
+            );
         } else {
-            // Set the title for the alert
-            this.alertTitle = 'created';
             // Create the new pick list
-            this.subscribeToSaveResponse(this.pickListService.create(this.pickListObject), this.alertTitle);
+            this.subscribeToSaveResponse(
+                this.pickListService.create(this.pickListObject), 'created'
+            );
         }
     }
 
@@ -262,7 +260,7 @@ export class PickListComponent implements OnInit {
      * return the saved response of success and
      * error from the nursery table
      * @param result IPickList
-     * @param alertTitle string
+     * @param alertTitle message title for alert
      */
     private subscribeToSaveResponse(result: Observable<HttpResponse<IPickList>>, alertTitle) {
         result.subscribe(
@@ -270,7 +268,7 @@ export class PickListComponent implements OnInit {
                 this.pickListModal.hide();
                 this.pickListObject = new PickListModel();
                 // alert('Successfully updated the record.');
-                this.success.next(`Pick list ${alertTitle} successfully`);
+                this.success.next(`Pick list ${alertTitle} successfully.`);
                 this.getPickList();
             },
             (res: HttpErrorResponse) => {
@@ -289,15 +287,15 @@ export class PickListComponent implements OnInit {
         // If the picklist object id is not undefined,
         // to update the old records
         if (this.pickListValueObject.id !== undefined) {
-            // Set the alert message
-            this.alertTitle = 'updated';
             // Update the old pick value using the picklistObject
-            this.subscribeToSaveSubPickListResponse(this.pickListValueService.update(this.pickListValueObject), this.alertTitle);
+            this.subscribeToSaveSubPickListResponse(
+                this.pickListValueService.update(this.pickListValueObject), 'updated'
+            );
         } else {
-            // Set the alert message
-            this.alertTitle = 'created';
             // Create a new pick value
-            this.subscribeToSaveSubPickListResponse(this.pickListValueService.create(this.pickListValueObject), this.alertTitle);
+            this.subscribeToSaveSubPickListResponse(
+                this.pickListValueService.create(this.pickListValueObject), 'created'
+            );
         }
     }
 
@@ -305,7 +303,7 @@ export class PickListComponent implements OnInit {
      * return the saved response of success and
      * error from the nursery table
      * @param result IPickListValue
-     * @param alertTitle string
+     * @param alertTitle message title for alert
      */
     private subscribeToSaveSubPickListResponse(result: Observable<HttpResponse<IPickListValue>>, alertTitle) {
         result.subscribe(
@@ -313,7 +311,7 @@ export class PickListComponent implements OnInit {
                 this.pickListValueModal.hide();
                 this.pickListValueObject = new PickListValueModel();
                 // alert('Successfully updated the record.');
-                this.success.next(`Pick list value ${alertTitle} successfully`);
+                this.success.next(`Pick list value ${alertTitle} successfully.`);
                 this.getAllPickListValue();
             },
             (res: HttpErrorResponse) => {
@@ -344,13 +342,13 @@ export class PickListComponent implements OnInit {
         this.title = 'Create Pick List Value:';
     }
 
-    // show model popup to create MotherBed
     /**
      * Show model popup to create MotherBed
      */
     showMotherBedCreateForm(): void {
         this.motherBedObject = new MotherBedModel();
         this.motherBedModal.show();
+        this.getZonalList();
     }
 
     /**
@@ -378,7 +376,7 @@ export class PickListComponent implements OnInit {
     deletePickList(value: PickListModel): void {
         this.pickListService.delete(value.id).subscribe(data => {
             // alert('PickList delete Successfully.');
-            this.success.next(`Pick list deleted successfully`);
+            this.success.next(`Pick list deleted successfully.`);
             this.pickLists = this.pickLists.filter(u => u !== value);
         });
     }
@@ -387,7 +385,7 @@ export class PickListComponent implements OnInit {
     deletePickListValue(value: PickListValueModel): void {
         this.pickListValueService.delete(value.id).subscribe(data => {
             // alert('PickListValue deleted Successfully.');
-            this.success.next(`Pick list value deleted successfully`);
+            this.success.next(`Pick list value deleted successfully.`);
             this.pickListValues = this.pickListValues.filter(u => u !== value);
         });
     }
@@ -408,19 +406,19 @@ export class PickListComponent implements OnInit {
         this.pickListValueObject.pickValueId = val.id;
         this.pickListValueObject.pickListValue = val.subChildValue;
         this.pickListValueObject.status = STATUS_ACTIVE;
-        this.pickListValueService.create(this.pickListValueObject).subscribe(
-            data => {
+        this.pickListValueService.create(this.pickListValueObject)
+            .subscribe(data => {
                 this.subPickListModal.hide();
                 // alert('Sub PickListValue Created Successfully.');
-                this.success.next(`Sub PickListValue Created Successfully.`);
+                this.success.next(`Sub pick list value created successfully.`);
                 this.pickListValueObject = new PickListValueModel();
                 this.getAllPickListValue();
             },
-            (res: HttpErrorResponse) => {
-                // alert(res.error.fieldErrors[0].message);
-                this.error.next(res.error.fieldErrors[0].message);
-            }
-        );
+                (res: HttpErrorResponse) => {
+                    // alert(res.error.fieldErrors[0].message);
+                    this.error.next(res.error.fieldErrors[0].message);
+                }
+            );
     }
 
     /**
@@ -430,11 +428,13 @@ export class PickListComponent implements OnInit {
         // If the motherbed id is not undefined, to update the old records
         this.motherBedObject.status = STATUS_ACTIVE;
         if (this.motherBedObject.id !== undefined) {
-            this.alertTitle = 'updated';
-            this.subscribeToSaveMotherBedResponse(this.motherBedService.update(this.motherBedObject), this.alertTitle);
+            this.subscribeToSaveMotherBedResponse(
+                this.motherBedService.update(this.motherBedObject),
+                'updated');
         } else {
-            this.alertTitle = 'created';
-            this.subscribeToSaveMotherBedResponse(this.motherBedService.create(this.motherBedObject), this.alertTitle);
+            this.subscribeToSaveMotherBedResponse(
+                this.motherBedService.create(this.motherBedObject),
+                'created');
         }
     }
 
@@ -442,7 +442,7 @@ export class PickListComponent implements OnInit {
      * To save the response and hide the model
      *
      * @param result result values
-     * @param alertTitle title
+     * @param alertTitle message title for alert
      */
     private subscribeToSaveMotherBedResponse(result: Observable<HttpResponse<IMotherBed>>, alertTitle) {
         result.subscribe(
@@ -450,7 +450,10 @@ export class PickListComponent implements OnInit {
                 this.motherBedModal.hide();
                 this.motherBedObject = new MotherBedModel();
                 // alert('MotherBed Created/Updated Successfully.');
-                this.success.next(`Motherbed ${alertTitle} successfully`);
+                this.success.next(`Motherbed ${alertTitle} successfully.`);
+                // To set null value for the sector and nursery
+                this.sectors = null;
+                this.nurserys = null;
                 this.getMotherBedList();
             },
             (res: HttpErrorResponse) => {
@@ -497,9 +500,10 @@ export class PickListComponent implements OnInit {
         if (window.confirm('Are sure you want to delete?')) {
             this.pickListObject = value;
             this.pickListObject.status = SOFT_DELETE_STATUS;
-            this.pickListService.update(this.pickListObject).subscribe(
+            this.pickListService.update(this.pickListObject)
+            .subscribe(
                 data => {
-                    this.success.next(`PickList deleted successfully`);
+                    this.success.next(`PickList deleted successfully.`);
                     this.getPickList();
                 },
                 (res: HttpErrorResponse) => {
@@ -519,9 +523,10 @@ export class PickListComponent implements OnInit {
         if (window.confirm('Are sure you want to delete?')) {
             this.pickListValueObject = value;
             this.pickListValueObject.status = SOFT_DELETE_STATUS;
-            this.pickListValueService.update(this.pickListValueObject).subscribe(
+            this.pickListValueService.update(this.pickListValueObject)
+            .subscribe(
                 data => {
-                    this.success.next(`PickListValue deleted successfully`);
+                    this.success.next(`Pick list value deleted successfully.`);
                     this.getAllPickListValue();
                 },
                 (res: HttpErrorResponse) => {
@@ -540,9 +545,10 @@ export class PickListComponent implements OnInit {
         if (window.confirm('Are sure you want to delete?')) {
             this.motherBedObject = value;
             this.motherBedObject.status = SOFT_DELETE_STATUS;
-            this.motherBedService.update(this.motherBedObject).subscribe(
+            this.motherBedService.update(this.motherBedObject)
+            .subscribe(
                 data => {
-                    this.success.next(`Motherbed deleted successfully`);
+                    this.success.next(`Motherbed deleted successfully.`);
                     this.getMotherBedList();
                 },
                 (res: HttpErrorResponse) => {
@@ -598,6 +604,9 @@ export class PickListComponent implements OnInit {
         this.motherBedModal.hide();
         // Call the getMotherBedList function
         this.getMotherBedList();
+        // To set the sector and nursery as null
+        this.sectors = null;
+        this.nurserys = null;
     }
 
     /**
@@ -606,17 +615,15 @@ export class PickListComponent implements OnInit {
      */
     getVariety(id): void {
         // this.pickListValueService.getVariety(id)
-        this.pickListValueService
-            .query({
-                filter: {
-                    'status.equals': STATUS_ACTIVE,
-                    'pickListId.equals': id
-                }
-            })
-            .subscribe((res: HttpResponse<IPickListValue[]>) => {
-                // console.log(res.body);
-                this.variety = res.body;
-            });
+        this.pickListValueService.query({
+            filter: {
+                'status.equals': STATUS_ACTIVE,
+                'pickListId.equals': id
+            }
+        }).subscribe((res: HttpResponse<IPickListValue[]>) => {
+            // console.log(res.body);
+            this.varieties = res.body;
+        });
     }
 
     /**
@@ -625,17 +632,15 @@ export class PickListComponent implements OnInit {
      */
     getCategory(id): void {
         // this.pickListValueService.getCategory(id)
-        this.pickListValueService
-            .query({
-                filter: {
-                    'status.equals': STATUS_ACTIVE,
-                    'pickValueId.equals': id
-                }
-            })
-            .subscribe((res: HttpResponse<IPickListValue[]>) => {
-                // console.log(res.body);
-                this.categorys = res.body;
-            });
+        this.pickListValueService.query({
+            filter: {
+                'status.equals': STATUS_ACTIVE,
+                'pickValueId.equals': id
+            }
+        }).subscribe((res: HttpResponse<IPickListValue[]>) => {
+            // console.log(res.body);
+            this.categories = res.body;
+        });
     }
 
     /**

@@ -37,7 +37,7 @@ public class MotherBedDTO extends AbstractAuditingDTO implements Serializable {
 
     private Integer status;
 
-    @NotNull(message = " cannot be blank.")
+    @NotNull(message = "Nursery cannot be blank.")
     private Long nurseryId;
 
     private String nurseryNurseryName;

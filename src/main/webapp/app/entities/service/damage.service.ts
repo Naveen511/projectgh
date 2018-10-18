@@ -32,7 +32,8 @@ export class DamageService {
 
     constructor(private http: HttpClient) {}
 
-    /** Send a POST method request to create the damage and
+    /**
+     * Send a POST method request to create the damage and
      * get created record as response
      *
      * @param damage - single object

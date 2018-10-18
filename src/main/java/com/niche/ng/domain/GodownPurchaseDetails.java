@@ -55,7 +55,7 @@ public class GodownPurchaseDetails extends AbstractAuditingEntity implements Ser
     private LocalDate date;
 
     @Column(name = "price")
-    private Long price;
+    private Float price;
 
     @Column(name = "owned_by")
     private String ownedBy;
@@ -77,7 +77,7 @@ public class GodownPurchaseDetails extends AbstractAuditingEntity implements Ser
 
     /**
      * Relation Name : ManyToOne - godownPurchaseVarietys
-     * Table Name    : Connects the GodownPurchaseDetails Table to 
+     * Table Name    : Connect the GodownPurchaseDetails Table to 
      *                  PickListValue Table.
      * Used to point out the GodownPurchaseDetails values in the PickListValue table.
      */
@@ -87,7 +87,7 @@ public class GodownPurchaseDetails extends AbstractAuditingEntity implements Ser
 
     /**
      * Relation Name : ManyToOne - godownPurchaseCategorys
-     * Table Name    : Connects the GodownPurchaseDetails Table to 
+     * Table Name    : Connect the GodownPurchaseDetails Table to 
      *                  PickListValue Table.
      * Used to point out the GodownPurchaseDetails values in the PickListValue table.
      */
@@ -97,7 +97,7 @@ public class GodownPurchaseDetails extends AbstractAuditingEntity implements Ser
 
     /**
      * Relation Name : ManyToOne - godownPurchaseQuantityTypes
-     * Table Name    : Connects the GodownPurchaseDetails Table to 
+     * Table Name    : Connect the GodownPurchaseDetails Table to 
      *                  PickListValue Table.
      * Used to point out the GodownPurchaseDetails values in the PickListValue table.
      */
@@ -107,7 +107,7 @@ public class GodownPurchaseDetails extends AbstractAuditingEntity implements Ser
 
     /**
      * Relation Name : ManyToOne - godownPurchaseDetails
-     * Table Name    : Connects the GodownPurchaseDetails Table to 
+     * Table Name    : Connect the GodownPurchaseDetails Table to 
      *                  Godown Table.
      * Used to point out the GodownPurchaseDetails values in the Godown table.
      */
@@ -117,7 +117,7 @@ public class GodownPurchaseDetails extends AbstractAuditingEntity implements Ser
 
     /**
      * Relation Name : ManyToOne - godownPurchaseDetails
-     * Table Name    : Connects the GodownPurchaseDetails Table to 
+     * Table Name    : Connect the GodownPurchaseDetails Table to 
      *                  FinancialYearSettings Table.
      * Used to point out the GodownPurchaseDetails values in the 
      * FinancialYearSettings table.
@@ -208,7 +208,7 @@ public class GodownPurchaseDetails extends AbstractAuditingEntity implements Ser
      * 
      * @return price
      */
-    public Long getPrice() {
+    public Float getPrice() {
         return price;
     }
 
@@ -218,7 +218,7 @@ public class GodownPurchaseDetails extends AbstractAuditingEntity implements Ser
      * @param price price of the GodownPurchaseDetails
      * @return this
      */
-    public GodownPurchaseDetails price(Long price) {
+    public GodownPurchaseDetails price(Float price) {
         this.price = price;
         return this;
     }
@@ -228,7 +228,7 @@ public class GodownPurchaseDetails extends AbstractAuditingEntity implements Ser
      * 
      * @param price price value
      */
-    public void setPrice(Long price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 

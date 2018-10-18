@@ -29,7 +29,8 @@ export class GodownStockService {
 
     constructor(private http: HttpClient) {}
 
-    /** Send a POST method request to create the godownStock and
+    /**
+     * Send a POST method request to create the godownStock and
      * get created record as response
      *
      * @param godownStock - single object
@@ -58,7 +59,8 @@ export class GodownStockService {
      * @returns object of values
      */
     find(id: number): Observable<EntityResponseType> {
-        return this.http.get<IGodownStock>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+        return this.http
+            .get<IGodownStock>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
     /**
@@ -70,7 +72,8 @@ export class GodownStockService {
      */
     query(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
-        return this.http.get<IGodownStock[]>(this.resourceUrl, { params: options, observe: 'response' });
+        return this.http
+            .get<IGodownStock[]>(this.resourceUrl, { params: options, observe: 'response' });
     }
 
     /**

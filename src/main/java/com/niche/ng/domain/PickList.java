@@ -57,7 +57,7 @@ public class PickList extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : OneToMany - pickListValues
-     * Table Name    : Connects the PickList Table to PickListValue Table
+     * Table Name    : Connect the PickList Table to PickListValue Table
      * Pick list is mapped to the PickListValue table
      */
     @OneToMany(mappedBy = "pickList", cascade = javax.persistence.CascadeType.REMOVE)

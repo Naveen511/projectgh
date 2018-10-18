@@ -58,7 +58,7 @@ public class Damage extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : ManyToOne - damages
-     * Table Name    : Connects the damage Table to batch Table
+     * Table Name    : Connect the damage Table to batch Table
      * To get the values from the batch table.
      */
     @ManyToOne
@@ -68,7 +68,7 @@ public class Damage extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : ManyToOne - damageDescriptions
-     * Table Name    : Connects the damage Table to PickListValue Table
+     * Table Name    : Connect the damage Table to PickListValue Table
      * To get the damage description details belongs to damage.
      */
     @ManyToOne
@@ -77,7 +77,7 @@ public class Damage extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : ManyToOne - pickListValueDamageAreas
-     * Table Name    : Connects the damage Table to PickListValue Table
+     * Table Name    : Connect the damage Table to PickListValue Table
      * To get the damage description details belongs to damage area.
      */
     @ManyToOne
@@ -86,7 +86,7 @@ public class Damage extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : ManyToOne - damages
-     * Table Name    : Connects the damage Table to FinancialYearSettings Table
+     * Table Name    : Connect the damage Table to FinancialYearSettings Table
      * To get the FinancialYearSettings belongs to damage area.
      */
     @ManyToOne

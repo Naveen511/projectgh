@@ -65,7 +65,7 @@ public class NurseryStockDetails extends AbstractAuditingEntity implements Seria
 
     /**
      * Relation Name : ManyToOne - batch
-     * Table Name    : Connects the NurseryStockDetails Table to Batch Table
+     * Table Name    : Connect the NurseryStockDetails Table to Batch Table
      * To get the batch.
      */
     @ManyToOne
@@ -74,7 +74,7 @@ public class NurseryStockDetails extends AbstractAuditingEntity implements Seria
 
     /**
      * Relation Name : ManyToOne - nurseryStock
-     * Table Name    : Connects the NurseryStockDetails Table to NurseryStock Table
+     * Table Name    : Connect the NurseryStockDetails Table to NurseryStock Table
      * To get the nurseryStock.
      */
     @ManyToOne
@@ -83,7 +83,7 @@ public class NurseryStockDetails extends AbstractAuditingEntity implements Seria
 
     /**
      * Relation Name : ManyToOne - itNursery
-     * Table Name    : Connects the NurseryStockDetails Table to Nursery Table
+     * Table Name    : Connect the NurseryStockDetails Table to Nursery Table
      * To get the itNursery.
      */
     @ManyToOne
@@ -92,7 +92,7 @@ public class NurseryStockDetails extends AbstractAuditingEntity implements Seria
 
     /**
      * Relation Name : ManyToOne - saplingDamageArea
-     * Table Name    : Connects the NurseryStockDetails Table to PickListValue Table
+     * Table Name    : Connect the NurseryStockDetails Table to PickListValue Table
      * To get the saplingDamageArea.
      */
     @ManyToOne
@@ -101,7 +101,7 @@ public class NurseryStockDetails extends AbstractAuditingEntity implements Seria
 
     /**
      * Relation Name : ManyToOne - financialYearStockDetails
-     * Table Name    : Connects the NurseryStockDetails Table to 
+     * Table Name    : Connect the NurseryStockDetails Table to 
      *                 FinancialYearSettings Table
      * To get the financialYearStockDetails.
      */
@@ -111,7 +111,7 @@ public class NurseryStockDetails extends AbstractAuditingEntity implements Seria
 
     /**
      * Relation Name : ManyToOne - fromNurseryStockDetails
-     * Table Name    : Connects the NurseryStockDetails Table to Nursery Table
+     * Table Name    : Connect the NurseryStockDetails Table to Nursery Table
      * To get the from nursery Id.
      */
     @ManyToOne

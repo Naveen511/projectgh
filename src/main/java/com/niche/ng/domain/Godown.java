@@ -63,7 +63,7 @@ public class Godown extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : OneToMany - godownPurchaseDetails
-     * Table Name    : Connects the Godown Table to GodownPurchaseDetails Table
+     * Table Name    : Connect the Godown Table to GodownPurchaseDetails Table
      * Used to point out the Godown values in the GodownPurchaseDetails table.
      */
     @OneToMany(mappedBy = "godown", cascade = javax.persistence.CascadeType.REMOVE)
@@ -71,7 +71,7 @@ public class Godown extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : OneToMany - godownStocks
-     * Table Name    : Connects the Godown Table to GodownStock Table
+     * Table Name    : Connect the Godown Table to GodownStock Table
      * Used to point out the Godown values in the GodownStock table.
      */
     @OneToMany(mappedBy = "godown", cascade = javax.persistence.CascadeType.REMOVE)
@@ -79,7 +79,7 @@ public class Godown extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : ManyToOne - godowns
-     * Table Name    : Connects the Godown Table to FinancialYearSettings Table.
+     * Table Name    : Connect the Godown Table to FinancialYearSettings Table.
      * Used to point out the Godown values in the FinancialYearSettings table.
      */
     @ManyToOne

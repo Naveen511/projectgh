@@ -17,7 +17,7 @@ import { map } from 'rxjs/operators';
 
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared';
-import { IMapNurseryWithSector, STATUS_ACTIVE } from 'app/shared/model/map-nursery-with-sector.model';
+import { IMapNurseryWithSector } from 'app/shared/model/map-nursery-with-sector.model';
 
 type EntityResponseType = HttpResponse<IMapNurseryWithSector>;
 type EntityArrayResponseType = HttpResponse<IMapNurseryWithSector[]>;
@@ -32,7 +32,8 @@ export class MapNurseryWithSectorService {
 
     constructor(private http: HttpClient) {}
 
-    /** Send a POST method request to create the mapNurseryWithSector and
+    /**
+     * Send a POST method request to create the mapNurseryWithSector and
      * get created record as response
      *
      * @param mapNurseryWithSector - single object

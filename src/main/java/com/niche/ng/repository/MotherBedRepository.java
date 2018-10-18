@@ -6,7 +6,8 @@
  *  Date: 2018/08/22
  *  Target: yarn
  *  -----------------------------------------------------------------------------
- *  File Description    : This file performs MotherBedRepository
+ *  File Description    : This file intract with database to perform CRUD operation
+ *                        and manual query
  *
  *******************************************************************************/
 package com.niche.ng.repository;

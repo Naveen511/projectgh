@@ -17,7 +17,7 @@ import { map } from 'rxjs/operators';
 
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared';
-import { IMapZonalWithOh, STATUS_ACTIVE } from 'app/shared/model/map-zonal-with-oh.model';
+import { IMapZonalWithOh } from 'app/shared/model/map-zonal-with-oh.model';
 
 type EntityResponseType = HttpResponse<IMapZonalWithOh>;
 type EntityArrayResponseType = HttpResponse<IMapZonalWithOh[]>;
@@ -32,7 +32,8 @@ export class MapZonalWithOhService {
 
     constructor(private http: HttpClient) {}
 
-    /** Send a POST method request to create the mapZonalWithOh and
+    /**
+     * Send a POST method request to create the mapZonalWithOh and
      * get created record as response
      *
      * @param mapZonalWithOh - single object

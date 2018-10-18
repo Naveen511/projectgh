@@ -61,7 +61,7 @@ public class SectorIncharge extends AbstractAuditingEntity implements Serializab
 
     /**
      * Relation Name : ManyToOne - sector
-     * Table Name    : Connects the SectorIncharge Table to Sector Table
+     * Table Name    : Connect the SectorIncharge Table to Sector Table
      * To get the sector.
      */
     @ManyToOne

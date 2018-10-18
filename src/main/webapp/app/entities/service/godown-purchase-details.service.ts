@@ -32,7 +32,8 @@ export class GodownPurchaseDetailsService {
 
     constructor(private http: HttpClient) {}
 
-    /** Send a POST method request to create the godownPurchaseDetails and
+    /**
+     * Send a POST method request to create the godownPurchaseDetails and
      * get created record as response
      *
      * @param godownPurchaseDetails - single object

@@ -62,7 +62,7 @@ public class NurseryInventoryDetails extends AbstractAuditingEntity implements S
 
     /**
      * Relation Name : ManyToOne - nurseryInventoryDetails
-     * Table Name    : Connects the NurseryInventoryDetails Table to Nursery Table
+     * Table Name    : Connect the NurseryInventoryDetails Table to Nursery Table
      * To get the list of nursery inventory's form the NurseryInventory table.
      */
     @ManyToOne
@@ -71,7 +71,7 @@ public class NurseryInventoryDetails extends AbstractAuditingEntity implements S
 
     /**
      * Relation Name : ManyToOne - nurseryInventoryDamageTypes
-     * Table Name    : Connects the NurseryInventoryDetails Table to PickListValue Table
+     * Table Name    : Connect the NurseryInventoryDetails Table to PickListValue Table
      * To get the list of damage type form the PickListValue table.
      */
     @ManyToOne
@@ -80,7 +80,7 @@ public class NurseryInventoryDetails extends AbstractAuditingEntity implements S
 
     /**
      * Relation Name : ManyToOne - nurseryInventoryDamageDescs
-     * Table Name    : Connects the NurseryInventoryDetails Table to PickListValue Table
+     * Table Name    : Connect the NurseryInventoryDetails Table to PickListValue Table
      * To get the list of damage description form the PickListValue table.
      */
     @ManyToOne

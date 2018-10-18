@@ -9,38 +9,45 @@
 
 // Import needed component, model and dependency
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { GodownStockService } from 'app/entities/service/godown-stock.service';
 import {
-    IGodownStock,
-    GodownStockModel,
-    DISPLAY_NAME_VARIETY,
-    DISPLAY_NAME_QUANTITY_TYPE,
-    GodownStock
-} from 'app/shared/model/godown-stock.model';
-import { IGodownStockDetails, GodownStockDetails, STATUS_DIRECT_ADD } from 'app/shared/model/godown-stock-details.model';
-import { JhiParseLinks } from 'ng-jhipster';
-
-import { IPickList } from 'app/shared/model/pick-list.model';
-import { IPickListValue } from 'app/shared/model/pick-list-value.model';
-import { PickListService } from 'app/entities/service/pick-list.service';
-import { PickListValueService } from 'app/entities/service/pick-list-value.service';
-import { GodownService } from 'app/entities/service/godown.service';
-import { IGodown } from 'app/shared/model/godown.model';
-import { FinancialYearSettingsService } from 'app/entities/service/financial-year-settings.service';
-import { IFinancialYearSettings } from 'app/shared/model/financial-year-settings.model';
-import { HttpResponse, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { GodownStockDetailsService } from 'app/entities/service/godown-stock-details.service';
+    HttpResponse, HttpHeaders, HttpErrorResponse
+} from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ITEMS_PER_PAGE, STATUS_ACTIVE, ALERT_TIME_OUT_5000, SOFT_DELETE_STATUS } from 'app/shared';
 import * as moment from 'moment';
-import { DATE_TIME_FORMAT } from 'app/shared';
 import { Observable } from 'rxjs';
-
 import { ModalDirective } from 'ngx-bootstrap/modal';
-// Display the alert message of success and error
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
+import { JhiParseLinks } from 'ng-jhipster';
+
+import {
+    IGodownStock, GodownStockModel, DISPLAY_NAME_VARIETY,
+    DISPLAY_NAME_QUANTITY_TYPE, GodownStock
+} from 'app/shared/model/godown-stock.model';
+import {
+    IGodownStockDetails, GodownStockDetails, STATUS_DIRECT_ADD
+} from 'app/shared/model/godown-stock-details.model';
+import { IPickList } from 'app/shared/model/pick-list.model';
+import { IPickListValue } from 'app/shared/model/pick-list-value.model';
+import { IGodown } from 'app/shared/model/godown.model';
+import { IFinancialYearSettings } from 'app/shared/model/financial-year-settings.model';
+
+import {
+    GodownStockDetailsService
+} from 'app/entities/service/godown-stock-details.service';
+import { GodownStockService } from 'app/entities/service/godown-stock.service';
+import { PickListService } from 'app/entities/service/pick-list.service';
+import { PickListValueService } from 'app/entities/service/pick-list-value.service';
+import { GodownService } from 'app/entities/service/godown.service';
+import {
+    FinancialYearSettingsService
+} from 'app/entities/service/financial-year-settings.service';
+
+import {
+    DATE_TIME_FORMAT, ITEMS_PER_PAGE, STATUS_ACTIVE, ALERT_TIME_OUT_5000,
+    SOFT_DELETE_STATUS
+} from 'app/shared';
 
 // Mention the html, css/sass files
 @Component({
@@ -63,10 +70,10 @@ export class GodownStockComponent implements OnInit {
     godownStocks: IGodownStock[];
     godownStockDetails: IGodownStockDetails[];
     pickLists: IPickList[];
-    varietys: IPickListValue[];
-    categorys: IPickListValue[];
+    varieties: IPickListValue[];
+    categories: IPickListValue[];
     quantityTypes: IPickListValue[];
-    godown: IGodown[];
+    // godown: IGodown[];
 
     // collapsed status
     isCollapsed = true;
@@ -76,10 +83,6 @@ export class GodownStockComponent implements OnInit {
     financialYearId: number;
     stockDateDp: any;
     addInventoryDateDp: any;
-
-    // Title and alertTitle declation as String
-    title: String;
-    alertTitle: String;
 
     // To display the success message
     private success = new Subject<string>();
@@ -142,77 +145,75 @@ export class GodownStockComponent implements OnInit {
 
     ngOnInit() {
         // Get the list of godown
-        this.godownService
-            .query({
-                filter: { 'status.equals': STATUS_ACTIVE }
-            })
-            .subscribe((res: HttpResponse<IGodown[]>) => {
-                this.godown = res.body;
-            });
-        // Call a function to get active batch id
-        this.getActiveRecord();
+        /** this.godownService.query({
+            filter: { 'status.equals': STATUS_ACTIVE }
+        }).subscribe((res: HttpResponse<IGodown[]>) => {
+            this.godown = res.body;
+        }); */
+
         // Get the list of godown stocks
         this.getgodownStockList();
-        // to get the pick list
-        this.getPickList();
+
+        // // Call a function to get active batch id
+        // this.getActiveRecord();
+        // // to get the pick list
+        // this.getPickList();
 
         // To set the time for automatic alert close
         setTimeout(() => (this.staticAlertClosed = true), ALERT_TIME_OUT_5000);
 
         // Set the success message with debounce time
         this.success.subscribe(message => (this.successMessage = message));
-        this.success.pipe(debounceTime(ALERT_TIME_OUT_5000)).subscribe(() => (this.successMessage = null));
+        this.success.pipe(debounceTime(ALERT_TIME_OUT_5000))
+        .subscribe(() => (this.successMessage = null));
 
         // To set the error message with debounce time
         this.error.subscribe(message => (this.errorMessage = message));
-        this.error.pipe(debounceTime(ALERT_TIME_OUT_5000)).subscribe(() => (this.errorMessage = null));
+        this.error.pipe(debounceTime(ALERT_TIME_OUT_5000))
+        .subscribe(() => (this.errorMessage = null));
     }
 
     // Call a service function to get list of active batch
     getActiveRecord(): void {
         // Get the list of active batch record and
         // assign a 0th index array value to an batch id
-        this.settingsService
-            .query({
-                filter: { 'status.equals': STATUS_ACTIVE }
-            })
-            .subscribe((res: HttpResponse<IFinancialYearSettings[]>) => {
-                // Assign a value to an object
-                this.financialYearId = res.body[0].id;
-            });
+        this.settingsService.query({
+            filter: { 'status.equals': STATUS_ACTIVE }
+        }).subscribe((res: HttpResponse<IFinancialYearSettings[]>) => {
+            // Assign a value to an object
+            this.financialYearId = res.body[0].id;
+        });
     }
 
     // Get the list of picklist
     getPickList(): void {
         // To get the active pick list variety Id from Pick List based on label
-        this.pickListService
-            .query({
-                filter: {
-                    'status.equals': STATUS_ACTIVE,
-                    'displayLabelName.equals': DISPLAY_NAME_VARIETY
-                }
-            })
-            .subscribe((res: HttpResponse<IPickList[]>) => {
-                if (res.body.length > 0) {
-                    // Call a function to get list of variety
-                    this.getVariety(res.body[0].id);
-                }
-            });
+        this.pickListService.query({
+            filter: {
+                'status.equals': STATUS_ACTIVE,
+                'displayLabelName.equals': DISPLAY_NAME_VARIETY
+            }
+        })
+        .subscribe((res: HttpResponse<IPickList[]>) => {
+            if (res.body.length > 0) {
+                // Call a function to get list of variety
+                this.getVariety(res.body[0].id);
+            }
+        });
 
         // To get the active pick list quantity type Id from pickList based on label
-        this.pickListService
-            .query({
-                filter: {
-                    'status.equals': STATUS_ACTIVE,
-                    'displayLabelName.equals': DISPLAY_NAME_QUANTITY_TYPE
-                }
-            })
-            .subscribe((res: HttpResponse<IPickList[]>) => {
-                if (res.body.length > 0) {
-                    // Call a function to get list of quantity
-                    this.getQuantityType(res.body[0].id);
-                }
-            });
+        this.pickListService.query({
+            filter: {
+                'status.equals': STATUS_ACTIVE,
+                'displayLabelName.equals': DISPLAY_NAME_QUANTITY_TYPE
+            }
+        })
+        .subscribe((res: HttpResponse<IPickList[]>) => {
+            if (res.body.length > 0) {
+                // Call a function to get list of quantity
+                this.getQuantityType(res.body[0].id);
+            }
+        });
     }
 
     /**
@@ -221,17 +222,16 @@ export class GodownStockComponent implements OnInit {
      */
     getVariety(id): void {
         // this.pickListValueService.getVariety(id)
-        this.pickListValueService
-            .query({
-                filter: {
-                    'status.equals': STATUS_ACTIVE,
-                    'pickListId.equals': id
-                }
-            })
-            .subscribe((res: HttpResponse<IPickListValue[]>) => {
-                // Assign a response value to an object
-                this.varietys = res.body;
-            });
+        this.pickListValueService.query({
+            filter: {
+                'status.equals': STATUS_ACTIVE,
+                'pickListId.equals': id
+            }
+        })
+        .subscribe((res: HttpResponse<IPickListValue[]>) => {
+            // Assign a response value to an object
+            this.varieties = res.body;
+        });
     }
 
     /**
@@ -240,17 +240,16 @@ export class GodownStockComponent implements OnInit {
      */
     getCategory(id): void {
         // this.pickListValueService.getCategory(id)
-        this.pickListValueService
-            .query({
-                filter: {
-                    'status.equals': STATUS_ACTIVE,
-                    'pickValueId.equals': id
-                }
-            })
-            .subscribe((res: HttpResponse<IPickListValue[]>) => {
-                // Assign a response value to an object
-                this.categorys = res.body;
-            });
+        this.pickListValueService.query({
+            filter: {
+                'status.equals': STATUS_ACTIVE,
+                'pickValueId.equals': id
+            }
+        })
+        .subscribe((res: HttpResponse<IPickListValue[]>) => {
+            // Assign a response value to an object
+            this.categories = res.body;
+        });
     }
 
     /**
@@ -259,17 +258,16 @@ export class GodownStockComponent implements OnInit {
      */
     getQuantityType(id): void {
         // this.pickListValueService.getVariety(id)
-        this.pickListValueService
-            .query({
-                filter: {
-                    'status.equals': STATUS_ACTIVE,
-                    'pickListId.equals': id
-                }
-            })
-            .subscribe((res: HttpResponse<IPickListValue[]>) => {
-                // Assign a response value to an object
-                this.quantityTypes = res.body;
-            });
+        this.pickListValueService.query({
+            filter: {
+                'status.equals': STATUS_ACTIVE,
+                'pickListId.equals': id
+            }
+        })
+        .subscribe((res: HttpResponse<IPickListValue[]>) => {
+            // Assign a response value to an object
+            this.quantityTypes = res.body;
+        });
     }
 
     /**
@@ -294,7 +292,36 @@ export class GodownStockComponent implements OnInit {
      */
     createGodownStock(): void {
         this.isCollapsedStockDetails = true;
+        // Get the list of godown
+        this.godownService.query({
+            filter: { 'status.equals': STATUS_ACTIVE }
+        }).subscribe((res: HttpResponse<IGodown[]>) => {
+            // this.godown = res.body;
+            if (res.body.length > 0) {
+                // Call a function to get active batch id
+                this.getActiveRecord();
+                // to get the pick list
+                this.getPickList();
+                // Create a new model object
+                this.godownStock = new GodownStockModel();
+                this.godownStockDetail = new GodownStockDetails();
+                // Assign a value to an variable
+                this.godownStock.godownId = res.body[0].id;
+                // Display a collapsed div
+                this.isCollapsed = false;
+            } else {
+                // Display the error message in view
+                alert('There is no godown to add stock.');
+            }
+
+        });
+
+        /**this.isCollapsedStockDetails = true;
         if (this.godown.length > 0) {
+            // Call a function to get active batch id
+            this.getActiveRecord();
+            // to get the pick list
+            this.getPickList();
             // Create a new model object
             this.godownStock = new GodownStockModel();
             this.godownStockDetail = new GodownStockDetails();
@@ -304,8 +331,8 @@ export class GodownStockComponent implements OnInit {
             this.isCollapsed = false;
         } else {
             // Display the error message in view
-            alert('There is no Godown to add stock');
-        }
+            alert('There is no godown to add stock.');
+        } */
     }
 
     /**
@@ -315,18 +342,17 @@ export class GodownStockComponent implements OnInit {
     getStockDetails(id): void {
         this.isCollapsed = true;
         // Call a godown stock query service to get particular stock details
-        this.godownStockDetailService
-            .query({
-                filter: {
-                    'godownStockId.equals': id
-                }
-            })
-            .subscribe((res: HttpResponse<IGodownStockDetails[]>) => {
-                // Assign a value to an godown purchase object
-                this.godownStockDetails = res.body;
-                // Hide a collapsed div
-                this.isCollapsedStockDetails = false;
-            });
+        this.godownStockDetailService.query({
+            filter: {
+                'godownStockId.equals': id
+            }
+        })
+        .subscribe((res: HttpResponse<IGodownStockDetails[]>) => {
+            // Assign a value to an godown purchase object
+            this.godownStockDetails = res.body;
+            // Hide a collapsed div
+            this.isCollapsedStockDetails = false;
+        });
     }
 
     /**
@@ -341,33 +367,33 @@ export class GodownStockComponent implements OnInit {
             this.godownStockDetail.status = STATUS_DIRECT_ADD;
             // console.log('before', this.godownStock);
             // Call a godown stock query service to get particular godown category list
-            this.godownStockService
-                .query({
-                    filter: {
-                        'godownId.equals': this.godownStock.godownId,
-                        'pickListCategoryId.equals': this.godownStock.pickListCategoryId,
-                        'status.greaterThan': SOFT_DELETE_STATUS
-                    }
-                })
-                .subscribe((res: HttpResponse<IGodownStock[]>) => {
-                    // If already stock have the record for same category add the quantity
-                    // and update the record otherwise create a new record
-                    if (res.body.length > 0) {
-                        this.godownStock = res.body[res.body.length - 1];
-                        // Add a new quantity to old quantity and assign a value
-                        this.godownStock.currentQuantity = +this.godownStock.currentQuantity + +this.godownStockDetail.quantity;
-                        this.godownStock.addedQuantity = +this.godownStock.addedQuantity + +this.godownStockDetail.quantity;
-                        // Call a godown stock update service
-                        this.subscribeToSaveResponse(this.godownStockService.update(this.godownStock));
-                    } else {
-                        // Assigna quantity to a variable
-                        this.godownStock.status = STATUS_ACTIVE;
-                        this.godownStock.currentQuantity = this.godownStockDetail.quantity;
-                        this.godownStock.addedQuantity = this.godownStockDetail.quantity;
-                        // Call a godown stock create service
-                        this.subscribeToSaveResponse(this.godownStockService.create(this.godownStock));
-                    }
-                });
+            this.godownStockService.query({
+                filter: {
+                    'godownId.equals': this.godownStock.godownId,
+                    'pickListCategoryId.equals': this.godownStock.pickListCategoryId,
+                    'status.greaterThan': SOFT_DELETE_STATUS
+                }
+            }).subscribe((res: HttpResponse<IGodownStock[]>) => {
+                // If already stock have the record for same category add the quantity
+                // and update the record otherwise create a new record
+                if (res.body.length > 0) {
+                    this.godownStock = res.body[res.body.length - 1];
+                    // Add a new quantity to old quantity and assign a value
+                    this.godownStock.currentQuantity =
+                        +this.godownStock.currentQuantity + +this.godownStockDetail.quantity;
+                    this.godownStock.addedQuantity =
+                        +this.godownStock.addedQuantity + +this.godownStockDetail.quantity;
+                    // Call a godown stock update service
+                    this.subscribeToSaveResponse(this.godownStockService.update(this.godownStock));
+                } else {
+                    // Assigna quantity to a variable
+                    this.godownStock.status = STATUS_ACTIVE;
+                    this.godownStock.currentQuantity = this.godownStockDetail.quantity;
+                    this.godownStock.addedQuantity = this.godownStockDetail.quantity;
+                    // Call a godown stock create service
+                    this.subscribeToSaveResponse(this.godownStockService.create(this.godownStock));
+                }
+            });
         } else {
             // alert('Variety and Category cannot be blank');
             this.error.next('Variety and Category cannot be blank');
@@ -399,7 +425,9 @@ export class GodownStockComponent implements OnInit {
      */
     saveStockDetails(): void {
         // Assign a value to an variable
-        this.godownStockDetail.date = moment(this.godownStockDetail.date, DATE_TIME_FORMAT);
+        this.godownStockDetail.date = moment(
+            this.godownStockDetail.date, DATE_TIME_FORMAT
+        );
         // Call a service to create a stock details
         this.godownStockDetailService.create(this.godownStockDetail).subscribe(
             data => {
@@ -413,6 +441,8 @@ export class GodownStockComponent implements OnInit {
                 this.addParticularStock.hide();
                 // If success display the success message in view
                 this.success.next('Successfully updated the stock.');
+                // To set the null for category
+                this.categories = null;
             },
             (res: HttpErrorResponse) => {
                 // If error response display the error message in view
@@ -444,10 +474,12 @@ export class GodownStockComponent implements OnInit {
      */
     addInventoryQuantity(value): void {
         // Check the empty validation for date and quantity.
-        if (this.godownStockDetail.date != null && this.godownStockDetail.quantity != null) {
+        if ((this.godownStockDetail.date != null) && (this.godownStockDetail.quantity != null)) {
             // Add a new quantity with old quantity and assign to a field
-            this.godownStock.currentQuantity = +value.currentQuantity + +this.godownStockDetail.quantity;
-            this.godownStock.addedQuantity = +value.addedQuantity + +this.godownStockDetail.quantity;
+            this.godownStock.currentQuantity =
+                +value.currentQuantity + +this.godownStockDetail.quantity;
+            this.godownStock.addedQuantity =
+                +value.addedQuantity + +this.godownStockDetail.quantity;
             // Call a godown stock update service to update the record
             this.subscribeToSaveResponse(this.godownStockService.update(this.godownStock));
         } else {
@@ -460,7 +492,7 @@ export class GodownStockComponent implements OnInit {
      * If entered value is number allow to enter otherwise return as false
      */
     numberOnly(event): boolean {
-        const charCode = event.which ? event.which : event.keyCode;
+        const charCode = (event.which) ? event.which : event.keyCode;
         if (charCode > 31 && (charCode < 48 || charCode > 57)) {
             return false;
         }

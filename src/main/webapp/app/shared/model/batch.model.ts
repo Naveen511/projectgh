@@ -115,6 +115,8 @@ export class BatchModel {
     noOfQuantity?: number;
     pickListDescriptionId?: number;
     descriptionId?: number;
+    damagecount?: number;
+    seedlingsCount?: number;
 }
 
 // Constant variables
@@ -123,3 +125,5 @@ export const DISPLAY_NAME_QUANTITY_TYPE = 'QUANTITY TYPE';
 export const DISPLAY_NAME_DAMAGE_AREA = 'DAMAGE AREA';
 export const DISPLAY_NAME_DAMAGE_REASON = 'DAMAGE REASON';
 export const STATUS_BATCH_CLOSE = 4;
+export const STATUS_SHOWING_TYPE_COVER = 2;
+export const STATUS_SHOWING_TYPE_MOTHERBED = 1;

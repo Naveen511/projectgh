@@ -67,7 +67,7 @@ public class CoverFilling extends AbstractAuditingEntity implements Serializable
 
     /**
      * Relation Name : OneToMany - coverFillingDetails
-     * Table Name    : Connects the CoverFilling Table.
+     * Table Name    : Connect the CoverFilling Table.
      * To get the coverFillingDetails.
      */
     @OneToMany(mappedBy = "coverFilling", cascade = javax.persistence.CascadeType.REMOVE)

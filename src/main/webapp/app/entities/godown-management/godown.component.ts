@@ -9,24 +9,26 @@
 
 // Import needed component, model and dependency
 import { Component, OnInit } from '@angular/core';
-import { GodownService } from 'app/entities/service/godown.service';
-import { IGodown, GodownModel } from 'app/shared/model/godown.model';
-import { FinancialYearSettingsService } from 'app/entities/service/financial-year-settings.service';
-import { IFinancialYearSettings } from 'app/shared/model/financial-year-settings.model';
-
-import { ModalDirective } from 'ngx-bootstrap/modal';
 import { ViewChild } from '@angular/core';
-
 import { JhiParseLinks } from 'ng-jhipster';
-
-import { ITEMS_PER_PAGE, SOFT_DELETE_STATUS, STATUS_ACTIVE, ALERT_TIME_OUT_5000 } from 'app/shared';
 import { HttpResponse, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-
-// Display the alert message of success and error
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { ModalDirective } from 'ngx-bootstrap/modal';
+
+import { IGodown, GodownModel } from 'app/shared/model/godown.model';
+import { IFinancialYearSettings } from 'app/shared/model/financial-year-settings.model';
+
+import { GodownService } from 'app/entities/service/godown.service';
+import {
+    FinancialYearSettingsService
+} from 'app/entities/service/financial-year-settings.service';
+
+import {
+    ITEMS_PER_PAGE, SOFT_DELETE_STATUS, STATUS_ACTIVE, ALERT_TIME_OUT_5000
+} from 'app/shared';
 
 // Mension the html, css/sass files
 @Component({
@@ -47,9 +49,8 @@ export class GodownComponent implements OnInit {
     godowns: IGodown[];
     financialYearId: number;
 
-    // Title and alertTitle declation as String
+    // Title declation as String
     title: String;
-    alertTitle: String;
 
     // To display the success message
     private success = new Subject<string>();
@@ -97,18 +98,20 @@ export class GodownComponent implements OnInit {
         // Call a function to get list of godowns
         this.getGodownList();
         // Call a function to get active batch id
-        this.getActiveRecord();
+        // this.getActiveRecord();
 
         // To set the time for automatic alert close
         setTimeout(() => (this.staticAlertClosed = true), ALERT_TIME_OUT_5000);
 
         // Set the success message with debounce time
         this.success.subscribe(message => (this.successMessage = message));
-        this.success.pipe(debounceTime(ALERT_TIME_OUT_5000)).subscribe(() => (this.successMessage = null));
+        this.success.pipe(debounceTime(ALERT_TIME_OUT_5000))
+        .subscribe(() => (this.successMessage = null));
 
         // To set the error message with debounce time
         this.error.subscribe(message => (this.errorMessage = message));
-        this.error.pipe(debounceTime(ALERT_TIME_OUT_5000)).subscribe(() => (this.errorMessage = null));
+        this.error.pipe(debounceTime(ALERT_TIME_OUT_5000))
+        .subscribe(() => (this.errorMessage = null));
     }
 
     /**
@@ -116,16 +119,15 @@ export class GodownComponent implements OnInit {
      */
     getGodownList(): void {
         // Get the list of godown
-        this.godownService
-            .query({
-                page: this.page - 1,
-                size: this.itemsPerPage,
-                sort: this.sort(),
-                filter: { 'status.equals': STATUS_ACTIVE }
-            })
-            .subscribe((res: HttpResponse<IGodown[]>) => {
-                this.paginateGodownLists(res.body, res.headers);
-            });
+        this.godownService.query({
+            page: this.page - 1,
+            size: this.itemsPerPage,
+            sort: this.sort(),
+            filter: { 'status.equals': STATUS_ACTIVE }
+        })
+        .subscribe((res: HttpResponse<IGodown[]>) => {
+            this.paginateGodownLists(res.body, res.headers);
+        });
     }
 
     /**
@@ -134,18 +136,15 @@ export class GodownComponent implements OnInit {
     getActiveRecord(): void {
         // Get the list of active batch record and
         // assign a 0th index array value to an batch id
-        this.settingsService
-            .query({
-                filter: { 'status.equals': STATUS_ACTIVE }
-            })
-            .subscribe((res: HttpResponse<IFinancialYearSettings[]>) => {
-                if (res.body.length > 0) {
-                    this.financialYearId = res.body[0].id;
-                } else {
-                    // If error response display the error message in view
-                    this.error.next('There is no active year in calendar settings');
-                }
-            });
+        this.settingsService.query({ filter: { 'status.equals': STATUS_ACTIVE }})
+        .subscribe((res: HttpResponse<IFinancialYearSettings[]>) => {
+            if (res.body.length > 0) {
+                this.financialYearId = res.body[0].id;
+            } else {
+                // If error response display the error message in view
+                this.error.next('There is no active year in calendar settings.');
+            }
+        });
     }
 
     /**
@@ -155,24 +154,30 @@ export class GodownComponent implements OnInit {
         // Assign a value to an variable
         this.godownObject.status = STATUS_ACTIVE;
         if (this.godownObject.id !== undefined) {
-            this.alertTitle = 'updated';
             // Call a metheod to update record
-            this.subscribeToSaveResponse(this.godownService.update(this.godownObject), this.alertTitle);
+            this.subscribeToSaveResponse(
+                this.godownService.update(this.godownObject),
+                'updated.'
+            );
         } else {
-            this.alertTitle = 'created';
             // Assign a value to an varaible
             this.godownObject.financialYearGodownId = this.financialYearId;
             // Call a metheod to create record
-            this.subscribeToSaveResponse(this.godownService.create(this.godownObject), this.alertTitle);
+            this.subscribeToSaveResponse(
+                this.godownService.create(this.godownObject),
+                'created.'
+            );
         }
     }
 
     /**
      * To save the godown and get the object
      * @param result object of godown details
-     * @param alertTitle message title
+     * @param alertTitle message title for alert
      */
-    private subscribeToSaveResponse(result: Observable<HttpResponse<IGodown>>, alertTitle) {
+    private subscribeToSaveResponse(
+        result: Observable<HttpResponse<IGodown>>, alertTitle
+    ) {
         result.subscribe(
             (res: HttpResponse<IGodown>) => {
                 // Hide the model popup
@@ -195,6 +200,8 @@ export class GodownComponent implements OnInit {
      * Show model popup to create godown value
      */
     createGodown(): void {
+        // Call a function to get active batch id
+        this.getActiveRecord();
         // Create empty object for godown
         this.godownObject = new GodownModel();
         // Show the model popup
@@ -228,7 +235,7 @@ export class GodownComponent implements OnInit {
             this.godownService.update(this.godownObject).subscribe(
                 data => {
                     // If success display the success message in view
-                    this.success.next(`Godown deleted successfully`);
+                    this.success.next(`Godown deleted successfully.`);
                     // Call a function to display list of godown
                     this.getGodownList();
                 },

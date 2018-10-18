@@ -30,14 +30,16 @@ export class SectorService {
 
     constructor(private http: HttpClient) {}
 
-    /** Send a POST method request to create the sector and
+    /**
+     * Send a POST method request to create the sector and
      * get created record as response
      *
      * @param sector - single object
      * @returns object of values
      */
     create(sector: ISector): Observable<EntityResponseType> {
-        return this.http.post<ISector>(this.resourceUrl, sector, { observe: 'response' });
+        return this.http
+            .post<ISector>(this.resourceUrl, sector, { observe: 'response' });
     }
 
     /**
@@ -48,7 +50,8 @@ export class SectorService {
      * @returns object of values
      */
     update(sector: ISector): Observable<EntityResponseType> {
-        return this.http.put<ISector>(this.resourceUrl, sector, { observe: 'response' });
+        return this.http
+            .put<ISector>(this.resourceUrl, sector, { observe: 'response' });
     }
 
     /**
@@ -59,7 +62,8 @@ export class SectorService {
      * @returns object of values
      */
     find(id: number): Observable<EntityResponseType> {
-        return this.http.get<ISector>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+        return this.http
+            .get<ISector>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
     /**
@@ -70,7 +74,8 @@ export class SectorService {
      */
     query(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
-        return this.http.get<ISector[]>(this.resourceUrl, { params: options, observe: 'response' });
+        return this.http
+            .get<ISector[]>(this.resourceUrl, { params: options, observe: 'response' });
     }
 
     /**
@@ -99,7 +104,7 @@ export class SectorService {
      *
      * @returns Mixed
      */
-    getSectorCount(): Observable<HttpResponse<any>> {
+     getSectorCount(): Observable<HttpResponse<any>> {
         return this.http.get<any>(`${this.resourceUrl}/count/${STATUS_ACTIVE}`, { observe: 'response' });
     }
 }

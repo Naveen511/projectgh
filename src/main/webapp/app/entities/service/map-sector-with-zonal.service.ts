@@ -17,7 +17,7 @@ import { map } from 'rxjs/operators';
 
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared';
-import { IMapSectorWithZonal, STATUS_ACTIVE } from 'app/shared/model/map-sector-with-zonal.model';
+import { IMapSectorWithZonal } from 'app/shared/model/map-sector-with-zonal.model';
 
 type EntityResponseType = HttpResponse<IMapSectorWithZonal>;
 type EntityArrayResponseType = HttpResponse<IMapSectorWithZonal[]>;
@@ -32,7 +32,8 @@ export class MapSectorWithZonalService {
 
     constructor(private http: HttpClient) {}
 
-    /** Send a POST method request to create the mapSectorWithZonal and
+    /**
+     * Send a POST method request to create the mapSectorWithZonal and
      * get created record as response
      *
      * @param mapSectorWithZonal - single object

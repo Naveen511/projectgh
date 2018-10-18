@@ -6,14 +6,15 @@
  *  Date: 2018/08/02 11:27:58
  *  Target: yarn
  *******************************************************************************/
-// Import angular dependency
+// Import angular dependency and component
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { JhiResolvePagingParams } from 'ng-jhipster';
 
-// Import the component
 import { GodownComponent } from 'app/entities/godown-management/godown.component';
-import { GodownPurchaseComponent } from 'app/entities/godown-management/godown-purchase.component';
+import {
+    GodownPurchaseComponent
+} from 'app/entities/godown-management/godown-purchase.component';
 import { GodownStockComponent } from 'app/entities/godown-management/godown-stock.component';
 
 // Constant value to set sidebar link for godown, purchase and godownStock details

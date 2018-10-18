@@ -32,7 +32,8 @@ export class NurseryInchargeService {
 
     constructor(private http: HttpClient) {}
 
-    /** Send a POST method request to create the nurseryIncharge and
+    /**
+     * Send a POST method request to create the nurseryIncharge and
      * get created record as response
      *
      * @param nurseryIncharge - single object

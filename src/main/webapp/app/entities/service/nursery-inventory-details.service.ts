@@ -32,7 +32,8 @@ export class NurseryInventoryDetailsService {
 
     constructor(private http: HttpClient) {}
 
-    /** Send a POST method request to create the nurseryInventoryDetails (seed & cover)
+    /**
+     * Send a POST method request to create the nurseryInventoryDetails (seed & cover)
      * and get created record as response
      *
      * @param nurseryInventoryDetails - single object

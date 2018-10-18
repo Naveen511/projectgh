@@ -57,7 +57,7 @@ public class Zonal extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : OneToMany - sectors
-     * Table Name    : Connects the Zonal Table to Sector Table
+     * Table Name    : Connect the Zonal Table to Sector Table
      * After Creation of the Zonal, If any movement it affect in sector Table
      */
     @OneToMany(mappedBy = "zonal", cascade = javax.persistence.CascadeType.REMOVE)
@@ -65,7 +65,7 @@ public class Zonal extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : ManyToOne - financialYear
-     * Table Name    : Connects the Zonal Table to FinancialYearSettings Table
+     * Table Name    : Connect the Zonal Table to FinancialYearSettings Table
      * To get the financialYear.
      */
     @ManyToOne
@@ -74,7 +74,7 @@ public class Zonal extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : ManyToOne - operationalHead
-     * Table Name    : Connects the Zonal Table to OperationalHead Table
+     * Table Name    : Connect the Zonal Table to OperationalHead Table
      * To get the operationalHead.
      */
     @ManyToOne
@@ -83,7 +83,7 @@ public class Zonal extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : OneToMany - mapZonalWithOhs
-     * Table Name    : Connects the Zonal Table to MapZonalWithOh Table
+     * Table Name    : Connect the Zonal Table to MapZonalWithOh Table
      * After Creation of the Zonal, If any movement it affect in MapZonalWithOh Table
      */
     @OneToMany(mappedBy = "zonal", cascade = javax.persistence.CascadeType.REMOVE)
@@ -91,7 +91,7 @@ public class Zonal extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : OneToMany - zonalIncharges
-     * Table Name    : Connects the Zonal Table to ZonalIncharge Table
+     * Table Name    : Connect the Zonal Table to ZonalIncharge Table
      * After Creation of the Zonal, If assign a staff it affect in ZonalIncharge Table
      */
     @OneToMany(mappedBy = "zonal", cascade = javax.persistence.CascadeType.REMOVE)
@@ -99,7 +99,7 @@ public class Zonal extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : OneToMany - mapSectorWithZonals
-     * Table Name    : Connects the Zonal Table to MapSectorWithZonal Table
+     * Table Name    : Connect the Zonal Table to MapSectorWithZonal Table
      * After Creation of the Zonal, If any movement it affect in MapSectorWithZonal Table
      */
     @OneToMany(mappedBy = "zonal", cascade = javax.persistence.CascadeType.REMOVE)

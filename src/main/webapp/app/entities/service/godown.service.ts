@@ -29,14 +29,16 @@ export class GodownService {
 
     constructor(private http: HttpClient) {}
 
-    /** Send a POST method request to create the godown and
+    /**
+     * Send a POST method request to create the godown and
      * get created record as response
      *
      * @param godown - single object
      * @returns object of values
      */
     create(godown: IGodown): Observable<EntityResponseType> {
-        return this.http.post<IGodown>(this.resourceUrl, godown, { observe: 'response' });
+        return this.http.post<IGodown>(this.resourceUrl, godown, { observe: 'response' }
+        );
     }
 
     /**
@@ -56,7 +58,8 @@ export class GodownService {
      * @returns object of values
      */
     find(id: number): Observable<EntityResponseType> {
-        return this.http.get<IGodown>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+        return this.http
+            .get<IGodown>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
     /**

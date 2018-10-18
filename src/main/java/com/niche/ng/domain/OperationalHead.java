@@ -66,7 +66,7 @@ public class OperationalHead extends AbstractAuditingEntity implements Serializa
 
     /**
      * Relation Name : OneToMany - zonals
-     * Table Name    : Connects the OperationalHead Table to Zonal Table
+     * Table Name    : Connect the OperationalHead Table to Zonal Table
      * After Creation of the OperationalHead, If any movement it affect in Zonal Table
      */
     @OneToMany(mappedBy = "operationalHead", cascade = javax.persistence.CascadeType.REMOVE)
@@ -74,7 +74,7 @@ public class OperationalHead extends AbstractAuditingEntity implements Serializa
 
     /**
      * Relation Name : OneToMany - mapZonalWithOhs
-     * Table Name    : Connects the OperationalHead Table to MapZonalWithOh Table
+     * Table Name    : Connect the OperationalHead Table to MapZonalWithOh Table
      * After Creation of the OperationalHead, If any movement it affect in MapZonalWithOh Table
      */
     @OneToMany(mappedBy = "operationalHead", cascade = javax.persistence.CascadeType.REMOVE)

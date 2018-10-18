@@ -61,7 +61,7 @@ public class MapNurseryWithSector extends AbstractAuditingEntity implements Seri
 
     /**
      * Relation Name : ManyToOne - mapNurseryWithSectors
-     * Table Name    : Connects the MapNurseryWithSector Table to Nursery Table.
+     * Table Name    : Connect the MapNurseryWithSector Table to Nursery Table.
      * Used to point out the MapNurseryWithSector values in the Nursery table.
      */
     @ManyToOne
@@ -70,7 +70,7 @@ public class MapNurseryWithSector extends AbstractAuditingEntity implements Seri
 
     /**
      * Relation Name : ManyToOne - mapNurseryWithSectors
-     * Table Name    : Connects the MapNurseryWithSector Table to Sector Table.
+     * Table Name    : Connect the MapNurseryWithSector Table to Sector Table.
      * Used to point out the MapNurseryWithSector values in the Sector table.
      */
     @ManyToOne

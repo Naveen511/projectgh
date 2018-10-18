@@ -66,7 +66,7 @@ public class GodownStock extends AbstractAuditingEntity implements Serializable 
 
     /**
      * Relation Name : OneToMany - godownStockDetails
-     * Table Name    : Connects the GodownStock Table to GodownStockDetails Table
+     * Table Name    : Connect the GodownStock Table to GodownStockDetails Table
      * Used to point out the GodownStock values in the GodownStockDetails table.
      */
     @OneToMany(mappedBy = "godownStock", cascade = javax.persistence.CascadeType.REMOVE)
@@ -74,7 +74,7 @@ public class GodownStock extends AbstractAuditingEntity implements Serializable 
 
     /**
      * Relation Name : ManyToOne - godownStockVarietys
-     * Table Name    : Connects the GodownStock Table to PickListValue Table.
+     * Table Name    : Connect the GodownStock Table to PickListValue Table.
      * Used to point out the GodownStock values in the PickListValue table.
      */
     @ManyToOne
@@ -83,7 +83,7 @@ public class GodownStock extends AbstractAuditingEntity implements Serializable 
 
     /**
      * Relation Name : ManyToOne - godownStockCategorys
-     * Table Name    : Connects the GodownStock Table to PickListValue Table.
+     * Table Name    : Connect the GodownStock Table to PickListValue Table.
      * Used to point out the GodownStock values in the PickListValue table.
      */
     @ManyToOne
@@ -92,7 +92,7 @@ public class GodownStock extends AbstractAuditingEntity implements Serializable 
 
     /**
      * Relation Name : ManyToOne - godownStockQuantityTypes
-     * Table Name    : Connects the GodownStock Table to PickListValue Table.
+     * Table Name    : Connect the GodownStock Table to PickListValue Table.
      * Used to point out the GodownStock values in the PickListValue table.
      */
     @ManyToOne
@@ -101,7 +101,7 @@ public class GodownStock extends AbstractAuditingEntity implements Serializable 
 
     /**
      * Relation Name : ManyToOne - godownStocks
-     * Table Name    : Connects the GodownStock Table to Godown Table.
+     * Table Name    : Connect the GodownStock Table to Godown Table.
      * Used to point out the GodownStock values in the Godown table.
      */
     @ManyToOne
@@ -110,7 +110,7 @@ public class GodownStock extends AbstractAuditingEntity implements Serializable 
 
     /**
      * Relation Name : ManyToOne - godownStocks
-     * Table Name    : Connects the GodownStock Table to FinancialYearSettings Table.
+     * Table Name    : Connect the GodownStock Table to FinancialYearSettings Table.
      * Used to point out the GodownStock values in the FinancialYearSettings table.
      */
     @ManyToOne

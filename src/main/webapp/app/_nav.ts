@@ -1,3 +1,18 @@
+/******************************************************************************
+ *  Property of Nichehands
+ *  Nichehands Confidential Proprietary
+ *  Nichehands Copyright (C) 2018 All rights reserved
+ *  ----------------------------------------------------------------------------
+ *  Date: 2018/08/02
+ *  Target: yarn
+ * -----------------------------------------------------------------------------
+ * File Description : Declared an array variable to get sidebar option with name
+ *                    to display in sidebar, url for link, icon for an option
+ *                    as an object.
+ *
+ *******************************************************************************/
+
+// Declare a variable with array of values
 export const navItems = [
     {
         name: 'Dashboard',

@@ -44,7 +44,7 @@ public class GodownPurchaseDetailsCriteria implements Serializable {
 
     private LocalDateFilter date;
 
-    private LongFilter price;
+    private FloatFilter price;
 
     private StringFilter ownedBy;
 
@@ -130,7 +130,7 @@ public class GodownPurchaseDetailsCriteria implements Serializable {
      * 
      * @return price
      */
-    public LongFilter getPrice() {
+    public FloatFilter getPrice() {
         return price;
     }
 
@@ -139,7 +139,7 @@ public class GodownPurchaseDetailsCriteria implements Serializable {
      * 
      * @param price price of the godownPurchaseDetails
      */
-    public void setPrice(LongFilter price) {
+    public void setPrice(FloatFilter price) {
         this.price = price;
     }
 

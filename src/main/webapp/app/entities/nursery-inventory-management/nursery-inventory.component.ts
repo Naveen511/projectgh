@@ -9,45 +9,54 @@
 
 // Import needed component, model and dependency
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NurseryInventoryService } from 'app/entities/service/nursery-inventory.service';
-import { NurseryInventoryDetailsService } from 'app/entities/service/nursery-inventory-details.service';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import * as moment from 'moment';
+import { Observable } from 'rxjs';
+import { ModalDirective } from 'ngx-bootstrap/modal';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
+import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
+
+import {
+    NurseryInventoryService
+} from 'app/entities/service/nursery-inventory.service';
+import {
+    NurseryInventoryDetailsService
+} from 'app/entities/service/nursery-inventory-details.service';
 import { ZonalService } from 'app/entities/service/zonal.service';
 import { SectorService } from 'app/entities/service/sector.service';
 import { NurseryService } from 'app/entities/service/nursery.service';
 import { PickListService } from 'app/entities/service/pick-list.service';
 import { PickListValueService } from 'app/entities/service/pick-list-value.service';
-import { INurseryInventory, STATUS_SEEDS, STATUS_COVER, NurseryInventory } from 'app/shared/model/nursery-inventory.model';
 import {
-    STATUS_ADD,
-    STATUS_CONSUME,
-    STATUS_DAMAGE,
-    NurseryInventoryDetails,
-    INurseryInventoryDetails,
-    DISPLAY_NAME_VARIETY,
-    DISPLAY_NAME_QUANTITY_TYPE,
-    DISPLAY_NAME_DAMAGE_TYPE,
-    DISPLAY_NAME_DAMAGE_REASON
+    FinancialYearSettingsService
+} from 'app/entities/service/financial-year-settings.service';
+import { CoverFillingService } from 'app/entities/service/cover-filling.service';
+import {
+    CoverFillingDetailsService
+} from 'app/entities/service/cover-filling-details.service';
+
+import { INurseryInventory, STATUS_SEEDS, STATUS_COVER, NurseryInventory
+} from 'app/shared/model/nursery-inventory.model';
+import {
+    STATUS_ADD, STATUS_CONSUME, STATUS_DAMAGE, NurseryInventoryDetails,
+    INurseryInventoryDetails, DISPLAY_NAME_VARIETY, DISPLAY_NAME_QUANTITY_TYPE,
+    DISPLAY_NAME_DAMAGE_TYPE, DISPLAY_NAME_DAMAGE_REASON
 } from 'app/shared/model/nursery-inventory-details.model';
 import { IZonal } from 'app/shared/model/zonal.model';
 import { ISector } from 'app/shared/model/sector.model';
 import { INursery } from 'app/shared/model/nursery.model';
 import { IPickList } from 'app/shared/model/pick-list.model';
 import { IPickListValue } from 'app/shared/model/pick-list-value.model';
-import { FinancialYearSettingsService } from 'app/entities/service/financial-year-settings.service';
 import { IFinancialYearSettings } from 'app/shared/model/financial-year-settings.model';
-
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import * as moment from 'moment';
-import { DATE_TIME_FORMAT, STATUS_ACTIVE, SOFT_DELETE_STATUS, ALERT_TIME_OUT_5000 } from 'app/shared';
-import { Observable } from 'rxjs';
-import { ModalDirective } from 'ngx-bootstrap/modal';
-import { Subject } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import {
+    CoverFillingDetails, ICoverFillingDetails
+} from 'app/shared/model/cover-filling-details.model';
 import { CoverFilling, ICoverFilling } from 'app/shared/model/cover-filling.model';
-import { CoverFillingService } from 'app/entities/cover-filling';
-import { CoverFillingDetails, ICoverFillingDetails } from 'app/shared/model/cover-filling-details.model';
-import { CoverFillingDetailsService } from 'app/entities/service/cover-filling-details.service';
-import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
+
+import {
+    DATE_TIME_FORMAT, STATUS_ACTIVE, SOFT_DELETE_STATUS, ALERT_TIME_OUT_5000
+} from 'app/shared';
 
 // Mension the html, css/sass files
 @Component({
@@ -78,8 +87,8 @@ export class NurseryInventoryMgntComponent implements OnInit {
     sectors: ISector[];
     nurserys: INursery[];
     pickLists: IPickList[];
-    varietys: IPickListValue[];
-    categorys: IPickListValue[];
+    varieties: IPickListValue[];
+    categories: IPickListValue[];
     quantityTypes: IPickListValue[];
     damageTypes: IPickListValue[];
     damageDescription: IPickListValue[];
@@ -99,7 +108,9 @@ export class NurseryInventoryMgntComponent implements OnInit {
     inventoryStatus: any;
     inventoryTitle: any;
     financialYearId: number;
-
+    statusAdded: number;
+    statusConsumed: number;
+    statusDamage: number;
     seedInventoryStatus: number;
     coverInventoryStatus: number;
 
@@ -147,32 +158,38 @@ export class NurseryInventoryMgntComponent implements OnInit {
 
         this.seedInventoryStatus = STATUS_SEEDS;
         this.coverInventoryStatus = STATUS_COVER;
+        this.statusAdded = STATUS_ADD;
+        this.statusConsumed = STATUS_CONSUME;
+        this.statusDamage = STATUS_DAMAGE;
     }
 
     ngOnInit() {
         // Call a function to get list of seed inventory
         this.getSeedsInventoryList();
-        // Call a function to get list of cover inventory
-        this.getCoverInventoryList();
         // Call a function to get active batch id
         this.getActiveRecord();
         // Call a function to get list of active zonal
         this.getZonalList();
         // Call a function to get list of variety and quantity type
         this.getPickList();
+
+        // Call a function to get list of cover inventory
+        // this.getCoverInventoryList();
         // Call a function to get list of cover filling details
-        this.getCoverFillingList();
+        // this.getCoverFillingList();
 
         // To set the time for automatic alert close
         setTimeout(() => (this.staticAlertClosed = true), ALERT_TIME_OUT_5000);
 
         // Set the success message with debounce time
         this.success.subscribe(message => (this.successMessage = message));
-        this.success.pipe(debounceTime(ALERT_TIME_OUT_5000)).subscribe(() => (this.successMessage = null));
+        this.success.pipe(debounceTime(ALERT_TIME_OUT_5000))
+        .subscribe(() => (this.successMessage = null));
 
         // To set the error message with debounce time
         this.error.subscribe(message => (this.errorMessage = message));
-        this.error.pipe(debounceTime(ALERT_TIME_OUT_5000)).subscribe(() => (this.errorMessage = null));
+        this.error.pipe(debounceTime(ALERT_TIME_OUT_5000))
+        .subscribe(() => (this.errorMessage = null));
     }
 
     /**
@@ -181,14 +198,12 @@ export class NurseryInventoryMgntComponent implements OnInit {
     getActiveRecord(): void {
         // Get the list of active batch record and
         // assign a 0th index array value to an batch id
-        this.settingsService
-            .query({
-                filter: { 'status.equals': STATUS_ACTIVE }
-            })
-            .subscribe((res: HttpResponse<IFinancialYearSettings[]>) => {
-                // Assign a value to an object
-                this.financialYearId = res.body[0].id;
-            });
+        this.settingsService.query({
+            filter: { 'status.equals': STATUS_ACTIVE }
+        }).subscribe((res: HttpResponse<IFinancialYearSettings[]>) => {
+            // Assign a value to an object
+            this.financialYearId = res.body[0].id;
+        });
     }
 
     /**
@@ -276,34 +291,32 @@ export class NurseryInventoryMgntComponent implements OnInit {
      */
     getPickList(): void {
         // To get the active pick list variety Id from Pick List based on label
-        this.pickListService
-            .query({
-                filter: {
-                    'status.equals': STATUS_ACTIVE,
-                    'displayLabelName.equals': DISPLAY_NAME_VARIETY
-                }
-            })
-            .subscribe((res: HttpResponse<IPickList[]>) => {
-                if (res.body.length > 0) {
-                    // Call a function to get list of variety
-                    this.getVariety(res.body[0].id);
-                }
-            });
+        this.pickListService.query({
+            filter: {
+                'status.equals': STATUS_ACTIVE,
+                'displayLabelName.equals': DISPLAY_NAME_VARIETY
+            }
+        })
+        .subscribe((res: HttpResponse<IPickList[]>) => {
+            if (res.body.length > 0) {
+                // Call a function to get list of variety
+                this.getVariety(res.body[0].id);
+            }
+        });
 
         // To get the active pick list quantity type Id from pickList based on label
-        this.pickListService
-            .query({
-                filter: {
-                    'status.equals': STATUS_ACTIVE,
-                    'displayLabelName.equals': DISPLAY_NAME_QUANTITY_TYPE
-                }
-            })
-            .subscribe((res: HttpResponse<IPickList[]>) => {
-                if (res.body.length > 0) {
-                    // Call a function to get list of quantity
-                    this.getQuantityType(res.body[0].id);
-                }
-            });
+        this.pickListService.query({
+            filter: {
+                'status.equals': STATUS_ACTIVE,
+                'displayLabelName.equals': DISPLAY_NAME_QUANTITY_TYPE
+            }
+        })
+        .subscribe((res: HttpResponse<IPickList[]>) => {
+            if (res.body.length > 0) {
+                // Call a function to get list of quantity
+                this.getQuantityType(res.body[0].id);
+            }
+        });
     }
 
     /**
@@ -313,17 +326,16 @@ export class NurseryInventoryMgntComponent implements OnInit {
     getSector(zoneId): void {
         // Get the list of sector
         // this.sectorService.getSectors(zoneId)
-        this.sectorService
-            .query({
-                filter: {
-                    'status.equals': STATUS_ACTIVE,
-                    'zonalId.equals': zoneId
-                }
-            })
-            .subscribe((res: HttpResponse<ISector[]>) => {
-                // Assign a response value to an object
-                this.sectors = res.body;
-            });
+        this.sectorService.query({
+            filter: {
+                'status.equals': STATUS_ACTIVE,
+                'zonalId.equals': zoneId
+            }
+        })
+        .subscribe((res: HttpResponse<ISector[]>) => {
+            // Assign a response value to an object
+            this.sectors = res.body;
+        });
     }
 
     /**
@@ -333,17 +345,16 @@ export class NurseryInventoryMgntComponent implements OnInit {
     getNursery(sectorId): void {
         // Get the list of nursery
         // this.nurseryService.getNurserys(sectorId)
-        this.nurseryService
-            .query({
-                filter: {
-                    'status.equals': STATUS_ACTIVE,
-                    'sectorId.equals': sectorId
-                }
-            })
-            .subscribe((res: HttpResponse<INursery[]>) => {
-                // Assign a response value to an object
-                this.nurserys = res.body;
-            });
+        this.nurseryService.query({
+            filter: {
+                'status.equals': STATUS_ACTIVE,
+                'sectorId.equals': sectorId
+            }
+        })
+        .subscribe((res: HttpResponse<INursery[]>) => {
+            // Assign a response value to an object
+            this.nurserys = res.body;
+        });
     }
 
     /**
@@ -352,17 +363,16 @@ export class NurseryInventoryMgntComponent implements OnInit {
      */
     getVariety(id): void {
         // this.pickListValueService.getVariety(id)
-        this.pickListValueService
-            .query({
-                filter: {
-                    'status.equals': STATUS_ACTIVE,
-                    'pickListId.equals': id
-                }
-            })
-            .subscribe((res: HttpResponse<IPickListValue[]>) => {
-                // Assign a response value to an object
-                this.varietys = res.body;
-            });
+        this.pickListValueService.query({
+            filter: {
+                'status.equals': STATUS_ACTIVE,
+                'pickListId.equals': id
+            }
+        })
+        .subscribe((res: HttpResponse<IPickListValue[]>) => {
+            // Assign a response value to an object
+            this.varieties = res.body;
+        });
     }
 
     /**
@@ -371,17 +381,16 @@ export class NurseryInventoryMgntComponent implements OnInit {
      */
     getQuantityType(id): void {
         // this.pickListValueService.getVariety(id)
-        this.pickListValueService
-            .query({
-                filter: {
-                    'status.equals': STATUS_ACTIVE,
-                    'pickListId.equals': id
-                }
-            })
-            .subscribe((res: HttpResponse<IPickListValue[]>) => {
-                // Assign a response value to an object
-                this.quantityTypes = res.body;
-            });
+        this.pickListValueService.query({
+            filter: {
+                'status.equals': STATUS_ACTIVE,
+                'pickListId.equals': id
+            }
+        })
+        .subscribe((res: HttpResponse<IPickListValue[]>) => {
+            // Assign a response value to an object
+            this.quantityTypes = res.body;
+        });
     }
 
     /**
@@ -390,17 +399,16 @@ export class NurseryInventoryMgntComponent implements OnInit {
      */
     getCategory(id): void {
         // this.pickListValueService.getCategory(id)
-        this.pickListValueService
-            .query({
-                filter: {
-                    'status.equals': STATUS_ACTIVE,
-                    'pickValueId.equals': id
-                }
-            })
-            .subscribe((res: HttpResponse<IPickListValue[]>) => {
-                // Assign a response value to an object
-                this.categorys = res.body;
-            });
+        this.pickListValueService.query({
+            filter: {
+                'status.equals': STATUS_ACTIVE,
+                'pickValueId.equals': id
+            }
+        })
+        .subscribe((res: HttpResponse<IPickListValue[]>) => {
+            // Assign a response value to an object
+            this.categories = res.body;
+        });
     }
 
     /**
@@ -410,17 +418,16 @@ export class NurseryInventoryMgntComponent implements OnInit {
     getDamageType(id): void {
         // Call a pick list query service to get active record of damage type
         // this.pickListValueService.getVariety(id)
-        this.pickListValueService
-            .query({
-                filter: {
-                    'status.equals': STATUS_ACTIVE,
-                    'pickListId.equals': id
-                }
-            })
-            .subscribe((res: HttpResponse<IPickListValue[]>) => {
-                // Assign a response value to an object
-                this.damageTypes = res.body;
-            });
+        this.pickListValueService.query({
+            filter: {
+                'status.equals': STATUS_ACTIVE,
+                'pickListId.equals': id
+            }
+        })
+        .subscribe((res: HttpResponse<IPickListValue[]>) => {
+            // Assign a response value to an object
+            this.damageTypes = res.body;
+        });
     }
 
     /**
@@ -430,17 +437,16 @@ export class NurseryInventoryMgntComponent implements OnInit {
     getDamageDescriptionType(id): void {
         // Call a pick list query service to get active record of damage description
         // this.pickListValueService.getVariety(id)
-        this.pickListValueService
-            .query({
-                filter: {
-                    'status.equals': STATUS_ACTIVE,
-                    'pickListId.equals': id
-                }
-            })
-            .subscribe((res: HttpResponse<IPickListValue[]>) => {
-                // Assign a response value to an object
-                this.damageDescription = res.body;
-            });
+        this.pickListValueService.query({
+            filter: {
+                'status.equals': STATUS_ACTIVE,
+                'pickListId.equals': id
+            }
+        })
+        .subscribe((res: HttpResponse<IPickListValue[]>) => {
+            // Assign a response value to an object
+            this.damageDescription = res.body;
+        });
     }
 
     /**
@@ -459,12 +465,16 @@ export class NurseryInventoryMgntComponent implements OnInit {
      */
     saveSeeds(): void {
         // Check the empty validation for Nursery and Category.
-        if (this.nurseryInventory.nurserysId === null || this.nurseryInventory.nurserysId === undefined) {
-            this.error.next(`Nursery should not be empty`);
-        } else if (this.nurseryInventory.pickListCategoryId === null || this.nurseryInventory.pickListCategoryId === undefined) {
-            this.error.next(`Category should not be empty`);
+        if ((this.nurseryInventory.nurserysId === null)
+            || (this.nurseryInventory.nurserysId === undefined)
+        ) {
+            this.error.next(`Nursery cannot be blank.`);
+        } else if ((this.nurseryInventory.pickListCategoryId === null)
+            || (this.nurseryInventory.pickListCategoryId === undefined)
+        ) {
+            this.error.next(`Category cannot be blank.`);
         } else {
-            // } else if (this.nurseryInventory.quantityTypeId === null || this.nurseryInventory.quantityTypeId === undefined) {
+        // } else if (this.nurseryInventory.quantityTypeId === null || this.nurseryInventory.quantityTypeId === undefined) {
             // this.error.next(`Quantity Type should not be empty`);
             // Assign a value to an variable
             this.nurseryInventory.status = STATUS_SEEDS;
@@ -474,39 +484,35 @@ export class NurseryInventoryMgntComponent implements OnInit {
             //     .getNurseryCategoryInventory(this.nurseryInventory.nurserysId, this.nurseryInventory.pickListCategoryId)
             // Call a nursery inventory query service
             // to get active particular nursery category list
-            this.nurseryInventoryService
-                .query({
-                    filter: {
-                        'nurserysId.equals': this.nurseryInventory.nurserysId,
-                        'pickListCategoryId.equals': this.nurseryInventory.pickListCategoryId,
-                        'status.greaterThan': SOFT_DELETE_STATUS
-                    }
-                })
-                .subscribe(
-                    (res: HttpResponse<INurseryInventory[]>) => {
-                        // If the total count is greater than 0
-                        // (that means already that nursery added the needs)
-                        // To update the nursery seeds details
-                        if (res.body.length > 0) {
-                            this.nurseryInventory = res.body[res.body.length - 1];
-                            // Add a new quantity to old quantity and assign a value
-                            this.nurseryInventory.currentQuantity =
-                                +this.nurseryInventory.currentQuantity + +this.nurseryInventoryDetails.quantity;
-                            this.nurseryInventory.addedQuantity =
-                                +this.nurseryInventory.addedQuantity + +this.nurseryInventoryDetails.quantity;
-                            this.subscribeToSaveResponse(this.nurseryInventoryService.update(this.nurseryInventory));
-                        } else {
-                            // Assign a value to an variable
-                            this.nurseryInventory.currentQuantity = this.nurseryInventoryDetails.quantity;
-                            this.nurseryInventory.addedQuantity = this.nurseryInventoryDetails.quantity;
-                            this.subscribeToSaveResponse(this.nurseryInventoryService.create(this.nurseryInventory));
-                        }
-                    },
-                    (res: HttpErrorResponse) => {
-                        // If error response display the error message in view
-                        this.error.next(res.error.fieldErrors[0].message);
-                    }
-                );
+            this.nurseryInventoryService.query({
+                filter: {
+                    'nurserysId.equals': this.nurseryInventory.nurserysId,
+                    'pickListCategoryId.equals': this.nurseryInventory.pickListCategoryId,
+                    'status.greaterThan': SOFT_DELETE_STATUS
+                }
+            })
+            .subscribe((res: HttpResponse<INurseryInventory[]>) => {
+                // If the total count is greater than 0
+                // (that means already that nursery added the needs)
+                // To update the nursery seeds details
+                if (res.body.length > 0) {
+                    this.nurseryInventory = res.body[res.body.length - 1];
+                    // Add a new quantity to old quantity and assign a value
+                    this.nurseryInventory.currentQuantity =
+                        +this.nurseryInventory.currentQuantity + +this.nurseryInventoryDetails.quantity;
+                    this.nurseryInventory.addedQuantity = +this.nurseryInventory.addedQuantity + +this.nurseryInventoryDetails.quantity;
+                    this.subscribeToSaveResponse(this.nurseryInventoryService.update(this.nurseryInventory));
+                } else {
+                    // Assign a value to an variable
+                    this.nurseryInventory.currentQuantity = this.nurseryInventoryDetails.quantity;
+                    this.nurseryInventory.addedQuantity = this.nurseryInventoryDetails.quantity;
+                    this.subscribeToSaveResponse(this.nurseryInventoryService.create(this.nurseryInventory));
+                }
+            },
+            (res: HttpErrorResponse) => {
+                // If error response display the error message in view
+                this.error.next(res.error.fieldErrors[0].message);
+            });
         }
     }
 
@@ -534,40 +540,46 @@ export class NurseryInventoryMgntComponent implements OnInit {
      */
     saveInventoryDetails(): void {
         // Convery a date formate and assign to an variable
-        this.nurseryInventoryDetails.date = moment(this.nurseryInventoryDetails.date, DATE_TIME_FORMAT);
+        this.nurseryInventoryDetails.date = moment(
+            this.nurseryInventoryDetails.date, DATE_TIME_FORMAT
+        );
         // this.nurseryInventoryDetails.status = STATUS_ADD;
         // Call a service to create a nursery inventory details
-        this.nurseryInventoryDetailsService.create(this.nurseryInventoryDetails).subscribe(
-            data => {
-                // If the status is seeds to display the text message as seeds
-                if (this.nurseryInventory.status === STATUS_SEEDS) {
-                    this.inventoryStatus = 'seeds';
-                    this.isCollapsed = true;
-                } else {
-                    this.inventoryStatus = 'cover';
-                    this.isCoverCollapsed = true;
-                }
+        this.nurseryInventoryDetailsService.create(
+            this.nurseryInventoryDetails
+        ).subscribe(data => {
+            // If the status is seeds to display the text message as seeds
+            if (this.nurseryInventory.status === STATUS_SEEDS) {
+                this.inventoryStatus = 'seeds';
+                this.isCollapsed = true;
+            } else {
+                this.inventoryStatus = 'cover';
+                this.isCoverCollapsed = true;
+            }
 
-                // Based on the status displayed the status alert
-                if (this.nurseryInventoryDetails.status === STATUS_ADD) {
-                    this.success.next(`Successfully added the ${this.inventoryStatus}.`);
-                    this.addParticularInventory.hide();
-                } else if (this.nurseryInventoryDetails.status === STATUS_CONSUME) {
-                    this.success.next(`Successfully consumed the ${this.inventoryStatus}.`);
-                    this.consumeParticularInventory.hide();
-                } else {
-                    this.success.next(`Successfully updated damage ${this.inventoryStatus}.`);
-                    this.damageParticularInventory.hide();
-                }
-                // Call a function to get list of nursery Stocks
-                this.getSeedsInventoryList();
-                this.getCoverInventoryList();
-                this.nurseryInventory = new NurseryInventory();
-                this.nurseryInventoryDetails = new NurseryInventoryDetails();
-                // this.isCollapsed = true;
-                this.isCollapsedInventoryDetails = true;
-            },
-            (res: HttpErrorResponse) => {
+            // Based on the status displayed the status alert
+            if (this.nurseryInventoryDetails.status === STATUS_ADD) {
+                this.success.next(`Successfully added the ${this.inventoryStatus}.`);
+                this.addParticularInventory.hide();
+            } else if (this.nurseryInventoryDetails.status === STATUS_CONSUME) {
+                this.success.next(`Successfully consumed the ${this.inventoryStatus}.`);
+                this.consumeParticularInventory.hide();
+            } else {
+                this.success.next(`Successfully updated damage ${this.inventoryStatus}.`);
+                this.damageParticularInventory.hide();
+            }
+            // Call a function to get list of nursery Stocks
+            this.getSeedsInventoryList();
+            this.getCoverInventoryList();
+            this.nurseryInventory = new NurseryInventory();
+            this.nurseryInventoryDetails = new NurseryInventoryDetails();
+            // this.isCollapsed = true;
+            this.isCollapsedInventoryDetails = true;
+            // To set the null value for the sectors and nursery
+            this.sectors = null;
+            this.nurserys = null;
+            this.categories = null;
+        }, (res: HttpErrorResponse) => {
                 this.error.next(res.error.fieldErrors[0].message);
             }
         );
@@ -589,14 +601,12 @@ export class NurseryInventoryMgntComponent implements OnInit {
         }
         // Get the particular inventory details
         // this.nurseryInventoryDetailsService.getParticularInventorys(id)
-        this.nurseryInventoryDetailsService
-            .query({
-                filter: { 'nurseryInventoryId.equals': id }
-            })
-            .subscribe((res: HttpResponse<INurseryInventoryDetails[]>) => {
-                this.isCollapsedInventoryDetails = false;
-                this.inventoryDetails = res.body;
-            });
+        this.nurseryInventoryDetailsService.query({
+            filter: { 'nurseryInventoryId.equals': id}
+        }).subscribe((res: HttpResponse<INurseryInventoryDetails[]>) => {
+            this.isCollapsedInventoryDetails = false;
+            this.inventoryDetails = res.body;
+        });
     }
 
     /**
@@ -620,12 +630,13 @@ export class NurseryInventoryMgntComponent implements OnInit {
      */
     addInventoryQuantity(value): void {
         // Check the empty validation for date and quantity.
-        if (this.nurseryInventoryDetails.date === null || this.nurseryInventoryDetails.date === undefined) {
-            this.error.next(`Date should not be empty`);
-        } else if (
-            this.nurseryInventoryDetails.quantity === null ||
-            this.nurseryInventoryDetails.quantity <= 0 ||
-            this.nurseryInventoryDetails.quantity === undefined
+        if (this.nurseryInventoryDetails.date === null
+            || this.nurseryInventoryDetails.date === undefined
+        ) {
+            this.error.next(`Date cannot be blank.`);
+        } else if (this.nurseryInventoryDetails.quantity === null
+            || this.nurseryInventoryDetails.quantity <= 0
+            || this.nurseryInventoryDetails.quantity === undefined
         ) {
             this.error.next(`You cant able to add.
              Please enter valid quantity.`);
@@ -643,7 +654,9 @@ export class NurseryInventoryMgntComponent implements OnInit {
      */
     consumeInventory(value): void {
         // If current quantity is 0, throw the error
-        if (value.currentQuantity === 0 || value.currentQuantity < this.nurseryInventoryDetails.quantity) {
+        if (value.currentQuantity === 0
+            || value.currentQuantity < this.nurseryInventoryDetails.quantity
+        ) {
             alert('You cant able to consume. Because your current quantity is 0');
         } else {
             // Create an empty object
@@ -663,26 +676,31 @@ export class NurseryInventoryMgntComponent implements OnInit {
      */
     consumeInventoryQuantity(value): void {
         // Check the empty validation for date and quantity.
-        if (this.nurseryInventoryDetails.date === null || this.nurseryInventoryDetails.date === undefined) {
-            this.error.next(`Date should not be empty`);
-        } else if (
-            this.nurseryInventoryDetails.quantity === null ||
-            this.nurseryInventoryDetails.quantity <= 0 ||
-            this.nurseryInventoryDetails.quantity === undefined
+        if (this.nurseryInventoryDetails.date === null
+            || this.nurseryInventoryDetails.date === undefined
+        ) {
+            this.error.next(`Date cannot be blank.`);
+        } else if (this.nurseryInventoryDetails.quantity === null
+            || this.nurseryInventoryDetails.quantity <= 0
+            || this.nurseryInventoryDetails.quantity === undefined
         ) {
             this.error.next(`You cant able to add.
              Please enter valid quantity.`);
-        } else if (value.currentQuantity < this.nurseryInventoryDetails.quantity) {
+        } else if (
+            value.currentQuantity < this.nurseryInventoryDetails.quantity
+        ) {
             this.error.next(`You cant able to consume.
-             Because your current quantity is ${value.currentQuantity}.
-             Please enter lessthan current quantity.`);
+            Because your current quantity is ${value.currentQuantity}.
+            Please enter less then current quantity.`);
         } else {
             // Reduce the current quantity and assign to a variable
             this.nurseryInventory.currentQuantity = +value.currentQuantity - +this.nurseryInventoryDetails.quantity;
             // this.nurseryInventory.addedQuantity = +value.addedQuantity - +this.nurseryInventoryDetails.quantity;
             // Add the consumed quantity and assign to a variable
             this.nurseryInventory.consumedQuantity = +value.consumedQuantity + +this.nurseryInventoryDetails.quantity;
-            this.subscribeToSaveResponse(this.nurseryInventoryService.update(this.nurseryInventory));
+            this.subscribeToSaveResponse(
+                this.nurseryInventoryService.update(this.nurseryInventory)
+            );
         }
     }
 
@@ -707,34 +725,32 @@ export class NurseryInventoryMgntComponent implements OnInit {
             this.damageParticularInventory.show();
 
             // To get the active pick list damage type Id from Pick List based on label
-            this.pickListService
-                .query({
-                    filter: {
-                        'status.equals': STATUS_ACTIVE,
-                        'displayLabelName.equals': DISPLAY_NAME_DAMAGE_TYPE
-                    }
-                })
-                .subscribe((res: HttpResponse<IPickList[]>) => {
-                    if (res.body.length > 0) {
-                        // Call a function to get list of damage type
-                        this.getDamageType(res.body[0].id);
-                    }
-                });
+            this.pickListService.query({
+                filter: {
+                    'status.equals': STATUS_ACTIVE,
+                    'displayLabelName.equals': DISPLAY_NAME_DAMAGE_TYPE
+                }
+            })
+            .subscribe((res: HttpResponse<IPickList[]>) => {
+                if (res.body.length > 0) {
+                    // Call a function to get list of damage type
+                    this.getDamageType(res.body[0].id);
+                }
+            });
 
             // To get the active pick list damage reason Id from Pick List based on label
-            this.pickListService
-                .query({
-                    filter: {
-                        'status.equals': STATUS_ACTIVE,
-                        'displayLabelName.equals': DISPLAY_NAME_DAMAGE_REASON
-                    }
-                })
-                .subscribe((res: HttpResponse<IPickList[]>) => {
-                    if (res.body.length > 0) {
-                        // Call a function to get list of damage description
-                        this.getDamageDescriptionType(res.body[0].id);
-                    }
-                });
+            this.pickListService.query({
+                filter: {
+                    'status.equals': STATUS_ACTIVE,
+                    'displayLabelName.equals': DISPLAY_NAME_DAMAGE_REASON
+                }
+            })
+            .subscribe((res: HttpResponse<IPickList[]>) => {
+                if (res.body.length > 0) {
+                    // Call a function to get list of damage description
+                    this.getDamageDescriptionType(res.body[0].id);
+                }
+            });
         }
     }
 
@@ -744,20 +760,25 @@ export class NurseryInventoryMgntComponent implements OnInit {
      */
     damageInventoryQuantity(value): void {
         // Check a validation for required field
-        if (this.nurseryInventoryDetails.damageTypeId == null || this.nurseryInventoryDetails.damageTypeId === undefined) {
-            this.error.next(`Pick damage name should not be empty`);
-        } else if (this.nurseryInventoryDetails.date == null || this.nurseryInventoryDetails.date === undefined) {
-            this.error.next(`Date should not be empty`);
-        } else if (
-            this.nurseryInventoryDetails.quantity === null ||
-            this.nurseryInventoryDetails.quantity <= 0 ||
-            this.nurseryInventoryDetails.quantity === undefined
+        if (this.nurseryInventoryDetails.damageTypeId == null
+            || this.nurseryInventoryDetails.damageTypeId === undefined
         ) {
-            this.error.next(`Quantity should not be empty`);
-        } else if (value.currentQuantity < this.nurseryInventoryDetails.quantity) {
+            this.error.next(`Pick damage name cannot be blank.`);
+        } else if (this.nurseryInventoryDetails.date == null
+            || this.nurseryInventoryDetails.date === undefined
+        ) {
+            this.error.next(`Date cannot be blank.`);
+        } else if (this.nurseryInventoryDetails.quantity === null
+            || this.nurseryInventoryDetails.quantity <= 0
+            || this.nurseryInventoryDetails.quantity === undefined
+        ) {
+            this.error.next(`Quantity cannot be blank.`);
+        } else if (
+            value.currentQuantity < this.nurseryInventoryDetails.quantity
+        ) {
             this.error.next(`You cant able to consume the damage quantity.
                 Because your current quantity is ${value.currentQuantity}.
-                Please enter lessthan current quantity`);
+                Please enter less then current quantity.`);
         } else {
             // Add a damage quantity and reduce a current quantity and
             // assign a value to an variable
@@ -774,10 +795,14 @@ export class NurseryInventoryMgntComponent implements OnInit {
     saveCover(): void {
         // console.log(this.nurseryInventory);
         // Check a validation for required field
-        if (this.nurseryInventory.nurserysId === null || this.nurseryInventory.nurserysId === undefined) {
-            this.error.next(`Nursery should not be empty`);
-        } else if (this.nurseryInventory.quantityTypeId === null || this.nurseryInventory.quantityTypeId === undefined) {
-            this.error.next(`Quantity Type should not be empty`);
+        if ((this.nurseryInventory.nurserysId === null)
+            || (this.nurseryInventory.nurserysId === undefined)
+        ) {
+            this.error.next(`Nursery cannot be blank.`);
+        } else if ((this.nurseryInventory.quantityTypeId === null)
+            || (this.nurseryInventory.quantityTypeId === undefined)
+        ) {
+            this.error.next(`Quantity type cannot be blank.`);
         } else {
             // console.log('cover save function');
             // Assign a value to an variable
@@ -788,29 +813,28 @@ export class NurseryInventoryMgntComponent implements OnInit {
             //     .getCoverInventory(this.nurseryInventory.nurserysId, STATUS_COVER)
             // Call a nursery inventory query service to
             // get list of particular nursery cover details
-            this.nurseryInventoryService
-                .query({
-                    filter: {
-                        'status.equals': STATUS_COVER,
-                        'nurserysId.equals': this.nurseryInventory.nurserysId
-                    }
-                })
-                .subscribe((res: HttpResponse<INurseryInventory[]>) => {
-                    // If length is greater than 0, to update the old row
-                    if (res.body.length > 0) {
-                        this.nurseryInventory = res.body[res.body.length - 1];
-                        // Add a quantity to current quantity and assign a value
-                        this.nurseryInventory.currentQuantity =
-                            +this.nurseryInventory.currentQuantity + +this.nurseryInventoryDetails.quantity;
-                        this.nurseryInventory.addedQuantity = +this.nurseryInventory.addedQuantity + +this.nurseryInventoryDetails.quantity;
-                        this.subscribeToSaveResponse(this.nurseryInventoryService.update(this.nurseryInventory));
-                    } else {
-                        // Assign a value to current quantity
-                        this.nurseryInventory.currentQuantity = this.nurseryInventoryDetails.quantity;
-                        this.nurseryInventory.addedQuantity = this.nurseryInventoryDetails.quantity;
-                        this.subscribeToSaveResponse(this.nurseryInventoryService.create(this.nurseryInventory));
-                    }
-                });
+            this.nurseryInventoryService.query({
+                filter: {
+                    'status.equals': STATUS_COVER,
+                    'nurserysId.equals': this.nurseryInventory.nurserysId
+                }
+            })
+            .subscribe((res: HttpResponse<INurseryInventory[]>) => {
+                // If length is greater than 0, to update the old row
+                if (res.body.length > 0) {
+                    this.nurseryInventory = res.body[res.body.length - 1];
+                    // Add a quantity to current quantity and assign a value
+                    this.nurseryInventory.currentQuantity =
+                        +this.nurseryInventory.currentQuantity + +this.nurseryInventoryDetails.quantity;
+                    this.nurseryInventory.addedQuantity = +this.nurseryInventory.addedQuantity + +this.nurseryInventoryDetails.quantity;
+                    this.subscribeToSaveResponse(this.nurseryInventoryService.update(this.nurseryInventory));
+                } else {
+                    // Assign a value to current quantity
+                    this.nurseryInventory.currentQuantity = this.nurseryInventoryDetails.quantity;
+                    this.nurseryInventory.addedQuantity = this.nurseryInventoryDetails.quantity;
+                    this.subscribeToSaveResponse(this.nurseryInventoryService.create(this.nurseryInventory));
+                }
+            });
         }
     }
 
@@ -820,7 +844,9 @@ export class NurseryInventoryMgntComponent implements OnInit {
     saveCoverFilling(): void {
         // this.coverFilling.status = STATUS_COVER;
         // Call a cover filling create service
-        this.coverFillingsubscribeToSaveResponse(this.coverFillingService.create(this.coverFilling));
+        this.coverFillingsubscribeToSaveResponse(
+            this.coverFillingService.create(this.coverFilling)
+        );
     }
 
     /**
@@ -836,6 +862,8 @@ export class NurseryInventoryMgntComponent implements OnInit {
                 // Call a function to display list of cover filling details
                 this.getCoverFillingList();
                 this.coverFilling = {};
+                // Call a function to reset the form value
+                this.resetCoverFilling();
             },
             (res: HttpErrorResponse) => {
                 // If error response display the error message in view
@@ -861,7 +889,8 @@ export class NurseryInventoryMgntComponent implements OnInit {
         this.isCoverFillingCollapsed = true;
         this.resetCoverFilling();
         // Call a cover filling query service to get the list of cover
-        this.coverFillingService.query().subscribe((res: HttpResponse<ICoverFilling[]>) => {
+        this.coverFillingService.query()
+        .subscribe((res: HttpResponse<ICoverFilling[]>) => {
             this.coverFillings = res.body;
         });
     }
@@ -884,36 +913,39 @@ export class NurseryInventoryMgntComponent implements OnInit {
             this.coverFillingDetails.status = STATUS_DAMAGE;
             // Show the model pop up
             this.damageCoverFillingModel.show();
+            // Hide the form details of inventory and cover
+            this.isCollapsed = true;
+            this.isCollapsedInventoryDetails = true;
+            this.isCoverCollapsed = true;
+            this.isCoverFillingCollapsed = true;
 
             // To get the active pick list damage type Id from Pick List based on label
-            this.pickListService
-                .query({
-                    filter: {
-                        'status.equals': STATUS_ACTIVE,
-                        'displayLabelName.equals': DISPLAY_NAME_DAMAGE_TYPE
-                    }
-                })
-                .subscribe((res: HttpResponse<IPickList[]>) => {
-                    if (res.body.length > 0) {
-                        // Call a function to get list of damage type
-                        this.getDamageType(res.body[0].id);
-                    }
-                });
+            this.pickListService.query({
+                filter: {
+                    'status.equals': STATUS_ACTIVE,
+                    'displayLabelName.equals': DISPLAY_NAME_DAMAGE_TYPE
+                }
+            })
+            .subscribe((res: HttpResponse<IPickList[]>) => {
+                if (res.body.length > 0) {
+                    // Call a function to get list of damage type
+                    this.getDamageType(res.body[0].id);
+                }
+            });
 
             // To get the active pick list damage reason Id from Pick List based on label
-            this.pickListService
-                .query({
-                    filter: {
-                        'status.equals': STATUS_ACTIVE,
-                        'displayLabelName.equals': DISPLAY_NAME_DAMAGE_REASON
-                    }
-                })
-                .subscribe((res: HttpResponse<IPickList[]>) => {
-                    if (res.body.length > 0) {
-                        // Call a function to get list of damage description
-                        this.getDamageDescriptionType(res.body[0].id);
-                    }
-                });
+            this.pickListService.query({
+                filter: {
+                    'status.equals': STATUS_ACTIVE,
+                    'displayLabelName.equals': DISPLAY_NAME_DAMAGE_REASON
+                }
+            })
+            .subscribe((res: HttpResponse<IPickList[]>) => {
+                if (res.body.length > 0) {
+                    // Call a function to get list of damage description
+                    this.getDamageDescriptionType(res.body[0].id);
+                }
+            });
         }
     }
 
@@ -925,7 +957,7 @@ export class NurseryInventoryMgntComponent implements OnInit {
         const remainingQuantity = +value.noOfCover - +value.damageQuantity;
         // Check the validation for required field
         if (this.coverFillingDetails.damageTypeId == null || this.coverFillingDetails.damageTypeId === undefined) {
-            this.error.next(`Pick damage name should not be empty`);
+            this.error.next(`Damage type cannot be blank.`);
         } else if (remainingQuantity < this.coverFillingDetails.quantity) {
             this.error.next(`You cant able to consume.
                 Because your current quantity is ${remainingQuantity}.`);
@@ -993,22 +1025,18 @@ export class NurseryInventoryMgntComponent implements OnInit {
      * @param id as cover filling model auto increment id
      */
     getCoverFillingDetails(id): void {
+        this.inventoryTitle = 'Cover Filling Details';
         // To hide the form
         this.isCollapsed = false;
         // Get the particular inventory details
         // this.coverFillingDetailsService.getParticularCover(id)
-        this.coverFillingDetailsService
-            .query({
-                filter: {
-                    'coverFillingId.equals': id
-                }
-            })
-            .subscribe((res: HttpResponse<ICoverFillingDetails[]>) => {
-                // Display the div
-                this.isCollapsedInventoryDetails = false;
-                // Assign a response value to an object
-                this.inventoryDetails = res.body;
-            });
+        this.coverFillingDetailsService.query({ filter: { 'coverFillingId.equals': id }
+        }).subscribe((res: HttpResponse<ICoverFillingDetails[]>) => {
+            // Display the div
+            this.isCollapsedInventoryDetails = false;
+            // Assign a response value to an object
+            this.inventoryDetails = res.body;
+        });
     }
 
     /**
@@ -1016,7 +1044,7 @@ export class NurseryInventoryMgntComponent implements OnInit {
      * If entered value is number allow to enter otherwise return as false
      */
     numberOnly(event): boolean {
-        const charCode = event.which ? event.which : event.keyCode;
+        const charCode = (event.which) ? event.which : event.keyCode;
         if (charCode > 31 && (charCode < 48 || charCode > 57)) {
             return false;
         }

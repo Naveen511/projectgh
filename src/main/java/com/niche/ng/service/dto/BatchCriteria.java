@@ -158,7 +158,7 @@ public class BatchCriteria implements Serializable {
     /**
      * To get the showingType from the batch table
      * 
-     * @return showingType type of sown
+     * @return showingType type of shown
      */
     public IntegerFilter getShowingType() {
         return showingType;
@@ -167,7 +167,7 @@ public class BatchCriteria implements Serializable {
     /**
      * To set the sowing type  from the batch table
      * 
-     * @param showingType type of sown
+     * @param showingType type of shown
      */
     public void setShowingType(IntegerFilter showingType) {
         this.showingType = showingType;

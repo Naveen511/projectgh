@@ -7,53 +7,49 @@
  *  Target: yarn
  *******************************************************************************/
 
-// Import needed component and dependency
+// Import needed model, service, shared and angular dependency
 import { Component, OnInit } from '@angular/core';
-import { NurseryService } from 'app/entities/service/nursery.service';
-import { SectorService } from 'app/entities/service/sector.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { INursery, NurseryModel, DISPLAY_NAME_NURSERY_TYPE } from 'app/shared/model/nursery.model';
-import { ISector } from 'app/shared/model/sector.model';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { ViewChild } from '@angular/core';
-
 import { JhiParseLinks } from 'ng-jhipster';
-
 import * as moment from 'moment';
-import {
-    DATE_TIME_FORMAT,
-    ITEMS_PER_PAGE,
-    STATUS_ACTIVE,
-    SOFT_DELETE_STATUS,
-    ALERT_TIME_OUT_5000,
-    ALERT_TIME_OUT_3000,
-    STATUS_MOVEMENT,
-    STATUS_UPDATE
-} from 'app/shared';
 import { HttpResponse, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ZonalService } from 'app/entities/service/zonal.service';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
+import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
+
 import { IZonal } from 'app/shared/model/zonal.model';
 import { IPickList } from 'app/shared/model/pick-list.model';
+import {
+    INursery, NurseryModel, DISPLAY_NAME_NURSERY_TYPE
+} from 'app/shared/model/nursery.model';
+import { ISector } from 'app/shared/model/sector.model';
+import { IFinancialYearSettings } from 'app/shared/model/financial-year-settings.model';
+import { IOperationalHead } from 'app/shared/model/operational-head.model';
+import {
+    MapNurseryWithSector, IMapNurseryWithSector, MapNurseryWithSectorModel, STATUS_INACTIVE
+} from 'app/shared/model/map-nursery-with-sector.model';
+
+import { NurseryService } from 'app/entities/service/nursery.service';
+import { SectorService } from 'app/entities/service/sector.service';
+import { ZonalService } from 'app/entities/service/zonal.service';
 import { IPickListValue } from 'app/shared/model/pick-list-value.model';
 import { PickListService } from 'app/entities/service/pick-list.service';
 import { PickListValueService } from 'app/entities/service/pick-list-value.service';
-
-// Display the alert message of success and error
-import { Subject } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
-import { FinancialYearSettingsService } from 'app/entities/service/financial-year-settings.service';
-import { IFinancialYearSettings } from 'app/shared/model/financial-year-settings.model';
-import { OperationalHeadService } from 'app/entities/service/operational-head.service';
-import { IOperationalHead } from 'app/shared/model/operational-head.model';
 import {
-    MapNurseryWithSector,
-    IMapNurseryWithSector,
-    MapNurseryWithSectorModel,
-    STATUS_INACTIVE
-} from 'app/shared/model/map-nursery-with-sector.model';
-import { MapNurseryWithSectorService } from 'app/entities/service/map-nursery-with-sector.service';
-import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
+    FinancialYearSettingsService
+} from 'app/entities/service/financial-year-settings.service';
+import { OperationalHeadService } from 'app/entities/service/operational-head.service';
+import {
+    MapNurseryWithSectorService
+} from 'app/entities/service/map-nursery-with-sector.service';
+
+import {
+    DATE_TIME_FORMAT, ITEMS_PER_PAGE, STATUS_ACTIVE, SOFT_DELETE_STATUS,
+    ALERT_TIME_OUT_5000, ALERT_TIME_OUT_3000, STATUS_MOVEMENT, STATUS_UPDATE
+} from 'app/shared';
 
 // Mension the html, css/sass files
 @Component({
@@ -76,7 +72,7 @@ export class NurseryComponent implements OnInit {
     sectors: ISector[];
     nurserys: INursery[];
     pickLists: IPickList[];
-    varietys: IPickListValue[];
+    varieties: IPickListValue[];
     mapNurseryWithSectors: IMapNurseryWithSector[];
     toDate: string;
     batchId: number;
@@ -84,9 +80,8 @@ export class NurseryComponent implements OnInit {
     movementStatus: number;
     isCollapsed = true;
 
-    // Title and alertTitle declation as String
+    // Title declation as String
     title: String;
-    alertTitle: String;
 
     // Date picker id declation
     dateFromDp: any;
@@ -159,12 +154,6 @@ export class NurseryComponent implements OnInit {
     }
 
     ngOnInit() {
-        // Call a function to get active batch id
-        this.getActiveRecord();
-        // Get the pick list value
-        this.getPickList();
-        // Call a function to get list of active headOffice
-        this.getOperationalHead();
         // Call a function to get list of zonals and Nurserys
         this.getNurseryList();
 
@@ -173,11 +162,13 @@ export class NurseryComponent implements OnInit {
 
         // Set the success message with debounce time
         this.success.subscribe(message => (this.successMessage = message));
-        this.success.pipe(debounceTime(ALERT_TIME_OUT_3000)).subscribe(() => (this.successMessage = null));
+        this.success.pipe(debounceTime(ALERT_TIME_OUT_3000))
+            .subscribe(() => (this.successMessage = null));
 
         // To set the error message with debounce time
         this.error.subscribe(message => (this.errorMessage = message));
-        this.error.pipe(debounceTime(ALERT_TIME_OUT_5000)).subscribe(() => (this.errorMessage = null));
+        this.error.pipe(debounceTime(ALERT_TIME_OUT_5000))
+            .subscribe(() => (this.errorMessage = null));
     }
 
     /**
@@ -186,28 +177,12 @@ export class NurseryComponent implements OnInit {
     getActiveRecord(): void {
         // Get the list of active batch record and
         // assign a 0th index array value to an batch id
-        this.settingsService
-            .query({
-                filter: { 'status.equals': STATUS_ACTIVE }
-            })
-            .subscribe((res: HttpResponse<IFinancialYearSettings[]>) => {
-                // Assign a value to an object
-                this.batchId = res.body[0].id;
-            });
-    }
-
-    /**
-     * Get the active pick list value from the variety dropdown
-     */
-    getPickList(): void {
-        // Get the list of picklist
-        this.pickListService
-            .query({
-                filter: { 'status.equals': STATUS_ACTIVE }
-            })
-            .subscribe((res: HttpResponse<IPickList[]>) => {
-                this.pickLists = res.body;
-            });
+        this.settingsService.query({
+            filter: { 'status.equals': STATUS_ACTIVE }
+        }).subscribe((res: HttpResponse<IFinancialYearSettings[]>) => {
+            // Assign a value to an object
+            this.batchId = res.body[0].id;
+        });
     }
 
     /**
@@ -217,29 +192,25 @@ export class NurseryComponent implements OnInit {
     getOperationalHead(): void {
         // Get the list of active batch record and assign a array value to a variable
         // this.operationalHeadService.getActiveList()
-        this.operationalHeadService
-            .query({
-                filter: { 'status.equals': STATUS_ACTIVE }
-            })
-            .subscribe((res: HttpResponse<IOperationalHead[]>) => {
-                this.operationalHeads = res.body;
-            });
+        this.operationalHeadService.query({
+            filter: { 'status.equals': STATUS_ACTIVE }
+        }).subscribe((res: HttpResponse<IOperationalHead[]>) => {
+            this.operationalHeads = res.body;
+        });
     }
 
     /**
      * Get the nursery list and using the active status
      */
     getNurseryList(): void {
-        this.nurseryService
-            .query({
-                page: this.page - 1,
-                size: this.itemsPerPage,
-                sort: this.sort(),
-                filter: { 'status.equals': STATUS_ACTIVE }
-            })
-            .subscribe((res: HttpResponse<INursery[]>) => {
-                this.paginateNurserys(res.body, res.headers);
-            });
+        this.nurseryService.query({
+            page: this.page - 1,
+            size: this.itemsPerPage,
+            sort: this.sort(),
+            filter: { 'status.equals': STATUS_ACTIVE }
+        }).subscribe((res: HttpResponse<INursery[]>) => {
+            this.paginateNurserys(res.body, res.headers);
+        });
     }
 
     /**
@@ -250,25 +221,25 @@ export class NurseryComponent implements OnInit {
      * @param zonalId number
      * @param status number
      */
-    getZoneList(operationalHeadId: number, zonalId, status): void {
+    getZoneList(operationalHeadId: number, zonalId): void {
+        // To empty the sector value
+        this.sectors = null;
         // Get the list of zone
         // this.zonalService.getParticularHeadOfficeRecord(operationalHeadId)
-        this.zonalService
-            .query({
-                filter: {
-                    'status.equals': STATUS_ACTIVE,
-                    'operationalHeadId.equals': operationalHeadId
-                }
-            })
-            .subscribe((res: HttpResponse<IZonal[]>) => {
-                this.zonals = res.body;
-            });
+        this.zonalService.query({
+            filter: {
+                'status.equals': STATUS_ACTIVE,
+                'operationalHeadId.equals': operationalHeadId
+            }
+        }).subscribe((res: HttpResponse<IZonal[]>) => {
+            this.zonals = res.body;
+        });
 
         // Zonal Id variable is passed from the getNursery value
         // If the zone id is not null
         // load the sector for dependent dropdown
         // If it is null to set zonal and sector id is null
-        if (zonalId !== null && zonalId !== undefined) {
+        if (zonalId !== null && zonalId !== undefined && zonalId !== '') {
             this.getSector(zonalId);
         } else {
             // Set the zonal and sector id as null
@@ -292,36 +263,31 @@ export class NurseryComponent implements OnInit {
     getSector(zoneId): void {
         // Get the list of sector
         // this.sectorService.getSectors(zoneId)
-        this.sectorService
-            .query({
-                filter: {
-                    'status.equals': STATUS_ACTIVE,
-                    'zonalId.equals': zoneId
-                }
-            })
-            .subscribe((res: HttpResponse<ISector[]>) => {
-                this.sectors = res.body;
-            });
+        this.sectorService.query({
+            filter: {
+                'status.equals': STATUS_ACTIVE,
+                'zonalId.equals': zoneId
+            }
+        }).subscribe((res: HttpResponse<ISector[]>) => {
+            this.sectors = res.body;
+        });
     }
 
     /**
      * Get the variety from the picklist table
      * using the active status and pickListId from the pickListValue table
-     * @param id number
+     * @param id auto increment value of PickListValue table
      */
     getVariety(id): void {
         // this.pickListValueService.getVariety(id)
-        this.pickListValueService
-            .query({
-                filter: {
-                    'status.equals': STATUS_ACTIVE,
-                    'pickListId.equals': id
-                }
-            })
-            .subscribe((res: HttpResponse<IPickListValue[]>) => {
-                // console.log(res.body);
-                this.varietys = res.body;
-            });
+        this.pickListValueService.query({
+        filter: {
+            'status.equals': STATUS_ACTIVE,
+            'pickListId.equals': id
+        }}).subscribe((res: HttpResponse<IPickListValue[]>) => {
+            // console.log(res.body);
+            this.varieties = res.body;
+        });
     }
 
     /**
@@ -333,24 +299,25 @@ export class NurseryComponent implements OnInit {
         this.nurseryObject.status = STATUS_ACTIVE;
         // If the nursery id is not equal to undefined, update the old record
         if (this.nurseryObject.id !== undefined) {
-            // Set the title for the alert updated
-            this.alertTitle = 'updated';
             // Update the nursery service
-            this.subscribeToSaveResponse(this.nurseryService.update(this.nurseryObject), this.alertTitle);
+            this.subscribeToSaveResponse(
+                this.nurseryService.update(this.nurseryObject), 'updated'
+            );
         } else {
-            // Set the title for the alert created
-            this.alertTitle = 'created';
             this.nurseryObject.financialYearNurseryId = this.batchId;
             // Create the nursery
-            this.subscribeToSaveResponse(this.nurseryService.create(this.nurseryObject), this.alertTitle);
+            this.subscribeToSaveResponse(
+                this.nurseryService.create(this.nurseryObject), 'created'
+            );
         }
     }
 
     /**
      * Return the saved response of success and
      * error from the nursery table
-     * @param result object
-     * @param alertTitle string
+     *
+     * @param result object of Nursery
+     * @param alertTitle message title for alert
      */
     private subscribeToSaveResponse(result: Observable<HttpResponse<INursery>>, alertTitle) {
         result.subscribe(
@@ -358,8 +325,11 @@ export class NurseryComponent implements OnInit {
                 this.nurseryModal.hide();
                 this.moveNurseryValue(res.body, this.mapNurseryWithSector);
                 // alert('Nursery Created/Updated Successfully.');
-                this.success.next(`Nursery ${alertTitle} successfully`);
+                this.success.next(`Nursery ${alertTitle} successfully.`);
                 this.getNurseryList();
+                // To empty the value of sector and zonal list
+                this.zonals = null;
+                this.sectors = null;
                 this.isCollapsed = true;
                 this.nurseryObject = new NurseryModel();
             },
@@ -384,16 +354,14 @@ export class NurseryComponent implements OnInit {
         this.mapNurseryWithSector.sectorId = nurseryDetails.sectorId;
         this.mapNurseryWithSector.nurseryId = nurseryDetails.id;
         this.mapNurseryWithSector.status = STATUS_ACTIVE;
-        this.mapNurseryWithSectorService.create(this.mapNurseryWithSector).subscribe(
-            (res: HttpResponse<IMapNurseryWithSector>) => {
-                this.moveNursery.hide();
-            },
-            (res: HttpErrorResponse) => {
-                // alert(res.error.fieldErrors[0].message);
-                // Return the error alert
-                this.error.next(res.error.fieldErrors[0].message);
-            }
-        );
+        this.mapNurseryWithSectorService.create(this.mapNurseryWithSector)
+        .subscribe((res: HttpResponse<IMapNurseryWithSector>) => {
+            this.moveNursery.hide();
+        }, (res: HttpErrorResponse) => {
+            // alert(res.error.fieldErrors[0].message);
+            // Return the error alert
+            this.error.next(res.error.fieldErrors[0].message);
+        });
     }
 
     /**
@@ -412,24 +380,28 @@ export class NurseryComponent implements OnInit {
         }
 
         // .getParticularNurseryActiveRecord(nurseryDetails.id)
-        this.mapNurseryWithSectorService
-            .query({ filter: { 'nurseryId.equals': nurseryDetails.id } })
-            .subscribe((res: HttpResponse<IMapNurseryWithSector[]>) => {
-                // If the length is greater than 0,
-                // Set the status as inactive and todate for the old row
-                if (res.body.length > 0) {
-                    // If the todate date is empty,
-                    // To set the default date for the todate date
-                    if (value.toDate === null || value.toDate === undefined) {
-                        // console.log(this.fromDate);
-                        this.toDate = moment(value.toDate).format(DATE_TIME_FORMAT);
-                        value.toDate = moment(this.toDate, DATE_TIME_FORMAT);
-                    }
-                    this.mapNurseryWithSector = res.body[0];
-                    this.mapNurseryWithSector.description = value.description;
-                    this.mapNurseryWithSector.toDate = moment(value.toDate, DATE_TIME_FORMAT);
-                    this.mapNurseryWithSector.status = STATUS_INACTIVE;
-                    this.mapNurseryWithSectorService.update(this.mapNurseryWithSector).subscribe(
+        this.mapNurseryWithSectorService.query({
+            filter: {
+                'nurseryId.equals': nurseryDetails.id,
+                'status.equals': STATUS_ACTIVE
+            }
+        }).subscribe((res: HttpResponse<IMapNurseryWithSector[]>) => {
+            // If the length is greater than 0,
+            // Set the status as inactive and todate for the old row
+            if (res.body.length > 0) {
+                // If the todate date is empty,
+                // To set the default date for the todate date
+                if (value.toDate === null || value.toDate === undefined) {
+                    // console.log(this.fromDate);
+                    this.toDate = moment(value.toDate).format(DATE_TIME_FORMAT);
+                    value.toDate = moment(this.toDate, DATE_TIME_FORMAT);
+                }
+                this.mapNurseryWithSector = res.body[0];
+                this.mapNurseryWithSector.description = value.description;
+                this.mapNurseryWithSector.toDate = moment(value.toDate, DATE_TIME_FORMAT);
+                this.mapNurseryWithSector.status = STATUS_INACTIVE;
+                this.mapNurseryWithSectorService.update(this.mapNurseryWithSector)
+                    .subscribe(
                         (output: HttpResponse<IMapNurseryWithSector>) => {
                             this.saveMapTable(nurseryDetails, value.fromDate);
                         },
@@ -438,10 +410,10 @@ export class NurseryComponent implements OnInit {
                             this.error.next(error.error.fieldErrors[0].message);
                         }
                     );
-                } else {
-                    this.saveMapTable(nurseryDetails, value.fromDate);
-                }
-            });
+            } else {
+                this.saveMapTable(nurseryDetails, value.fromDate);
+            }
+        });
     }
 
     /**
@@ -449,26 +421,31 @@ export class NurseryComponent implements OnInit {
      * Show model popup to create nursery value
      */
     createNursery(): void {
+        // Call a function to get active batch id
+        this.getActiveRecord();
+
+        // Call a function to get list of active headOffice
+        this.getOperationalHead();
+
         this.nurseryObject = new NurseryModel();
         this.mapNurseryWithSector = new MapNurseryWithSectorModel();
         this.nurseryModal.show();
         this.title = 'Create Nursery:';
 
         // To get the pick list Id for Pick List Nursery Type
-        this.pickListService
-            .query({
-                filter: {
-                    'status.equals': STATUS_ACTIVE,
-                    'displayLabelName.equals': DISPLAY_NAME_NURSERY_TYPE
-                }
-            })
-            .subscribe((res: HttpResponse<IPickList[]>) => {
-                if (res.body.length > 0) {
-                    this.pickLists = res.body;
-                    // Call a function to get list of variety
-                    this.getVariety(res.body[0].id);
-                }
-            });
+        this.pickListService.query({
+            filter: {
+                'status.equals': STATUS_ACTIVE,
+                'displayLabelName.equals': DISPLAY_NAME_NURSERY_TYPE
+            }
+        }).subscribe((res: HttpResponse<IPickList[]>) => {
+            // If the length is greater than 0, get getVariety
+            if (res.body.length > 0) {
+                this.pickLists = res.body;
+                // Call a function to get list of variety
+                this.getVariety(res.body[0].id);
+            }
+        });
     }
 
     /**
@@ -484,45 +461,48 @@ export class NurseryComponent implements OnInit {
             this.title = `Update Nursery: ${value.nurseryName}`;
             // To get the pick list Id for Pick List Nursery Type
             // this.pickListService.getPickListId(DISPLAY_NAME_NURSERY_TYPE)
-            this.pickListService
-                .query({
-                    filter: {
-                        'status.equals': STATUS_ACTIVE,
-                        'displayLabelName.equals': DISPLAY_NAME_NURSERY_TYPE
-                    }
-                })
-                .subscribe((res: HttpResponse<IPickList[]>) => {
-                    this.getVariety(res.body[0].id);
-                });
+            this.pickListService.query({
+                filter: {
+                    'status.equals': STATUS_ACTIVE,
+                    'displayLabelName.equals': DISPLAY_NAME_NURSERY_TYPE
+                }
+            }).subscribe((res: HttpResponse<IPickList[]>) => {
+                this.getVariety(res.body[0].id);
+            });
         } else {
+            // Call the operational head
+            this.getOperationalHead();
             this.mapNurseryWithSector = new MapNurseryWithSectorModel();
             this.moveNursery.show();
             this.title = `Move Nursery: ${value.nurseryName}`;
 
-            this.sectorService
-                .query({
-                    filter: { 'id.equals': value.sectorId }
-                })
-                .subscribe((res: HttpResponse<ISector[]>) => {
-                    // If the res.body is not null get the zonal service details
-                    if (res.body[0] !== null && res.body !== undefined) {
-                        // this.nurseryObject.zonalId = res.body[0].zonalId;
-                        // this.nurseryObject.sectorId = value.sectorId;
+            this.sectorService.query({
+                filter: { 'id.equals':  value.sectorId }
+            }).subscribe((res: HttpResponse<ISector[]>) => {
+                // If the res.body is not null get the zonal service details
+                if (res.body[0] !== null && res.body !== undefined) {
+                    // this.nurseryObject.zonalId = res.body[0].zonalId;
+                    // this.nurseryObject.sectorId = value.sectorId;
 
-                        this.zonalService
-                            .query({
-                                filter: { 'id.equals': res.body[0].zonalId }
-                            })
-                            .subscribe((rest: HttpResponse<IZonal[]>) => {
-                                if (rest.body[0] !== null && rest.body !== undefined) {
-                                    this.nurseryObject.operationalHeadId = rest.body[0].operationalHeadId;
-                                    // this.getZoneList(rest.body[0].operationalHeadId, this.nurseryObject.zonalId);
-                                    // To get the zonal list based on the operationalHeadId and zonalId
-                                    this.getZoneList(rest.body[0].operationalHeadId, res.body[0].zonalId, status);
-                                }
-                            });
-                    }
-                });
+                    this.zonalService.query({
+                        filter: { 'id.equals':  res.body[0].zonalId }
+                    }).subscribe((rest: HttpResponse<IZonal[]>) => {
+                        if (rest.body[0] !== null && rest.body !== undefined) {
+                            this.nurseryObject.operationalHeadId = rest.body[0].operationalHeadId;
+                            // this.getZoneList(rest.body[0].operationalHeadId, this.nurseryObject.zonalId);
+                            // To get the zonal list based on the operationalHeadId and zonalId
+                            this.getZoneList(
+                                rest.body[0].operationalHeadId,
+                                res.body[0].zonalId
+                            );
+                            // this.getZoneList(
+                            //     rest.body[0].operationalHeadId,
+                            //     res.body[0].zonalId, status
+                            // );
+                        }
+                    });
+                }
+            });
         }
         // Set the nursery model to nurseryObject
         this.nurseryObject = value;
@@ -541,7 +521,7 @@ export class NurseryComponent implements OnInit {
             this.nurseryService.update(this.nurseryObject).subscribe(
                 data => {
                     // console.log('upda', this.sectorObject);
-                    this.success.next(`Nursery deleted successfully`);
+                    this.success.next(`Nursery deleted successfully.`);
                     this.getNurseryList();
                 },
                 (res: HttpErrorResponse) => {
@@ -558,14 +538,12 @@ export class NurseryComponent implements OnInit {
      */
     getMapList(id: number): void {
         // this.mapNurseryWithSectorService.getParticularNurseryRecord(id)
-        this.mapNurseryWithSectorService
-            .query({
-                filter: { 'nurseryId.equals': id }
-            })
-            .subscribe((res: HttpResponse<IMapNurseryWithSector[]>) => {
-                this.isCollapsed = false;
-                this.mapNurseryWithSectors = res.body;
-            });
+        this.mapNurseryWithSectorService.query({
+            filter: { 'nurseryId.equals': id }
+        }).subscribe((res: HttpResponse<IMapNurseryWithSector[]>) => {
+            this.isCollapsed = false;
+            this.mapNurseryWithSectors = res.body;
+        });
     }
 
     /**
@@ -577,6 +555,8 @@ export class NurseryComponent implements OnInit {
         this.nurseryModal.hide();
         // Call the getSector List function
         this.getNurseryList();
+        this.zonals = null;
+        this.sectors = null;
         // To close the opened div
         this.isCollapsed = true;
     }

@@ -39,7 +39,7 @@
                                         Active
                                     </span>
                                     <span *ngIf="val.status == 2" class="badge badge-danger">
-                                        InActive
+                                        Inactive
                                     </span>
                                 </td>
                             </tr>
@@ -74,7 +74,7 @@
                         <thead>
                             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" 
                                 [callback]="transition.bind(this)">
-                                <th>S.No</th>
+                                <th>S No.</th>
                                 <th jhiSortBy="financialYearNurseryBatchName">Year
                                     <fa-icon [icon]="'sort'"></fa-icon>
                                 </th>
@@ -170,7 +170,7 @@
                 </button>
             </div>
             <div class="modal-body font13">
-                <form action="" method="post" enctype="multipart/form-data" 
+                <form method="post" enctype="multipart/form-data" 
                     class="form-horizontal">
                     <input [(ngModel)]="nurseryObject.id" type="hidden" id="id"
                         name="id" class="form-control">
@@ -182,11 +182,11 @@
                     </div>
                     <div *ngIf="!nurseryObject.id" class="row">
                         <div class="form-group col-sm-3">
-                            <label for="select1">Head Office *</label>
+                            <label for="operationalHeadId">Head Office *</label>
                             <select [(ngModel)]="nurseryObject.operationalHeadId" 
                                 id="operationalHeadId" name="operationalHeadId"
                                 class="form-control"
-                                (change)="getZoneList(nurseryObject.operationalHeadId)">
+                                (change)="getZoneList(nurseryObject.operationalHeadId, '')">
                                 <option value="0" disabled selected>Select Head Office</option>
                                 <option *ngFor="let operationalHead of operationalHeads"
                                     value={{operationalHead.id}}>
@@ -195,7 +195,7 @@
                             </select>
                         </div>
                         <div class="form-group col-sm-3">
-                            <label for="select1">Zonal Name *</label>
+                            <label for="zoneId">Zonal Name *</label>
                             <select [(ngModel)]="nurseryObject.zoneId" id="zoneId"
                                 name="zoneId" class="form-control" (change)="getSector(nurseryObject.zoneId)">
                                 <option value="0" disabled selected>Select Zonal Name</option>
@@ -205,7 +205,7 @@
                             </select>
                         </div>
                         <div class="form-group col-sm-3">
-                            <label for="select1">Sector Name*</label>
+                            <label for="sectorId">Sector Name *</label>
                             <select [(ngModel)]="nurseryObject.sectorId" id="sectorId"
                                 name="sectorId" class="form-control">
                                 <option value="0" disabled selected>Select Sector Name</option>
@@ -215,20 +215,20 @@
                             </select>
                         </div>
                         <div class="form-group col-sm-3">
-                            <label for="text-input">Nursery Code *</label>
+                            <label for="code">Nursery Code *</label>
                             <input [(ngModel)]="nurseryObject.code" type="text" id="code"
                             name="code" class="form-control" placeholder="Name">
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-sm-3">
-                            <label for="text-input">Nursery Name *</label>
+                            <label for="nurseryName">Nursery Name *</label>
                             <input [(ngModel)]="nurseryObject.nurseryName" type="text" 
                             id="nurseryName" name="nurseryName" class="form-control"
                             placeholder="Name">
                         </div>
                         <!-- <div class="form-group col-sm-4">
-                            <label for="name">Pick Nursery Type* </label>
+                            <label for="pickListId">Pick Nursery Type* </label>
                             <select [(ngModel)]="nurseryObject.pickListId" id="pickListId" 
                                 name="pickListId" class="form-control" 
                                 (change)="getVariety(nurseryObject.pickListId)">
@@ -238,27 +238,27 @@
                             </select>
                         </div> -->
                         <div class="form-group col-sm-3">
-                            <label for="name">Nursery Type*</label>
+                            <label for="nurseryTypeId">Nursery Type *</label>
                             <select [(ngModel)]="nurseryObject.nurseryTypeId"
                                 id="nurseryTypeId" name="nurseryTypeId" class="form-control">
                                 <option value="0" disabled selected>Select Type</option>
-                                <option *ngFor="let val of varietys" value={{val.id}}>
+                                <option *ngFor="let val of varieties" value={{val.id}}>
                                     {{val.pickListValue}}
                                 </option>
                             </select>
                         </div>
                         <div class="form-group col-sm-3">
-                            <label for="text-input">From Date</label>
+                            <label for="fromDate">From Date</label>
                             <input [(ngModel)]="mapNurseryWithSector.fromDate" type="text" 
                                 id="fromDate" name="fromDate" readonly class="form-control"
                                 placeholder="From Date" ngbDatepicker 
                                 #dateFromDp="ngbDatepicker" (click)="dateFromDp.toggle()">
                         </div>
                         <div class="form-group col-sm-3">
-                            <label for="textarea-input">Address</label>
+                            <label for="nurseryAddress">Address</label>
                             <textarea [(ngModel)]="nurseryObject.nurseryAddress" 
-                                id="textarea-input" name="textarea-input" rows="3" 
-                                class="form-control" placeholder="Address..">
+                                id="nurseryAddress" name="nurseryAddress" rows="3" 
+                                class="form-control" placeholder="Address">
                             </textarea>
                         </div>
                     </div>
@@ -298,9 +298,9 @@
                 </button>
             </div>
             <div class="modal-body font13">
-                <form action="" method="post" enctype="multipart/form-data" 
+                <form method="post" enctype="multipart/form-data" 
                     class="form-horizontal">
-                    <input [(ngModel)]="nurseryObject.id" type="hidden" id="id"
+                    <input [(ngModel)]="nurseryObject.id" type="hidden" id="nurseryId"
                         name="id" class="form-control">
                     <div class="form-group row">
                         <div class="col-md-6">
@@ -309,14 +309,14 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="select1">
+                        <label class="col-md-3 col-form-label" for="updateOperationalHeadId">
                             Head Office *
                         </label>
                         <div class="col-md-9">
                             <select [(ngModel)]="nurseryObject.operationalHeadId" 
-                                id="operationalHeadId" name="operationalHeadId" 
+                                id="updateOperationalHeadId" name="operationalHeadId" 
                                 class="form-control"
-                                (change)="getZoneList(nurseryObject.operationalHeadId)">
+                                (change)="getZoneList(nurseryObject.operationalHeadId, '')">
                                 <option value="0" disabled selected>Select Head Office</option>
                                 <option *ngFor="let operationalHead of operationalHeads"
                                     value={{operationalHead.id}}>
@@ -326,9 +326,9 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="select1">Zonal *</label>
+                        <label class="col-md-3 col-form-label" for="updateZonalId">Zonal *</label>
                         <div class="col-md-9">
-                            <select [(ngModel)]="nurseryObject.zonalId" id="zonalId" 
+                            <select [(ngModel)]="nurseryObject.zonalId" id="updateZonalId" 
                                 name="zonalId" class="form-control"
                                 (change)="getSector(nurseryObject.zonalId)">
                                 <option value="0" disabled selected>Select Zonal</option>
@@ -339,11 +339,11 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="select1">
+                        <label class="col-md-3 col-form-label" for="updateSectorId">
                             Sector *
                         </label>
                         <div class="col-md-9">
-                            <select [(ngModel)]="nurseryObject.sectorId" id="sectorId" 
+                            <select [(ngModel)]="nurseryObject.sectorId" id="updateSectorId" 
                                 name="sectorId" class="form-control">
                                 <option value="0" disabled selected>Select Zonal</option>
                                 <option *ngFor="let sector of sectors" value={{sector.id}}>
@@ -353,35 +353,35 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="text-input">
+                        <label class="col-md-3 col-form-label" for="updateFromDate">
                             From Date
                         </label>
                         <div class="col-md-9">
                             <input [(ngModel)]="mapNurseryWithSector.fromDate" type="text" 
-                                id="fromDate" name="fromDate" readonly class="form-control"
+                                id="updateFromDate" name="fromDate" readonly class="form-control"
                                 placeholder="From Date" ngbDatepicker 
                                 #fromDateDp="ngbDatepicker" (click)="fromDateDp.toggle()">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="text-input">
+                        <label class="col-md-3 col-form-label" for="updateToDate">
                             To Date (Previous)
                         </label>
                         <div class="col-md-9">
                             <input [(ngModel)]="mapNurseryWithSector.toDate" type="text" 
-                                id="toDate" name="toDate" readonly class="form-control" 
+                                id="updateToDate" name="toDate" readonly class="form-control" 
                                 placeholder="To Date" ngbDatepicker 
                                 #toDateDp="ngbDatepicker" (click)="toDateDp.toggle()">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="textarea-input">
+                        <label class="col-md-3 col-form-label" for="description">
                             Description
                         </label>
                         <div class="col-md-9">
                             <textarea [(ngModel)]="mapNurseryWithSector.description" 
                                 id="description" name="description" rows="3" 
-                                class="form-control" placeholder="Description.."></textarea>
+                                class="form-control" placeholder="Description"></textarea>
                         </div>
                     </div>
                 </form>

@@ -66,7 +66,7 @@ public class Nursery extends AbstractAuditingEntity implements Serializable {
 
      /**
      * Relation Name : OneToMany - batchs
-     * Table Name    : Connects the Nursery Table to Batch Table
+     * Table Name    : Connect the Nursery Table to Batch Table
      * Used to point out the Nursery values in the Batch table.
      */
     @OneToMany(mappedBy = "nursery", cascade = javax.persistence.CascadeType.REMOVE)
@@ -74,7 +74,7 @@ public class Nursery extends AbstractAuditingEntity implements Serializable {
 
      /**
      * Relation Name : OneToMany - nurseryStocks
-     * Table Name    : Connects the Nursery Table to NurseryStock Table
+     * Table Name    : Connect the Nursery Table to NurseryStock Table
      * Used to point out the Nursery values in the NurseryStock table.
      */
     @OneToMany(mappedBy = "nursery", cascade = javax.persistence.CascadeType.REMOVE)
@@ -82,7 +82,7 @@ public class Nursery extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : ManyToOne - nurserys
-     * Table Name    : Connects the Nursery Table to Sector Table.
+     * Table Name    : Connect the Nursery Table to Sector Table.
      * Used to point out the Nursery values in the Sector table.
      */
     @ManyToOne
@@ -92,7 +92,7 @@ public class Nursery extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : ManyToOne - nurserys
-     * Table Name    : Connects the Nursery Table to PickListValue Table.
+     * Table Name    : Connect the Nursery Table to PickListValue Table.
      * Used to point out the Nursery values in the PickListValue table.
      */
     @ManyToOne
@@ -101,7 +101,7 @@ public class Nursery extends AbstractAuditingEntity implements Serializable {
 
      /**
      * Relation Name : OneToMany - motherBeds
-     * Table Name    : Connects the Nursery Table to MotherBed Table
+     * Table Name    : Connect the Nursery Table to MotherBed Table
      * Used to point out the Nursery values in the MotherBed table.
      */
     @OneToMany(mappedBy = "nursery", cascade = javax.persistence.CascadeType.REMOVE)
@@ -109,7 +109,7 @@ public class Nursery extends AbstractAuditingEntity implements Serializable {
 
      /**
      * Relation Name : OneToMany - nurseryInventorys
-     * Table Name    : Connects the Nursery Table to NurseryInventory Table
+     * Table Name    : Connect the Nursery Table to NurseryInventory Table
      * Used to point out the Nursery values in the NurseryInventory table.
      */
     @OneToMany(mappedBy = "nurserys", cascade = javax.persistence.CascadeType.REMOVE)
@@ -117,7 +117,7 @@ public class Nursery extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : OneToMany - nurseryStockDetails
-     * Table Name    : Connects the Nursery Table to NurseryStockDetails Table
+     * Table Name    : Connect the Nursery Table to NurseryStockDetails Table
      * Used to point out the Nursery values in the NurseryStockDetails table.
      */
     @OneToMany(mappedBy = "itNursery", cascade = javax.persistence.CascadeType.REMOVE)
@@ -125,7 +125,7 @@ public class Nursery extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : ManyToOne - nurseries
-     * Table Name    : Connects the Nursery Table to FinancialYearSettings Table.
+     * Table Name    : Connect the Nursery Table to FinancialYearSettings Table.
      * Used to point out the Nursery values in the FinancialYearSettings table.
      */
     @ManyToOne
@@ -134,7 +134,7 @@ public class Nursery extends AbstractAuditingEntity implements Serializable {
 
      /**
      * Relation Name : OneToMany - incharges
-     * Table Name    : Connects the Nursery Table to NurseryIncharge Table
+     * Table Name    : Connect the Nursery Table to NurseryIncharge Table
      * Used to point out the Nursery values in the NurseryIncharge table.
      */
     @OneToMany(mappedBy = "nursery", cascade = javax.persistence.CascadeType.REMOVE)
@@ -142,7 +142,7 @@ public class Nursery extends AbstractAuditingEntity implements Serializable {
 
      /**
      * Relation Name : OneToMany - mapNurseryWithSectors
-     * Table Name    : Connects the Nursery Table to MapNurseryWithSector Table
+     * Table Name    : Connect the Nursery Table to MapNurseryWithSector Table
      * Used to point out the Nursery values in the MapNurseryWithSector table.
      */
     @OneToMany(mappedBy = "nursery", cascade = javax.persistence.CascadeType.REMOVE)
@@ -150,7 +150,7 @@ public class Nursery extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : OneToMany - fromNurseryStockDetails
-     * Table Name    : Connects the Nursery Table to NurseryStockDetails Table
+     * Table Name    : Connect the Nursery Table to NurseryStockDetails Table
      * Used to point out the Nursery values in the NurseryStockDetails table.
      */
     @OneToMany(mappedBy = "fromNurseryStockDetails", cascade = javax.persistence.CascadeType.REMOVE)

@@ -17,7 +17,9 @@ import { map } from 'rxjs/operators';
 
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared';
-import { IFinancialYearSettings, STATUS_ACTIVE } from 'app/shared/model/financial-year-settings.model';
+import {
+    IFinancialYearSettings, STATUS_ACTIVE
+} from 'app/shared/model/financial-year-settings.model';
 
 type EntityResponseType = HttpResponse<IFinancialYearSettings>;
 type EntityArrayResponseType = HttpResponse<IFinancialYearSettings[]>;
@@ -32,7 +34,8 @@ export class FinancialYearSettingsService {
 
     constructor(private http: HttpClient) {}
 
-    /** Send a POST method request to create the financialYearSettings and
+    /**
+     * Send a POST method request to create the financialYearSettings and
      * get created record as response
      *
      * @param financialYearSettings - single object

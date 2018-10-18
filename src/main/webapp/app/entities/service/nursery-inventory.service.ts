@@ -29,14 +29,16 @@ export class NurseryInventoryService {
 
     constructor(private http: HttpClient) {}
 
-    /** Send a POST method request to create the Nursery Inventory of Seeds and Cover,
+    /**
+     * Send a POST method request to create the Nursery Inventory of Seeds and Cover,
      * get created record as response
      *
      * @param nurseryInventory - single object
      * @returns object of values
      */
     create(nurseryInventory: INurseryInventory): Observable<EntityResponseType> {
-        return this.http.post<INurseryInventory>(this.resourceUrl, nurseryInventory, { observe: 'response' });
+        return this.http
+            .post<INurseryInventory>(this.resourceUrl, nurseryInventory, { observe: 'response' });
     }
 
     /**
@@ -47,7 +49,8 @@ export class NurseryInventoryService {
      * @returns object of values
      */
     update(nurseryInventory: INurseryInventory): Observable<EntityResponseType> {
-        return this.http.put<INurseryInventory>(this.resourceUrl, nurseryInventory, { observe: 'response' });
+        return this.http
+            .put<INurseryInventory>(this.resourceUrl, nurseryInventory, { observe: 'response' });
     }
 
     /**
@@ -58,7 +61,8 @@ export class NurseryInventoryService {
      * @returns object of values
      */
     find(id: number): Observable<EntityResponseType> {
-        return this.http.get<INurseryInventory>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+        return this.http
+            .get<INurseryInventory>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
     /**
@@ -70,7 +74,8 @@ export class NurseryInventoryService {
      */
     query(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
-        return this.http.get<INurseryInventory[]>(this.resourceUrl, { params: options, observe: 'response' });
+         return this.http
+             .get<INurseryInventory[]>(this.resourceUrl, { params: options, observe: 'response' });
     }
 
     /**

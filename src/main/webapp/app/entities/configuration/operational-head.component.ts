@@ -7,25 +7,28 @@
  *  Target: yarn
  *******************************************************************************/
 
-// Import needed component and dependency
+// Import needed model, service, shared and angular dependency
 import { Component, OnInit } from '@angular/core';
-import { OperationalHeadService } from 'app/entities/service/operational-head.service';
-import { IOperationalHead, OperationalHeadModel, STATUS_ACTIVE } from 'app/shared/model/operational-head.model';
-
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { ViewChild } from '@angular/core';
 import { JhiParseLinks } from 'ng-jhipster';
-
-import { ITEMS_PER_PAGE, SOFT_DELETE_STATUS, ALERT_TIME_OUT_5000, ALERT_TIME_OUT_3000 } from 'app/shared';
 import { HttpResponse, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-
-// Display the alert message of success and error
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+
 import { EntityAuditEvent } from 'app/admin/entity-audit/entity-audit-event.model';
+import {
+    IOperationalHead, OperationalHeadModel, STATUS_ACTIVE
+} from 'app/shared/model/operational-head.model';
+
 import { EntityAuditService } from 'app/admin/entity-audit/entity-audit.service';
+import { OperationalHeadService } from 'app/entities/service/operational-head.service';
+
+import {
+    ITEMS_PER_PAGE, SOFT_DELETE_STATUS, ALERT_TIME_OUT_5000, ALERT_TIME_OUT_3000
+} from 'app/shared';
 
 // Mension the html, css/sass files
 @Component({
@@ -49,9 +52,8 @@ export class OperationalHeadComponent implements OnInit {
     audits: EntityAuditEvent[];
     isCollapsed = true;
 
-    // Title and alertTitle declation as String
+    // Title declation as String
     title: String;
-    alertTitle: String;
 
     // To display the success message
     private success = new Subject<string>();
@@ -107,11 +109,13 @@ export class OperationalHeadComponent implements OnInit {
 
         // Set the success message with debounce time
         this.success.subscribe(message => (this.successMessage = message));
-        this.success.pipe(debounceTime(ALERT_TIME_OUT_3000)).subscribe(() => (this.successMessage = null));
+        this.success.pipe(debounceTime(ALERT_TIME_OUT_3000))
+            .subscribe(() => (this.successMessage = null));
 
         // To set the error message with debounce time
         this.error.subscribe(message => (this.errorMessage = message));
-        this.error.pipe(debounceTime(ALERT_TIME_OUT_5000)).subscribe(() => (this.errorMessage = null));
+        this.error.pipe(debounceTime(ALERT_TIME_OUT_5000))
+            .subscribe(() => (this.errorMessage = null));
     }
 
     /**
@@ -120,13 +124,12 @@ export class OperationalHeadComponent implements OnInit {
      */
     getList(): void {
         // Get the list of head office
-        this.operationalHeadService
-            .query({
-                page: this.page - 1,
-                size: this.itemsPerPage,
-                sort: this.sort(),
-                filter: { 'status.equals': STATUS_ACTIVE }
-            })
+        this.operationalHeadService.query({
+            page: this.page - 1,
+            size: this.itemsPerPage,
+            sort: this.sort(),
+            filter: { 'status.equals': STATUS_ACTIVE }
+        })
             .subscribe((res: HttpResponse<IOperationalHead[]>) => {
                 this.paginateLists(res.body, res.headers);
             });
@@ -139,23 +142,22 @@ export class OperationalHeadComponent implements OnInit {
         // If the operation Id is not empty, goto update action
         if (this.operationalHead.id !== undefined) {
             this.operationalHeadService
-                .query({
-                    filter: {
-                        'id.equals': this.operationalHead.id,
-                        'name.equals': this.operationalHead.name,
-                        'status.equals': STATUS_ACTIVE
-                    }
-                })
-                .subscribe((res: HttpResponse<IOperationalHead[]>) => {
-                    // Same value - 1, differnt value 0
-                    if (res.body.length === 1) {
-                        this.saveHeadOffice();
-                    } else if (res.body.length === 0) {
-                        this.validateHeadOffice();
-                    } else {
-                        this.error.next('Already this name has taken');
-                    }
-                });
+            .query({
+                filter: {
+                    'id.equals':  this.operationalHead.id,
+                    'name.equals':  this.operationalHead.name,
+                    'status.equals': STATUS_ACTIVE
+                }
+            }).subscribe((res: HttpResponse<IOperationalHead[]>) => {
+                // Same value - 1, differnt value 0
+                if (res.body.length === 1) {
+                    this.saveHeadOffice();
+                } else if (res.body.length === 0) {
+                    this.validateHeadOffice();
+                } else {
+                    this.error.next('Already this name has taken');
+                }
+            });
         } else {
             // Validate the head office
             this.validateHeadOffice();
@@ -168,12 +170,17 @@ export class OperationalHeadComponent implements OnInit {
      */
     saveHeadOffice() {
         this.operationalHead.status = STATUS_ACTIVE;
+        // If the Id is not empty call the update function
         if (this.operationalHead.id !== undefined) {
-            this.alertTitle = 'updated';
-            this.subscribeToSaveResponse(this.operationalHeadService.update(this.operationalHead), this.alertTitle);
+            this.subscribeToSaveResponse(
+                this.operationalHeadService.update(
+                    this.operationalHead), 'updated.'
+                );
         } else {
-            this.alertTitle = 'created';
-            this.subscribeToSaveResponse(this.operationalHeadService.create(this.operationalHead), this.alertTitle);
+            this.subscribeToSaveResponse(
+                this.operationalHeadService.create(
+                    this.operationalHead), 'created.'
+                );
         }
     }
 
@@ -182,26 +189,25 @@ export class OperationalHeadComponent implements OnInit {
      */
     validateHeadOffice() {
         this.operationalHeadService
-            .query({
-                filter: {
-                    'name.equals': this.operationalHead.name,
-                    'status.equals': STATUS_ACTIVE
-                }
-            })
-            .subscribe((res: HttpResponse<IOperationalHead[]>) => {
-                if (res.body.length > 0) {
-                    this.error.next('Already this name has taken');
-                } else {
-                    this.saveHeadOffice();
-                }
-            });
+        .query({
+            filter: {
+                'name.equals':  this.operationalHead.name,
+                'status.equals': STATUS_ACTIVE
+            }
+        }).subscribe((res: HttpResponse<IOperationalHead[]>) => {
+            if (res.body.length > 0) {
+                this.error.next('Already this name has taken');
+            } else {
+                this.saveHeadOffice();
+            }
+        });
     }
 
     /**
      * return the saved response of success and
      * error from the operational head table
      * @param result object
-     * @param alertTitle string
+     * @param alertTitle message title for alert
      */
     private subscribeToSaveResponse(result: Observable<HttpResponse<IOperationalHead>>, alertTitle) {
         result.subscribe(

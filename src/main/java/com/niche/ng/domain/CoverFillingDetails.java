@@ -61,7 +61,7 @@ public class CoverFillingDetails extends AbstractAuditingEntity implements Seria
 
     /**
      * Relation Name : ManyToOne - coverFillingDetails
-     * Table Name    : Connects the coverFillingDetails Table to CoverFilling Table
+     * Table Name    : Connect the coverFillingDetails Table to CoverFilling Table
      * To get the cover details belongs to CoverFilling Table.
      */
     @ManyToOne
@@ -70,7 +70,7 @@ public class CoverFillingDetails extends AbstractAuditingEntity implements Seria
 
     /**
      * Relation Name : ManyToOne - coverFillingDetails
-     * Table Name    : Connects the coverFillingDetails Table to PickListValue Table
+     * Table Name    : Connect the coverFillingDetails Table to PickListValue Table
      * To get the damageType in the coverFillingDetails.
      */
     @ManyToOne
@@ -79,7 +79,7 @@ public class CoverFillingDetails extends AbstractAuditingEntity implements Seria
 
     /**
      * Relation Name : ManyToOne
-     * Table Name    : Connects the coverFillingDetails Table to PickListValue Table
+     * Table Name    : Connect the coverFillingDetails Table to PickListValue Table
      * To get the cover details.
      */
     @ManyToOne

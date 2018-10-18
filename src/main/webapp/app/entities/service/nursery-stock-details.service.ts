@@ -32,7 +32,8 @@ export class NurseryStockDetailsService {
 
     constructor(private http: HttpClient) {}
 
-    /** Send a POST method request to create the nurseryStockDetails and
+    /**
+     * Send a POST method request to create the nurseryStockDetails and
      * get created record as response
      *
      * @param nurseryStockDetails - single object
@@ -143,7 +144,9 @@ export class NurseryStockDetailsService {
     private convertDateFromClient(nurseryStockDetails: INurseryStockDetails): INurseryStockDetails {
         const copy: INurseryStockDetails = Object.assign({}, nurseryStockDetails, {
             date:
-                nurseryStockDetails.date != null && nurseryStockDetails.date.isValid() ? nurseryStockDetails.date.format(DATE_FORMAT) : null
+                nurseryStockDetails.date != null && nurseryStockDetails.date.isValid()
+                    ? nurseryStockDetails.date.format(DATE_FORMAT)
+                    : null
         });
         return copy;
     }

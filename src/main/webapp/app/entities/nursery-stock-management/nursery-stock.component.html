@@ -12,20 +12,20 @@
                     </button>
                 </div>
                 <div class="card-body">
-                    <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                    <form method="post" enctype="multipart/form-data" class="form-horizontal">
                         <div class="row">
                             <div class="form-group col-sm-3">
-                                <label for="name">Zonal *</label>
-                                <select [(ngModel)]="nurseryStock.zoneId" id="zoneId" 
+                                <label for="zoneId">Zonal *</label>
+                                <select [(ngModel)]="nurseryStock.zoneId" id="zoneId"
                                     name="zoneId" class="form-control"
-                                    (change)="getSector(nurseryStock.zoneId)" required>
+                                    (change)="getSector(nurseryStock.zoneId)">
                                     <option value="0" disabled selected>Select Zonal Name</option>
                                     <option *ngFor="let zone of zonals"
                                         value={{zone.id}}>{{zone.zoneName}}</option>
                                 </select>
                             </div>
                             <div class="form-group col-sm-3">
-                                <label for="name">Sector *</label>
+                                <label for="sectorId">Sector *</label>
                                 <select [(ngModel)]="nurseryStock.sectorId" id="sectorId"
                                     name="sectorId" class="form-control"
                                     (change)="getNursery(nurseryStock.sectorId)">
@@ -35,56 +35,56 @@
                                 </select>
                             </div>
                             <div class="form-group col-sm-3">
-                                <label for="name">Nursery *</label>
+                                <label for="nurseryId">Nursery *</label>
                                 <select [(ngModel)]="nurseryStock.nurseryId"
                                     id="nurseryId" name="nurseryId" 
-                                    class="form-control" required>
+                                    class="form-control">
                                     <option value="0" disabled selected>Select Nursery Name</option>
                                     <option *ngFor="let nursery of nurserys"
                                         value={{nursery.id}}>{{nursery.nurseryName}}</option>
                                 </select>
                             </div>
                             <!-- <div class="form-group col-sm-4">
-                                <label for="name">Pick Name *</label>
+                                <label for="pickListId">Pick Name *</label>
                                 <select [(ngModel)]="nurseryStock.pickListId" id="pickListId" 
                                     name="pickListId" class="form-control"
-                                    (change)="getVariety(nurseryStock.pickListId)" required>
+                                    (change)="getVariety(nurseryStock.pickListId)">
                                     <option value="0" disabled selected>Select</option>
                                     <option *ngFor="let pickList of pickLists"
                                         value={{pickList.id}}>{{pickList.pickListName}}</option>
                                 </select>
                             </div> -->
                             <div class="form-group col-sm-3">
-                                <label for="name">Variety * </label>
+                                <label for="pickListVarietyId">Variety * </label>
                                 <select [(ngModel)]="nurseryStock.pickListVarietyId"
                                     id="pickListVarietyId" name="pickListVarietyId" class="form-control"
-                                    (change)="getCategory(nurseryStock.pickListVarietyId)" required>
+                                    (change)="getCategory(nurseryStock.pickListVarietyId)">
                                     <option value="0" disabled selected>Select Variety Name</option>
-                                    <option *ngFor="let val of varietys"
+                                    <option *ngFor="let val of varieties"
                                         value={{val.id}}>{{val.pickListValue}}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-sm-3">
-                                <label for="name">Category *</label>
+                                <label for="pickListCategoryId">Category *</label>
                                 <select [(ngModel)]="nurseryStock.pickListCategoryId" 
                                     id="pickListCategoryId" name="pickListCategoryId" 
-                                    class="form-control" required>
+                                    class="form-control">
                                     <option value="0" disabled selected>Select Category Name</option>
-                                    <option *ngFor="let category of categorys" 
+                                    <option *ngFor="let category of categories" 
                                         value={{category.id}}>{{category.pickListValue}}</option>
                                 </select>
                             </div>
                             <div class="form-group col-sm-3">
-                                <label for="name">Quantity *</label>
+                                <label for="quantity">Quantity *</label>
                                 <input [(ngModel)]="nurseryStockDetails.quantity"
                                     type="text" id="quantity" name="quantity"
-                                    class="form-control" placeholder="Quantity" required
+                                    class="form-control" placeholder="Quantity"
                                     (keypress)="numberOnly($event)">
                             </div>
                             <div class="form-group col-sm-3">
-                                <label for="name">Date *</label>
+                                <label for="field_date">Date *</label>
                                 <div class="input-group">
                                     <input id="field_date" type="text" class="form-control" 
                                     name="date" [(ngModel)]="nurseryStockDetails.date" 
@@ -97,10 +97,10 @@
                                 </div>
                             </div>
                             <div class="form-group col-sm-3">
-                                    <label for="name">Description</label>
+                                    <label for="description">Description</label>
                                 <textarea [(ngModel)]="nurseryStockDetails.description" 
                                     type="text" id="description" name="description"
-                                    class="form-control" placeholder="Description">
+                                    class="form-control" placeholder="Description..">
                                 </textarea>
                             </div>
                         </div>
@@ -108,17 +108,17 @@
                             <div class="col-sm-12 text-info">
                                 Received saplings from other nursery </div>
                             <div class="form-group col-sm-3">
-                                <label for="name">Zonal</label>
+                                <label for="receivedZoneId">Zonal</label>
                                 <select [(ngModel)]="nurseryStockDetails.receivedZoneId"
                                     id="receivedZoneId" name="receivedZoneId" class="form-control"
-                                    (change)="getReceivedSector(nurseryStockDetails.receivedZoneId)" required>
+                                    (change)="getReceivedSector(nurseryStockDetails.receivedZoneId)">
                                     <option value="0" disabled selected>Select Zonal Name</option>
                                     <option *ngFor="let zonal of zonals"
                                         value={{zonal.id}}>{{zonal.zoneName}}</option>
                                 </select>
                             </div>
                             <div class="form-group col-sm-3">
-                                <label for="name">Sector</label>
+                                <label for="receivedSectorId">Sector</label>
                                 <select [(ngModel)]="nurseryStockDetails.receivedSectorId"
                                     id="receivedSectorId" name="receivedSectorId" class="form-control" 
                                     (change)="getReceivedNursery(nurseryStockDetails.receivedSectorId)">
@@ -128,19 +128,21 @@
                                 </select>
                             </div>
                             <div class="form-group col-sm-3">
-                                <label for="name">Nursery</label>
+                                <label for="itNurseryId">Nursery</label>
                                 <select [(ngModel)]="nurseryStockDetails.itNurseryId"
                                     id="itNurseryId" name="itNurseryId" 
-                                    class="form-control" required>
+                                    class="form-control">
                                     <option value="0" disabled selected>Select Nursery Name</option>
                                     <option *ngFor="let nursery of receivedNurserys"
                                         value={{nursery.id}}>{{nursery.nurseryName}}</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <span class="text-danger" *ngIf="errorMessage"
-                                (close)="errorMessage = null">{{ errorMessage }}</span>
+                        <div class="row">
+                            <div class="form-group col-sm-6">
+                                <span class="text-danger" *ngIf="errorMessage"
+                                    (close)="errorMessage = null">{{ errorMessage }}</span>
+                            </div>    
                         </div>
                     </form>
                 </div>
@@ -193,26 +195,26 @@
                                     <span 
                                         *ngIf="val.itNurseryNurseryName != null 
                                         && val.itNurseryNurseryName != undefined
-                                        && val.status == 2">
+                                        && val.status == statusConsume">
                                         <b>Distributed to(nursery) : </b>{{val.itNurseryNurseryName}}
                                     </span>
                                     <span 
                                         *ngIf="val.fromNurseryStockDetailsNurseryName != null 
                                         && val.fromNurseryStockDetailsNurseryName != undefined
-                                        && (val.status == 1 || val.status == 3)">
+                                        && (val.status == statusAdd || val.status == statusDamage)">
                                         <b>Received from(nursery) : </b>{{val.fromNurseryStockDetailsNurseryName}}
                                     </span>
 
                                 </td>
                                 <td>{{val.createdDate | date:'medium'}}</td>
                                 <td><b>
-                                    <span *ngIf="val.status == 1" 
+                                    <span *ngIf="val.status == statusAdd" 
                                         class="text-success">Added</span>
-                                    <span *ngIf="val.status == 2" 
+                                    <span *ngIf="val.status == statusConsume" 
                                         class="text-primary">Distributed</span>
-                                    <span *ngIf="val.status == 3" 
+                                    <span *ngIf="val.status == statusDamage" 
                                         class="text-danger">Damage</span>
-                                    <span *ngIf="val.status == 4" 
+                                    <span *ngIf="val.status == statusPos" 
                                         class="text-danger">POS</span></b>
                                 </td>
                             </tr>
@@ -244,12 +246,12 @@
                         (click)="getNurseryStockList()"> Stock List </i>
                     </ng-template>
                     <!-- Display the error message -->
-                    <div class="form-group row">
+                    <!--<div class="form-group row">
                         <div class="col-md-6">
                             <span class="text-danger" *ngIf="errorMessage"
                                 (close)="errorMessage = null">{{ errorMessage }}</span>
                         </div>
-                    </div> <!-- End of the error message -->
+                    </div> --><!-- End of the error message -->
                     <div class="card">
                         <div class="card-header">
                             <i class="fa fa-align-justify"></i> Nursery Stock List
@@ -290,16 +292,16 @@
                                         <td>{{value.addedQuantity}}</td>
                                         <td>{{value.currentQuantity}}</td>
                                         <td>
-                                            <span *ngIf="value.consumedQuantity == '' || value.consumedQuantity == null">0</span>
-                                            <span *ngIf="value.consumedQuantity != '' || value.consumedQuantity != null">{{value.consumedQuantity}}</span>
+                                            <span *ngIf="value.consumedQuantity == null">0</span>
+                                            <span *ngIf="value.consumedQuantity != null">{{value.consumedQuantity}}</span>
                                         </td>
                                         <td>
-                                            <span *ngIf="value.damageQuantity == '' || value.damageQuantity == null">0</span>
-                                            <span *ngIf="value.damageQuantity != '' || value.damageQuantity != null">{{value.damageQuantity}}</span>
+                                            <span *ngIf="value.damageQuantity == null">0</span>
+                                            <span *ngIf="value.damageQuantity != null">{{value.damageQuantity}}</span>
                                         </td>
                                         <td>
-                                            <span *ngIf="value.damageQuantity == '' || value.damageQuantity == null">0</span>
-                                            <span *ngIf="value.posQuantity != '' || value.posQuantity != null">{{value.damageQuantity}}</span>
+                                            <span *ngIf="value.damageQuantity == null">0</span>
+                                            <span *ngIf="value.posQuantity != null">{{value.posQuantity}}</span>
                                         </td>
                                         <!-- <td>{{value.consumedQuantity}}</td>
                                         <td>{{value.damageQuantity}}</td>
@@ -346,22 +348,19 @@
                     <div class="card">
                         <div class="card-header">
                             <!-- <i class="fa fa-align-justify"></i> Distribution List -->
-                            <div class="row">
-                                <div class="form-group col-sm-1">
-                                    <label for="name">Nursery </label>
-                                </div>
-                                <div class="form-group col-sm-3">
-                                    <form action="" method="post"
-                                        enctype="multipart/form-data" class="form-horizontal">
+                            <form method="post" enctype="multipart/form-data" class="form-horizontal">
+                                <div class="row">
+                                    <label class="col-sm-2" for="filterNurseryId">Nursery </label>
+                                    <div class="col-sm-3">
                                         <select [(ngModel)]="nurseryStock.nurseryId"
-                                            id="nurseryId" name="nurseryId" class="form-control" 
+                                            id="filterNurseryId" name="nurseryId" class="form-control" 
                                             (change)="getParticularList(nurseryStock.nurseryId)">
                                             <option value="0" disabled selected>Select Nursery Name</option>
                                             <option *ngFor="let nursery of nurserysList" value={{nursery.id}}>{{nursery.nurseryName}}</option>
                                         </select>
-                                    </form>
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                         <div class="card-body table-responsive">
                             <!-- *ngIf="particularNurseryDetails != '' 
@@ -404,7 +403,7 @@
                         </div>
                     </div>
                     <div class="card" 
-                        *ngIf="addedNurseryDetails != '' && addedNurseryDetails != undefined">
+                        *ngIf="nurseryStock.nurseryId != null">
                         <div class="card-header">
                             <i class="fa fa-align-justify"></i> Added List
                         </div>
@@ -504,7 +503,7 @@
                 </button>
             </div>
             <div class="modal-body font12">
-                <form action="" method="post" enctype="multipart/form-data"
+                <form method="post" enctype="multipart/form-data"
                     class="form-horizontal">
                     <input [(ngModel)]="nurseryStockDetails.nurseryStockId"
                         type="hidden" id="nurseryStockId" 
@@ -512,9 +511,9 @@
                     <div class="row">
                         <div class="form-group col-sm-3"
                             *ngIf="nurseryStockDetails.status == statusConsume">
-                            <label for="select1">Zonal *</label>
+                            <label for="stockZoneId">Zonal *</label>
                             <select [(ngModel)]="nurseryStockDetails.zoneId" 
-                                id="zoneId" name="zoneId" class="form-control" 
+                                id="stockZoneId" name="zoneId" class="form-control" 
                                 (change)="getSector(nurseryStockDetails.zoneId)">
                                 <option value="0" disabled selected>Select Zonal Name</option>
                                 <option *ngFor="let zone of zonals"
@@ -523,9 +522,9 @@
                         </div>
                         <div class="form-group col-sm-3"
                             *ngIf="nurseryStockDetails.status == statusConsume">
-                            <label for="select1">Sector *</label>
+                            <label for="stockSectorId">Sector *</label>
                             <select [(ngModel)]="nurseryStockDetails.sectorId"
-                                id="sectorId" name="sectorId" class="form-control" 
+                                id="stockSectorId" name="sectorId" class="form-control" 
                                 (change)="getNursery(nurseryStockDetails.sectorId)">
                                 <option value="0" disabled selected>Select Sector Name</option>
                                 <option *ngFor="let sectorValue of sectors"
@@ -535,9 +534,9 @@
                         </div>
                         <div class="form-group col-sm-3"
                             *ngIf="nurseryStockDetails.status == statusConsume">
-                            <label for="name">Nursery *</label>
+                            <label for="stockItNurseryId">Nursery *</label>
                             <select [(ngModel)]="nurseryStockDetails.itNurseryId"
-                                id="itNurseryId" name="itNurseryId" class="form-control" required>
+                                id="stockItNurseryId" name="itNurseryId" class="form-control">
                                 <option value="0" disabled selected>Select Nursery Name</option>
                                 <option *ngFor="let nursery of nurserys"
                                     value={{nursery.id}}>{{nursery.nurseryName}}
@@ -545,9 +544,9 @@
                             </select>
                         </div>
                         <div class="form-group col-sm-3">
-                            <label for="text-input">Date *</label>
+                            <label for="stockDate">Date *</label>
                             <div class="input-group">
-                                <input id="field_date" type="text" class="form-control" name="date" 
+                                <input id="stockDate" type="text" class="form-control" name="date" 
                                 [(ngModel)]="nurseryStockDetails.date" ngbDatepicker 
                                 #stockDetailsDateDp="ngbDatepicker" readonly/>
                                 <span class="input-group-append">
@@ -559,23 +558,23 @@
                             </div>
                         </div>
                         <div class="form-group col-sm-3">
-                            <label for="text-input">Quantity *</label>
+                            <label for="stockQuantity">Quantity *</label>
                             <input [(ngModel)]="nurseryStockDetails.quantity"
-                                type="text" id="quantity" name="quantity"
+                                type="text" id="stockQuantity" name="quantity"
                                 class="form-control" placeholder="Quantity"
                                 (keypress)="numberOnly($event)">
                         </div>
                         <div *ngIf="nurseryStockDetails.status != statusDamage" 
                             class="form-group col-sm-3">
-                            <label for="text-input">Description *</label>
+                            <label for="stockDetailsDescription">Description *</label>
                             <textarea [(ngModel)]="nurseryStockDetails.description"
-                                type="text" id="description" name="description" 
-                                class="form-control" placeholder="Description">
+                                type="text" id="stockDetailsDescription" name="description" 
+                                class="form-control" placeholder="Description..">
                             </textarea>
                         </div>
                         <div *ngIf="nurseryStockDetails.status == statusDamage"
                             class="form-group col-sm-3">
-                            <label for="name">Damage Area *</label>
+                            <label for="saplingDamageAreaId">Damage Area *</label>
                             <select [(ngModel)]="nurseryStockDetails.saplingDamageAreaId"
                                 id="saplingDamageAreaId" name="saplingDamageAreaId" class="form-control">
                                 <option value="0" disabled selected>Description</option>
@@ -585,9 +584,9 @@
                         </div>
                         <div *ngIf="nurseryStockDetails.status == statusDamage"
                             class="form-group col-sm-3">
-                            <label for="name">Description *</label>
+                            <label for="stockDetailsDescription1">Description *</label>
                             <select [(ngModel)]="nurseryStockDetails.description"
-                                id="description" name="description" class="form-control">
+                                id="stockDetailsDescription1" name="description" class="form-control">
                                 <option value="0" disabled selected>Description</option>
                                 <option *ngFor="let damageReason of damageReasons" 
                                     value={{damageReason.pickListValue}}>
@@ -641,68 +640,68 @@
                 </button>
             </div>
             <div class="modal-body font13">
-                <form action="" method="post" 
+                <form method="post" 
                     enctype="multipart/form-data" class="form-horizontal">
                     <input [(ngModel)]="nurseryStockDetails.nurseryStockId"
                         type="hidden" id="nurseryStockId" name="nurseryStockId" 
                         class="form-control">
                     <div class="row">
                         <div class="form-group col-sm-3">
-                            <label for="text-input">Quantity *</label>
+                            <label for="stockDetailsQuantity">Quantity *</label>
                             <input [(ngModel)]="nurseryStockDetails.quantity"
-                                type="text" id="quantity" name="quantity"
+                                type="text" id="stockDetailsQuantity" name="quantity"
                                 class="form-control" placeholder="Quantity"
                                 (keypress)="numberOnly($event)">
                         </div>
                         <div class="form-group col-sm-3">
-                            <label for="text-input">Date *</label>
-                            <input id="field_date" type="text" class="form-control"
+                            <label for="stockDetailsDate">Date *</label>
+                            <input id="stockDetailsDate" type="text" class="form-control"
                                 name="date" [(ngModel)]="nurseryStockDetails.date" readonly
                                 ngbDatepicker  #consumeInventoryDateDp="ngbDatepicker" 
                             (click)="consumeInventoryDateDp.toggle()"/>
                         </div>
                         <div class="form-group col-sm-3">
-                            <label for="text-input">Discount in *</label>
+                            <label for="discount">Discount in *</label>
                             <input [(ngModel)]="pointOfSaleDetails.discount"
                                 type="text" id="discount" name="discount"
                                 class="form-control" placeholder="Discount"
                                 (keypress)="numberOnly($event)">
                         </div>
                         <div class="form-group col-sm-3">
-                            <label for="text-input">Discount Amount</label>
+                            <label for="discountAmount">Discount Amount</label>
                             <input [(ngModel)]="pointOfSaleDetails.discountAmount"
                                 type="text" id="discountAmount" name="discountAmount"
                                 class="form-control" placeholder="Discount Amount"
                                 (keypress)="numberOnly($event)">
                         </div>
                         <div class="form-group col-sm-3">
-                            <label for="text-input">Collected Amount *</label>
+                            <label for="collectedAmount">Collected Amount *</label>
                             <input [(ngModel)]="pointOfSaleDetails.collectedAmount"
                                 type="text" id="collectedAmount" name="collectedAmount"
                                 class="form-control" placeholder="Collected Amount"
                                 (keypress)="numberOnly($event)">
                         </div>
                         <div class="form-group col-sm-3">
-                            <label for="text-input">Donor Name *</label>
+                            <label for="donorName">Donor Name *</label>
                             <input [(ngModel)]="pointOfSaleDetails.donorName"
                                 type="text" id="donorName" name="donorName"
                                 class="form-control" placeholder="Donor Name">
                         </div>
                         <div class="form-group col-sm-3">
-                            <label for="text-input">Donor Address *</label>
+                            <label for="posQuantity">Donor Address *</label>
                             <input [(ngModel)]="pointOfSaleDetails.donorAddress" 
-                                type="text" id="quantity" name="donorAddress"
+                                type="text" id="posQuantity" name="donorAddress"
                                 class="form-control" placeholder="Donor Address">
                         </div>
                         <div class="form-group col-sm-3">
-                            <label for="text-input">Contact No *</label>
+                            <label for="contactNo">Contact No *</label>
                             <input [(ngModel)]="pointOfSaleDetails.contactNo"
                                 type="text" id="contactNo" name="contactNo"
                                 class="form-control" placeholder="Contact No"
                                 (keypress)="numberOnly($event)">
                         </div>
                         <div class="form-group col-sm-3">
-                            <label for="text-input">Purpose Of Taking *</label>
+                            <label for="purposeOfTaking">Purpose Of Taking *</label>
                             <input [(ngModel)]="pointOfSaleDetails.purposeOfTaking"
                                 type="text" id="purposeOfTaking" name="purposeOfTaking"
                                 class="form-control" placeholder="Purpose Of Taking">
@@ -741,11 +740,10 @@ aria-hidden="true" [config]="{backdrop: 'static',  keyboard: false}">
             </button>
         </div>
         <div class="modal-body">
-            <form action="" method="post"
-                enctype="multipart/form-data" class="form-horizontal">
+            <form method="post" enctype="multipart/form-data" class="form-horizontal">
                 <div class="form-group row">
                     <label class="col-md-4 col-form-label"
-                        for="text-input">Damage Quantity</label>
+                        for="damageQuantity">Damage Quantity</label>
                     <div class="col-md-6">
                         <input [(ngModel)]="damageQuantity"
                         (change)="getDamageDetails(damageQuantity)"
@@ -755,17 +753,17 @@ aria-hidden="true" [config]="{backdrop: 'static',  keyboard: false}">
                 </div>
                 <div class="form-group row" *ngIf="statusDamage != 2">
                     <label class="col-md-4 col-form-label"
-                        for="text-input">Description *</label>
+                        for="stockDamageDescription">Description *</label>
                     <div class="col-md-6">
                         <textarea [(ngModel)]="nurseryStockDetails.description"
-                            type="text" id="description" name="description" 
-                            class="form-control" placeholder="Description">
+                            type="text" id="stockDamageDescription" name="description" 
+                            class="form-control" placeholder="Description..">
                         </textarea>
                     </div>
                 </div>
                 <div class="form-group row" *ngIf="statusDamage == 2">
                     <label class="col-md-4 col-form-label"
-                        for="text-input">Damage Area *</label>
+                        for="saplingDamageAreaId">Damage Area *</label>
                     <div class="col-md-6">
                         <select [(ngModel)]="nurseryStockDetails.saplingDamageAreaId"
                             id="saplingDamageAreaId" name="saplingDamageAreaId" class="form-control">
@@ -777,10 +775,10 @@ aria-hidden="true" [config]="{backdrop: 'static',  keyboard: false}">
                 </div>
                 <div class="form-group row" *ngIf="statusDamage == 2">
                     <label class="col-md-4 col-form-label"
-                        for="text-input">Description *</label>
+                        for="stockDamageDescription1">Description *</label>
                     <div class="col-md-6">
                         <select [(ngModel)]="nurseryStockDetails.description"
-                            id="description" name="description" class="form-control">
+                            id="stockDamageDescription1" name="description" class="form-control">
                             <option value="0" disabled selected>Description</option>
                             <option *ngFor="let damageReason of damageReasons" 
                                 value={{damageReason.pickListValue}}>

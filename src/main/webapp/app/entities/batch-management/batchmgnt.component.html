@@ -1,14 +1,5 @@
 <!-- Batch Creation -->
 <div class="animated fadeIn">
-    <div class="row">
-        <div class="col-sm-12">
-            <button type="button" class="btn btn-sm btn-success float-right mb-2"
-            (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="isCollapsed" 
-            aria-controls="collapseBasic">
-                <fa-icon [icon]="'plus'"></fa-icon> Create Batch
-            </button>
-        </div>
-    </div>
     <!-- Batch Creation Form -->
     <div id="collapseBasic" [collapse]="isCollapsed" class="row">
         <div class="col-sm-12">
@@ -23,11 +14,11 @@
                     </button>
                 </div>
                 <div class="card-body">
-                    <form action="" method="post" enctype="multipart/form-data" 
+                    <form method="post" enctype="multipart/form-data" 
                         class="form-horizontal">
                         <div class="row">
                             <!-- <div class="form-group col-sm-3">
-                                <label for="name">Zonal *</label>
+                                <label for="zoneId">Zonal *</label>
                                 <select [(ngModel)]="batch.zoneId" id="zoneId"
                                     name="zoneId" class="form-control"
                                     (change)="getSector(batch.zoneId)" required>
@@ -37,7 +28,7 @@
                                 </select>
                             </div>
                             <div class="form-group col-sm-3">
-                                <label for="name">Sector *</label>
+                                <label for="sectorId">Sector *</label>
                                 <select [(ngModel)]="batch.sectorId" id="sectorId"
                                     name="sectorId" class="form-control"
                                     (change)="getNursery(batch.sectorId)">
@@ -47,7 +38,7 @@
                                 </select>
                             </div> -->
                             <!-- <div class="form-group col-sm-3">
-                                <label for="name">Nursery *</label>
+                                <label for="nurseryId">Nursery *</label>
                                 <select [(ngModel)]="batch.nurseryId" id="nurseryId"
                                     name="nurseryId" class="form-control" 
                                 (change)="getMotherBedValue(batch.nurseryId)" required>
@@ -57,7 +48,7 @@
                                 </select>
                             </div> -->
                             <!-- <div class="form-group col-sm-3">
-                                <label for="name">Pick Name *</label>
+                                <label for="pickListId">Pick Name *</label>
                                 <select [(ngModel)]="batch.pickListId" id="pickListId"
                                     name="pickListId" class="form-control"
                                 (change)="getVariety(batch.pickListId)" required>
@@ -67,34 +58,34 @@
                                 </select>
                             </div> -->
                             <div class="form-group col-sm-3">
-                                <label for="name">Pick Variety * </label>
+                                <label for="pickListVarietyId">Pick Variety * </label>
                                 <select [(ngModel)]="batch.pickListVarietyId"
                                     id="pickListVarietyId"
                                     name="pickListVarietyId" class="form-control"
                                     (change)="getCategory(batch.pickListVarietyId)" required>
                                     <option value="0" disabled selected>Select Variety Name</option>
-                                    <option *ngFor="let val of varietys"
+                                    <option *ngFor="let val of varieties"
                                         value={{val.id}}>{{val.pickListValue}}</option>
                                 </select>
                             </div>
                             <div class="form-group col-sm-3">
-                                <label for="name">Category *</label>
+                                <label for="pickListCategoryId">Category *</label>
                                 <select [(ngModel)]="batch.pickListCategoryId"
                                     id="pickListCategoryId" name="pickListCategoryId"
                                     class="form-control" required>
                                     <option value="0" disabled selected>Select Category Name</option>
-                                    <option *ngFor="let category of categorys"
+                                    <option *ngFor="let category of categories"
                                         value={{category.id}}>{{category.pickListValue}}</option>
                                 </select>
                             </div>
                             <div class="form-group col-sm-3">
-                                <label for="name">Batch No. *</label>
+                                <label for="batchNo">Batch No. *</label>
                                 <input [(ngModel)]="batch.batchNo" type="text" 
                                     id="batchNo" name="batchNo" 
                                     class="form-control" placeholder="Batch No." required>
                             </div>
                             <div class="form-group col-sm-3">
-                                <label for="name">Batch Name *</label>
+                                <label for="batchName">Batch Name *</label>
                                 <input [(ngModel)]="batch.batchName" type="text"
                                     id="batchName" name="batchName" class="form-control"
                                     placeholder="Batch Name" required>
@@ -102,9 +93,9 @@
                         </div>
                         <div class="row">
                             <div class="form-group col-sm-3">
-                                <label for="name">Date *</label>
+                                <label for="sowingDate">Date *</label>
                                 <div class="input-group">
-                                    <input id="field_sowingDate" type="text" class="form-control"
+                                    <input id="sowingDate" type="text" class="form-control"
                                         name="sowingDate" [(ngModel)]="batch.sowingDate" ngbDatepicker 
                                         #sowingDateDp="ngbDatepicker" required readonly/>
                                     <span class="input-group-append">
@@ -115,7 +106,7 @@
                                 </div>
                             </div>
                             <div class="form-group col-sm-3">
-                                <label for="name">Quantity Type * </label>
+                                <label for="quantityTypeId">Quantity Type * </label>
                                 <select [(ngModel)]="batch.quantityTypeId" id="quantityTypeId"
                                     name="quantityTypeId" class="form-control" required
                                     (change)="getQuantityTypeValue($event)">
@@ -124,34 +115,35 @@
                                         value={{type.id}}>{{type.pickListValue}}</option>
                                 </select>
                             </div>
-                            <div *ngIf="quantityType == 'KG'" class="form-group col-sm-3">
-                                    <label for="name">No of Kg </label>
+                            <div *ngIf="quantityType == quantityTypeKg" class="form-group col-sm-3">
+                                    <label for="noOfKg">No of Kg </label>
                                     <input [(ngModel)]="batch.noOfKg" type="text" id="noOfKg"
                                     name="No of Kg" class="form-control"
                                     placeholder="No of KG" required>
                             </div>
                             <div class="form-group col-sm-3">
-                                <label *ngIf="quantityType == 'KG'" for="name">
+                                <label *ngIf="quantityType == quantityTypeKg" for="batchQuantity">
                                     Expected Quantity *
                                 </label>
-                                <label *ngIf="quantityType == 'NOS'" for="name">
+                                <label *ngIf="quantityType == quantityTypeNos" for="batchQuantity">
                                     Quantity *
                                 </label>
                                 <input [(ngModel)]="batch.quantity" type="text" 
-                                id="quantity" name="quantity" class="form-control" 
+                                id="batchQuantity" name="quantity" class="form-control" 
                                 placeholder="Quantity" required (keypress)="numberOnly($event)">
                             </div>
                             <div class="form-group col-sm-3">
-                                <label for="name">Showing Type *</label>
-                                <select [(ngModel)]="batch.showingType" id="select1"
-                                    name="select1" class="form-control" required>
-                                    <option value="0" disabled selected>Showing Type</option>
+                                <label for="sowingType">Sowing Type *</label>
+                                <select [(ngModel)]="batch.showingType" id="sowingType"
+                                    name="sowingType" class="form-control"
+                                    (change)="getMotherBed(batch.showingType)" required>
+                                    <option value="0" disabled selected>Sowing Type</option>
                                     <option value="1">Motherbed</option>
                                     <option value="2">Cover</option>
                                 </select>
                             </div><!-- (click)="getMotherBedForNursery(batch.nurseryId)"  -->
                             <div *ngIf="batch.showingType == 1" class="form-group col-sm-3">
-                                <label for="name">Motherbed</label>
+                                <label for="motherBedId">Motherbed</label>
                                 <select [(ngModel)]="batch.motherBedId" 
                                     (change)="getMotherBedTypeValue($event)" 
                                     id="motherBedId" name="motherBedId" class="form-control">
@@ -162,324 +154,289 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="row">
-                            <!-- <div class="form-group col-sm-3">
-                                <label for="name">Pick Quantity Name *</label>
-                                <select [(ngModel)]="batch.pickListQuantityId"
-                                    id="pickListQuantityId" name="pickListQuantityId" class="form-control" 
-                                    (change)="getQuantityType(batch.pickListQuantityId)" required>
-                                    <option value="0" disabled selected>Select</option>
-                                    <option *ngFor="let pickList of pickLists"
-                                        value={{pickList.id}}>{{pickList.pickListName}}</option>
-                                </select>
-                            </div> -->
                         <div class="form-group row">
                             <div class="col-md-6">
                                 <span class="text-danger" *ngIf="errorMessage"
                                     (close)="errorMessage = null">{{ errorMessage }}</span>
                             </div>
                         </div>
-                    </div>
-                </form>
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-sm btn-primary"
-                    (click)="save()">
-                        <i class="fa fa-dot-circle-o"></i> Create Batch
-                    </button>
-                    <button type="button" 
-                        class="btn btn-sm btn-danger"
-                        (click)="resetForm()">
-                        <i class="fa fa-ban"></i> Reset
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div><!-- End of the creation Form -->
-</div><!-- End of Batch Creation -->
-
-<!-- To display the tabset with tab for the Batch management list and 
-Shade area list and Damage records List-->
-<div class="row font12">
-    <div class="col-lg-12">
-        <tabset>
-            <!-- To display the Batch Management List-->
-            <tab>
-                <ng-template tabHeading>
-                    <i class="icon-basket"> Batch Management List</i>
-                </ng-template>
-                <!-- Display the success message -->
-                <div>
-                    <ngb-alert *ngIf="successMessage" type="success" 
-                        (close)="successMessage = null">{{ successMessage }}
-                    </ngb-alert>
-                </div><!-- End of the success message -->
-                <!--<div class="row">
-                    <div class="form-group col-sm-3">
-                        <label for="name">Month</label>
-                        <select [(ngModel)]="filter.month" id="month"
-                            name="month" class="form-control"
-                        required> <!-- (change)="getList(month)"
-                            <option value="0" disabled selected>Select..</option>
-                            <option *ngFor="let month of months"
-                                value={{month.value}}>{{month.name}}</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-sm-3">
-                            <label for="name">Date From</label>
-                            <input id="field_fromDate" type="text"
-                                class="form-control" name="fromDate" 
-                                ngbDatepicker  #fromDate="ngbDatepicker"
-                                [(ngModel)]="filter.fromDate"
-                                (click)="fromDate.toggle()" placeholder="Date From"/>
-                    </div>
-                    <div class="form-group col-sm-3">
-                        <label for="name">Date To</label>
-                            <input id="field_date" type="text" class="form-control" name="toDate" 
-                            ngbDatepicker  #toDate="ngbDatepicker" [(ngModel)]="filter.toDate"
-                            (click)="toDate.toggle()" placeholder="Date To"/>
-                    </div>
-                    <div class="form-group col-sm-3">
-                        <button type="button" class="btn btn-sm btn-info" (click)="getReport()">
-                            <i class="fa fa-dot-circle-o"></i> Filter
+                    </form>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-sm btn-primary"
+                        (click)="save()">
+                            <i class="fa fa-dot-circle-o"></i> Create Batch
+                        </button>
+                        <button type="button" class="btn btn-sm btn-danger"
+                            (click)="resetForm()">
+                            <i class="fa fa-ban"></i> Reset
                         </button>
                     </div>
-                </div> -->
-
-                <div class="text-right">
-                    <span class="text-success"><fa-icon [icon]="'leaf'">
-                        </fa-icon> - Shade</span>,
-                    <span class="text-danger">
-                        <fa-icon [icon]="'leaf'"></fa-icon> - Damage</span>,
-                    <span class="text-warning">
-                        <fa-icon [icon]="'times'"></fa-icon> - Close</span>,
-                    <span class="text-primary">
-                        <fa-icon [icon]="'trash-alt'"></fa-icon> - Delete</span>
                 </div>
-                <table class="table-responsive table table-bordered">
-                    <thead>
-                    <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse"
-                        [callback]="transition.bind(this)">
-                        <th jhiSortBy="batchNo">Batch No.
-                            <fa-icon [icon]="'sort'"></fa-icon></th>
-                        <th jhiSortBy="batchName">Batch Name
-                            <fa-icon [icon]="'sort'"></fa-icon></th>                  
-                        <th jhiSortBy="nurseryNurseryName">Nursery Name
-                            <fa-icon [icon]="'sort'"></fa-icon></th>
-                        <th jhiSortBy="pickListVarietyPickListValue">Variety 
-                            <fa-icon [icon]="'sort'"></fa-icon></th>
-                        <th jhiSortBy="pickListCategoryPickListValue">Category 
-                            <fa-icon [icon]="'sort'"></fa-icon></th>
-                        <th jhiSortBy="sowingDate">Date 
-                            <fa-icon [icon]="'sort'"></fa-icon></th>
-                        <th jhiSortBy="quantityTypePickListValue">Quantity Type 
-                            <fa-icon [icon]="'sort'"></fa-icon></th>
-                        <th jhiSortBy="quantity">Quantity 
-                            <fa-icon [icon]="'sort'"></fa-icon></th>
-                        <th jhiSortBy="motherBedValue">Motherbed 
-                            <fa-icon [icon]="'sort'"></fa-icon></th>
-                        <th jhiSortBy="showingType">Showing Type 
-                            <fa-icon [icon]="'sort'"></fa-icon></th>
-                        <th jhiSortBy="round">Rounds 
-                            <fa-icon [icon]="'sort'"></fa-icon></th>
-                        <th jhiSortBy="closedDate">Closed Date 
-                            <fa-icon [icon]="'sort'"></fa-icon></th>
-                        <th>Action</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let list of batchs; trackBy: trackId"
-                            [ngClass]="{'table-danger': list.status == -1}">
-                            <td>{{list.batchNo}}</td>
-                            <td>{{list.batchName}}</td>
-                            <td>{{list.nurseryNurseryName}}</td>
-                            <td>{{list.pickListVarietyPickListValue}}</td>
-                            <td>{{list.pickListCategoryPickListValue}}</td>
-                            <td>{{list.sowingDate | date: 'dd/MM/yyyy'}}</td>
-                            <td>{{list.quantityTypePickListValue}}</td>
+            </div>
+        </div><!-- End of the creation Form -->
+    </div><!-- End of Batch Creation -->
+
+    <!-- To display the tabset with tab for the Batch management list and 
+    Shade area list and Damage records List-->
+    <div class="row font12">
+        <div class="col-lg-12">
+            <tabset>
+                <!-- To display the Batch Management List-->
+                <tab>
+                    <ng-template tabHeading>
+                        <i class="icon-basket"> Batch Mgnt</i>
+                    </ng-template>
+                    <!-- Display the success message -->
+                    <div>
+                        <ngb-alert *ngIf="successMessage" type="success" 
+                            (close)="successMessage = null">{{ successMessage }}
+                        </ngb-alert>
+                    </div><!-- End of the success message -->
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fa fa-align-justify"></i>Batch Management List
+                            <button class="btn btn-sm btn-success float-right mb-2"
+                                (click)="createBatch()">
+                                <fa-icon [icon]="'plus'"></fa-icon> Create Batch
+                            </button>
+                        </div>
+                        <div class="card-body table-responsive">
+                            <div class="text-left">
+                                <span class="text-success"><fa-icon [icon]="'leaf'">
+                                    </fa-icon> - Shade</span>,
+                                <span class="text-danger">
+                                    <fa-icon [icon]="'leaf'"></fa-icon> - Damage</span>,
+                                <span class="text-warning">
+                                    <fa-icon [icon]="'times'"></fa-icon> - Close</span>,
+                                <span class="text-primary">
+                                <fa-icon [icon]="'trash-alt'"></fa-icon> - Delete</span>
+                            </div>
+                            <table class="table table-responsive table-bordered">
+                                <thead>
+                                <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse"
+                                    [callback]="transition.bind(this)">
+                                    <th jhiSortBy="batchNo">Batch No.
+                                        <fa-icon [icon]="'sort'"></fa-icon></th>
+                                    <th jhiSortBy="batchName">Batch Name
+                                        <fa-icon [icon]="'sort'"></fa-icon></th>                  
+                                    <th jhiSortBy="nurseryNurseryName">Nursery Name
+                                        <fa-icon [icon]="'sort'"></fa-icon></th>
+                                    <th jhiSortBy="pickListVarietyPickListValue">Variety 
+                                        <fa-icon [icon]="'sort'"></fa-icon></th>
+                                    <th jhiSortBy="pickListCategoryPickListValue">Category 
+                                        <fa-icon [icon]="'sort'"></fa-icon></th>
+                                    <th jhiSortBy="sowingDate">Date 
+                                        <fa-icon [icon]="'sort'"></fa-icon></th>
+                                    <th jhiSortBy="quantityTypePickListValue">Quantity Type 
+                                        <fa-icon [icon]="'sort'"></fa-icon></th>
+                                    <th jhiSortBy="quantity">Quantity 
+                                        <fa-icon [icon]="'sort'"></fa-icon></th>
+                                    <th jhiSortBy="motherBedValue">Motherbed 
+                                        <fa-icon [icon]="'sort'"></fa-icon></th>
+                                    <th jhiSortBy="showingType">Showing Type 
+                                        <fa-icon [icon]="'sort'"></fa-icon></th>
+                                    <th jhiSortBy="round">Rounds 
+                                        <fa-icon [icon]="'sort'"></fa-icon></th>
+                                    <th jhiSortBy="closedDate">Closed Date 
+                                        <fa-icon [icon]="'sort'"></fa-icon></th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let list of batches; trackBy: trackId"
+                                        [ngClass]="{'table-danger': list.status == -1}">
+                                        <td>{{list.batchNo}}</td>
+                                        <td>{{list.batchName}}</td>
+                                        <td>{{list.nurseryNurseryName}}</td>
+                                        <td>{{list.pickListVarietyPickListValue}}</td>
+                                        <td>{{list.pickListCategoryPickListValue}}</td>
+                                        <td>{{list.sowingDate | date: 'dd/MM/yyyy'}}</td>
+                                        <td>{{list.quantityTypePickListValue}}</td>
+                                        <td>
+                                            {{list.quantity}}
+                                            <ng-template #popTemplate>Shade Area : {{shadeCount}}<br>
+                                                Damage : {{damageCount}}
+                                            </ng-template>
+                                            <!-- <a (click)="getParticularBatchShadeDamageCount(list.id)" 
+                                                [popover]="popTemplate" popoverTitle="Quantity Details">
+                                                <fa-icon [icon]="'eye'"></fa-icon>
+                                            </a> -->
+                                            <span *ngIf="list.status != 4 && list.status != -1">
+                                                <a class="text-primary" data-toggle="modal" title="Add Quantity" 
+                                                    (click)="addQuantity(list)"><fa-icon [icon]="'plus'"></fa-icon>
+                                                </a>
+                                            </span>
+                                            <a class="text-warning" data-toggle="modal" title="Quantity Details"
+                                                (click)="getParticularBatchQuantityDetails(list.id)">
+                                                <fa-icon [icon]="'cube'"></fa-icon>
+                                            </a>
+                                            <button type="button" class="btn btn-ghost-success btn-sm"
+                                                (click)="getParticularBatchShadeDamageCount(list.id)"
+                                                [popover]="popTemplate" popoverTitle="Quantity Details"
+                                                triggers="click:blur">
+                                                <fa-icon [icon]="'eye'"></fa-icon>
+                                            </button>
+                                        </td>
+                                        <td>{{list.motherBedValue}}</td>
+                                        <td *ngIf="list.showingType == 1">Motherbed</td>
+                                        <td *ngIf="list.showingType == 2">Cover</td>
+                                        <td *ngIf="((list.showingType != 1) && (list.showingType != 2))"></td>
+                                        <td>{{list.round}}</td>
+                                        <td>{{list.closedDate | date: 'dd/MM/yyyy'}}</td>
+                                        <td style="width: 10%">
+                                            <span *ngIf="list.status != -1">
+                                                <span *ngIf="list.status != 4">
+                                                    <a class="text-success" data-toggle="modal"
+                                                        style="text-align: left;"
+                                                        title="Move to Shade Area" (click)="updateShift(list)">
+                                                        <fa-icon [icon]="'leaf'"></fa-icon>
+                                                    </a>
+                                                    <a class="text-danger ml-2" data-toggle="modal"
+                                                        style="text-align: left;"
+                                                        title="Move to damage" (click)="updateDamage(list)">
+                                                        <fa-icon [icon]="'leaf'"></fa-icon></a>
+                                                    <a class="text-warning ml-2" data-toggle="modal"
+                                                        title="Close the batch" (click)="updateBatch(list)">
+                                                        <fa-icon [icon]="'times'"></fa-icon></a>
+                                                </span>
+                                                <a class="text-primary ml-2" data-toggle="modal"
+                                                    title="Delete a batch" (click)="softDeleteBatch(list)">
+                                                    <fa-icon [icon]="'trash-alt'"></fa-icon>
+                                                </a>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+                        <li class="page-item active">
+                        <a class="page-link" href="#">1</a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">4</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    </ul> -->
+                    <div *ngIf="batches && batches.length" class="card-footer">
+                        <!-- <div class="row justify-content-center">
+                            <jhi-item-count [page]="page" [total]="queryCount"
+                                [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+                        </div> -->
+                        <div class="row justify-content-center">
+                            <ngb-pagination [collectionSize]="totalItems"
+                                [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5"
+                                [rotate]="true" [boundaryLinks]="true"
+                                (pageChange)="loadPage(page)">
+                            </ngb-pagination>
+                        </div>
+                    </div>
+                </tab><!-- End of the Batch Management List -->
+                <!-- To display the Shade Area List-->
+                <tab>
+                    <ng-template tabHeading><i class="icon-basket-loaded"
+                        (click)="getShadeAreaList()"> Shade Area List</i>
+                    </ng-template>
+                    <table class="table-responsive table font13">
+                        <thead>
+                        <tr>
+                            <th>S No.</th>
+                            <th>Batch Name</th>                  
+                            <th>Date</th>
+                            <th>Round</th>
+                            <th>Quantity</th>
+                            <th>Damage Quantity</th>
+                            <th>Moved to Seasoning</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let temp of shadeAreas; let i = index">
+                            <td>{{i+1}}</td>
+                            <td>{{temp.batchBatchName}}</td>
+                            <td>{{temp.date | date: 'dd/MM/yyyy'}}</td>
+                            <td>{{temp.round}}</td>
+                            <td>{{temp.noOfSeedlings}}</td>
+                            <td>{{temp.damage}}</td>
+                            <td>{{temp.saplings}}</td>
                             <td>
-                                {{list.quantity}}
-                                <ng-template #popTemplate>Shade Area : {{shadeCount}}<br>
-                                    Damage : {{damageCount}}
-                                </ng-template>
-                                <!-- <a (click)="getParticularBatchShadeDamageCount(list.id)" 
-                                    [popover]="popTemplate" popoverTitle="Quantity Details">
-                                    <fa-icon [icon]="'eye'"></fa-icon>
-                                </a> -->
-                                <span *ngIf="list.status != 4 && list.status != -1">
-                                    <a class="text-primary" data-toggle="modal" title="Add Quantity" 
-                                        (click)="addQuantity(list)"><fa-icon [icon]="'plus'"></fa-icon>
-                                    </a>
-                                </span>
-                                <a class="text-warning" data-toggle="modal" title="Quantity Details"
-                                    (click)="getParticularBatchQuantityDetails(list.id)">
-                                    <fa-icon [icon]="'cube'"></fa-icon>
+                            <span *ngIf="temp.noOfSeedlings > (temp.damage + temp.saplings)">
+                                <a class="text-success" data-toggle="modal"
+                                    title="Move to Seasoning Area" 
+                                    (click)="updateStock(temp)">
+                                    <fa-icon [icon]="'cart-plus'"></fa-icon>
                                 </a>
-                                <button type="button" class="btn btn-ghost-success btn-sm"
-                                    (click)="getParticularBatchShadeDamageCount(list.id)"
-                                    [popover]="popTemplate" popoverTitle="Quantity Details"
-                                    triggers="click:blur">
-                                    <fa-icon [icon]="'eye'"></fa-icon>
-                                </button>
-                            </td>
-                            <td>{{list.motherBedValue}}</td>
-                            <td *ngIf="list.showingType == 1">Motherbed</td>
-                            <td *ngIf="list.showingType == 2">Cover</td>
-                            <td *ngIf="((list.showingType != 1) && (list.showingType != 2))"></td>
-                            <td>{{list.round}}</td>
-                            <td>{{list.closedDate | date: 'dd/MM/yyyy'}}</td>
-                            <td style="width: 10%">
-                                <span *ngIf="list.status != -1">
-                                    <span *ngIf="list.status != 4">
-                                        <a class="text-success" data-toggle="modal"
-                                            style="text-align: left;"
-                                            title="Move to Shade Area" (click)="updateShift(list)">
-                                            <fa-icon [icon]="'leaf'"></fa-icon>
-                                        </a>
-                                        <a class="text-danger ml-2" data-toggle="modal"
-                                            style="text-align: left;"
-                                            title="Move to damage" (click)="updateDamage(list)">
-                                            <fa-icon [icon]="'leaf'"></fa-icon></a>
-                                        <a class="text-warning ml-2" data-toggle="modal"
-                                            title="Close the batch" (click)="updateBatch(list)">
-                                            <fa-icon [icon]="'times'"></fa-icon></a>
-                                    </span>
-                                </span>
-                                <a class="text-primary ml-2" data-toggle="modal"
-                                    title="Delete a batch" (click)="softDeleteBatch(list)">
-                                    <fa-icon [icon]="'trash-alt'"></fa-icon>
-                                </a>
+                                <a class="text-danger ml-2" data-toggle="modal"
+                                    title="Move to damage" (click)="updateSeedlingDamage(temp)">
+                                    <fa-icon [icon]="'cart-arrow-down'"></fa-icon></a>
+                            </span>
                             </td>
                         </tr>
-                    </tbody>
-                </table>
-                <!-- <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">Prev</a></li>
-                    <li class="page-item active">
-                    <a class="page-link" href="#">1</a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                </ul> -->
-                <div *ngIf="batchs && batchs.length" class="card-footer">
-                    <!-- <div class="row justify-content-center">
-                        <jhi-item-count [page]="page" [total]="queryCount"
-                            [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
-                    </div> -->
-                    <div class="row justify-content-center">
-                        <ngb-pagination [collectionSize]="totalItems"
-                            [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5"
-                            [rotate]="true" [boundaryLinks]="true"
-                            (pageChange)="loadPage(page)">
-                        </ngb-pagination>
-                    </div>
-                </div>
-            </tab><!-- End of the Batch Management List -->
-            <!-- To display the Shade Area List-->
-            <tab>
-                <ng-template tabHeading><i class="icon-basket-loaded"
-                    (click)="getShadeAreaList()"> Shade Area List</i>
-                </ng-template>
-                <table class="table-responsive table font13">
-                    <thead>
-                    <tr>
-                        <th>S No.</th>
-                        <th>Batch Name</th>                  
-                        <th>Date</th>
-                        <th>Round</th>
-                        <th>Quantity</th>
-                        <th>Damage Quantity</th>
-                        <th>Moved to Seasoning</th>
-                        <th>Action</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr *ngFor="let temp of shadeAreas; let i = index">
-                        <td>{{i+1}}</td>
-                        <td>{{temp.batchBatchName}}</td>
-                        <td>{{temp.date | date: 'dd/MM/yyyy'}}</td>
-                        <td>{{temp.round}}</td>
-                        <td>{{temp.noOfSeedlings}}</td>
-                        <td>{{temp.damage}}</td>
-                        <td>{{temp.saplings}}</td>
-                        <td>
-                        <span *ngIf="temp.noOfSeedlings > (temp.damage + temp.saplings)">
-                            <a class="text-success" data-toggle="modal"
-                                title="Move to Seasoning Area" 
-                                (click)="updateStock(temp)">
-                                <fa-icon [icon]="'cart-plus'"></fa-icon>
-                            </a>
-                            <a class="text-danger ml-2" data-toggle="modal"
-                                title="Move to damage" (click)="updateSeedlingDamage(temp)">
-                                <fa-icon [icon]="'cart-arrow-down'"></fa-icon></a>
-                        </span>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <!-- <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">Prev</a></li>
-                    <li class="page-item active">
-                    <a class="page-link" href="#">1</a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                </ul> -->
-            </tab><!-- End of the Shade Area List-->
-            <!-- To display the Damage List-->
-            <tab>
-                <ng-template tabHeading><i class="icon-drop"
-                    (click)="getDamageList()"> Damage List</i>
-                </ng-template>
-                <table class="table-responsive table font13">
-                    <thead>
-                    <tr>
-                        <th>S No.</th>
-                        <th>Batch Name</th>                  
-                        <th>Quantity</th>
-                        <th>Damage Area</th>
-                        <th>Damage Reason</th>
-                        <th>Date</th>
-                        <th>Status</th>
-                        <!-- <th>Action</th> -->
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <!-- <tr *ngFor="let damageVal of damages"> -->
-                    <tr *ngFor="let damageVal of damages; let i = index">
-                        <td>{{i+1}}</td>
-                        <td>{{damageVal.batchBatchName}}</td>
-                        <td>{{damageVal.noOfQuantity}}</td>
-                        <td>{{damageVal.damageAreaPickListValue}}</td>
-                        <td>{{damageVal.descriptionPickListValue}}</td>
-                        <td>{{damageVal.date | date: 'dd/MM/yyyy'}}</td>
-                        <td>
-                            <span *ngIf="damageVal.status == 1">Seeds</span>
-                            <span *ngIf="damageVal.status == 2">Seedlings</span>
-                        </td>
-                        <!-- <td></td> -->
-                    </tr>
-                    </tbody>
-                </table>
-                <!-- <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">Prev</a></li>
-                    <li class="page-item active">
-                    <a class="page-link" href="#">1</a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                </ul> -->
-            </tab><!-- End of the Damage List-->
-        </tabset>
-    </div>
-</div><!-- End of the records details -->
-
-<!-- </div> Have to check this one is needded or not-->
+                        </tbody>
+                    </table>
+                    <!-- <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+                        <li class="page-item active">
+                        <a class="page-link" href="#">1</a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">4</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    </ul> -->
+                </tab><!-- End of the Shade Area List-->
+                <!-- To display the Damage List-->
+                <tab>
+                    <ng-template tabHeading><i class="icon-drop"
+                        (click)="getDamageList()"> Damage List</i>
+                    </ng-template>
+                    <table class="table-responsive table font13">
+                        <thead>
+                        <tr>
+                            <th>S No.</th>
+                            <th>Batch Name</th>                  
+                            <th>Quantity</th>
+                            <th>Damage Area</th>
+                            <th>Damage Reason</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <!-- <th>Action</th> -->
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!-- <tr *ngFor="let damageVal of damages"> -->
+                        <tr *ngFor="let damageVal of damages; let i = index">
+                            <td>{{i+1}}</td>
+                            <td>{{damageVal.batchBatchName}}</td>
+                            <td>{{damageVal.noOfQuantity}}</td>
+                            <td>{{damageVal.damageAreaPickListValue}}</td>
+                            <td>{{damageVal.descriptionPickListValue}}</td>
+                            <td>{{damageVal.date | date: 'dd/MM/yyyy'}}</td>
+                            <td>
+                                <span *ngIf="damageVal.status == 1">Seeds</span>
+                                <span *ngIf="damageVal.status == 2">Seedlings</span>
+                            </td>
+                            <!-- <td></td> -->
+                        </tr>
+                        </tbody>
+                    </table>
+                    <!-- <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+                        <li class="page-item active">
+                        <a class="page-link" href="#">1</a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">4</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    </ul> -->
+                </tab><!-- End of the Damage List-->
+            </tabset>
+        </div>
+    </div><!-- End of the records details -->
+</div>
 
 <!-- Start Batch close model -->
 <div bsModal #closeBatchModal="bs-modal" class="modal fade" tabindex="-1" 
@@ -495,16 +452,16 @@ Shade area list and Damage records List-->
                 </button>
             </div>
             <div class="modal-body font13">
-                <form action="" method="post" enctype="multipart/form-data"
+                <form method="post" enctype="multipart/form-data"
                     class="form-horizontal">
                     <input [(ngModel)]="updateBatchValue.id" type="hidden"
-                        id="id" name="id" class="form-control">
+                        id="batchId" name="id" class="form-control">
                     <div class="form-group row">
                         <label class="col-md-4 col-form-label" 
-                            for="text-input">Close Date</label>
+                            for="closedDate">Close Date *</label>
                         <div class="col-md-8">
                             <div class="input-group">
-                                <input id="field_closedDate" type="text"
+                                <input id="closedDate" type="text"
                                     class="form-control" name="closedDate" 
                                     [(ngModel)]="updateBatchValue.closedDate"
                                     ngbDatepicker  #closedDateDp="ngbDatepicker" readonly/>
@@ -519,10 +476,10 @@ Shade area list and Damage records List-->
                     </div>
                     <div class="form-group row">
                         <label class="col-md-4 col-form-label"
-                            for="textarea-input">Reason</label>
+                            for="remarks">Reason</label>
                         <div class="col-md-8">
                         <textarea [(ngModel)]="updateBatchValue.remarks"
-                            id="textarea-input" id="remarks" name="remarks" 
+                            id="remarks" id="remarks" name="remarks" 
                             rows="3" class="form-control" placeholder="Reason..">
                         </textarea>
                         </div>
@@ -560,10 +517,10 @@ Shade area list and Damage records List-->
                 </button>
             </div>
             <div class="modal-body font13">
-                <form action="" method="post"
-                    enctype="multipart/form-data" class="form-horizontal">
+                <form method="post" enctype="multipart/form-data"
+                    class="form-horizontal">
                     <input [(ngModel)]="updateBatchValue.id" type="hidden"
-                        id="id" name="id" class="form-control">
+                        id="damageBatchId" name="id" class="form-control">
                     <!-- <div class="form-group row">
                         <label class="col-md-3 col-form-label" for="name">Pick Name </label>
                         <div class="col-md-9">
@@ -579,7 +536,7 @@ Shade area list and Damage records List-->
                     </div> -->
                     <div class="form-group row">
                         <label class="col-md-4 col-form-label"
-                            for="name">Damage Area *</label>
+                            for="damageAreaId">Damage Area *</label>
                         <div class="col-md-8">
                             <select [(ngModel)]="updateBatchValue.damageAreaId"
                                 id="damageAreaId" name="damageAreaId" class="form-control">
@@ -592,10 +549,10 @@ Shade area list and Damage records List-->
                     </div>
                     <div class="form-group row">
                         <label class="col-md-4 col-form-label"
-                            for="text-input">Date *</label>
+                            for="damageDate">Date *</label>
                         <div class="col-md-8">
                             <div class="input-group">
-                                <input id="field_date" type="text" class="form-control"
+                                <input id="damageDate" type="text" class="form-control"
                                     name="date" [(ngModel)]="updateBatchValue.date"
                                     ngbDatepicker #dateDamageDp="ngbDatepicker" readonly/>
                                 <span class="input-group-append">
@@ -609,7 +566,7 @@ Shade area list and Damage records List-->
                     </div>
                     <div class="form-group row">
                         <label class="col-md-4 col-form-label"
-                            for="text-input">Quantity *</label>
+                            for="noOfQuantity">Quantity *</label>
                         <div class="col-md-8">
                             <input [(ngModel)]="updateBatchValue.noOfQuantity"
                                 type="text" id="noOfQuantity" name="noOfQuantity" 
@@ -619,12 +576,12 @@ Shade area list and Damage records List-->
                     </div>
                     <div class="form-group row">
                         <label class="col-md-4 col-form-label"
-                            for="name">Description</label>
+                            for="descriptionId">Reason</label>
                         <div class="col-md-8">
                             <select [(ngModel)]="updateBatchValue.descriptionId"
                                 id="descriptionId" name="descriptionId" class="form-control">
                                 <option value="0" disabled selected>Description</option>
-                                <option *ngFor="let val of varietys"
+                                <option *ngFor="let val of varieties"
                                     value={{val.id}}>{{val.pickListValue}}
                                 </option>
                             </select>
@@ -682,15 +639,15 @@ Shade area list and Damage records List-->
                 </button>
             </div>
             <div class="modal-body font13">
-                <form action="" method="post" enctype="multipart/form-data" 
+                <form method="post" enctype="multipart/form-data" 
                     class="form-horizontal">
-                    <input [(ngModel)]="updateBatchValue.id" type="hidden" id="id"
-                        name="id" class="form-control">
+                    <input [(ngModel)]="updateBatchValue.id" type="hidden"
+                        id="shadeBatchId" name="id" class="form-control">
                     <div class="form-group row">
-                        <label class="col-md-4 col-form-label" for="text-input">Date</label>
+                        <label class="col-md-4 col-form-label" for="shadeDate">Date *</label>
                         <div class="col-md-8">
                             <div class="input-group">
-                                <input id="field_date" type="text"
+                                <input id="shadeDate" type="text"
                                     class="form-control" name="date" 
                                     [(ngModel)]="updateBatchValue.date" ngbDatepicker
                                     #dateShadeAreaDp="ngbDatepicker" readonly/>
@@ -705,7 +662,7 @@ Shade area list and Damage records List-->
                     </div>
                     <div class="form-group row">
                         <label class="col-md-4 col-form-label"
-                            for="text-input">Quantity</label>
+                            for="noOfSeedlings">Quantity *</label>
                         <div class="col-md-8">
                         <input [(ngModel)]="updateBatchValue.noOfSeedlings"
                             type="text" id="noOfSeedlings" name="noOfSeedlings"
@@ -714,8 +671,8 @@ Shade area list and Damage records List-->
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-8"> 
-                            <input type="checkbox" [(ngModel)]="theCheckbox"  
+                        <label class="col-md-8" for="checkbox"> 
+                            <input id="checkbox" type="checkbox" [(ngModel)]="theCheckbox"  
                             data-md-icheck (change)="toggleVisibility($event)"
                             name="checkbox"/>
                             Last slot of Transplantation ?
@@ -750,15 +707,15 @@ Shade area list and Damage records List-->
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+            <div class="modal-body font13">
+                <form method="post" enctype="multipart/form-data" class="form-horizontal">
                     <input [(ngModel)]="nurseryStockDetails.batchId" type="hidden" 
                         id="batchId" name="batchId" class="form-control">
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="text-input">Date</label>
+                        <label class="col-md-3 col-form-label" for="stockDate">Date</label>
                         <div class="col-md-9">
                             <div class="input-group">
-                                <input id="field_date" type="text" class="form-control" name="date" 
+                                <input id="stockDate" type="text" class="form-control" name="date" 
                                 [(ngModel)]="nurseryStockDetails.date" ngbDatepicker
                                 #dateSeasoningAreaDp="ngbDatepicker"
                                 readonly />
@@ -772,18 +729,19 @@ Shade area list and Damage records List-->
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="text-input">Quantity</label>
+                        <label class="col-md-3 col-form-label" 
+                            for="stockQuantity">Quantity</label>
                         <div class="col-md-9">
                             <input [(ngModel)]="nurseryStockDetails.quantity" type="text" 
-                            id="quantity" name="quantity" class="form-control"
+                            id="stockQuantity" name="quantity" class="form-control"
                             placeholder="Quantity" (keypress)="numberOnly($event)">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="text-input">Description</label>
+                        <label class="col-md-3 col-form-label" for="stockDescription">Description</label>
                         <div class="col-md-9">
                             <input [(ngModel)]="nurseryStockDetails.description" type="text" 
-                            id="description" name="description" class="form-control" placeholder="description">
+                            id="stockDescription" name="description" class="form-control" placeholder="description">
                         </div>
                     </div>
                 </form>
@@ -891,23 +849,22 @@ Shade area list and Damage records List-->
                 </button>
             </div>
             <div class="modal-body font13">
-                <form action="" method="post"
-                    enctype="multipart/form-data" class="form-horizontal">
+                <form method="post" enctype="multipart/form-data" class="form-horizontal">
                     <div class="form-group row">
                         <label class="col-md-4 col-form-label"
-                            for="text-input">Quantity *</label>
+                            for="addQuantity">Quantity *</label>
                         <div class="col-md-8">
                             <input [(ngModel)]="batchQuantity.quantity" type="text" 
-                                id="quantity" name="quantity" class="form-control"
+                                id="addQuantity" name="quantity" class="form-control"
                                 placeholder="Quantity" (keypress)="numberOnly($event)">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-md-4 col-form-label"
-                            for="text-input">Date</label>
+                            for="addQuantityDate">Date</label>
                         <div class="col-md-8">
                             <div class="input-group">
-                                <input id="field_date" type="text" class="form-control"
+                                <input id="addQuantityDate" type="text" class="form-control"
                                     name="date" [(ngModel)]="batchQuantity.date"
                                     ngbDatepicker #dateQuantityDp="ngbDatepicker" readonly/>
                                 <span class="input-group-append">
@@ -921,10 +878,10 @@ Shade area list and Damage records List-->
                     </div>
                     <div class="form-group row">
                         <label class="col-md-4 col-form-label"
-                            for="text-input">Description</label>
+                            for="quantityRemarks">Description</label>
                         <div class="col-md-8">
                             <input [(ngModel)]="batchQuantity.remarks" type="text" 
-                                id="remarks" name="remarks" 
+                                id="quantityRemarks" name="remarks" 
                                 class="form-control" placeholder="Description">
                         </div>
                     </div>
@@ -970,7 +927,7 @@ Shade area list and Damage records List-->
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let temp of batchQuantitys">
+                        <tr *ngFor="let temp of batchQuantities">
                             <td>{{temp.batchBatchName}}</td>
                             <td>{{temp.date | date: 'dd/MM/yyyy'}}</td>
                             <td>{{temp.quantity}}</td>

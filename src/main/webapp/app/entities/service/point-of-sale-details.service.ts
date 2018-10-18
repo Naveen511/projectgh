@@ -32,7 +32,8 @@ export class PointOfSaleDetailsService {
 
     constructor(private http: HttpClient) {}
 
-    /** Send a POST method request to create the pointOfSaleDetails and
+    /**
+     * Send a POST method request to create the pointOfSaleDetails and
      * get created record as response
      *
      * @param pointOfSaleDetails - single object

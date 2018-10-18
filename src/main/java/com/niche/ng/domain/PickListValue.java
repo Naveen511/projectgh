@@ -60,7 +60,7 @@ public class PickListValue extends AbstractAuditingEntity implements Serializabl
 
      /**
      * Relation Name : OneToMany - selfIds
-     * Table Name    : Connects the PickListValue Table to PickListValue Table
+     * Table Name    : Connect the PickListValue Table to PickListValue Table
      * Used to point out the PickListValue values in the PickListValue table.
      */
     @OneToMany(mappedBy = "pickValue", cascade = javax.persistence.CascadeType.REMOVE)
@@ -68,7 +68,7 @@ public class PickListValue extends AbstractAuditingEntity implements Serializabl
 
     /**
      * Relation Name : OneToMany - varietys
-     * Table Name    : Connects the PickListValue Table to Batch Table
+     * Table Name    : Connect the PickListValue Table to Batch Table
      * Used to point out the PickListValue values in the Batch table.
      */
     @OneToMany(mappedBy = "pickListVariety", cascade = javax.persistence.CascadeType.REMOVE)
@@ -76,7 +76,7 @@ public class PickListValue extends AbstractAuditingEntity implements Serializabl
 
     /**
      * Relation Name : OneToMany - categorys
-     * Table Name    : Connects the PickListValue Table to Batch Table
+     * Table Name    : Connect the PickListValue Table to Batch Table
      * Used to point out the PickListValue values in the Batch table.
      */
     @OneToMany(mappedBy = "pickListCategory", cascade = javax.persistence.CascadeType.REMOVE)
@@ -84,7 +84,7 @@ public class PickListValue extends AbstractAuditingEntity implements Serializabl
 
     /**
      * Relation Name : OneToMany - nurseryStockVarietys
-     * Table Name    : Connects the PickListValue Table to NurseryStock Table
+     * Table Name    : Connect the PickListValue Table to NurseryStock Table
      * Used to point out the PickListValue values in the NurseryStock table.
      */
     @OneToMany(mappedBy = "pickListVariety", cascade = javax.persistence.CascadeType.REMOVE)
@@ -92,7 +92,7 @@ public class PickListValue extends AbstractAuditingEntity implements Serializabl
 
     /**
      * Relation Name : OneToMany - nurseryStockCategorys
-     * Table Name    : Connects the PickListValue Table to NurseryStock Table
+     * Table Name    : Connect the PickListValue Table to NurseryStock Table
      * Used to point out the PickListValue values in the NurseryStock table.
      */
     @OneToMany(mappedBy = "pickListCategory", cascade = javax.persistence.CascadeType.REMOVE)
@@ -100,7 +100,7 @@ public class PickListValue extends AbstractAuditingEntity implements Serializabl
 
     /**
      * Relation Name : OneToMany - godownPurchaseVarietys
-     * Table Name    : Connects the PickListValue Table to GodownPurchaseDetails Table
+     * Table Name    : Connect the PickListValue Table to GodownPurchaseDetails Table
      * Used to point out the PickListValue values in the GodownPurchaseDetails table.
      */
     @OneToMany(mappedBy = "pickListVariety", cascade = javax.persistence.CascadeType.REMOVE)
@@ -108,7 +108,7 @@ public class PickListValue extends AbstractAuditingEntity implements Serializabl
 
     /**
      * Relation Name : OneToMany - godownPurchaseCategorys
-     * Table Name    : Connects the PickListValue Table to GodownPurchaseDetails Table
+     * Table Name    : Connect the PickListValue Table to GodownPurchaseDetails Table
      * Used to point out the PickListValue values in the GodownPurchaseDetails table.
      */
     @OneToMany(mappedBy = "pickListCategory", cascade = javax.persistence.CascadeType.REMOVE)
@@ -116,7 +116,7 @@ public class PickListValue extends AbstractAuditingEntity implements Serializabl
 
     /**
      * Relation Name : OneToMany - godownPurchaseQuantityTypes
-     * Table Name    : Connects the PickListValue Table to GodownPurchaseDetails Table
+     * Table Name    : Connect the PickListValue Table to GodownPurchaseDetails Table
      * Used to point out the PickListValue values in the GodownPurchaseDetails table.
      */
     @OneToMany(mappedBy = "pickListQuantityType", cascade = javax.persistence.CascadeType.REMOVE)
@@ -124,7 +124,7 @@ public class PickListValue extends AbstractAuditingEntity implements Serializabl
 
     /**
      * Relation Name : OneToMany - godownStockVarietys
-     * Table Name    : Connects the PickListValue Table to GodownStock Table
+     * Table Name    : Connect the PickListValue Table to GodownStock Table
      * Used to point out the PickListValue values in the GodownStock table.
      */
     @OneToMany(mappedBy = "pickListVariety", cascade = javax.persistence.CascadeType.REMOVE)
@@ -132,7 +132,7 @@ public class PickListValue extends AbstractAuditingEntity implements Serializabl
 
     /**
      * Relation Name : OneToMany - godownStockCategorys
-     * Table Name    : Connects the PickListValue Table to GodownStock Table
+     * Table Name    : Connect the PickListValue Table to GodownStock Table
      * Used to point out the PickListValue values in the GodownStock table.
      */
     @OneToMany(mappedBy = "pickListCategory", cascade = javax.persistence.CascadeType.REMOVE)
@@ -140,7 +140,7 @@ public class PickListValue extends AbstractAuditingEntity implements Serializabl
 
     /**
      * Relation Name : OneToMany - godownStockQuantityTypes
-     * Table Name    : Connects the PickListValue Table to GodownStock Table
+     * Table Name    : Connect the PickListValue Table to GodownStock Table
      * Used to point out the PickListValue values in the GodownStock table.
      */
     @OneToMany(mappedBy = "pickListQuantityType", cascade = javax.persistence.CascadeType.REMOVE)
@@ -148,7 +148,7 @@ public class PickListValue extends AbstractAuditingEntity implements Serializabl
 
     /**
      * Relation Name : ManyToOne - pickListValues
-     * Table Name    : Connects the PickListValue Table to PickList Table.
+     * Table Name    : Connect the PickListValue Table to PickList Table.
      * Used to point out the PickListValue values in the PickList table.
      */
     @ManyToOne
@@ -158,7 +158,7 @@ public class PickListValue extends AbstractAuditingEntity implements Serializabl
 
     /**
      * Relation Name : ManyToOne - selfIds
-     * Table Name    : Connects the PickListValue Table to PickListValue Table.
+     * Table Name    : Connect the PickListValue Table to PickListValue Table.
      * Used to point out the PickListValue values in the PickListValue table.
      */
     @ManyToOne
@@ -168,7 +168,7 @@ public class PickListValue extends AbstractAuditingEntity implements Serializabl
 
     /**
      * Relation Name : OneToMany - nurserys
-     * Table Name    : Connects the PickListValue Table to Nursery Table
+     * Table Name    : Connect the PickListValue Table to Nursery Table
      * Used to point out the PickListValue values in the Nursery table.
      */
     @OneToMany(mappedBy = "nurseryType", cascade = javax.persistence.CascadeType.REMOVE)
@@ -176,7 +176,7 @@ public class PickListValue extends AbstractAuditingEntity implements Serializabl
 
     /**
      * Relation Name : OneToMany - batchQuantityTypes
-     * Table Name    : Connects the PickListValue Table to Batch Table
+     * Table Name    : Connect the PickListValue Table to Batch Table
      * Used to point out the PickListValue values in the Batch table.
      */
     @OneToMany(mappedBy = "quantityType", cascade = javax.persistence.CascadeType.REMOVE)
@@ -184,7 +184,7 @@ public class PickListValue extends AbstractAuditingEntity implements Serializabl
 
     /**
      * Relation Name : OneToMany - nurseryInventoryVarietys
-     * Table Name    : Connects the PickListValue Table to NurseryInventory Table
+     * Table Name    : Connect the PickListValue Table to NurseryInventory Table
      * Used to point out the PickListValue values in the NurseryInventory table.
      */
     @OneToMany(mappedBy = "pickListVariety", cascade = javax.persistence.CascadeType.REMOVE)
@@ -192,7 +192,7 @@ public class PickListValue extends AbstractAuditingEntity implements Serializabl
 
     /**
      * Relation Name : OneToMany - nurseryInventoryCategorys
-     * Table Name    : Connects the PickListValue Table to NurseryInventory Table
+     * Table Name    : Connect the PickListValue Table to NurseryInventory Table
      * Used to point out the PickListValue values in the NurseryInventory table.
      */
     @OneToMany(mappedBy = "pickListCategory", cascade = javax.persistence.CascadeType.REMOVE)
@@ -200,7 +200,7 @@ public class PickListValue extends AbstractAuditingEntity implements Serializabl
 
     /**
      * Relation Name : OneToMany - nurseryInventoryQuantityTypes
-     * Table Name    : Connects the PickListValue Table to NurseryInventory Table
+     * Table Name    : Connect the PickListValue Table to NurseryInventory Table
      * Used to point out the PickListValue values in the NurseryInventory table.
      */
     @OneToMany(mappedBy = "quantityType", cascade = javax.persistence.CascadeType.REMOVE)
@@ -208,7 +208,7 @@ public class PickListValue extends AbstractAuditingEntity implements Serializabl
 
     /**
      * Relation Name : OneToMany - nurseryInventoryDamageTypes
-     * Table Name    : Connects the PickListValue Table to NurseryInventoryDetails Table
+     * Table Name    : Connect the PickListValue Table to NurseryInventoryDetails Table
      * Used to point out the PickListValue values in the NurseryInventoryDetails table.
      */
     @OneToMany(mappedBy = "damageType", cascade = javax.persistence.CascadeType.REMOVE)
@@ -216,7 +216,7 @@ public class PickListValue extends AbstractAuditingEntity implements Serializabl
 
     /**
      * Relation Name : OneToMany - pickListValueDamageAreas
-     * Table Name    : Connects the PickListValue Table to Damage Table
+     * Table Name    : Connect the PickListValue Table to Damage Table
      * Used to point out the PickListValue values in the Damage table.
      */
     @OneToMany(mappedBy = "damageArea", cascade = javax.persistence.CascadeType.REMOVE)
@@ -224,7 +224,7 @@ public class PickListValue extends AbstractAuditingEntity implements Serializabl
 
     /**
      * Relation Name : OneToMany - nurseryStockDamageAreas
-     * Table Name    : Connects the PickListValue Table to NurseryStockDetails Table
+     * Table Name    : Connect the PickListValue Table to NurseryStockDetails Table
      * Used to point out the PickListValue values in the NurseryStockDetails table.
      */
     @OneToMany(mappedBy = "saplingDamageArea", cascade = javax.persistence.CascadeType.REMOVE)
@@ -232,7 +232,7 @@ public class PickListValue extends AbstractAuditingEntity implements Serializabl
 
     /**
      * Relation Name : OneToMany - financialYearNames
-     * Table Name    : Connects the PickListValue Table to FinancialYearSettings Table
+     * Table Name    : Connect the PickListValue Table to FinancialYearSettings Table
      * Used to point out the PickListValue values in the FinancialYearSettings table.
      */
     @OneToMany(mappedBy = "financialYear", cascade = javax.persistence.CascadeType.REMOVE)
@@ -240,7 +240,7 @@ public class PickListValue extends AbstractAuditingEntity implements Serializabl
 
     /**
      * Relation Name : OneToMany - damageDescriptions
-     * Table Name    : Connects the PickListValue Table to Damage Table
+     * Table Name    : Connect the PickListValue Table to Damage Table
      * Used to point out the PickListValue values in the Damage table.
      */
     @OneToMany(mappedBy = "description", cascade = javax.persistence.CascadeType.REMOVE)
@@ -248,7 +248,7 @@ public class PickListValue extends AbstractAuditingEntity implements Serializabl
 
     /**
      * Relation Name : OneToMany - quantitysVarieties
-     * Table Name    : Connects the PickListValue Table to Quantity Table
+     * Table Name    : Connect the PickListValue Table to Quantity Table
      * Used to point out the PickListValue values in the Quantity table.
      */
     @OneToMany(mappedBy = "pickListVariety", cascade = javax.persistence.CascadeType.REMOVE)
@@ -256,7 +256,7 @@ public class PickListValue extends AbstractAuditingEntity implements Serializabl
 
     /**
      * Relation Name : OneToMany - quantitysCategories
-     * Table Name    : Connects the PickListValue Table to Quantity Table
+     * Table Name    : Connect the PickListValue Table to Quantity Table
      * Used to point out the PickListValue values in the Quantity table.
      */
     @OneToMany(mappedBy = "pickListCategory", cascade = javax.persistence.CascadeType.REMOVE)
@@ -264,7 +264,7 @@ public class PickListValue extends AbstractAuditingEntity implements Serializabl
 
     /**
      * Relation Name : OneToMany - pointOfSaleVarietys
-     * Table Name    : Connects the PickListValue Table to PointOfSaleDetails Table
+     * Table Name    : Connect the PickListValue Table to PointOfSaleDetails Table
      * Used to point out the PickListValue values in the PointOfSaleDetails table.
      */
     @OneToMany(mappedBy = "pickListVariety", cascade = javax.persistence.CascadeType.REMOVE)
@@ -272,7 +272,7 @@ public class PickListValue extends AbstractAuditingEntity implements Serializabl
 
     /**
      * Relation Name : OneToMany - pointOfSaleCategorys
-     * Table Name    : Connects the PickListValue Table to PointOfSaleDetails Table
+     * Table Name    : Connect the PickListValue Table to PointOfSaleDetails Table
      * Used to point out the PickListValue values in the PointOfSaleDetails table.
      */
     @OneToMany(mappedBy = "pickListCategory", cascade = javax.persistence.CascadeType.REMOVE)
@@ -280,7 +280,7 @@ public class PickListValue extends AbstractAuditingEntity implements Serializabl
 
     /**
      * Relation Name : OneToMany - coverFillingDetails
-     * Table Name    : Connects the PickListValue Table to CoverFillingDetails Table
+     * Table Name    : Connect the PickListValue Table to CoverFillingDetails Table
      * Used to point out the PickListValue values in the CoverFillingDetails table.
      */
     @OneToMany(mappedBy = "damageType", cascade = javax.persistence.CascadeType.REMOVE)
@@ -288,7 +288,7 @@ public class PickListValue extends AbstractAuditingEntity implements Serializabl
 
     /**
      * Relation Name : OneToMany - nurseryInventoryDamageDescs
-     * Table Name    : Connects the PickListValue Table to NurseryInventoryDetails Table
+     * Table Name    : Connect the PickListValue Table to NurseryInventoryDetails Table
      * Used to point out the PickListValue values in the NurseryInventoryDetails table.
      */
     @OneToMany(mappedBy = "inventoryDamageDescription", cascade = javax.persistence.CascadeType.REMOVE)
@@ -296,7 +296,7 @@ public class PickListValue extends AbstractAuditingEntity implements Serializabl
 
     /**
      * Relation Name : OneToMany - coverFillingDamageDescs
-     * Table Name    : Connects the PickListValue Table to CoverFillingDetails Table
+     * Table Name    : Connect the PickListValue Table to CoverFillingDetails Table
      * Used to point out the PickListValue values in the CoverFillingDetails table.
      */
     @OneToMany(mappedBy = "coverFillingDamageDescription", cascade = javax.persistence.CascadeType.REMOVE)

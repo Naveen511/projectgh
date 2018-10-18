@@ -62,7 +62,7 @@ public class MapSectorWithZonal extends AbstractAuditingEntity implements Serial
 
     /**
      * Relation Name : ManyToOne - mapSectorWithZonals
-     * Table Name    : Connects the MapSectorWithZonal Table to Zonal Table.
+     * Table Name    : Connect the MapSectorWithZonal Table to Zonal Table.
      * Used to point out the MapSectorWithZonal values in the Zonal table.
      */
     @ManyToOne
@@ -71,7 +71,7 @@ public class MapSectorWithZonal extends AbstractAuditingEntity implements Serial
 
     /**
      * Relation Name : ManyToOne - mapSectorWithZonals
-     * Table Name    : Connects the MapSectorWithZonal Table to Sector Table.
+     * Table Name    : Connect the MapSectorWithZonal Table to Sector Table.
      * Used to point out the MapSectorWithZonal values in the Sector table.
      */
     @ManyToOne

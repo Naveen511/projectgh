@@ -7,42 +7,42 @@
  *  Target : yarn
  *******************************************************************************/
 
-// Import needed component and dependency
+// Import needed model, service, shared and angular dependency
 import { Component, OnInit } from '@angular/core';
-import { ZonalService } from 'app/entities/service/zonal.service';
-import { SectorService } from 'app/entities/service/sector.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ISector, SectorModel } from 'app/shared/model/sector.model';
-import { IZonal } from 'app/shared/model/zonal.model';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { ViewChild } from '@angular/core';
-
 import { JhiParseLinks } from 'ng-jhipster';
-
 import * as moment from 'moment';
-import {
-    DATE_TIME_FORMAT,
-    ITEMS_PER_PAGE,
-    STATUS_ACTIVE,
-    SOFT_DELETE_STATUS,
-    ALERT_TIME_OUT_5000,
-    STATUS_MOVEMENT,
-    STATUS_UPDATE
-} from 'app/shared';
 import { HttpResponse, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-// Display the alert message of success and error
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { FinancialYearSettingsService } from 'app/entities/service/financial-year-settings.service';
-import { IFinancialYearSettings } from 'app/shared/model/financial-year-settings.model';
-import { IMapSectorWithZonal, MapSectorWithZonal, STATUS_INACTIVE } from 'app/shared/model/map-sector-with-zonal.model';
-import { MapSectorWithZonalService } from 'app/entities/service/map-sector-with-zonal.service';
-import { MapNurseryWithSectorModel } from 'app/shared/model/map-nursery-with-sector.model';
-import { OperationalHeadService } from 'app/entities/service/operational-head.service';
-import { IOperationalHead } from 'app/shared/model/operational-head.model';
 import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
+
+import { ZonalService } from 'app/entities/service/zonal.service';
+import { SectorService } from 'app/entities/service/sector.service';
+import {
+    FinancialYearSettingsService
+} from 'app/entities/service/financial-year-settings.service';
+import {
+    MapSectorWithZonalService
+} from 'app/entities/service/map-sector-with-zonal.service';
+import { OperationalHeadService } from 'app/entities/service/operational-head.service';
+
+import { ISector, SectorModel } from 'app/shared/model/sector.model';
+import { IZonal } from 'app/shared/model/zonal.model';
+import { MapNurseryWithSectorModel } from 'app/shared/model/map-nursery-with-sector.model';
+import { IOperationalHead } from 'app/shared/model/operational-head.model';
+import { IFinancialYearSettings } from 'app/shared/model/financial-year-settings.model';
+import {
+    IMapSectorWithZonal, MapSectorWithZonal, STATUS_INACTIVE
+} from 'app/shared/model/map-sector-with-zonal.model';
+
+import {
+    DATE_TIME_FORMAT, ITEMS_PER_PAGE, STATUS_ACTIVE, SOFT_DELETE_STATUS,
+    ALERT_TIME_OUT_5000, STATUS_MOVEMENT, STATUS_UPDATE
+} from 'app/shared';
 
 // Mension the html, css/sass files
 @Component({
@@ -70,9 +70,8 @@ export class SectorComponent implements OnInit {
     movementStatus: number;
     isCollapsed = true;
 
-    // Title and alertTitle declation as String
+    // Title declation as String
     title: String;
-    alertTitle: String;
 
     // Date picker id declation
     dateFromDp: any;
@@ -151,22 +150,25 @@ export class SectorComponent implements OnInit {
     }
 
     ngOnInit() {
-        // Call a function to get list of active headOffice
-        this.getOperationalHead();
+        // To get sector to display the sector list
         this.getSectorList();
+        // Call a function to get list of active headOffice
+        // this.getOperationalHead();
         // Call a function to get active batch id
-        this.getActiveRecord();
+        // this.getActiveRecord();
 
         // To set the time for automatic alert close
         setTimeout(() => (this.staticAlertClosed = true), ALERT_TIME_OUT_5000);
 
         // Set the success message with debounce time
         this.success.subscribe(message => (this.successMessage = message));
-        this.success.pipe(debounceTime(ALERT_TIME_OUT_5000)).subscribe(() => (this.successMessage = null));
+        this.success.pipe(debounceTime(ALERT_TIME_OUT_5000))
+            .subscribe(() => (this.successMessage = null));
 
         // To set the error message with debounce time
         this.error.subscribe(message => (this.errorMessage = message));
-        this.error.pipe(debounceTime(ALERT_TIME_OUT_5000)).subscribe(() => (this.errorMessage = null));
+        this.error.pipe(debounceTime(ALERT_TIME_OUT_5000))
+            .subscribe(() => (this.errorMessage = null));
     }
 
     /**
@@ -175,13 +177,11 @@ export class SectorComponent implements OnInit {
     getOperationalHead(): void {
         // Get the list of active batch record and assign a array value to a variable
         // this.operationalHeadService.getActiveList()
-        this.operationalHeadService
-            .query({
-                filter: { 'status.equals': STATUS_ACTIVE }
-            })
-            .subscribe((res: HttpResponse<IOperationalHead[]>) => {
-                this.operationalHeads = res.body;
-            });
+        this.operationalHeadService.query({
+            filter: { 'status.equals': STATUS_ACTIVE }
+        }).subscribe((res: HttpResponse<IOperationalHead[]>) => {
+            this.operationalHeads = res.body;
+        });
     }
 
     /**
@@ -193,16 +193,14 @@ export class SectorComponent implements OnInit {
         // console.log('operational Head Id', operationalHeadId);
         // Get the list of zone
         // this.zonalService.getParticularHeadOfficeRecord(operationalHeadId)
-        this.zonalService
-            .query({
-                filter: {
-                    'status.equals': STATUS_ACTIVE,
-                    'operationalHeadId.equals': operationalHeadId
-                }
-            })
-            .subscribe((res: HttpResponse<IZonal[]>) => {
-                this.zonals = res.body;
-            });
+        this.zonalService.query({
+            filter: {
+                'status.equals': STATUS_ACTIVE,
+                'operationalHeadId.equals': operationalHeadId
+            }
+        }).subscribe((res: HttpResponse<IZonal[]>) => {
+            this.zonals = res.body;
+        });
     }
 
     /**
@@ -210,16 +208,14 @@ export class SectorComponent implements OnInit {
      */
     getSectorList(): void {
         // Get the list of zone
-        this.sectorService
-            .query({
-                page: this.page - 1,
-                size: this.itemsPerPage,
-                sort: this.sort(),
-                filter: { 'status.equals': STATUS_ACTIVE }
-            })
-            .subscribe((res: HttpResponse<ISector[]>) => {
-                this.paginateSectors(res.body, res.headers);
-            });
+        this.sectorService.query({
+            page: this.page - 1,
+            size: this.itemsPerPage,
+            sort: this.sort(),
+            filter: { 'status.equals': STATUS_ACTIVE }
+        }).subscribe((res: HttpResponse<ISector[]>) => {
+            this.paginateSectors(res.body, res.headers);
+        });
     }
 
     /**
@@ -228,14 +224,12 @@ export class SectorComponent implements OnInit {
     getActiveRecord(): void {
         // Get the list of active batch record and assign a 0th index array value
         // to an batch id
-        this.settingsService
-            .query({
-                filter: { 'status.equals': STATUS_ACTIVE }
-            })
-            .subscribe((res: HttpResponse<IFinancialYearSettings[]>) => {
-                // Assign a value to an object
-                this.batchId = res.body[0].id;
-            });
+        this.settingsService.query({
+            filter: { 'status.equals': STATUS_ACTIVE }
+        }).subscribe((res: HttpResponse<IFinancialYearSettings[]>) => {
+            // Assign a value to an object
+            this.batchId = res.body[0].id;
+        });
     }
 
     /**
@@ -243,15 +237,16 @@ export class SectorComponent implements OnInit {
      */
     save() {
         this.sectorObject.status = STATUS_ACTIVE;
+        // If the id is not empty call the update function
         if (this.sectorObject.id !== undefined) {
-            // Set the title for the alert updated
-            this.alertTitle = 'updated';
-            this.subscribeToSaveResponse(this.sectorService.update(this.sectorObject), this.alertTitle);
+            this.subscribeToSaveResponse(
+                this.sectorService.update(this.sectorObject), 'updated'
+            );
         } else {
-            // Set the title for the alert created
-            this.alertTitle = 'created';
             this.sectorObject.financialYearSectorId = this.batchId;
-            this.subscribeToSaveResponse(this.sectorService.create(this.sectorObject), this.alertTitle);
+            this.subscribeToSaveResponse(
+                this.sectorService.create(this.sectorObject), 'created'
+            );
         }
     }
 
@@ -259,7 +254,7 @@ export class SectorComponent implements OnInit {
      * To save the response and hide the model
      *
      * @param result list of values
-     * @param alertTitle title
+     * @param alertTitle message title for alert
      */
     private subscribeToSaveResponse(result: Observable<HttpResponse<ISector>>, alertTitle) {
         result.subscribe(
@@ -267,8 +262,9 @@ export class SectorComponent implements OnInit {
                 this.sectorModal.hide();
                 this.moveSectorValue(res.body, this.mapSectorWithZonal);
                 // alert('Sector Created/Updated Successfully.');
-                this.success.next(`Sector ${alertTitle} successfully`);
+                this.success.next(`Sector ${alertTitle} successfully.`);
                 this.getSectorList();
+                this.zonals = null;
                 this.isCollapsed = true;
                 this.sectorObject = new SectorModel();
             },
@@ -293,7 +289,8 @@ export class SectorComponent implements OnInit {
         this.mapSectorWithZonal.zonalId = sectorDetails.zonalId;
         this.mapSectorWithZonal.sectorId = sectorDetails.id;
         this.mapSectorWithZonal.status = STATUS_ACTIVE;
-        this.mapSectorWithZonalService.create(this.mapSectorWithZonal).subscribe(
+        this.mapSectorWithZonalService.create(this.mapSectorWithZonal)
+        .subscribe(
             (res: HttpResponse<IMapSectorWithZonal>) => {
                 this.moveSector.hide();
             },
@@ -323,26 +320,28 @@ export class SectorComponent implements OnInit {
         }
 
         // this.mapSectorWithZonalService.getParticularSectorActiveRecord(sectorDetails.id)
-        this.mapSectorWithZonalService
-            .query({
-                filter: { 'sectorId:equals': sectorDetails.id }
-            })
-            .subscribe((res: HttpResponse<IMapSectorWithZonal[]>) => {
-                // If the length is greater than 0,
-                // Set the status as inactive and todate for the old row
-                if (res.body.length > 0) {
-                    // If the todate date is empty,
-                    // To set the default date for the todate date
-                    if (value.toDate === null || value.toDate === undefined) {
-                        // console.log(this.fromDate);
-                        this.toDate = moment(value.toDate).format(DATE_TIME_FORMAT);
-                        value.toDate = moment(this.toDate, DATE_TIME_FORMAT);
-                    }
-                    this.mapSectorWithZonal = res.body[0];
-                    this.mapSectorWithZonal.description = value.description;
-                    this.mapSectorWithZonal.toDate = moment(value.toDate, DATE_TIME_FORMAT);
-                    this.mapSectorWithZonal.status = STATUS_INACTIVE;
-                    this.mapSectorWithZonalService.update(this.mapSectorWithZonal).subscribe(
+        this.mapSectorWithZonalService.query({
+            filter: {
+                'sectorId:equals': sectorDetails.id,
+                'status.equals': STATUS_ACTIVE
+            }
+        }).subscribe((res: HttpResponse<IMapSectorWithZonal[]>) => {
+            // If the length is greater than 0,
+            // Set the status as inactive and todate for the old row
+            if (res.body.length > 0) {
+                // If the todate date is empty,
+                // To set the default date for the todate date
+                if (value.toDate === null || value.toDate === undefined) {
+                    // console.log(this.fromDate);
+                    this.toDate = moment(value.toDate).format(DATE_TIME_FORMAT);
+                    value.toDate = moment(this.toDate, DATE_TIME_FORMAT);
+                }
+                this.mapSectorWithZonal = res.body[0];
+                this.mapSectorWithZonal.description = value.description;
+                this.mapSectorWithZonal.toDate = moment(value.toDate, DATE_TIME_FORMAT);
+                this.mapSectorWithZonal.status = STATUS_INACTIVE;
+                this.mapSectorWithZonalService.update(this.mapSectorWithZonal)
+                    .subscribe(
                         (output: HttpResponse<IMapSectorWithZonal>) => {
                             this.saveMapTable(sectorDetails, value.fromDate);
                         },
@@ -351,16 +350,20 @@ export class SectorComponent implements OnInit {
                             this.error.next(error.error.fieldErrors[0].message);
                         }
                     );
-                } else {
-                    this.saveMapTable(sectorDetails, value.fromDate);
-                }
-            });
+            } else {
+                this.saveMapTable(sectorDetails, value.fromDate);
+            }
+        });
     }
 
     /**
      * Shown model popup to create sector value with the title
      */
     createSector(): void {
+        // Call a function to get list of active headOffice
+        this.getOperationalHead();
+        // Call a function to get active batch id
+        this.getActiveRecord();
         this.sectorObject = new SectorModel();
         this.mapSectorWithZonal = new MapNurseryWithSectorModel();
         this.sectorModal.show();
@@ -379,6 +382,8 @@ export class SectorComponent implements OnInit {
             this.sectorModal.show();
             this.title = `Update sector: ${value.sectorName}`;
         } else {
+            // To get Operational Head
+            this.getOperationalHead();
             this.mapSectorWithZonal = new MapNurseryWithSectorModel();
             this.moveSector.show();
             this.title = `Move sector: ${value.sectorName}`;
@@ -388,8 +393,7 @@ export class SectorComponent implements OnInit {
         this.zonalService
             .query({
                 filter: { 'id.equals': value.zonalId }
-            })
-            .subscribe((res: HttpResponse<IZonal[]>) => {
+            }).subscribe((res: HttpResponse<IZonal[]>) => {
                 if (res.body[0] !== null && res.body !== undefined) {
                     this.sectorObject.operationalHeadId = res.body[0].operationalHeadId;
                     this.getZoneList(res.body[0].operationalHeadId);
@@ -409,7 +413,8 @@ export class SectorComponent implements OnInit {
             this.sectorObject = sector;
             this.sectorObject.status = SOFT_DELETE_STATUS;
             // console.log('date', this.sectorObject);
-            this.sectorService.update(this.sectorObject).subscribe(
+            this.sectorService.update(this.sectorObject)
+            .subscribe(
                 data => {
                     // console.log('upda', this.sectorObject);
                     this.success.next(`Sector deleted successfully`);
@@ -440,14 +445,12 @@ export class SectorComponent implements OnInit {
     getMapList(id: number): void {
         // Get the list of record based on zonal id
         // this.mapSectorWithZonalService.getParticularSectorRecord(id)
-        this.mapSectorWithZonalService
-            .query({
-                filter: { 'sectorId:equals': id }
-            })
-            .subscribe((res: HttpResponse<IMapSectorWithZonal[]>) => {
-                this.isCollapsed = false;
-                this.mapSectorWithZonals = res.body;
-            });
+        this.mapSectorWithZonalService.query({
+            filter: { 'sectorId:equals': id }
+        }).subscribe((res: HttpResponse<IMapSectorWithZonal[]>) => {
+            this.isCollapsed = false;
+            this.mapSectorWithZonals = res.body;
+        });
     }
 
     /**
@@ -458,6 +461,7 @@ export class SectorComponent implements OnInit {
         this.sectorModal.hide();
         // Call the getSector List function
         this.getSectorList();
+        this.zonals = null;
         this.isCollapsed = true;
     }
 

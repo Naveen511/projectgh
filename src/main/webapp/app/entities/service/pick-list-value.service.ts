@@ -29,14 +29,16 @@ export class PickListValueService {
 
     constructor(private http: HttpClient) {}
 
-    /** Send a POST method request to create the pickListValue and
+    /**
+     * Send a POST method request to create the pickListValue and
      * get created record as response
      *
      * @param pickListValue - single object
      * @returns object of values
      */
     create(pickListValue: IPickListValue): Observable<EntityResponseType> {
-        return this.http.post<IPickListValue>(this.resourceUrl, pickListValue, { observe: 'response' });
+        return this.http
+            .post<IPickListValue>(this.resourceUrl, pickListValue, { observe: 'response' });
     }
 
     /**
@@ -47,7 +49,8 @@ export class PickListValueService {
      * @returns object of values
      */
     update(pickListValue: IPickListValue): Observable<EntityResponseType> {
-        return this.http.put<IPickListValue>(this.resourceUrl, pickListValue, { observe: 'response' });
+        return this.http
+            .put<IPickListValue>(this.resourceUrl, pickListValue, { observe: 'response' });
     }
 
     /**
@@ -58,7 +61,8 @@ export class PickListValueService {
      * @returns object of values
      */
     find(id: number): Observable<EntityResponseType> {
-        return this.http.get<IPickListValue>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+        return this.http
+            .get<IPickListValue>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
     /**
@@ -70,7 +74,8 @@ export class PickListValueService {
      */
     query(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
-        return this.http.get<IPickListValue[]>(this.resourceUrl, { params: options, observe: 'response' });
+        return this.http
+            .get<IPickListValue[]>(this.resourceUrl, { params: options, observe: 'response' });
     }
 
     /**

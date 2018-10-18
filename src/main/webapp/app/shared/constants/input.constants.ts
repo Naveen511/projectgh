@@ -20,7 +20,10 @@ export const MONTHS = [
 ];
 
 // Default Status
-export const DEFAULT_STATUS = [{ value: 1, name: 'ACTIVE' }, { value: 2, name: 'INACTIVE' }];
+export const DEFAULT_STATUS = [
+    { value: 1, name: 'ACTIVE' },
+    { value: 2, name: 'INACTIVE' }
+];
 
 // Default damage status
 export const SOFT_DELETE_STATUS = -1;

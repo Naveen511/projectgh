@@ -60,7 +60,7 @@ public class BatchQuantity extends AbstractAuditingEntity implements Serializabl
 
      /**
      * Relation Name : ManyToOne - batch
-     * Table Name    : Connects the BatchQuantity Table to Batch Table
+     * Table Name    : Connect the BatchQuantity Table to Batch Table
      * To get the batch quantity.
      */
     @ManyToOne

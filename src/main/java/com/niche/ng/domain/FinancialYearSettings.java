@@ -65,7 +65,7 @@ public class FinancialYearSettings extends AbstractAuditingEntity implements Ser
 
     /**
      * Relation Name : ManyToOne - financialYearNames
-     * Table Name    : Connects the FinancialYearSettings Table to PickListValue Table.
+     * Table Name    : Connect the FinancialYearSettings Table to PickListValue Table.
      * Used to get the FinancialYearSettings values from the picklist value table.
      */
     @ManyToOne
@@ -74,7 +74,7 @@ public class FinancialYearSettings extends AbstractAuditingEntity implements Ser
 
     /**
      * Relation Name : OneToMany - zonals
-     * Table Name    : Connects the FinancialYearSettings Table to Zonal Table
+     * Table Name    : Connect the FinancialYearSettings Table to Zonal Table
      * Used to point out the FinancialYearSettings values in the Zonal table.
      */
     @OneToMany(mappedBy = "financialYear", cascade = javax.persistence.CascadeType.REMOVE)
@@ -82,7 +82,7 @@ public class FinancialYearSettings extends AbstractAuditingEntity implements Ser
 
     /**
      * Relation Name : OneToMany - sectors
-     * Table Name    : Connects the FinancialYearSettings Table to Sector Table
+     * Table Name    : Connect the FinancialYearSettings Table to Sector Table
      * Used to point out the FinancialYearSettings values in the Sector table.
      */
     @OneToMany(mappedBy = "financialYearSector", cascade = javax.persistence.CascadeType.REMOVE)
@@ -90,7 +90,7 @@ public class FinancialYearSettings extends AbstractAuditingEntity implements Ser
 
     /**
      * Relation Name : OneToMany - nurseries
-     * Table Name    : Connects the FinancialYearSettings Table to Nursery Table
+     * Table Name    : Connect the FinancialYearSettings Table to Nursery Table
      * Used to point out the FinancialYearSettings values in the Nursery table.
      */
     @OneToMany(mappedBy = "financialYearNursery", cascade = javax.persistence.CascadeType.REMOVE)
@@ -98,7 +98,7 @@ public class FinancialYearSettings extends AbstractAuditingEntity implements Ser
 
     /**
      * Relation Name : OneToMany - batches
-     * Table Name    : Connects the FinancialYearSettings Table to batch Table
+     * Table Name    : Connect the FinancialYearSettings Table to batch Table
      * Used to point out the FinancialYearSettings values in the Batch table.
      */
     @OneToMany(mappedBy = "financialYearBatch", cascade = javax.persistence.CascadeType.REMOVE)
@@ -106,7 +106,7 @@ public class FinancialYearSettings extends AbstractAuditingEntity implements Ser
 
     /**
      * Relation Name : OneToMany - damages
-     * Table Name    : Connects the FinancialYearSettings Table to Damage Table
+     * Table Name    : Connect the FinancialYearSettings Table to Damage Table
      * Used to point out the FinancialYearSettings values in the Damage table.
      */
     @OneToMany(mappedBy = "financialYearDamage", cascade = javax.persistence.CascadeType.REMOVE)
@@ -114,7 +114,7 @@ public class FinancialYearSettings extends AbstractAuditingEntity implements Ser
 
     /**
      * Relation Name : OneToMany - shadeAreas
-     * Table Name    : Connects the FinancialYearSettings Table to ShadeArea Table
+     * Table Name    : Connect the FinancialYearSettings Table to ShadeArea Table
      * Used to point out the FinancialYearSettings values in the ShadeArea table.
      */
     @OneToMany(mappedBy = "financialYearShadeArea", cascade = javax.persistence.CascadeType.REMOVE)
@@ -122,7 +122,7 @@ public class FinancialYearSettings extends AbstractAuditingEntity implements Ser
 
     /**
      * Relation Name : OneToMany - nurseryStocks
-     * Table Name    : Connects the FinancialYearSettings Table to NurseryStock Table
+     * Table Name    : Connect the FinancialYearSettings Table to NurseryStock Table
      * Used to point out the FinancialYearSettings values in the NurseryStock table.
      */
     @OneToMany(mappedBy = "financialYearNurseryStock", cascade = javax.persistence.CascadeType.REMOVE)
@@ -130,7 +130,7 @@ public class FinancialYearSettings extends AbstractAuditingEntity implements Ser
 
     /**
      * Relation Name : OneToMany - nurseryStockDetails
-     * Table Name    : Connects the FinancialYearSettings Table to NurseryStockDetails Table
+     * Table Name    : Connect the FinancialYearSettings Table to NurseryStockDetails Table
      * Used to point out the FinancialYearSettings values in the NurseryStockDetails table.
      */
     @OneToMany(mappedBy = "financialYearStockDetails", cascade = javax.persistence.CascadeType.REMOVE)
@@ -138,7 +138,7 @@ public class FinancialYearSettings extends AbstractAuditingEntity implements Ser
 
     /**
      * Relation Name : OneToMany - godowns
-     * Table Name    : Connects the FinancialYearSettings Table to Godown Table
+     * Table Name    : Connect the FinancialYearSettings Table to Godown Table
      * Used to point out the FinancialYearSettings values in the Godown table.
      */
     @OneToMany(mappedBy = "financialYearGodown", cascade = javax.persistence.CascadeType.REMOVE)
@@ -146,7 +146,7 @@ public class FinancialYearSettings extends AbstractAuditingEntity implements Ser
 
     /**
      * Relation Name : OneToMany - godownStocks
-     * Table Name    : Connects the FinancialYearSettings Table to GodownStock Table
+     * Table Name    : Connect the FinancialYearSettings Table to GodownStock Table
      * Used to point out the FinancialYearSettings values in the GodownStock table.
      */
     @OneToMany(mappedBy = "financialYearGodownStock", cascade = javax.persistence.CascadeType.REMOVE)
@@ -154,7 +154,7 @@ public class FinancialYearSettings extends AbstractAuditingEntity implements Ser
 
     /**
      * Relation Name : OneToMany - godownStockDetails
-     * Table Name    : Connects the FinancialYearSettings Table to GodownStockDetails Table
+     * Table Name    : Connect the FinancialYearSettings Table to GodownStockDetails Table
      * Used to point out the FinancialYearSettings values in the GodownStockDetails table.
      */
     @OneToMany(mappedBy = "financialYearGodownStockDetails", cascade = javax.persistence.CascadeType.REMOVE)
@@ -162,7 +162,7 @@ public class FinancialYearSettings extends AbstractAuditingEntity implements Ser
 
     /**
      * Relation Name : OneToMany - godownPurchaseDetails
-     * Table Name    : Connects the FinancialYearSettings Table to GodownPurchaseDetails Table
+     * Table Name    : Connect the FinancialYearSettings Table to GodownPurchaseDetails Table
      * Used to point out the FinancialYearSettings values in the GodownPurchaseDetails table.
      */
     @OneToMany(mappedBy = "financialYearGodownPurchase", cascade = javax.persistence.CascadeType.REMOVE)

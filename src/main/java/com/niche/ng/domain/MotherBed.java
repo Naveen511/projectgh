@@ -58,7 +58,7 @@ public class MotherBed extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : ManyToOne - motherBeds
-     * Table Name    : Connects the MotherBed Table to Nursery Table.
+     * Table Name    : Connect the MotherBed Table to Nursery Table.
      * Used to point out the MotherBed values in the Nursery table.
      */
     @ManyToOne(optional = false)
@@ -68,7 +68,7 @@ public class MotherBed extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : OneToMany - batchMotherBeds
-     * Table Name    : Connects the MotherBed Table to Batch Table
+     * Table Name    : Connect the MotherBed Table to Batch Table
      * Used to point out the MotherBed values in the Batch table.
      */
     @OneToMany(mappedBy = "motherBed", cascade = javax.persistence.CascadeType.REMOVE)

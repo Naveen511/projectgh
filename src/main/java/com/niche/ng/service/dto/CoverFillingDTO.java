@@ -17,7 +17,7 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 
- /**
+/**
  * A DTO for the CoverFilling entity.
  * 
  * CoverFillingDTO class implements Serializable to convert instance class into series of bytes.

@@ -32,7 +32,8 @@ export class ZonalInchargeService {
 
     constructor(private http: HttpClient) {}
 
-    /** Send a POST method request to create the zonalIncharge and
+    /**
+     * Send a POST method request to create the zonalIncharge and
      * get created record as response
      *
      * @param zonalIncharge - single object

@@ -58,7 +58,7 @@ public class Sector extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : OneToMany - nurserys
-     * Table Name    : Connects the sector Table to nursery Table
+     * Table Name    : Connect the sector Table to nursery Table
      * After Creation of the Sector, If any movement it affect in nursery Table
      */
     @OneToMany(mappedBy = "sector", cascade = javax.persistence.CascadeType.REMOVE)
@@ -66,7 +66,7 @@ public class Sector extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : ManyToOne - zonal
-     * Table Name    : Connects the Sector Table to Zonal Table
+     * Table Name    : Connect the Sector Table to Zonal Table
      * To get the zonal.
      */
     @ManyToOne
@@ -76,7 +76,7 @@ public class Sector extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : ManyToOne - financialYearSector
-     * Table Name    : Connects the Sector Table to FinancialYearSettings Table
+     * Table Name    : Connect the Sector Table to FinancialYearSettings Table
      * To get the financialYearSector.
      */
     @ManyToOne
@@ -85,7 +85,7 @@ public class Sector extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : OneToMany - incharges
-     * Table Name    : Connects the Sector Table to SectorIncharge Table
+     * Table Name    : Connect the Sector Table to SectorIncharge Table
      * After Creation of the Sector, If assign a staff it affect in SectorIncharge Table
      */
     @OneToMany(mappedBy = "sector", cascade = javax.persistence.CascadeType.REMOVE)
@@ -93,7 +93,7 @@ public class Sector extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : OneToMany - mapSectorWithZonals
-     * Table Name    : Connects the Sector Table to MapSectorWithZonal Table
+     * Table Name    : Connect the Sector Table to MapSectorWithZonal Table
      * After Creation of the Sector, If any movement it affect in MapSectorWithZonal Table
      */
     @OneToMany(mappedBy = "sector", cascade = javax.persistence.CascadeType.REMOVE)
@@ -101,7 +101,7 @@ public class Sector extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : OneToMany - mapNurseryWithSectors
-     * Table Name    : Connects the Sector Table to MapNurseryWithSector Table
+     * Table Name    : Connect the Sector Table to MapNurseryWithSector Table
      * After Creation of the Sector, If any movement it affect in MapNurseryWithSector Table
      */
     @OneToMany(mappedBy = "sector", cascade = javax.persistence.CascadeType.REMOVE)

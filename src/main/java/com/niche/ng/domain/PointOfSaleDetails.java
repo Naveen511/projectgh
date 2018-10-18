@@ -76,7 +76,7 @@ public class PointOfSaleDetails extends AbstractAuditingEntity implements Serial
 
     /**
      * Relation Name : ManyToOne - pickListVariety
-     * Table Name    : Connects the PointOfSaleDetails Table to PickListValue Table
+     * Table Name    : Connect the PointOfSaleDetails Table to PickListValue Table
      * To get the pickListVariety.
      */
     @ManyToOne
@@ -85,7 +85,7 @@ public class PointOfSaleDetails extends AbstractAuditingEntity implements Serial
 
     /**
      * Relation Name : ManyToOne - pickListCategory
-     * Table Name    : Connects the PointOfSaleDetails Table to PickListValue Table
+     * Table Name    : Connect the PointOfSaleDetails Table to PickListValue Table
      * To get the pickListCategory.
      */
     @ManyToOne
@@ -94,7 +94,7 @@ public class PointOfSaleDetails extends AbstractAuditingEntity implements Serial
 
     /**
      * Relation Name : ManyToOne - nurseryStock
-     * Table Name    : Connects the PointOfSaleDetails Table to NurseryStock Table
+     * Table Name    : Connect the PointOfSaleDetails Table to NurseryStock Table
      * To get the nurseryStock.
      */
     @ManyToOne

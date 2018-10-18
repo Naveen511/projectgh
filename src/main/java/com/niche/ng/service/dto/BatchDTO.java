@@ -44,7 +44,7 @@ public class BatchDTO extends AbstractAuditingDTO implements Serializable {
     @NotNull(message = "Quantity cannot be blank.")
     private Long quantity;
 
-    @NotNull(message = "Showing cannot be blank.")
+    @NotNull(message = "Sowing type cannot be blank.")
     private Integer showingType;
 
     @NotNull(message = "Date cannot be blank.")
@@ -171,7 +171,7 @@ public class BatchDTO extends AbstractAuditingDTO implements Serializable {
     /**
      * To set the sowing type  from the batch table
      * 
-     * @param showingType type of sown
+     * @param showingType type of shown
      */
     public void setShowingType(Integer showingType) {
         this.showingType = showingType;

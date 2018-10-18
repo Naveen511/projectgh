@@ -29,14 +29,16 @@ export class NurseryStockService {
 
     constructor(private http: HttpClient) {}
 
-    /** Send a POST method request to create the nurseryStock and
+    /**
+     * Send a POST method request to create the nurseryStock and
      * get created record as response
      *
      * @param nurseryStock - single object
      * @returns object of values
      */
     create(nurseryStock: INurseryStock): Observable<EntityResponseType> {
-        return this.http.post<INurseryStock>(this.resourceUrl, nurseryStock, { observe: 'response' });
+        return this.http
+            .post<INurseryStock>(this.resourceUrl, nurseryStock, { observe: 'response' });
     }
 
     /**
@@ -47,7 +49,8 @@ export class NurseryStockService {
      * @returns object of values
      */
     update(nurseryStock: INurseryStock): Observable<EntityResponseType> {
-        return this.http.put<INurseryStock>(this.resourceUrl, nurseryStock, { observe: 'response' });
+        return this.http
+            .put<INurseryStock>(this.resourceUrl, nurseryStock, { observe: 'response' });
     }
 
     /**
@@ -58,7 +61,8 @@ export class NurseryStockService {
      * @returns object of values
      */
     find(id: number): Observable<EntityResponseType> {
-        return this.http.get<INurseryStock>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+        return this.http
+            .get<INurseryStock>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
     /**
@@ -69,7 +73,8 @@ export class NurseryStockService {
      */
     query(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
-        return this.http.get<INurseryStock[]>(this.resourceUrl, { params: options, observe: 'response' });
+        return this.http
+            .get<INurseryStock[]>(this.resourceUrl, { params: options, observe: 'response' });
     }
 
     /**

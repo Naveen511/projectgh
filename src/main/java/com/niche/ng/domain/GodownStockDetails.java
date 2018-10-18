@@ -65,7 +65,7 @@ public class GodownStockDetails extends AbstractAuditingEntity implements Serial
 
     /**
      * Relation Name : ManyToOne - godownStockDetails
-     * Table Name    : Connects the GodownStockDetails Table to GodownStock Table.
+     * Table Name    : Connect the GodownStockDetails Table to GodownStock Table.
      * Used to point out the GodownStockDetails values in the GodownStock table.
      */
     @ManyToOne
@@ -74,7 +74,7 @@ public class GodownStockDetails extends AbstractAuditingEntity implements Serial
 
     /**
      * Relation Name : ManyToOne - godownStockDetails
-     * Table Name    : Connects the GodownStockDetails Table to FinancialYearSettings Table.
+     * Table Name    : Connect the GodownStockDetails Table to FinancialYearSettings Table.
      * Used to point out the GodownStockDetails values in the FinancialYearSettings table.
      */
     @ManyToOne

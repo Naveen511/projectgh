@@ -1,14 +1,30 @@
+/******************************************************************************
+ *  Property of Nichehands
+ *  Nichehands Confidential Proprietary
+ *  Nichehands Copyright (C) 2018 All rights reserved
+ *  ----------------------------------------------------------------------------
+ *  Date: 2018/08/02
+ *  Target: yarn
+ * -----------------------------------------------------------------------------
+ * File Description : Declared an array variable to set module to a sidebar option
+ *                    with path to display in url, component name to access html,
+ *                    css and methods, data for an option to set page title,
+ *                    loadChildren to mension folder path of module file and
+ *                    class name as an object.
+ *
+ *******************************************************************************/
+// Import an angular dependency
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-// Import Containers
+// Import Component
 import { DefaultLayoutComponent } from 'app/containers';
-
 import { P404Component } from './views/error/404.component';
 import { P500Component } from './views/error/500.component';
 import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 
+// Declare a variable with array of values
 export const routes: Routes = [
     {
         path: '',

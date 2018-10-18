@@ -29,7 +29,7 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="price" type="bigint">
+            <column name="price" type="${floatType}">
                 <constraints nullable="true" />
             </column>
 

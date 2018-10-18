@@ -32,7 +32,8 @@ export class BatchService {
 
     constructor(private http: HttpClient) {}
 
-    /** Send a POST method request to create the batch and get created record as response
+    /**
+     * Send a POST method request to create the batch and get created record as response
      *
      * @param batch - single object
      * @returns object of values
@@ -96,7 +97,6 @@ export class BatchService {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
-    // Get all the record of batch based on filter
     /**
      * Send a request to get list of record based on filter data
      *

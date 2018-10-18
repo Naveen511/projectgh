@@ -32,7 +32,8 @@ export class BatchQuantityService {
 
     constructor(private http: HttpClient) {}
 
-    /** Send a POST method request to create the batch quantity and
+    /**
+     * Send a POST method request to create the batch quantity and
      * get created record as response
      *
      * @param batchQuantity - single object

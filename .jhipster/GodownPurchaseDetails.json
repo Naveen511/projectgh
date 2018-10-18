@@ -50,7 +50,7 @@
         },
         {
             "fieldName": "price",
-            "fieldType": "Long"
+            "fieldType": "Float"
         },
         {
             "fieldName": "ownedBy",

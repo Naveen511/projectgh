@@ -32,7 +32,8 @@ export class ShadeAreaService {
 
     constructor(private http: HttpClient) {}
 
-    /** Send a POST method request to create the shadeArea and
+    /**
+     * Send a POST method request to create the shadeArea and
      * get created record as response
      *
      * @param shadeArea - single object

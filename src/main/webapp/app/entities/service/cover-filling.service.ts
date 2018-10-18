@@ -32,7 +32,8 @@ export class CoverFillingService {
 
     constructor(private http: HttpClient) {}
 
-    /** Send a POST method request to create the coverFilling and
+    /**
+     * Send a POST method request to create the coverFilling and
      * get created record as response
      *
      * @param coverFilling - single object

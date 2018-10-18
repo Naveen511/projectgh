@@ -70,7 +70,7 @@ public class NurseryStock extends AbstractAuditingEntity implements Serializable
 
     /**
      * Relation Name : OneToMany - nurseryStockDetails
-     * Table Name    : Connects the NurseryStock Table to NurseryStockDetails Table
+     * Table Name    : Connect the NurseryStock Table to NurseryStockDetails Table
      * After Creation of the NurseryStock, If any movement it affect in NurseryStockDetails Table
      */
     @OneToMany(mappedBy = "nurseryStock", cascade = javax.persistence.CascadeType.REMOVE)
@@ -78,7 +78,7 @@ public class NurseryStock extends AbstractAuditingEntity implements Serializable
 
     /**
      * Relation Name : ManyToOne - nursery
-     * Table Name    : Connects the NurseryStock Table to Nursery Table
+     * Table Name    : Connect the NurseryStock Table to Nursery Table
      * To get the nursery.
      */
     @ManyToOne
@@ -88,7 +88,7 @@ public class NurseryStock extends AbstractAuditingEntity implements Serializable
 
     /**
      * Relation Name : ManyToOne - pickListVariety
-     * Table Name    : Connects the NurseryStock Table to PickListValue Table
+     * Table Name    : Connect the NurseryStock Table to PickListValue Table
      * To get the pickListVariety.
      */
     @ManyToOne
@@ -98,7 +98,7 @@ public class NurseryStock extends AbstractAuditingEntity implements Serializable
 
     /**
      * Relation Name : ManyToOne - pickListCategory
-     * Table Name    : Connects the NurseryStock Table to PickListValue Table
+     * Table Name    : Connect the NurseryStock Table to PickListValue Table
      * To get the pickListCategory.
      */
     @ManyToOne
@@ -108,7 +108,7 @@ public class NurseryStock extends AbstractAuditingEntity implements Serializable
 
     /**
      * Relation Name : ManyToOne - financialYearNurseryStock
-     * Table Name    : Connects the NurseryStock Table to FinancialYearSettings Table
+     * Table Name    : Connect the NurseryStock Table to FinancialYearSettings Table
      * To get the financialYearNurseryStock.
      */
     @ManyToOne
@@ -117,7 +117,7 @@ public class NurseryStock extends AbstractAuditingEntity implements Serializable
 
     /**
      * Relation Name : OneToMany - pointOfSaleDetails
-     * Table Name    : Connects the NurseryStock Table to PointOfSaleDetails Table
+     * Table Name    : Connect the NurseryStock Table to PointOfSaleDetails Table
      * After Creation of the NurseryStock, If any movement it affect in PointOfSaleDetails Table
      */
     @OneToMany(mappedBy = "nurseryStock", cascade = javax.persistence.CascadeType.REMOVE)

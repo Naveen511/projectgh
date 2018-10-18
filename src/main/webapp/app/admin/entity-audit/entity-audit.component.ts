@@ -42,14 +42,14 @@ export class EntityAuditComponent implements OnInit {
     loadChanges() {
         this.loading = true;
         this.service.findByEntity(this.selectedEntity, this.selectedLimit)
-            .subscribe(res => {
-                const data = res.body;
-                this.audits = data.map((it: EntityAuditEvent) => {
-                    it.entityValue = JSON.parse(it.entityValue);
-                    return it;
-                });
-                this.loading = false;
-            }, err => this.loading = false);
+        .subscribe(res => {
+            const data = res.body;
+            this.audits = data.map((it: EntityAuditEvent) => {
+                it.entityValue = JSON.parse(it.entityValue);
+                return it;
+            });
+            this.loading = false;
+        }, err => this.loading = false);
     }
 
     trackId(index: number, item: EntityAuditEvent) {

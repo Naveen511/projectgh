@@ -59,7 +59,7 @@ public class MapZonalWithOh extends AbstractAuditingEntity implements Serializab
 
     /**
      * Relation Name : ManyToOne - mapZonalWithOhs
-     * Table Name    : Connects the MapZonalWithOh Table to Zonal Table.
+     * Table Name    : Connect the MapZonalWithOh Table to Zonal Table.
      * Used to point out the MapZonalWithOh values in the Zonal table.
      */
     @ManyToOne
@@ -68,7 +68,7 @@ public class MapZonalWithOh extends AbstractAuditingEntity implements Serializab
 
     /**
      * Relation Name : ManyToOne - mapZonalWithOhs
-     * Table Name    : Connects the MapZonalWithOh Table to OperationalHead Table.
+     * Table Name    : Connect the MapZonalWithOh Table to OperationalHead Table.
      * Used to point out the MapZonalWithOh values in the OperationalHead table.
      */
     @ManyToOne

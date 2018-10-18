@@ -183,7 +183,7 @@
                 </button>
             </div>
             <div class="modal-body font13">
-                <form action="" method="post" enctype="multipart/form-data" 
+                <form method="post" enctype="multipart/form-data" 
                     class="form-horizontal">
                     <input [(ngModel)]="sectorObject.id" type="hidden" id="id" name="id"
                         class="form-control">
@@ -194,7 +194,7 @@
                         </div>
                     </div>
                     <div *ngIf="!sectorObject.id" class="form-group row">
-                        <label class="col-md-3 col-form-label" for="select1">
+                        <label class="col-md-3 col-form-label" for="operationalHeadId">
                             Head Office *
                         </label>
                         <div class="col-md-9">
@@ -210,7 +210,7 @@
                         </div>
                     </div>
                     <div *ngIf="!sectorObject.id" class="form-group row">
-                        <label class="col-md-3 col-form-label" for="select1">Zone *</label>
+                        <label class="col-md-3 col-form-label" for="zonalId">Zone *</label>
                         <div class="col-md-9">
                             <select [(ngModel)]="sectorObject.zonalId" id="zonalId" 
                                 name="zonalId" class="form-control">
@@ -222,17 +222,17 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="text-input">
+                        <label class="col-md-3 col-form-label" for="sectorName">
                             Sector Name *
                         </label>
                         <div class="col-md-9">
                             <input [(ngModel)]="sectorObject.sectorName" type="text"
-                            id="text-input" name="text-input" class="form-control"
+                            id="sectorName" name="sectorName" class="form-control"
                             placeholder="Sector Name">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="text-input">
+                        <label class="col-md-3 col-form-label" for="fromDate">
                             From Date
                         </label>
                         <div class="col-md-9">
@@ -274,9 +274,9 @@
                 </button>
             </div>
             <div class="modal-body font13">
-                <form action="" method="post" enctype="multipart/form-data"
+                <form method="post" enctype="multipart/form-data"
                     class="form-horizontal">
-                    <input [(ngModel)]="sectorObject.id" type="hidden" id="id" name="id"
+                    <input [(ngModel)]="sectorObject.id" type="hidden" id="sectorId" name="id"
                         class="form-control">
                     <div class="form-group row">
                         <div class="col-md-6">
@@ -285,12 +285,12 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="select1">
+                        <label class="col-md-3 col-form-label" for="updateOperationalHeadId">
                             Head Office *
                         </label>
                         <div class="col-md-9">
                             <select [(ngModel)]="sectorObject.operationalHeadId"
-                                id="operationalHeadId" name="operationalHeadId"
+                                id="updateOperationalHeadId" name="operationalHeadId"
                                 class="form-control"
                                 (change)="getZoneList(sectorObject.operationalHeadId)">
                                 <option value="0" disabled selected>Select Head Office</option>
@@ -301,9 +301,9 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="select1">Zonal *</label>
+                        <label class="col-md-3 col-form-label" for="updateZonalId">Zonal *</label>
                         <div class="col-md-9">
-                            <select [(ngModel)]="sectorObject.zonalId" id="zonalId" 
+                            <select [(ngModel)]="sectorObject.zonalId" id="updateZonalId" 
                                 name="zonalId" class="form-control">
                                 <option value="0" disabled selected>Select Zonal</option>
                                 <option *ngFor="let zonal of zonals" value={{zonal.id}}>
@@ -313,35 +313,35 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="text-input">
+                        <label class="col-md-3 col-form-label" for="updateFromDate">
                             From Date
                         </label>
                         <div class="col-md-9">
                             <input [(ngModel)]="mapSectorWithZonal.fromDate" type="text" 
-                                id="fromDate" name="fromDate" readonly class="form-control"
+                                id="updateFromDate" name="fromDate" readonly class="form-control"
 
                                 placeholder="From Date" ngbDatepicker
                                 #fromDateDp="ngbDatepicker" (click)="fromDateDp.toggle()">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="text-input">
+                        <label class="col-md-3 col-form-label" for="updateToDate">
                             To Date (Previous)
                         </label>
                         <div class="col-md-9">
                             <input [(ngModel)]="mapSectorWithZonal.toDate" type="text" 
-                                id="toDate" name="toDate" readonly class="form-control" 
+                                id="updateToDate" name="toDate" readonly class="form-control" 
                                 placeholder="To Date" ngbDatepicker 
                                 #toDateDp="ngbDatepicker" (click)="toDateDp.toggle()">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="textarea-input">
+                        <label class="col-md-3 col-form-label" for="updateDescription">
                             Description
                         </label>
                         <div class="col-md-9">
                             <textarea [(ngModel)]="mapSectorWithZonal.description" 
-                                id="description" name="description" rows="3"
+                                id="updateDescription" name="description" rows="3"
                                 class="form-control" placeholder="Description.."></textarea>
                         </div>
                     </div>

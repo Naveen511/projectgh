@@ -28,11 +28,13 @@ type EntityArrayResponseType = HttpResponse<IGodownStockDetails[]>;
  */
 @Injectable({ providedIn: 'root' })
 export class GodownStockDetailsService {
+
     private resourceUrl = SERVER_API_URL + 'api/godown-stock-details';
 
     constructor(private http: HttpClient) {}
 
-    /** Send a POST method request to create the godownStockDetails and
+    /**
+     * Send a POST method request to create the godownStockDetails and
      * get created record as response
      *
      * @param godownStockDetails - single object

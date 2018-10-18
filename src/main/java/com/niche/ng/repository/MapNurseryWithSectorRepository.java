@@ -6,7 +6,8 @@
  *  Date  : 2018/09/02
  *  Target: yarn
  *  -----------------------------------------------------------------------------
- *  File Description    : This file performs MapNurseryWithSectorRepository
+ *  File Description    : This file intract with database to perform CRUD operation
+ *                        and manual query
  *
  *******************************************************************************/
 package com.niche.ng.repository;

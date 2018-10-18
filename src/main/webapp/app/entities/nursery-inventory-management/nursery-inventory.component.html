@@ -24,28 +24,33 @@
                                 <th>Status</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody *ngIf="inventoryDetails != ''">
                             <tr *ngFor="let val of inventoryDetails; let i = index">
                                 <td>{{i+1}}</td>
                                 <td>{{val.quantity}}</td>
                                 <td>{{val.date | date: 'dd/MM/yyyy'}}</td>
-                                <td><span *ngIf="val.status == 3 && val.damageTypePickListValue != '' && val.damageTypePickListValue != null">
+                                <td><span *ngIf="val.status == statusDamage && val.damageTypePickListValue != '' && val.damageTypePickListValue != null">
                                         <b>Damage Type : </b>{{val.damageTypePickListValue}}<br>
                                     </span>
-                                    <span *ngIf="val.status == 3 && val.inventoryDamageDescriptionPickListValue != '' && val.inventoryDamageDescriptionPickListValue != null">
+                                    <span *ngIf="val.status == statusDamage && val.inventoryDamageDescriptionPickListValue != '' && val.inventoryDamageDescriptionPickListValue != null">
                                         <b>Damage Description : </b>{{val.inventoryDamageDescriptionPickListValue}}<br>
                                     </span>
-                                    <span *ngIf="val.status == 3 && val.coverFillingDamageDescriptionPickListValue != '' && val.coverFillingDamageDescriptionPickListValue != null">
+                                    <span *ngIf="val.status == statusDamage && val.coverFillingDamageDescriptionPickListValue != '' && val.coverFillingDamageDescriptionPickListValue != null">
                                         <b>Damage Description : </b>{{val.coverFillingDamageDescriptionPickListValue}}<br>
                                     </span>{{val.description}}
                                 </td>
                                 <!-- <td>{{val.damageTypePickListValue}}</td> -->
                                 <td>{{val.createdDate | date:'medium'}}</td>
                                 <td>
-                                    <span *ngIf="val.status == 1" class="text-success">Added</span>
-                                    <span *ngIf="val.status == 2" class="text-primary">Consumed</span>
-                                    <span *ngIf="val.status == 3" class="text-danger">Damage</span>
+                                    <span *ngIf="val.status == statusAdded" class="text-success">Added</span>
+                                    <span *ngIf="val.status == statusConsumed" class="text-primary">Consumed</span>
+                                    <span *ngIf="val.status == statusDamage" class="text-danger">Damage</span>
                                 </td>
+                            </tr>
+                        </tbody>
+                        <tbody *ngIf="inventoryDetails == ''">
+                            <tr>
+                                <td colspan="6">No records found</td>
                             </tr>
                         </tbody>
                     </table>
@@ -78,19 +83,20 @@
                                     <strong>Receiving the Seeds</strong> Form
                                 </div>
                                 <div class="card-body">
-                                    <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                    <form method="post" enctype="multipart/form-data" class="form-horizontal">
                                         <div class="row">
                                             <div class="form-group col-sm-3">
-                                                <label for="name">Zonal *</label>
-                                                <select [(ngModel)]="nurseryInventory.zoneId" id="zoneId" name="zoneId" class="form-control"
-                                                (change)="getSector(nurseryInventory.zoneId)" required>
+                                                <label for="zoneId">Zonal *</label>
+                                                <select [(ngModel)]="nurseryInventory.zoneId" id="zoneId"
+                                                name="zoneId" class="form-control"
+                                                (change)="getSector(nurseryInventory.zoneId)">
                                                     <option value="0" disabled selected>Select Zonal Name</option>
                                                     <option *ngFor="let zone of zonals"
                                                     value={{zone.id}}>{{zone.zoneName}}</option>
                                                 </select>
                                             </div>
                                             <div class="form-group col-sm-3">
-                                                <label for="name">Sector *</label>
+                                                <label for="sectorId">Sector *</label>
                                                 <select [(ngModel)]="nurseryInventory.sectorId"
                                                     id="sectorId" name="sectorId" class="form-control" 
                                                     (change)="getNursery(nurseryInventory.sectorId)">
@@ -100,74 +106,74 @@
                                                 </select>
                                             </div>
                                             <div class="form-group col-sm-3">
-                                                <label for="name">Nursery *</label>
+                                                <label for="nurserysId">Nursery *</label>
                                                 <select [(ngModel)]="nurseryInventory.nurserysId"
                                                     id="nurserysId" name="nurserysId" 
-                                                    class="form-control" required>
+                                                    class="form-control">
                                                     <option value="0" disabled selected>Select Nursery Name</option>
                                                     <option *ngFor="let nursery of nurserys"
                                                         value={{nursery.id}}>{{nursery.nurseryName}}</option>
                                                 </select>
                                             </div>
                                             <!-- <div class="form-group col-sm-3">
-                                                <label for="name">Pick Name *</label>
+                                                <label for="pickListId">Pick Name *</label>
                                                 <select [(ngModel)]="nurseryInventory.pickListId"
                                                     id="pickListId" name="pickListId" class="form-control"
-                                                    (change)="getVariety(nurseryInventory.pickListId)" required>
+                                                    (change)="getVariety(nurseryInventory.pickListId)">
                                                     <option value="0" disabled selected>Select Pick Name</option>
                                                     <option *ngFor="let pickList of pickLists"
                                                         value={{pickList.id}}>{{pickList.pickListName}}</option>
                                                 </select>
                                             </div> -->
                                             <div class="form-group col-sm-3">
-                                                <label for="name">Pick Variety * </label>
+                                                <label for="pickListVarietyId">Pick Variety * </label>
                                                 <select [(ngModel)]="nurseryInventory.pickListVarietyId"
                                                     id="pickListVarietyId" name="pickListVarietyId" class="form-control"
-                                                    (change)="getCategory(nurseryInventory.pickListVarietyId)" required>
+                                                    (change)="getCategory(nurseryInventory.pickListVarietyId)">
                                                     <option value="0" disabled selected>Select Variety Name</option>
-                                                    <option *ngFor="let val of varietys"
+                                                    <option *ngFor="let val of varieties"
                                                         value={{val.id}}>{{val.pickListValue}}</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="form-group col-sm-3">
-                                                <label for="name">Pick Category *</label>
+                                                <label for="pickListCategoryId">Pick Category *</label>
                                                 <select [(ngModel)]="nurseryInventory.pickListCategoryId"
                                                     id="pickListCategoryId" name="pickListCategoryId"
-                                                    class="form-control" required>
+                                                    class="form-control">
                                                     <option value="0" disabled selected>Select Category Name</option>
-                                                    <option *ngFor="let category of categorys"
+                                                    <option *ngFor="let category of categories"
                                                         value={{category.id}}>{{category.pickListValue}}</option>
                                                 </select>
                                             </div>
                                             <!-- <div class="form-group col-sm-3">
-                                                <label for="name">Pick Quantity Name *</label>
+                                                <label for="pickListQuantityId">Pick Quantity Name *</label>
                                                 <select [(ngModel)]="nurseryInventory.pickListQuantityId" id="pickListQuantityId" name="pickListQuantityId" 
-                                                class="form-control" (change)="getQuantityType(nurseryInventory.pickListQuantityId)" required>
+                                                class="form-control" (change)="getQuantityType(nurseryInventory.pickListQuantityId)">
                                                     <option value="0" disabled selected>Select</option>
                                                     <option *ngFor="let pickList of pickLists"
                                                         value={{pickList.id}}>{{pickList.pickListName}}</option>
                                                 </select>
                                             </div> -->
                                             <div class="form-group col-sm-3">
-                                                <label for="name">Pick Quantity Type * </label>
-                                                <select [(ngModel)]="nurseryInventory.quantityTypeId" id="quantityTypeId" 
-                                                    name="quantityTypeId" class="form-control" required>
+                                                <label for="quantityTypeId">Pick Quantity Type * </label>
+                                                <select [(ngModel)]="nurseryInventory.quantityTypeId" id="quantityTypeId"
+                                                    name="quantityTypeId" class="form-control">
                                                     <option value="0" disabled selected>Select Quantity Type</option>
                                                     <option *ngFor="let type of quantityTypes"
                                                     value={{type.id}}>{{type.pickListValue}}</option>
                                                 </select>
                                             </div>
                                             <div class="form-group col-sm-3">
-                                                <label for="name">Quantity *</label>
+                                                <label for="quantity">Quantity *</label>
                                                 <input [(ngModel)]="nurseryInventoryDetails.quantity"
                                                 type="text" id="quantity" name="quantity" 
-                                                class="form-control" placeholder="Quantity" required
+                                                class="form-control" placeholder="Quantity"
                                                 (keypress)="numberOnly($event)">
                                             </div>
                                             <div class="form-group col-sm-3">
-                                                <label for="name">Date of Receiving*</label>
+                                                <label for="field_date">Date of Receiving *</label>
                                                 <input id="field_date" type="text" class="form-control" name="date" 
                                                 [(ngModel)]="nurseryInventoryDetails.date" readonly
                                                 ngbDatepicker  #seedsDateDp="ngbDatepicker"
@@ -176,7 +182,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="form-group col-sm-6">
-                                                <label for="name">Description</label>
+                                                <label for="description">Description</label>
                                                 <textarea [(ngModel)]="nurseryInventoryDetails.description" 
                                                 type="text" id="description" name="description"
                                                 class="form-control" placeholder="Description">
@@ -275,7 +281,7 @@
                                                 <fa-icon [icon]="'eye'"></fa-icon>
                                             </a>
                                             <a class="text-success sm-2" data-toggle="modal" placement="bottom"
-                                                (click)="addMoreInventory(value)" 
+                                                (click)="addMoreInventory(value)"
                                                 ngbTooltip="Add"><fa-icon [icon]="'plus-square'"></fa-icon>
                                             </a>
                                             <a class="text-warning sm-2" data-toggle="modal"
@@ -315,21 +321,23 @@
                                     <strong>Receiving the Cover</strong> Form
                                 </div>
                                 <div class="card-body">
-                                    <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                    <form method="post" enctype="multipart/form-data" class="form-horizontal">
                                         <div class="row">
                                             <div class="form-group col-sm-3">
-                                                <label for="name">Zonal *</label>
-                                                <select [(ngModel)]="nurseryInventory.zoneId" id="zoneId"
+                                                <label for="inventoryZoneId">Zonal *</label>
+                                                <select [(ngModel)]="nurseryInventory.zoneId"
+                                                    id="inventoryZoneId"
                                                     name="zoneId" class="form-control"
-                                                    (change)="getSector(nurseryInventory.zoneId)" required>
+                                                    (change)="getSector(nurseryInventory.zoneId)">
                                                     <option value="0" disabled selected>Select Zonal Name</option>
                                                     <option *ngFor="let zone of zonals"
                                                     value={{zone.id}}>{{zone.zoneName}}</option>
                                                 </select>
                                             </div>
                                             <div class="form-group col-sm-3">
-                                                <label for="name">Sector *</label>
-                                                <select [(ngModel)]="nurseryInventory.sectorId" id="sectorId"
+                                                <label for="inventorySectorId">Sector *</label>
+                                                <select [(ngModel)]="nurseryInventory.sectorId"
+                                                    id="inventorySectorId"
                                                     name="sectorId" class="form-control" 
                                                     (change)="getNursery(nurseryInventory.sectorId)">
                                                     <option value="0" disabled selected>Select Sector Name</option>
@@ -338,28 +346,29 @@
                                                 </select>
                                             </div>
                                             <div class="form-group col-sm-3">
-                                                <label for="name">Nursery *</label>
-                                                <select [(ngModel)]="nurseryInventory.nurserysId" id="nurserysId"
-                                                    name="nurserysId" class="form-control" required>
+                                                <label for="inventoryNurserysId">Nursery *</label>
+                                                <select [(ngModel)]="nurseryInventory.nurserysId"
+                                                    id="inventoryNurserysId"
+                                                    name="nurserysId" class="form-control">
                                                     <option value="0" disabled selected>Select Nursery Name</option>
                                                     <option *ngFor="let nursery of nurserys"
                                                         value={{nursery.id}}>{{nursery.nurseryName}}</option>
                                                 </select>
                                             </div>
                                             <!-- <div class="form-group col-sm-3">
-                                                <label for="name">Pick Quantity Name *</label>
+                                                <label for="pickListQuantityId">Pick Quantity Name *</label>
                                                 <select [(ngModel)]="nurseryInventory.pickListQuantityId"
                                                     id="pickListQuantityId" name="pickListQuantityId" class="form-control"
-                                                    (change)="getQuantityType(nurseryInventory.pickListQuantityId)" required>
+                                                    (change)="getQuantityType(nurseryInventory.pickListQuantityId)">
                                                     <option value="0" disabled selected>Select</option>
                                                     <option *ngFor="let pickList of pickLists"
                                                         value={{pickList.id}}>{{pickList.pickListName}}</option>
                                                 </select>
                                             </div> -->
                                             <div class="form-group col-sm-3">
-                                                <label for="name">Quantity Type * </label>
+                                                <label for="inventoryQuantityTypeId">Quantity Type * </label>
                                                 <select [(ngModel)]="nurseryInventory.quantityTypeId"
-                                                    id="quantityTypeId" name="quantityTypeId" class="form-control" required>
+                                                    id="inventoryQuantityTypeId" name="quantityTypeId" class="form-control">
                                                     <option value="0" disabled selected>Select Quantity Type</option>
                                                     <option *ngFor="let type of quantityTypes"
                                                         value={{type.id}}>{{type.pickListValue}}</option>
@@ -368,26 +377,26 @@
                                         </div>
                                         <div class="row">
                                             <div class="form-group col-sm-3">
-                                                <label for="name">Quantity *</label>
+                                                <label for="inventoryQuantity">Quantity *</label>
                                                 <input [(ngModel)]="nurseryInventoryDetails.quantity"
-                                                type="text" id="quantity" name="quantity" 
-                                                class="form-control" placeholder="Quantity" required
+                                                type="text" id="inventoryQuantity" name="quantity" 
+                                                class="form-control" placeholder="Quantity"
                                                 (keypress)="numberOnly($event)">
                                             </div>
                                             <div class="form-group col-sm-3">
-                                                <label for="name">Date of Receiving*</label>
-                                                <input id="field_date" type="text" class="form-control" name="date" 
+                                                <label for="inventoryDate">Date of Receiving *</label>
+                                                <input id="inventoryDate" type="text" class="form-control" name="date" 
                                                 [(ngModel)]="nurseryInventoryDetails.date" readonly
                                                 ngbDatepicker  #coverInvenotyDateDp="ngbDatepicker"
-                                                (click)="coverInvenotyDateDp.toggle()" required/>
+                                                (click)="coverInvenotyDateDp.toggle()"/>
 
                                                 <!-- ngbDatepicker  #dateShadeAreaDp="ngbDatepicker"
                                                     (click)="dateShadeAreaDp.toggle()" -->
                                             </div>
                                             <div class="form-group col-sm-5">
-                                                    <label for="name">Description</label>
+                                                    <label for="inventoryDescription">Description</label>
                                                 <textarea [(ngModel)]="nurseryInventoryDetails.description"
-                                                    type="text" id="description" name="description" 
+                                                    type="text" id="inventoryDescription" name="description" 
                                                     class="form-control"placeholder="Description">
                                                 </textarea>
                                             </div>
@@ -515,27 +524,27 @@
                                     <strong>Cover Filling</strong> Form
                                 </div>
                                 <div class="card-body">
-                                    <form action="" method="post" enctype="multipart/form-data"
+                                    <form method="post" enctype="multipart/form-data"
                                         class="form-horizontal">
                                         <div class="row">
                                             <div class="form-group col-sm-3">
-                                                    <label for="name">No. of Cover Prepared</label>
+                                                    <label for="noOfCover">No. of Cover Prepared</label>
                                                 <input [(ngModel)]="coverFilling.noOfCover" type="text" 
                                                     id="noOfCover" name="noOfCover" class="form-control" 
                                                     placeholder="No. of cover prepared" required
                                                     (keypress)="numberOnly($event)">
                                             </div>
                                             <div class="form-group col-sm-3">
-                                                <label for="name">Cover Prepared Date*</label>
-                                                <input id="field_date" type="text" class="form-control"
+                                                <label for="coverFillingDate">Cover Prepared Date*</label>
+                                                <input id="coverFillingDate" type="text" class="form-control"
                                                 name="date" [(ngModel)]="coverFilling.date" readonly required
                                                 ngbDatepicker  #inventoryDateDp="ngbDatepicker" 
                                                 (click)="inventoryDateDp.toggle()"/>
                                             </div>
                                             <div class="form-group col-sm-6">
-                                                <label for="name">Description</label>
+                                                <label for="coverFillingDescription">Description</label>
                                                 <textarea [(ngModel)]="coverFilling.description" type="text" 
-                                                    id="description" name="description" class="form-control" 
+                                                    id="coverFillingDescription" name="description" class="form-control" 
                                                     placeholder="Description"></textarea>
                                             </div>
                                         </div>
@@ -637,32 +646,34 @@
                     </button>
                 </div>
                 <div class="modal-body font13">
-                    <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                    <form method="post" enctype="multipart/form-data" class="form-horizontal">
                         <input [(ngModel)]="nurseryInventoryDetails.nurseryInventoryId"
-                            type="hidden" id="nurseryInventoryId" name="nurseryInventoryId" 
+                            type="hidden" id="inventoryDetailsId" name="nurseryInventoryId" 
                             class="form-control">
                         <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="text-input">Date *</label>
+                        <label class="col-md-3 col-form-label" for="inventoryDetailsDate">
+                            Date *
+                        </label>
                         <div class="col-md-9">
-                            <input id="field_date" type="text" class="form-control" name="date" 
-                            [(ngModel)]="nurseryInventoryDetails.date" readonly
+                            <input id="inventoryDetailsDate" type="text" class="form-control"
+                            name="date" [(ngModel)]="nurseryInventoryDetails.date" readonly
                             ngbDatepicker  #addInventoryDateDp="ngbDatepicker"
                             (click)="addInventoryDateDp.toggle()"/>
                         </div>
                         </div>
                         <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="text-input">Quantity *</label>
+                        <label class="col-md-3 col-form-label" for="inventoryDetailsQuantity">Quantity *</label>
                         <div class="col-md-9">
                             <input [(ngModel)]="nurseryInventoryDetails.quantity" type="text" 
-                            id="quantity" name="quantity" class="form-control"
+                            id="inventoryDetailsQuantity" name="quantity" class="form-control"
                             placeholder="Quantity" (keypress)="numberOnly($event)">
                         </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="text-input">Description</label>
+                            <label class="col-md-3 col-form-label" for="inventoryDetailsDescription">Description</label>
                             <div class="col-md-9">
                             <textarea [(ngModel)]="nurseryInventoryDetails.description"
-                                type="text" id="description" name="description"
+                                type="text" id="inventoryDetailsDescription" name="description"
                                 class="form-control" placeholder="Description">
                             </textarea>
                             </div>
@@ -699,33 +710,39 @@
                     </button>
                 </div>
                 <div class="modal-body font13">
-                    <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                    <form method="post" enctype="multipart/form-data" class="form-horizontal">
                         <input [(ngModel)]="nurseryInventoryDetails.nurseryInventoryId" 
                             type="hidden" id="nurseryInventoryId" name="nurseryInventoryId" 
                             class="form-control">
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="text-input">Date *</label>
+                            <label class="col-md-3 col-form-label" for="nurseryInventoryDate">
+                                Date *
+                            </label>
                             <div class="col-md-9">
-                                <input id="field_date" type="text" class="form-control" name="date"
+                                <input id="nurseryInventoryDate" type="text" class="form-control" name="date"
                                 [(ngModel)]="nurseryInventoryDetails.date"  readonly
                                 ngbDatepicker  #consumeInventoryDateDp="ngbDatepicker" 
                                 (click)="consumeInventoryDateDp.toggle()"/>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="text-input">Quantity *</label>
+                            <label class="col-md-3 col-form-label" for="nurseryInventoryQuantity">
+                                Quantity *
+                            </label>
                             <div class="col-md-9">
                                 <input [(ngModel)]="nurseryInventoryDetails.quantity"
-                                    type="text" id="quantity" name="quantity"
+                                    type="text" id="nurseryInventoryQuantity" name="quantity"
                                     class="form-control" placeholder="Quantity"
                                     (keypress)="numberOnly($event)">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="text-input">Description</label>
+                            <label class="col-md-3 col-form-label" for="nurseryInventoryDescription">
+                                Description
+                            </label>
                             <div class="col-md-9">
                             <textarea [(ngModel)]="nurseryInventoryDetails.description" type="text" 
-                                id="description" name="description" class="form-control" 
+                                id="nurseryInventoryDescription" name="description" class="form-control" 
                                 placeholder="Description"></textarea>
                             </div>
                         </div>
@@ -762,24 +779,26 @@
                     </button>
                 </div>
                 <div class="modal-body font13">
-                    <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                    <form method="post" enctype="multipart/form-data" class="form-horizontal">
                         <input [(ngModel)]="nurseryInventoryDetails.nurseryInventoryId" 
-                            type="hidden" id="nurseryInventoryId" name="nurseryInventoryId" 
+                            type="hidden" id="nurseryInventoryDetailsId" name="nurseryInventoryId" 
                             class="form-control">
                         <div class="form-group row">
-                            <label class="col-md-4 col-form-label" for="text-input">Date *</label>
+                            <label class="col-md-4 col-form-label" for="nurseryInventoryDetailsDate">Date *</label>
                             <div class="col-md-8">
-                                <input id="field_date" type="text" class="form-control" name="date"
+                                <input id="nurseryInventoryDetailsDate" type="text" class="form-control" name="date"
                                     [(ngModel)]="nurseryInventoryDetails.date" readonly
                                     ngbDatepicker  #damagesInventoryDateDp="ngbDatepicker" 
                                     (click)="damagesInventoryDateDp.toggle()"/>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-4 col-form-label" for="text-input">Quantity *</label>
+                            <label class="col-md-4 col-form-label" for="nurseryInventoryDetailsQuantity">
+                                Quantity *
+                            </label>
                             <div class="col-md-8">
                                 <input [(ngModel)]="nurseryInventoryDetails.quantity"
-                                    type="text" id="quantity" name="quantity"
+                                    type="text" id="nurseryInventoryDetailsQuantity" name="quantity"
                                     class="form-control" placeholder="Quantity"
                                     (keypress)="numberOnly($event)">
                             </div>
@@ -799,10 +818,10 @@
                         </div> -->
                         <div class="form-group row">
                             <label class="col-md-4 col-form-label" 
-                                for="text-input">Damage Type *</label>
+                                for="damageTypeId">Damage Type *</label>
                             <div class="col-md-8">
                                 <select [(ngModel)]="nurseryInventoryDetails.damageTypeId"
-                                    id="quantityTypeId" name="damageTypeId" class="form-control">
+                                    id="damageTypeId" name="damageTypeId" class="form-control">
                                     <option value="0" disabled selected>Select Damage Type</option>
                                     <option *ngFor="let type of damageTypes" 
                                         value={{type.id}}>{{type.pickListValue}}</option>
@@ -826,12 +845,14 @@
                             </div>
                         </div> -->
                         <div class="form-group row">
-                            <label class="col-md-4 col-form-label" for="text-input">Damage Reason *</label>
+                            <label class="col-md-4 col-form-label"
+                                for="inventoryDamageDescriptionId"> Reason
+                            </label>
                             <div class="col-md-8">
-                                <select id="quantityTypeId"
+                                <select id="inventoryDamageDescriptionId"
                                     [(ngModel)]="nurseryInventoryDetails.inventoryDamageDescriptionId" 
                                     name="inventoryDamageDescriptionId" class="form-control" required>
-                                    <option value="0" disabled selected>Select Damage Description</option>
+                                    <option value="0" disabled selected>Select Reason</option>
                                     <option *ngFor="let type of damageDescription" 
                                         value={{type.id}}>{{type.pickListValue}}</option>
                                 </select>
@@ -878,24 +899,24 @@
                     </button>
                 </div>
                 <div class="modal-body font13">
-                    <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                    <form method="post" enctype="multipart/form-data" class="form-horizontal">
                         <input [(ngModel)]="coverFillingDetails.coverFillingId" 
                             type="hidden" id="coverFillingId" name="coverFillingId" 
                             class="form-control">
                         <div class="form-group row">
-                            <label class="col-md-4 col-form-label" for="text-input">Date *</label>
+                            <label class="col-md-4 col-form-label" for="coverFillingDetailsDate">Date *</label>
                             <div class="col-md-8">
-                                <input id="field_date" type="text" class="form-control" name="date"
+                                <input id="coverFillingDetailsDate" type="text" class="form-control" name="date"
                                 [(ngModel)]="coverFillingDetails.date" readonly
                                 ngbDatepicker  #damageInventoryDateDp="ngbDatepicker" 
                                 (click)="damageInventoryDateDp.toggle()"/>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-4 col-form-label" for="text-input">Quantity *</label>
+                            <label class="col-md-4 col-form-label" for="coverFillingDetailsQuantity">Quantity *</label>
                             <div class="col-md-8">
                                 <input [(ngModel)]="coverFillingDetails.quantity" type="text" 
-                                id="quantity" name="quantity" class="form-control"
+                                id="coverFillingDetailsQuantity" name="quantity" class="form-control"
                                 placeholder="Quantity" (keypress)="numberOnly($event)">
                             </div>
                         </div>
@@ -913,9 +934,9 @@
                             </div>
                         </div> -->
                         <div class="form-group row">
-                            <label class="col-md-4 col-form-label" for="text-input">Damage Type *</label>
+                            <label class="col-md-4 col-form-label" for="coverDamageTypeId">Damage Type *</label>
                             <div class="col-md-8">
-                                <select [(ngModel)]="coverFillingDetails.damageTypeId" id="quantityTypeId" 
+                                <select [(ngModel)]="coverFillingDetails.damageTypeId" id="coverDamageTypeId" 
                                     name="damageTypeId" class="form-control" required>
                                     <option value="0" disabled selected>Select Damage Type</option>
                                     <option *ngFor="let type of damageTypes" 
@@ -940,11 +961,13 @@
                             </div>
                         </div> --> 
                         <div class="form-group row">
-                            <label class="col-md-4 col-form-label" for="text-input">Damage Reason *</label>
+                            <label class="col-md-4 col-form-label"
+                                for="coverFillingDamageDescriptionId"> Reason *</label>
                             <div class="col-md-8">
-                                <select [(ngModel)]="coverFillingDetails.coverFillingDamageDescriptionId" id="quantityTypeId" 
+                                <select [(ngModel)]="coverFillingDetails.coverFillingDamageDescriptionId"
+                                    id="coverFillingDamageDescriptionId" 
                                     name="coverFillingDamageDescriptionId" class="form-control" required>
-                                    <option value="0" disabled selected>Select Damage Description</option>
+                                    <option value="0" disabled selected>Select Reason</option>
                                     <option *ngFor="let type of damageDescription" 
                                         value={{type.id}}>{{type.pickListValue}}</option>
                                 </select>

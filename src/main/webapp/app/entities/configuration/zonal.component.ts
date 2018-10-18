@@ -7,41 +7,42 @@
  *  Target: yarn
  *******************************************************************************/
 
-// Import needed component and dependency
+// Import needed model, service, shared and angular dependency
 import { Component, OnInit } from '@angular/core';
+import { ModalDirective } from 'ngx-bootstrap/modal';
+import { ViewChild } from '@angular/core';
+import { JhiParseLinks } from 'ng-jhipster';
+import * as moment from 'moment';
+import { HttpResponse, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { IZonal, ZonalModel } from 'app/shared/model/zonal.model';
+import {
+    IMapZonalWithOh, MapZonalWithOhModel, STATUS_INACTIVE
+} from 'app/shared/model/map-zonal-with-oh.model';
+import { IOperationalHead } from 'app/shared/model/operational-head.model';
+import { IFinancialYearSettings } from 'app/shared/model/financial-year-settings.model';
+
+import { EntityAuditService } from 'app/admin/entity-audit/entity-audit.service';
+import {
+    EntityAuditEvent, ACTION_STATUS_UPDATE
+} from 'app/admin/entity-audit/entity-audit-event.model';
+
 import { ZonalService } from 'app/entities/service/zonal.service';
 import { MapZonalWithOhService } from 'app/entities/service/map-zonal-with-oh.service';
 import { OperationalHeadService } from 'app/entities/service/operational-head.service';
-import { IZonal, ZonalModel } from 'app/shared/model/zonal.model';
-import { IMapZonalWithOh, MapZonalWithOhModel, STATUS_INACTIVE } from 'app/shared/model/map-zonal-with-oh.model';
-import { IOperationalHead } from 'app/shared/model/operational-head.model';
-import { ModalDirective } from 'ngx-bootstrap/modal';
-import { ViewChild } from '@angular/core';
-
-import { JhiParseLinks } from 'ng-jhipster';
-
-import * as moment from 'moment';
 import {
-    DATE_TIME_FORMAT,
-    ITEMS_PER_PAGE,
-    STATUS_ACTIVE,
-    SOFT_DELETE_STATUS,
-    ALERT_TIME_OUT_5000,
-    STATUS_MOVEMENT,
-    STATUS_UPDATE
-} from 'app/shared';
-import { HttpResponse, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+    FinancialYearSettingsService
+} from 'app/entities/service/financial-year-settings.service';
 
-// Display the alert message of success and error
-import { Subject } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
-import { FinancialYearSettingsService } from 'app/entities/service/financial-year-settings.service';
-import { IFinancialYearSettings } from 'app/shared/model/financial-year-settings.model';
-import { ActivatedRoute, Router } from '@angular/router';
-import { EntityAuditService } from 'app/admin/entity-audit/entity-audit.service';
-import { EntityAuditEvent, ACTION_STATUS_UPDATE } from 'app/admin/entity-audit/entity-audit-event.model';
-import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
+import {
+    DATE_TIME_FORMAT, ITEMS_PER_PAGE, STATUS_ACTIVE, SOFT_DELETE_STATUS,
+    ALERT_TIME_OUT_5000, STATUS_MOVEMENT, STATUS_UPDATE
+} from 'app/shared';
 
 // Mension the html, css/sass files
 @Component({
@@ -70,9 +71,8 @@ export class ZonalComponent implements OnInit {
     isCollapsed = true;
     fromDate: any;
 
-    // Title and alertTitle declation as String
+    // Title declation as String
     title: String;
-    alertTitle: String;
 
     // Date picker id declation
     dateFromDp: any;
@@ -153,25 +153,27 @@ export class ZonalComponent implements OnInit {
     }
 
     ngOnInit() {
-        // console.log('ngOnInit');
         // Call a function to get list of zonals
         this.getZoneList();
 
         // Call a function to get active batch id
         // this.getActiveRecord();
+
         // Call a function to get list of active headOffice
-        this.getOperationalHead();
+        // this.getOperationalHead();
 
         // To set the time for automatic alert close
         setTimeout(() => (this.staticAlertClosed = true), ALERT_TIME_OUT_5000);
 
         // Set the success message with debounce time
         this.success.subscribe(message => (this.successMessage = message));
-        this.success.pipe(debounceTime(ALERT_TIME_OUT_5000)).subscribe(() => (this.successMessage = null));
+        this.success.pipe(debounceTime(ALERT_TIME_OUT_5000))
+        .subscribe(() => (this.successMessage = null));
 
         // To set the error message with debounce time
         this.error.subscribe(message => (this.errorMessage = message));
-        this.error.pipe(debounceTime(ALERT_TIME_OUT_5000)).subscribe(() => (this.errorMessage = null));
+        this.error.pipe(debounceTime(ALERT_TIME_OUT_5000))
+        .subscribe(() => (this.errorMessage = null));
     }
 
     /**
@@ -198,24 +200,29 @@ export class ZonalComponent implements OnInit {
         // Get the list of active batch record and assign a 0th
         // index array value to an batch id
         // this.settingsService.getActiveRecord()
-        this.settingsService
-            .query({
-                filter: { 'status.equals': STATUS_ACTIVE }
-            })
-            .subscribe((res: HttpResponse<IFinancialYearSettings[]>) => {
-                if (res.body.length > 0) {
-                    // Set the batch Id
-                    this.batchId = res.body[0].id;
-                    // To create a new zonal model and display the pop up
-                    this.zonalObject = new ZonalModel();
-                    this.zoneModal.show();
-                    // To set the Zone title
-                    this.title = 'Create Zone:';
-                } else {
-                    alert('There is no active year in calendar settings');
-                    // this.error.next('There is no active year in calendar settings');
-                }
-            });
+        this.settingsService.query({
+            filter: { 'status.equals': STATUS_ACTIVE }
+        }).subscribe((res: HttpResponse<IFinancialYearSettings[]>) => {
+            // If the length is greater than 0,
+            // show the zonal form and get the operational head details
+            if (res.body.length > 0) {
+                // Set the batch Id
+                this.batchId = res.body[0].id;
+                // To create a new zonal model and display the pop up
+                this.zonalObject = new ZonalModel();
+                // Create a new row for MapZonalWithOhModel
+                this.mapZoneWithOh = new MapZonalWithOhModel();
+                this.zoneModal.show();
+                // To set the Zone title
+                this.title = 'Create Zone:';
+
+                // Call a function to get list of active headOffice
+                this.getOperationalHead();
+            } else {
+                alert('There is no active year in calendar settings.');
+                // this.error.next('There is no active year in calendar settings');
+            }
+        });
     }
 
     /**
@@ -225,13 +232,11 @@ export class ZonalComponent implements OnInit {
         // Get the list of active batch record and
         // assign a 0th index array value to an batch id
         // this.operationalHeadService.getActiveList()
-        this.operationalHeadService
-            .query({
-                filter: { 'status.equals': STATUS_ACTIVE }
-            })
-            .subscribe((res: HttpResponse<IOperationalHead[]>) => {
-                this.operationalHeads = res.body;
-            });
+        this.operationalHeadService.query({
+            filter: { 'status.equals': STATUS_ACTIVE }
+        }).subscribe((res: HttpResponse<IOperationalHead[]>) => {
+            this.operationalHeads = res.body;
+        });
     }
 
     /**
@@ -241,13 +246,15 @@ export class ZonalComponent implements OnInit {
         // console.log('save');
         this.zonalObject.status = STATUS_ACTIVE;
         if (this.zonalObject.id !== undefined) {
-            this.alertTitle = 'updated';
-            this.subscribeToSaveResponse(this.zonalService.update(this.zonalObject), this.alertTitle);
+            this.subscribeToSaveResponse(
+                this.zonalService.update(this.zonalObject), 'updated'
+            );
         } else {
-            this.alertTitle = 'created';
             this.zonalObject.financialYearId = this.batchId;
             // this.mapZoneWithOh = new MapZonalWithOhModel();
-            this.subscribeToSaveResponse(this.zonalService.create(this.zonalObject), this.alertTitle);
+            this.subscribeToSaveResponse(
+                this.zonalService.create(this.zonalObject), 'created'
+            );
         }
     }
 
@@ -255,7 +262,7 @@ export class ZonalComponent implements OnInit {
      * To save the response with zonal
      *
      * @param result list of values
-     * @param alertTitle title
+     * @param alertTitle message title for alert
      */
     private subscribeToSaveResponse(result: Observable<HttpResponse<IZonal>>, alertTitle) {
         result.subscribe(
@@ -314,48 +321,46 @@ export class ZonalComponent implements OnInit {
         // this.toDate = moment(value.toDate).format(DATE_TIME_FORMAT);
         // Get the list of active batch record and assign a 0th index array value to an batch id
         // this.mapZoneWithOhService.getParticularZonalActiveRecord(zonalDetails.id)
-        this.mapZoneWithOhService
-            .query({
-                filter: { 'zonalId.equals': zonalDetails.id }
-            })
-            .subscribe((res: HttpResponse<IMapZonalWithOh[]>) => {
-                // If the length is greater than 0,
-                // Set the status as inactive and todate for the old row
-                if (res.body.length > 0) {
-                    // If the todate date is empty, To set the default date for the todate date
-                    if (value.toDate === null || value.toDate === undefined) {
-                        // console.log(this.fromDate);
-                        this.toDate = moment(value.toDate).format(DATE_TIME_FORMAT);
-                        value.toDate = moment(this.toDate, DATE_TIME_FORMAT);
-                    }
-                    this.mapZoneWithOh = res.body[0];
-                    this.mapZoneWithOh.description = value.description;
-                    this.mapZoneWithOh.toDate = moment(value.toDate, DATE_TIME_FORMAT);
-                    this.mapZoneWithOh.status = STATUS_INACTIVE;
-                    this.mapZoneWithOhService.update(this.mapZoneWithOh).subscribe(
-                        (output: HttpResponse<IMapZonalWithOh>) => {
-                            this.saveMapTable(zonalDetails, value.fromDate);
-                        },
-                        (error: HttpErrorResponse) => {
-                            // alert(res.error.fieldErrors[0].message);
-                            this.error.next(error.error.fieldErrors[0].message);
-                        }
-                    );
-                } else {
-                    this.saveMapTable(zonalDetails, value.fromDate);
+        this.mapZoneWithOhService.query({
+            filter: {
+                'zonalId.equals': zonalDetails.id,
+                'status.equals': STATUS_ACTIVE
+            }
+        }).subscribe((res: HttpResponse<IMapZonalWithOh[]>) => {
+            // If the length is greater than 0,
+            // Set the status as inactive and todate for the old row
+            if (res.body.length > 0) {
+                // If the todate date is empty, To set the default date for the todate date
+                if (value.toDate === null || value.toDate === undefined) {
+                    // console.log(this.fromDate);
+                    this.toDate = moment(value.toDate).format(DATE_TIME_FORMAT);
+                    value.toDate = moment(this.toDate, DATE_TIME_FORMAT);
                 }
-            });
+                this.mapZoneWithOh = res.body[0];
+                this.mapZoneWithOh.description = value.description;
+                this.mapZoneWithOh.toDate = moment(value.toDate, DATE_TIME_FORMAT);
+                this.mapZoneWithOh.status = STATUS_INACTIVE;
+                this.mapZoneWithOhService.update(this.mapZoneWithOh).subscribe(
+                    (output: HttpResponse<IMapZonalWithOh>) => {
+                        this.saveMapTable(zonalDetails, value.fromDate);
+                    },
+                    (error: HttpErrorResponse) => {
+                        // alert(res.error.fieldErrors[0].message);
+                        this.error.next(error.error.fieldErrors[0].message);
+                    }
+                );
+            } else {
+                this.saveMapTable(zonalDetails, value.fromDate);
+            }
+        });
     }
 
     /**
      * Shown model popup to create zonal value
      */
     createZone(): void {
-        // this.zonalObject = new ZonalModel();
-        // this.zoneModal.show();
+        // Call the active record for displaying the alert
         this.getActiveRecord();
-        // this.title = 'Create Zone:';
-        this.mapZoneWithOh = new MapZonalWithOhModel();
     }
 
     /**
@@ -370,6 +375,8 @@ export class ZonalComponent implements OnInit {
             this.zoneModal.show();
             this.title = `Update Zone: ${value.zoneName}`;
         } else {
+            // To call the operational head model
+            this.getOperationalHead();
             this.mapZoneWithOh = new MapZonalWithOhModel();
             this.moveZone.show();
             this.title = `Move Zone: ${value.zoneName}`;
@@ -388,7 +395,8 @@ export class ZonalComponent implements OnInit {
         if (window.confirm('Are sure you want to delete?')) {
             this.zonalObject = zone;
             this.zonalObject.status = SOFT_DELETE_STATUS;
-            this.zonalService.update(this.zonalObject).subscribe(
+            this.zonalService.update(this.zonalObject)
+            .subscribe(
                 data => {
                     this.success.next(`Zone deleted successfully`);
                     this.getZoneList();
@@ -418,14 +426,12 @@ export class ZonalComponent implements OnInit {
     getMapList(id: number): void {
         // Get the list of record based on zonal id
         // this.mapZoneWithOhService.getParticularZonalRecord(id)
-        this.mapZoneWithOhService
-            .query({
-                filter: { 'zonalId.equals': id }
-            })
-            .subscribe((res: HttpResponse<IMapZonalWithOh[]>) => {
-                this.isCollapsed = false;
-                this.mapZoneWithOhs = res.body;
-            });
+        this.mapZoneWithOhService.query({
+            filter: { 'zonalId.equals': id }
+        }).subscribe((res: HttpResponse<IMapZonalWithOh[]>) => {
+            this.isCollapsed = false;
+            this.mapZoneWithOhs = res.body;
+        });
     }
 
     /**

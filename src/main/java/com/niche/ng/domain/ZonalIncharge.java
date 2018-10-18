@@ -58,7 +58,7 @@ public class ZonalIncharge extends AbstractAuditingEntity implements Serializabl
 
     /**
      * Relation Name : ManyToOne - zonal
-     * Table Name    : Connects the ZonalIncharge Table to Zonal Table
+     * Table Name    : Connect the ZonalIncharge Table to Zonal Table
      * To get the zonal.
      */
     @ManyToOne

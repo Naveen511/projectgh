@@ -60,7 +60,7 @@ public class NurseryIncharge extends AbstractAuditingEntity implements Serializa
 
     /**
      * Relation Name : ManyToOne - incharges
-     * Table Name    : Connects the NurseryIncharge Table to Nursery Table
+     * Table Name    : Connect the NurseryIncharge Table to Nursery Table
      * To get the list of incharges form the nursery table.
      */
     @ManyToOne
@@ -193,7 +193,7 @@ public class NurseryIncharge extends AbstractAuditingEntity implements Serializa
         this.status = status;
         return this;
     }
-    
+
     /**
      * To set the status for NurseryIncharge table
      * 

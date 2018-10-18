@@ -42,17 +42,17 @@ public class GodownPurchaseDetailsDTO extends AbstractAuditingDTO implements Ser
     @NotNull(message = "Date cannot be blank.")
     private LocalDate date;
 
-    @NotNull(message = "Quantity Type cannot be blank.")
+    @NotNull(message = "Quantity type cannot be blank.")
     private Long pickListQuantityTypeId;
 
     @NotNull(message = "Quantity cannot be blank.")
     private Long quantity;
 
     @NotNull(message = "Price cannot be blank.")
-    private Long price;
+    private Float price;
 
-    @NotNull(message = "Owned By cannot be blank.")
-    @NotBlank(message = "Owned By cannot be blank.")
+    @NotNull(message = "Owned by cannot be blank.")
+    @NotBlank(message = "Owned by cannot be blank.")
     private String ownedBy;
 
     @NotNull(message = "Vendor name cannot be blank.")
@@ -141,7 +141,7 @@ public class GodownPurchaseDetailsDTO extends AbstractAuditingDTO implements Ser
      * 
      * @return price
      */
-    public Long getPrice() {
+    public Float getPrice() {
         return price;
     }
 
@@ -150,7 +150,7 @@ public class GodownPurchaseDetailsDTO extends AbstractAuditingDTO implements Ser
      * 
      * @param price price of the godownPurchaseDetails
      */
-    public void setPrice(Long price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 

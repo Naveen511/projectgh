@@ -86,7 +86,7 @@ public class Batch extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : OneToMany - damages
-     * Table Name    : Connects the Batch Table to Damage Table
+     * Table Name    : Connect the Batch Table to Damage Table
      * After Creation of the Batch, If any seeds/seedlings/saplings is damaged 
      * then it is move to Damage Table
      */
@@ -95,7 +95,7 @@ public class Batch extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : OneToMany - shadeAreas
-     * Table Name    : Connects the Batch Table to ShadeArea Table
+     * Table Name    : Connect the Batch Table to ShadeArea Table
      * Used to find out the seedlings are belongs to which batch, after moving the 
      * seedlings to shade area.
      */
@@ -104,7 +104,7 @@ public class Batch extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : OneToMany - nurseryStockDetails
-     * Table Name    : Connects the Batch Table to NurseryStockDetails Table
+     * Table Name    : Connect the Batch Table to NurseryStockDetails Table
      * Used to find out the saplings are belongs to which batch, after the saplings 
      * distributed to the nursery.
      */
@@ -113,7 +113,7 @@ public class Batch extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : ManyToOne - batchs
-     * Table Name    : Connects the Batch Table to Nursery Table
+     * Table Name    : Connect the Batch Table to Nursery Table
      * To get the batch details belongs to which nursery.
      */
     @ManyToOne
@@ -122,7 +122,7 @@ public class Batch extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : ManyToOne - varietys
-     * Table Name    : Connects the Batch Table to PickListValue Table
+     * Table Name    : Connect the Batch Table to PickListValue Table
      * To get the list of Varieties form the picklist table.
      */
     @ManyToOne
@@ -131,7 +131,7 @@ public class Batch extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : ManyToOne - categorys
-     * Table Name    : Connects the Batch Table to PickListValue Table
+     * Table Name    : Connect the Batch Table to PickListValue Table
      * To get the category for the particular variety from the picklistvalue table.
      */
     @ManyToOne
@@ -140,7 +140,7 @@ public class Batch extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : ManyToOne - batchQuantityTypes
-     * Table Name    : Connects the Batch Table to PickListValue Table
+     * Table Name    : Connect the Batch Table to PickListValue Table
      * To get the quantity from the picklist table.
      */
     @ManyToOne
@@ -149,7 +149,7 @@ public class Batch extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : ManyToOne - batchMotherBeds
-     * Table Name    : Connects the Batch Table to motherBed Table
+     * Table Name    : Connect the Batch Table to motherBed Table
      * To get the motherbed value from the motherbed table.
      */
     @ManyToOne
@@ -158,7 +158,7 @@ public class Batch extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : ManyToOne - batches
-     * Table Name    : Connects the Batch Table to financialyear Table
+     * Table Name    : Connect the Batch Table to financialyear Table
      * To get the financial year value from the financialyear table.
      */
     @ManyToOne
@@ -167,7 +167,7 @@ public class Batch extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : ManyToOne - batchQuantities
-     * Table Name    : Connects the Batch Table to BatchQuantity Table
+     * Table Name    : Connect the Batch Table to BatchQuantity Table
      * Quantity of the batch in BatchQuantity table.
      */
     @OneToMany(mappedBy = "batch", cascade = javax.persistence.CascadeType.REMOVE)
@@ -177,7 +177,7 @@ public class Batch extends AbstractAuditingEntity implements Serializable {
 
     /**
      * To Get the Id of the batch table
-     * 
+     *
      * @return id
      */
     public Long getId() {

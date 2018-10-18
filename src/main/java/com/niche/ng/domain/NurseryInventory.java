@@ -68,7 +68,7 @@ public class NurseryInventory extends AbstractAuditingEntity implements Serializ
 
     /**
      * Relation Name : ManyToOne - nurseryInventorys
-     * Table Name    : Connects the NurseryInventory Table to Nursery Table
+     * Table Name    : Connect the NurseryInventory Table to Nursery Table
      * To get the list of nurserys form the nursery table.
      */
     @ManyToOne
@@ -77,7 +77,7 @@ public class NurseryInventory extends AbstractAuditingEntity implements Serializ
 
     /**
      * Relation Name : ManyToOne - nurseryInventoryVarietys
-     * Table Name    : Connects the NurseryInventory Table to PickListValue Table
+     * Table Name    : Connect the NurseryInventory Table to PickListValue Table
      * To get the list of Varietys form the PickListValue table.
      */
     @ManyToOne
@@ -86,7 +86,7 @@ public class NurseryInventory extends AbstractAuditingEntity implements Serializ
 
     /**
      * Relation Name : ManyToOne - nurseryInventoryCategorys
-     * Table Name    : Connects the NurseryInventory Table to PickListValue Table
+     * Table Name    : Connect the NurseryInventory Table to PickListValue Table
      * To get the list of category form the PickListValue table.
      */
     @ManyToOne
@@ -95,7 +95,7 @@ public class NurseryInventory extends AbstractAuditingEntity implements Serializ
 
     /**
      * Relation Name : ManyToOne - nurseryInventoryQuantityTypes
-     * Table Name    : Connects the NurseryInventory Table to PickListValue Table
+     * Table Name    : Connect the NurseryInventory Table to PickListValue Table
      * To get the list of quantity types form the PickListValue table.
      */
     @ManyToOne
@@ -104,7 +104,7 @@ public class NurseryInventory extends AbstractAuditingEntity implements Serializ
 
     /**
      * Relation Name : OneToMany - nurseryInventoryDetails
-     * Table Name    : Connects the NurseryInventory Table to NurseryInventoryDetails Table
+     * Table Name    : Connect the NurseryInventory Table to NurseryInventoryDetails Table
      * Nursery Inventory id is mapped to the nursery inventory details
      */
     @OneToMany(mappedBy = "nurseryInventory", cascade = javax.persistence.CascadeType.REMOVE)
@@ -225,7 +225,7 @@ public class NurseryInventory extends AbstractAuditingEntity implements Serializ
     public String getDescription() {
         return description;
     }
-    
+
     /**
      * To set the description for NurseryInventory table
      * 

@@ -64,7 +64,7 @@
                         </button>
                     </div>
                     <div class="card-body">
-                        <form action="" method="post" enctype="multipart/form-data"
+                        <form method="post" enctype="multipart/form-data"
                         class="form-horizontal">
                             <input [(ngModel)]="godownStock.id" type="hidden" id="id"
                             name="id" class="form-control">
@@ -77,7 +77,7 @@
                                     </select>
                                 </div> -->
                                 <div class="form-group col-sm-3">
-                                    <label class="" for="name">Date *</label>
+                                    <label class="" for="field_stockDate">Date *</label>
                                     <input id="field_stockDate" type="text"
                                     class="form-control" name="date"
                                     [(ngModel)]="godownStockDetail.date" readonly
@@ -85,31 +85,33 @@
                                     (click)="stockDateDp.toggle()"/>
                                 </div>
                                 <div class="form-group col-sm-3">
-                                    <label for="name">Variety * </label>
+                                    <label for="pickListVarietyId">Variety * </label>
                                     <select [(ngModel)]="godownStock.pickListVarietyId"
                                         id="pickListVarietyId" name="pickListVarietyId"
                                         class="form-control"
                                         (change)="getCategory(godownStock.pickListVarietyId)"
                                         required>
                                         <option value="0" disabled selected>Select Variety Name</option>
-                                        <option *ngFor="let val of varietys" value={{val.id}}>
+                                        <option *ngFor="let val of varieties" value={{val.id}}>
                                             {{val.pickListValue}}
                                         </option>
                                     </select>
                                 </div>
                                 <div class="form-group col-sm-3">
-                                    <label for="name">Category *</label>
+                                    <label for="pickListCategoryId">Category *</label>
                                     <select [(ngModel)]="godownStock.pickListCategoryId"
                                     id="pickListCategoryId" name="pickListCategoryId"
                                     class="form-control" required>
                                         <option value="0" disabled selected>Select Category Name</option>
-                                        <option *ngFor="let category of categorys" value={{category.id}}>
+                                        <option *ngFor="let category of categories" value={{category.id}}>
                                             {{category.pickListValue}}
                                         </option>
                                     </select>
                                 </div>
                                 <div class="form-group col-sm-3">
-                                    <label class="col-form-label" for="select1">Quantity Type *</label>
+                                    <label class="col-form-label" for="pickListQuantityTypeId">
+                                        Quantity Type *
+                                    </label>
                                     <select [(ngModel)]="godownStock.pickListQuantityTypeId"
                                         id="pickListQuantityTypeId" name="pickListQuantityTypeId"
                                         class="form-control">
@@ -122,7 +124,7 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-sm-3">
-                                    <label class="col-form-label" for="select1">
+                                    <label class="col-form-label" for="quantity">
                                         Quantity *
                                     </label>
                                     <input [(ngModel)]="godownStockDetail.quantity"
@@ -131,7 +133,7 @@
                                     (keypress)="numberOnly($event)">
                                 </div>
                                 <div class="form-group col-sm-3">
-                                    <label class="col-form-label" for="text-input">
+                                    <label class="col-form-label" for="price">
                                         Price
                                     </label>
                                     <input [(ngModel)]="godownStockDetail.price"
@@ -140,7 +142,7 @@
                                     (keypress)="numberOnly($event)">
                                 </div>
                                 <div class="form-group col-sm-5">
-                                    <label class="col-form-label" for="text-input">
+                                    <label class="col-form-label" for="description">
                                         Description
                                     </label>
                                     <textarea [(ngModel)]="godownStockDetail.description"
@@ -282,50 +284,50 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <form action="" method="post" enctype="multipart/form-data"
+                <div class="modal-body font13">
+                    <form method="post" enctype="multipart/form-data"
                     class="form-horizontal">
                         <input [(ngModel)]="godownStockDetail.godownStockId" type="hidden"
                         id="godownStockId" name="godownStockId" class="form-control">
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="text-input">
+                            <label class="col-md-3 col-form-label" for="stockDate">
                                 Date *
                             </label>
                             <div class="col-md-9">
-                                <input id="field_date" type="text" class="form-control"
+                                <input id="stockDate" type="text" class="form-control"
                                 name="date" [(ngModel)]="godownStockDetail.date"
                                 readonly ngbDatepicker #addInventoryDateDp="ngbDatepicker"
                                 (click)="addInventoryDateDp.toggle()" />
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="text-input">
+                            <label class="col-md-3 col-form-label" for="stockQuantity">
                                 Quantity *
                             </label>
                             <div class="col-md-9">
                                 <input [(ngModel)]="godownStockDetail.quantity" type="text"
-                                id="quantity" name="quantity" class="form-control"
+                                id="stockQuantity" name="quantity" class="form-control"
                                 placeholder="Quantity" (keypress)="numberOnly($event)">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="text-input">
+                            <label class="col-md-3 col-form-label" for="stockPrice">
                                 Price
                             </label>
                             <div class="col-md-9">
                                 <input [(ngModel)]="godownStockDetail.price"
-                                type="text" id="price" name="price" 
+                                type="text" id="stockPrice" name="price" 
                                 class="form-control" placeholder="Price"
                                 (keypress)="numberOnly($event)">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="text-input">
+                            <label class="col-md-3 col-form-label" for="stockDescription">
                                 Description
                             </label>
                             <div class="col-md-9">
                                 <textarea [(ngModel)]="godownStockDetail.description"
-                                    type="text" id="description" name="description"
+                                    type="text" id="stockDescription" name="description"
                                     class="form-control" placeholder="Description">
                                 </textarea>
                             </div>
@@ -339,10 +341,12 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" (click)="addParticularStock.hide()">
+                    <button type="button" class="btn btn-secondary"
+                        (click)="addParticularStock.hide()">
                         Close
                     </button>
-                    <button type="button" class="btn btn-primary" (click)="addInventoryQuantity(godownStock)">
+                    <button type="button" class="btn btn-primary"
+                        (click)="addInventoryQuantity(godownStock)">
                         Save
                     </button>
                 </div>

@@ -14,7 +14,7 @@ import { Observable } from 'rxjs';
 
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared';
-import { IMotherBed, STATUS_AVAILABLE } from 'app/shared/model/mother-bed.model';
+import { IMotherBed } from 'app/shared/model/mother-bed.model';
 
 type EntityResponseType = HttpResponse<IMotherBed>;
 type EntityArrayResponseType = HttpResponse<IMotherBed[]>;
@@ -29,7 +29,8 @@ export class MotherBedService {
 
     constructor(private http: HttpClient) {}
 
-    /** Send a POST method request to create the Motherbed and
+    /**
+     * Send a POST method request to create the Motherbed and
      * get created record as response
      *
      * @param Motherbed - single object

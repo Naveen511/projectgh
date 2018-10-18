@@ -536,26 +536,25 @@ export class DashboardComponent implements OnInit {
         });
 
         // this.nurseryStockService.particularNursery(1401)
-        this.nurseryStockService
-            .query({
-                filter: { 'nurseryId.equals': 1401 }
-            })
-            .subscribe((res: HttpResponse<INurseryStock[]>) => {
-                // console.log("category", res.body);
-                this.stockDetailLabel = res.body;
-                console.log('category', this.stockDetailLabel);
-                for (const result of this.stockDetailLabel) {
-                    this.ids.push(result.pickListCategoryPickListValue);
-                    this.addedQuan.push(result.addedQuantity);
-                    this.consumedQuan.push(result.consumedQuantity);
-                    this.currentQuan.push(result.currentQuantity);
-                    // console.log("ids", this.ids);
-                }
-                console.log('Category', this.ids);
-                // console.log("addedQuantity", this.addedQuan);
-                // console.log("consumedQuantity", this.consumedQuan);
-                // console.log("currentQuantity", this.currentQuan);
-            });
+        this.nurseryStockService.query({
+            filter: { 'nurseryId.equals': 1401}
+        })
+        .subscribe((res: HttpResponse<INurseryStock[]>) => {
+            // console.log("category", res.body);
+            this.stockDetailLabel = res.body;
+            // console.log('category', this.stockDetailLabel);
+            for (const result of this.stockDetailLabel) {
+                this.ids.push(result.pickListCategoryPickListValue);
+                this.addedQuan.push(result.addedQuantity);
+                this.consumedQuan.push(result.consumedQuantity);
+                this.currentQuan.push(result.currentQuantity);
+                // console.log("ids", this.ids);
+            }
+            // console.log('Category', this.ids);
+            // console.log("addedQuantity", this.addedQuan);
+            // console.log("consumedQuantity", this.consumedQuan);
+            // console.log("currentQuantity", this.currentQuan);
+        });
 
         // this.pickListValueService.query().subscribe((res: HttpResponse<IPickListValue[]>) => {
         //     // console.log("category", res.body);

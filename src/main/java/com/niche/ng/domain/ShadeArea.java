@@ -67,7 +67,7 @@ public class ShadeArea extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : ManyToOne - batch
-     * Table Name    : Connects the ShadeArea Table to Batch Table
+     * Table Name    : Connect the ShadeArea Table to Batch Table
      * To get the Batch.
      */
     @ManyToOne
@@ -77,7 +77,7 @@ public class ShadeArea extends AbstractAuditingEntity implements Serializable {
 
     /**
      * Relation Name : ManyToOne - financialYearShadeArea
-     * Table Name    : Connects the ShadeArea Table to FinancialYearSettings Table
+     * Table Name    : Connect the ShadeArea Table to FinancialYearSettings Table
      * To get the financialYearSettings.
      */
     @ManyToOne

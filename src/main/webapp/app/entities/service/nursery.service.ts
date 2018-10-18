@@ -28,16 +28,18 @@ type EntityArrayResponseType = HttpResponse<INursery[]>;
 export class NurseryService {
     private resourceUrl = SERVER_API_URL + 'api/nurseries';
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) { }
 
-    /** Send a POST method request to create the nursery and
+    /**
+     * Send a POST method request to create the nursery and
      * get created record as response
      *
      * @param nursery - single object
      * @returns object of values
      */
     create(nursery: INursery): Observable<EntityResponseType> {
-        return this.http.post<INursery>(this.resourceUrl, nursery, { observe: 'response' });
+        return this.http
+            .post<INursery>(this.resourceUrl, nursery, { observe: 'response' });
     }
 
     /**
@@ -48,7 +50,8 @@ export class NurseryService {
      * @returns object of values
      */
     update(nursery: INursery): Observable<EntityResponseType> {
-        return this.http.put<INursery>(this.resourceUrl, nursery, { observe: 'response' });
+        return this.http
+            .put<INursery>(this.resourceUrl, nursery, { observe: 'response' });
     }
 
     /**
@@ -59,7 +62,8 @@ export class NurseryService {
      * @returns object of values
      */
     find(id: number): Observable<EntityResponseType> {
-        return this.http.get<INursery>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+        return this.http
+            .get<INursery>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
     /**
@@ -70,7 +74,8 @@ export class NurseryService {
      */
     query(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
-        return this.http.get<INursery[]>(this.resourceUrl, { params: options, observe: 'response' });
+        return this.http
+            .get<INursery[]>(this.resourceUrl, { params: options, observe: 'response' });
     }
 
     /**

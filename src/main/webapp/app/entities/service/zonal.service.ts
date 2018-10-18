@@ -29,14 +29,16 @@ export class ZonalService {
 
     constructor(private http: HttpClient) {}
 
-    /** Send a POST method request to create the zonal and
+    /**
+     * Send a POST method request to create the zonal and
      * get created record as response
      *
      * @param zonal - single object
      * @returns object of values
      */
     create(zonal: IZonal): Observable<EntityResponseType> {
-        return this.http.post<IZonal>(this.resourceUrl, zonal, { observe: 'response' });
+        return this.http
+            .post<IZonal>(this.resourceUrl, zonal, { observe: 'response' });
     }
 
     /**
@@ -47,7 +49,8 @@ export class ZonalService {
      * @returns object of values
      */
     update(zonal: IZonal): Observable<EntityResponseType> {
-        return this.http.put<IZonal>(this.resourceUrl, zonal, { observe: 'response' });
+        return this.http
+            .put<IZonal>(this.resourceUrl, zonal, { observe: 'response' });
     }
 
     /**
@@ -58,7 +61,8 @@ export class ZonalService {
      * @returns object of values
      */
     find(id: number): Observable<EntityResponseType> {
-        return this.http.get<IZonal>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+        return this.http
+            .get<IZonal>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
     /**
@@ -69,7 +73,8 @@ export class ZonalService {
      */
     query(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
-        return this.http.get<IZonal[]>(this.resourceUrl, { params: options, observe: 'response' });
+        return this.http
+            .get<IZonal[]>(this.resourceUrl, { params: options, observe: 'response' });
     }
 
     /**

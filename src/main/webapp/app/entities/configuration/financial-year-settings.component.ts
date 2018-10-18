@@ -7,33 +7,35 @@
  *  Target: yarn
  *******************************************************************************/
 
-// Import needed component and dependency
+// Import needed model, service, shared, subject to display alert message
+// and angular dependency
 import { Component, OnInit } from '@angular/core';
-import {
-    FinancialYearSettings,
-    IFinancialYearSettings,
-    STATUS_ACTIVE,
-    DISPLAY_NAME_YEAR
-} from 'app/shared/model/financial-year-settings.model';
-import { FinancialYearSettingsService } from 'app/entities/service/financial-year-settings.service';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { JhiParseLinks } from 'ng-jhipster';
-
 import * as moment from 'moment';
-import { DATE_TIME_FORMAT, DEFAULT_STATUS, ITEMS_PER_PAGE, SOFT_DELETE_STATUS, ALERT_TIME_OUT_5000, ALERT_TIME_OUT_3000 } from 'app/shared';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { PickListService } from 'app/entities/service/pick-list.service';
-import { PickListValueService } from 'app/entities/service/pick-list-value.service';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
+
+import {
+    FinancialYearSettings, IFinancialYearSettings, STATUS_ACTIVE, DISPLAY_NAME_YEAR
+} from 'app/shared/model/financial-year-settings.model';
 import { IPickList } from 'app/shared/model/pick-list.model';
 import { IPickListValue } from 'app/shared/model/pick-list-value.model';
 
-// Display the alert message of success and error
-import { Subject } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import {
+    FinancialYearSettingsService
+} from 'app/entities/service/financial-year-settings.service';
+import { PickListService } from 'app/entities/service/pick-list.service';
+import { PickListValueService } from 'app/entities/service/pick-list-value.service';
+
+import {
+    DATE_TIME_FORMAT, DEFAULT_STATUS, ITEMS_PER_PAGE, SOFT_DELETE_STATUS,
+    ALERT_TIME_OUT_5000, ALERT_TIME_OUT_3000
+} from 'app/shared';
 
 // Mention the html, css/sass files
 @Component({
@@ -56,9 +58,8 @@ export class FinancialYearSettingsComponent implements OnInit {
     pickLists: IPickList[];
     years: IPickListValue[];
 
-    // Title and alertTitle declation as String
+    // Title declation as String
     title: String;
-    alertTitle: String;
 
     // To display the success message
     private success = new Subject<string>();
@@ -123,11 +124,13 @@ export class FinancialYearSettingsComponent implements OnInit {
 
         // Set the success message with debounce time
         this.success.subscribe(message => (this.successMessage = message));
-        this.success.pipe(debounceTime(ALERT_TIME_OUT_3000)).subscribe(() => (this.successMessage = null));
+        this.success.pipe(debounceTime(ALERT_TIME_OUT_3000))
+            .subscribe(() => (this.successMessage = null));
 
         // To set the error message with debounce time
         this.error.subscribe(message => (this.errorMessage = message));
-        this.error.pipe(debounceTime(ALERT_TIME_OUT_5000)).subscribe(() => (this.errorMessage = null));
+        this.error.pipe(debounceTime(ALERT_TIME_OUT_5000))
+            .subscribe(() => (this.errorMessage = null));
     }
 
     /**
@@ -136,13 +139,11 @@ export class FinancialYearSettingsComponent implements OnInit {
      */
     getYearSettingsList(): void {
         // Get the list of financial year settings
-        this.settingsService
-            .query({
-                filter: { 'status.greaterThan': SOFT_DELETE_STATUS }
-            })
-            .subscribe((res: HttpResponse<IFinancialYearSettings[]>) => {
-                this.settings = res.body;
-            });
+        this.settingsService.query({
+            filter: { 'status.greaterThan': SOFT_DELETE_STATUS }
+        }).subscribe((res: HttpResponse<IFinancialYearSettings[]>) => {
+            this.settings = res.body;
+        });
     }
 
     /**
@@ -166,16 +167,14 @@ export class FinancialYearSettingsComponent implements OnInit {
      */
     getYears(id): void {
         // this.pickListValueService.getVariety(id)
-        this.pickListValueService
-            .query({
-                filter: {
-                    'status.equals': STATUS_ACTIVE,
-                    'pickListId.equals': id
-                }
-            })
-            .subscribe((res: HttpResponse<IPickListValue[]>) => {
-                this.years = res.body;
-            });
+        this.pickListValueService.query({
+            filter: {
+                'status.equals': STATUS_ACTIVE,
+                'pickListId.equals': id
+            }
+        }).subscribe((res: HttpResponse<IPickListValue[]>) => {
+            this.years = res.body;
+        });
     }
 
     /**
@@ -188,20 +187,22 @@ export class FinancialYearSettingsComponent implements OnInit {
         // console.log(this.setting);
         // If the settings id is not equal to undefined
         if (this.setting.id !== undefined) {
-            this.alertTitle = 'Updated';
             // Create the settings of financial year
-            this.subscribeToSaveResponse(this.settingsService.update(this.setting), this.alertTitle);
+            this.subscribeToSaveResponse(
+                this.settingsService.update(this.setting), 'Updated'
+            );
         } else {
-            this.alertTitle = 'Created';
             // Create the settings of financial year
-            this.subscribeToSaveResponse(this.settingsService.create(this.setting), this.alertTitle);
+            this.subscribeToSaveResponse(
+                this.settingsService.create(this.setting), 'Created'
+            );
         }
     }
 
     /**
      * Return saved response and hide the settings model
      * @param result settings model
-     * @param alertTitle Alert title
+     * @param alertTitle message for alert title
      */
     private subscribeToSaveResponse(result: Observable<HttpResponse<IFinancialYearSettings>>, alertTitle) {
         result.subscribe(
@@ -211,12 +212,12 @@ export class FinancialYearSettingsComponent implements OnInit {
                 // Create new row for the Financial Year Settings
                 this.setting = new FinancialYearSettings();
                 // alert('Created/Updated Successfully.');
-                this.success.next(`${alertTitle} successfully`);
+                this.success.next(`${alertTitle} successfully.`);
                 this.getYearSettingsList();
             },
             (res: HttpErrorResponse) => {
                 // Return the error alert for the create/update
-                alert(res.error.fieldErrors[0].message);
+                this.error.next(res.error.fieldErrors[0].message);
             }
         );
     }
@@ -231,18 +232,18 @@ export class FinancialYearSettingsComponent implements OnInit {
         this.settingsModal.show();
         // To get the pick list Id for Pick List Year
         // this.pickListService.getPickListId(DISPLAY_NAME_YEAR)
-        this.pickListService
-            .query({
-                filter: {
-                    'status.equals': STATUS_ACTIVE,
-                    'displayLabelName.equals': DISPLAY_NAME_YEAR
-                }
-            })
-            .subscribe((res: HttpResponse<IPickList[]>) => {
-                if (res.body.length > 0) {
-                    this.getYears(res.body[0].id);
-                }
-            });
+        this.pickListService.query({
+            filter: {
+                'status.equals': STATUS_ACTIVE,
+                'displayLabelName.equals': DISPLAY_NAME_YEAR
+            }
+        })
+        .subscribe((res: HttpResponse<IPickList[]>) => {
+            if (res.body.length > 0) {
+                this.getYears(res.body[0].id);
+            }
+
+        });
     }
 
     /**
@@ -268,7 +269,7 @@ export class FinancialYearSettingsComponent implements OnInit {
             this.settingsService.update(this.setting).subscribe(
                 data => {
                     // console.log('upda', this.sectorObject);
-                    this.success.next(`Year deleted successfully`);
+                    this.success.next(`Successfully deleted.`);
                     this.getYearSettingsList();
                 },
                 (res: HttpErrorResponse) => {
@@ -291,10 +292,12 @@ export class FinancialYearSettingsComponent implements OnInit {
     /**
      * Changed the status as active or inactive for the calendar settings
      * of the particular row values
+     * @param value as object of FinancialYearSettings
      */
     changeStatus(value: FinancialYearSettings): void {
-        this.alertTitle = 'Updated';
         // Updated the existing record using hte financial year Id
-        this.subscribeToSaveResponse(this.settingsService.update(value), this.alertTitle);
+        this.subscribeToSaveResponse(
+            this.settingsService.update(value), 'Updated'
+        );
     }
 }

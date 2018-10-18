@@ -1,4 +1,4 @@
-<div class="animated fadeIn">
+<div class="animated fadeIn font13">
     <!-- Display the success Message alert-->
     <!--Display the tab details-->
     <div class="row font12">
@@ -62,7 +62,10 @@
                 </tab> <!-- End of pick list data  -->
                 <tab> <!-- Display list of pick list value data  -->
                     <ng-template tabHeading>
-                        <i class="icon-basket-loaded"> Pick List Value</i>
+                        <div>
+                            <i class="icon-basket-loaded" 
+                                (click)="getAllPickListValue()"> Pick List Value</i>
+                        </div>
                     </ng-template>
                     <button type="button" class="btn btn-sm btn-ghost-success float-right" 
                     data-toggle="modal" (click)="createPickListValue()">
@@ -126,7 +129,8 @@
                 </tab> <!-- End of pick list value data  -->
                 <tab> <!-- Display list of motherBed data  -->
                     <ng-template tabHeading>
-                        <i class="icon-basket-loaded"> Mother Bed List</i>
+                        <i class="icon-basket-loaded"
+                            (click)="getMotherBedList()"> Mother Bed List</i>
                     </ng-template>
                     <button type="button" class="btn btn-sm btn-ghost-success float-right" 
                     data-toggle="modal" (click)="showMotherBedCreateForm()">
@@ -148,14 +152,16 @@
                                 <td>{{motherBed.nurseryNurseryName}}</td>
                                 <td>{{motherBed.value}}</td>
                                 <td>
-                                    <span *ngIf="motherBed.status == 1" class="text-success">Available</span>
-                                    <span *ngIf="motherBed.status == 3" class="text-danger">Occupied</span>
+                                    <span *ngIf="motherBed.status == statusAvailable"
+                                        class="text-success">Available</span>
+                                    <span *ngIf="motherBed.status == statusOccupied"
+                                        class="text-danger">Occupied</span>
                                 </td>
                                 <td>
-                                    <a class="text-info sm-2" data-toggle="modal" 
-                                    ngbTooltip="Edit" placement="top">
+                                    <!-- <a class="text-info sm-2" data-toggle="modal" 
+                                        ngbTooltip="Edit" placement="top">
                                         <fa-icon [icon]="'pencil-alt'"> </fa-icon>
-                                    </a>
+                                    </a> -->
                                     <a class="text-danger sm-2" data-toggle="modal" 
                                     ngbTooltip="Delete" placement="top" 
                                     (click)="softDeleteMothedBed(motherBed)">
@@ -185,23 +191,23 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+            <div class="modal-body font13">
+                <form method="post" enctype="multipart/form-data" class="form-horizontal">
                     <input [(ngModel)]="pickListObject.id" type="hidden" id="id" 
                     name="id" class="form-control">
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="text-input">Name *</label>
-                        <div class="col-md-9">
+                        <label class="col-md-4 col-form-label" for="pickListName">Name *</label>
+                        <div class="col-md-8">
                             <input [(ngModel)]="pickListObject.pickListName" type="text" 
                             id="pickListName" name="pickListName" class="form-control" 
                             placeholder="Name">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="text-input">
+                        <label class="col-md-4 col-form-label" for="displayLabelName">
                             Display Label Name *
                         </label>
-                        <div class="col-md-9">
+                        <div class="col-md-8">
                             <input [(ngModel)]="pickListObject.displayLabelName" 
                             type="text" id="displayLabelName" name="displayLabelName" 
                             class="form-control" placeholder="Display Label Name">
@@ -209,16 +215,17 @@
                     </div>
                     <div>
                         <span class="text-danger" *ngIf="errorMessage" 
-                        (close)="errorMessage = null">{{ errorMessage }}</span>
+                            (close)="errorMessage = null">{{ errorMessage }}
+                        </span>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" (click)="closePickListModal()">
-                    Close
+                <button type="button" class="btn btn-secondary"
+                    (click)="closePickListModal()">Close
                 </button>
-                <button type="button" class="btn btn-primary" (click)="savePickList()">
-                    Save
+                <button type="button" class="btn btn-primary"
+                    (click)="savePickList()">Save
                 </button>
             </div>
         </div>
@@ -243,15 +250,16 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-                    <input [(ngModel)]="pickListValueObject.id" type="hidden" id="id" 
-                    name="id" class="form-control">
+            <div class="modal-body font13">
+                <form method="post" enctype="multipart/form-data" class="form-horizontal">
+                    <input [(ngModel)]="pickListValueObject.id" type="hidden"
+                    id="pickListValueId" name="id" class="form-control">
                     <div *ngIf="!pickListValueObject.id" class="form-group row">
-                        <label class="col-md-4 col-form-label" for="select1">PickList Name *</label>
+                        <label class="col-md-4 col-form-label"
+                            for="pickListId">Pick List Name *</label>
                         <div class="col-md-8">
-                            <select [(ngModel)]="pickListValueObject.pickListId" id="pickListId" 
-                            name="pickListId" class="form-control">
+                            <select [(ngModel)]="pickListValueObject.pickListId"
+                                id="pickListId" name="pickListId" class="form-control">
                                 <option value="0" disabled selected>Select PickList Name</option>
                                 <option *ngFor="let val of pickLists" value={{val.id}}>
                                     {{val.pickListName}}
@@ -260,24 +268,28 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-4 col-form-label" for="text-input">Name *</label>
+                        <label class="col-md-4 col-form-label"
+                            for="pickListValue">Name *
+                        </label>
                         <div class="col-md-8">
-                            <input [(ngModel)]="pickListValueObject.pickListValue" type="text" 
-                            id="pickListValue" name="pickListValue" class="form-control" 
-                            placeholder="Name">
+                            <input [(ngModel)]="pickListValueObject.pickListValue"
+                                type="text" id="pickListValue" name="pickListValue"
+                                class="form-control" placeholder="Name">
                         </div>
                     </div>
                     <div>
-                        <span class="text-danger" *ngIf="errorMessage" (close)="errorMessage = null">{{ errorMessage }}</span>
+                        <span class="text-danger" *ngIf="errorMessage"
+                            (close)="errorMessage = null">{{ errorMessage }}
+                        </span>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" (click)="closePickListValueModal()">
-                    Close
+                <button type="button" class="btn btn-secondary"
+                    (click)="closePickListValueModal()"> Close
                 </button>
-                <button type="button" class="btn btn-primary" (click)="savePickValue()">
-                    Save
+                <button type="button" class="btn btn-primary"
+                    (click)="savePickValue()"> Save
                 </button>
             </div>
         </div>
@@ -300,19 +312,19 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form action="" method="post" enctype="multipart/form-data" 
+            <div class="modal-body font13">
+                <form method="post" enctype="multipart/form-data" 
                 class="form-horizontal">
-                    <input [(ngModel)]="pickListValueObject.id" type="hidden" id="id" 
-                    name="id" class="form-control">
+                    <input [(ngModel)]="pickListValueObject.id" type="hidden"
+                    id="subCategoryId" name="id" class="form-control">
                     <div class="form-group row">
-                        <label class="col-md-4 col-form-label" for="text-input">
+                        <label class="col-md-4 col-form-label" for="subChildValue">
                             Category Name *
                         </label>
                         <div class="col-md-8">
-                            <input [(ngModel)]="pickListValueObject.subChildValue" type="text" 
-                            id="subChildValue" name="subChildValue" class="form-control" 
-                            placeholder="Name">
+                            <input [(ngModel)]="pickListValueObject.subChildValue"
+                                type="text" id="subChildValue" name="subChildValue"
+                                class="form-control" placeholder="Name">
                         </div>
                     </div>
                     <div>
@@ -349,12 +361,12 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+            <div class="modal-body font13">
+                <form method="post" enctype="multipart/form-data" class="form-horizontal">
                     <input [(ngModel)]="motherBedObject.id" type="hidden" 
-                    id="id" name="id" class="form-control">
+                    id="motherBedId" name="id" class="form-control">
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="select1">Zonal *</label>
+                        <label class="col-md-3 col-form-label" for="zoneId">Zonal *</label>
                         <div class="col-md-9">
                             <select [(ngModel)]="motherBedObject.zoneId" id="zoneId" name="zoneId" 
                             class="form-control" (change)="getSector(motherBedObject.zoneId)">
@@ -366,7 +378,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="select1">Sector *</label>
+                        <label class="col-md-3 col-form-label" for="sectorId">Sector *</label>
                         <div class="col-md-9">
                             <select [(ngModel)]="motherBedObject.sectorId" id="sectorId" 
                             name="sectorId" class="form-control"
@@ -377,7 +389,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="name">Nursery *</label>
+                        <label class="col-md-3 col-form-label" for="nurseryId">Nursery *</label>
                         <div class="col-md-9">
                             <select [(ngModel)]="motherBedObject.nurseryId" id="nurseryId" 
                             name="nurseryId" class="form-control" required>
@@ -389,7 +401,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label" for="text-input">Number *</label>
+                        <label class="col-md-3 col-form-label" for="value">Number *</label>
                         <div class="col-md-9">
                             <input [(ngModel)]="motherBedObject.value" type="text" id="value" 
                             name="value" class="form-control" placeholder="MotherBed Number">
@@ -417,7 +429,7 @@
 <!-- End of modal -->
 
 <!-- Quantity lookup creation/updation form-->
-<div bsModal #quantityModal="bs-modal" class="modal fade" tabindex="-1" 
+<!-- <div bsModal #quantityModal="bs-modal" class="modal fade" tabindex="-1" 
     role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
     [config]="{backdrop: 'static',  keyboard: false}">
     <div class="modal-dialog modal-primary" role="document">
@@ -430,7 +442,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="" method="post" enctype="multipart/form-data" 
+                <form method="post" enctype="multipart/form-data" 
                 class="form-horizontal">
                     <input [(ngModel)]="quantityObject.id" type="hidden" id="id" name="id" 
                     class="form-control">
@@ -453,7 +465,7 @@
                             id="pickListVarietyId" name="pickListVarietyId" 
                             class="form-control" (change)="getCategory(quantityObject.pickListVarietyId)" required>
                                 <option value="0" disabled selected>Select Variety Name</option>
-                                <option *ngFor="let val of variety" value={{val.id}}>
+                                <option *ngFor="let val of varieties" value={{val.id}}>
                                     {{val.pickListValue}}</option>
                             </select>
                         </div>
@@ -465,7 +477,7 @@
                                 id="pickListCategoryId" name="pickListCategoryId" 
                                 class="form-control" required>
                                 <option value="0" disabled selected>Select Category Name</option>
-                                <option *ngFor="let category of categorys" 
+                                <option *ngFor="let category of categories" 
                                     value={{category.id}}>{{category.pickListValue}}
                                 </option>
                                 </select>
@@ -495,6 +507,6 @@
                     Save
                 </button>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- End of modal -->
+        </div>
+    </div>
+</div> -->
